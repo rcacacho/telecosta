@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author elfo_
  */
 @Entity
-@Table(name = "pago", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p"),
@@ -45,40 +45,31 @@ public class Pago implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idpago", nullable = false)
+    @Column(nullable = false)
     private Integer idpago;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "mes", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String mes;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "anio", nullable = false)
+    @Column(nullable = false)
     private int anio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechacreacion", nullable = false)
+    @Column(nullable = false)
     private int fechacreacion;
+    private Integer fechapago;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechapago", nullable = false)
-    private int fechapago;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "usuariocreacion", nullable = false)
+    @Column(nullable = false)
     private int usuariocreacion;
+    private Integer fechamodificacion;
+    private Integer usuariomodificacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechamodificacion", nullable = false)
-    private int fechamodificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "usuariomodificacion", nullable = false)
-    private int usuariomodificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -94,15 +85,12 @@ public class Pago implements Serializable {
         this.idpago = idpago;
     }
 
-    public Pago(Integer idpago, String mes, int anio, int fechacreacion, int fechapago, int usuariocreacion, int fechamodificacion, int usuariomodificacion, int activo) {
+    public Pago(Integer idpago, String mes, int anio, int fechacreacion, int usuariocreacion, int activo) {
         this.idpago = idpago;
         this.mes = mes;
         this.anio = anio;
         this.fechacreacion = fechacreacion;
-        this.fechapago = fechapago;
         this.usuariocreacion = usuariocreacion;
-        this.fechamodificacion = fechamodificacion;
-        this.usuariomodificacion = usuariomodificacion;
         this.activo = activo;
     }
 
@@ -138,11 +126,11 @@ public class Pago implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public int getFechapago() {
+    public Integer getFechapago() {
         return fechapago;
     }
 
-    public void setFechapago(int fechapago) {
+    public void setFechapago(Integer fechapago) {
         this.fechapago = fechapago;
     }
 
@@ -154,19 +142,19 @@ public class Pago implements Serializable {
         this.usuariocreacion = usuariocreacion;
     }
 
-    public int getFechamodificacion() {
+    public Integer getFechamodificacion() {
         return fechamodificacion;
     }
 
-    public void setFechamodificacion(int fechamodificacion) {
+    public void setFechamodificacion(Integer fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public int getUsuariomodificacion() {
+    public Integer getUsuariomodificacion() {
         return usuariomodificacion;
     }
 
-    public void setUsuariomodificacion(int usuariomodificacion) {
+    public void setUsuariomodificacion(Integer usuariomodificacion) {
         this.usuariomodificacion = usuariomodificacion;
     }
 

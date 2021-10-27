@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author elfo_
  */
 @Entity
-@Table(name = "tipopago", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tipopago.findAll", query = "SELECT t FROM Tipopago t"),
@@ -46,26 +46,26 @@ public class Tipopago implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idtipopago", nullable = false)
+    @Column(nullable = false)
     private Integer idtipopago;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "pago", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String pago;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechacreacion", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "usuariocreacion", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String usuariocreacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
     private List<Pago> pagoList;

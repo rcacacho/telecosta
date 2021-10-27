@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tele.costa.api.entity;
 
 import java.io.Serializable;
@@ -28,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author elfo_
  */
 @Entity
-@Table(name = "departamento", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
@@ -41,17 +37,20 @@ public class Departamento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "iddepartamento", nullable = false)
+    @Column(nullable = false)
     private Integer iddepartamento;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "nombre", nullable = false, length = 500)
+    @Column(nullable = false, length = 500)
     private String nombre;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartamento", fetch = FetchType.LAZY)
     private List<Municipio> municipioList;
 

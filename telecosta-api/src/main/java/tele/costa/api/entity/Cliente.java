@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author elfo_
  */
 @Entity
-@Table(name = "cliente", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
@@ -36,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByApellidos", query = "SELECT c FROM Cliente c WHERE c.apellidos = :apellidos"),
     @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion"),
     @NamedQuery(name = "Cliente.findByTelefono", query = "SELECT c FROM Cliente c WHERE c.telefono = :telefono"),
-    @NamedQuery(name = "Cliente.findByIdmunicipio", query = "SELECT c FROM Cliente c WHERE c.idmunicipio = :idmunicipio"),
     @NamedQuery(name = "Cliente.findByUsuariocreacion", query = "SELECT c FROM Cliente c WHERE c.usuariocreacion = :usuariocreacion"),
     @NamedQuery(name = "Cliente.findByFechacreacion", query = "SELECT c FROM Cliente c WHERE c.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Cliente.findByUsuariomodificacion", query = "SELECT c FROM Cliente c WHERE c.usuariomodificacion = :usuariomodificacion"),
@@ -48,53 +49,55 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcliente", nullable = false)
+    @Column(nullable = false)
     private Integer idcliente;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
-    @Column(name = "nombres", nullable = false, length = 250)
+    @Column(nullable = false, length = 250)
     private String nombres;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
-    @Column(name = "apellidos", nullable = false, length = 250)
+    @Column(nullable = false, length = 250)
     private String apellidos;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 500)
-    @Column(name = "direccion", nullable = false, length = 500)
+    
+    @Size(max = 500)
+    @Column(length = 500)
     private String direccion;
-    @Column(name = "telefono")
+    
     private Integer telefono;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idmunicipio", nullable = false)
-    private int idmunicipio;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "usuariocreacion", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String usuariocreacion;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechacreacion", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "usuariomodificacion", nullable = false, length = 50)
+    
+    @Size(max = 50)
+    @Column(length = 50)
     private String usuariomodificacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechamodificacion", nullable = false)
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
+    
+    @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Municipio idmunicipio;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -105,16 +108,12 @@ public class Cliente implements Serializable {
         this.idcliente = idcliente;
     }
 
-    public Cliente(Integer idcliente, String nombres, String apellidos, String direccion, int idmunicipio, String usuariocreacion, Date fechacreacion, String usuariomodificacion, Date fechamodificacion, int activo) {
+    public Cliente(Integer idcliente, String nombres, String apellidos, String usuariocreacion, Date fechacreacion, int activo) {
         this.idcliente = idcliente;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.direccion = direccion;
-        this.idmunicipio = idmunicipio;
         this.usuariocreacion = usuariocreacion;
         this.fechacreacion = fechacreacion;
-        this.usuariomodificacion = usuariomodificacion;
-        this.fechamodificacion = fechamodificacion;
         this.activo = activo;
     }
 
@@ -158,14 +157,6 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
-    public int getIdmunicipio() {
-        return idmunicipio;
-    }
-
-    public void setIdmunicipio(int idmunicipio) {
-        this.idmunicipio = idmunicipio;
-    }
-
     public String getUsuariocreacion() {
         return usuariocreacion;
     }
@@ -204,6 +195,14 @@ public class Cliente implements Serializable {
 
     public void setActivo(int activo) {
         this.activo = activo;
+    }
+
+    public Municipio getIdmunicipio() {
+        return idmunicipio;
+    }
+
+    public void setIdmunicipio(Municipio idmunicipio) {
+        this.idmunicipio = idmunicipio;
     }
 
     @XmlTransient

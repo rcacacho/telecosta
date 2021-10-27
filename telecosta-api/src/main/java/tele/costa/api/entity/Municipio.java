@@ -5,7 +5,9 @@
 package tele.costa.api.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,17 +18,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elfo_
  */
 @Entity
-@Table(name = "municipio", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Municipio.findAll", query = "SELECT m FROM Municipio m"),
@@ -39,17 +43,19 @@ public class Municipio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmunicipio", nullable = false)
+    @Column(nullable = false)
     private Integer idmunicipio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(name = "municipio", nullable = false, length = 500)
+    @Column(nullable = false, length = 500)
     private String municipio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
+    private List<Cliente> clienteList;
     @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Departamento iddepartamento;
@@ -89,6 +95,15 @@ public class Municipio implements Serializable {
 
     public void setActivo(int activo) {
         this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
 
     public Departamento getIddepartamento() {

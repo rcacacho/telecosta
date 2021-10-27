@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tele.costa.api.entity;
 
 import java.io.Serializable;
@@ -23,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author elfo_
  */
 @Entity
-@Table(name = "usuario", catalog = "telecosta", schema = "")
+@Table(catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -40,35 +36,36 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idusuario", nullable = false)
+    @Column(nullable = false)
     private Integer idusuario;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "nombres", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String nombres;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "apellidos", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String apellidos;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "usuario", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String usuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String password;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "root", nullable = false)
+    @Column(nullable = false)
     private int root;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(nullable = false)
     private int activo;
 
     public Usuario() {
