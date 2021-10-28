@@ -36,9 +36,7 @@ public class Departamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer iddepartamento;
+    private Integer idDepartamento;
     
     @Basic(optional = false)
     @NotNull
@@ -49,7 +47,7 @@ public class Departamento implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private int activo;
+    private boolean activo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartamento", fetch = FetchType.LAZY)
     private List<Municipio> municipioList;
@@ -57,22 +55,22 @@ public class Departamento implements Serializable {
     public Departamento() {
     }
 
-    public Departamento(Integer iddepartamento) {
-        this.iddepartamento = iddepartamento;
+    public Departamento(Integer idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
-    public Departamento(Integer iddepartamento, String nombre, int activo) {
-        this.iddepartamento = iddepartamento;
+    public Departamento(Integer idDepartamento, String nombre, boolean activo) {
+        this.idDepartamento = idDepartamento;
         this.nombre = nombre;
         this.activo = activo;
     }
 
     public Integer getIddepartamento() {
-        return iddepartamento;
+        return idDepartamento;
     }
 
     public void setIddepartamento(Integer iddepartamento) {
-        this.iddepartamento = iddepartamento;
+        this.idDepartamento = iddepartamento;
     }
 
     public String getNombre() {
@@ -83,11 +81,11 @@ public class Departamento implements Serializable {
         this.nombre = nombre;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
@@ -103,7 +101,7 @@ public class Departamento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (iddepartamento != null ? iddepartamento.hashCode() : 0);
+        hash += (idDepartamento != null ? idDepartamento.hashCode() : 0);
         return hash;
     }
 
@@ -114,7 +112,7 @@ public class Departamento implements Serializable {
             return false;
         }
         Departamento other = (Departamento) object;
-        if ((this.iddepartamento == null && other.iddepartamento != null) || (this.iddepartamento != null && !this.iddepartamento.equals(other.iddepartamento))) {
+        if ((this.idDepartamento == null && other.idDepartamento != null) || (this.idDepartamento != null && !this.idDepartamento.equals(other.idDepartamento))) {
             return false;
         }
         return true;
@@ -122,7 +120,7 @@ public class Departamento implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Departamento[ iddepartamento=" + iddepartamento + " ]";
+        return "tele.costa.api.entity.Departamento[ iddepartamento=" + idDepartamento + " ]";
     }
     
 }

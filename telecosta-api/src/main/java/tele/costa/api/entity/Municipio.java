@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tele.costa.api.entity;
 
 import java.io.Serializable;
@@ -42,43 +38,45 @@ public class Municipio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer idmunicipio;
+    private Integer idMunicipio;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(nullable = false, length = 500)
     private String municipio;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     private int activo;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
     private List<Cliente> clienteList;
+    
     @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Departamento iddepartamento;
+    private Departamento idDepartamento;
 
     public Municipio() {
     }
 
-    public Municipio(Integer idmunicipio) {
-        this.idmunicipio = idmunicipio;
+    public Municipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
-    public Municipio(Integer idmunicipio, String municipio, int activo) {
-        this.idmunicipio = idmunicipio;
+    public Municipio(Integer idMunicipio, String municipio, int activo) {
+        this.idMunicipio = idMunicipio;
         this.municipio = municipio;
         this.activo = activo;
     }
 
     public Integer getIdmunicipio() {
-        return idmunicipio;
+        return idMunicipio;
     }
 
-    public void setIdmunicipio(Integer idmunicipio) {
-        this.idmunicipio = idmunicipio;
+    public void setIdmunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
     public String getMunicipio() {
@@ -107,17 +105,17 @@ public class Municipio implements Serializable {
     }
 
     public Departamento getIddepartamento() {
-        return iddepartamento;
+        return idDepartamento;
     }
 
-    public void setIddepartamento(Departamento iddepartamento) {
-        this.iddepartamento = iddepartamento;
+    public void setIddepartamento(Departamento idDepartamento) {
+        this.idDepartamento = idDepartamento;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idmunicipio != null ? idmunicipio.hashCode() : 0);
+        hash += (idMunicipio != null ? idMunicipio.hashCode() : 0);
         return hash;
     }
 
@@ -128,7 +126,7 @@ public class Municipio implements Serializable {
             return false;
         }
         Municipio other = (Municipio) object;
-        if ((this.idmunicipio == null && other.idmunicipio != null) || (this.idmunicipio != null && !this.idmunicipio.equals(other.idmunicipio))) {
+        if ((this.idMunicipio == null && other.idMunicipio != null) || (this.idMunicipio != null && !this.idMunicipio.equals(other.idMunicipio))) {
             return false;
         }
         return true;
@@ -136,7 +134,7 @@ public class Municipio implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Municipio[ idmunicipio=" + idmunicipio + " ]";
+        return "tele.costa.api.entity.Municipio[ idmunicipio=" + idMunicipio + " ]";
     }
-    
+
 }

@@ -48,9 +48,7 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer idcliente;
+    private Integer idCliente;
     
     @Basic(optional = false)
     @NotNull
@@ -92,11 +90,11 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private int activo;
+    private boolean activo;
     
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Municipio idmunicipio;
+    private Municipio idMunicipio;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
@@ -104,12 +102,12 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Integer idcliente) {
-        this.idcliente = idcliente;
+    public Cliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public Cliente(Integer idcliente, String nombres, String apellidos, String usuariocreacion, Date fechacreacion, int activo) {
-        this.idcliente = idcliente;
+    public Cliente(Integer idCliente, String nombres, String apellidos, String usuariocreacion, Date fechacreacion, boolean activo) {
+        this.idCliente = idCliente;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.usuariocreacion = usuariocreacion;
@@ -118,11 +116,11 @@ public class Cliente implements Serializable {
     }
 
     public Integer getIdcliente() {
-        return idcliente;
+        return idCliente;
     }
 
-    public void setIdcliente(Integer idcliente) {
-        this.idcliente = idcliente;
+    public void setIdcliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNombres() {
@@ -189,20 +187,20 @@ public class Cliente implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
     public Municipio getIdmunicipio() {
-        return idmunicipio;
+        return idMunicipio;
     }
 
-    public void setIdmunicipio(Municipio idmunicipio) {
-        this.idmunicipio = idmunicipio;
+    public void setIdmunicipio(Municipio idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
     @XmlTransient
@@ -217,7 +215,7 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idcliente != null ? idcliente.hashCode() : 0);
+        hash += (idCliente != null ? idCliente.hashCode() : 0);
         return hash;
     }
 
@@ -228,7 +226,7 @@ public class Cliente implements Serializable {
             return false;
         }
         Cliente other = (Cliente) object;
-        if ((this.idcliente == null && other.idcliente != null) || (this.idcliente != null && !this.idcliente.equals(other.idcliente))) {
+        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
             return false;
         }
         return true;
@@ -236,7 +234,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Cliente[ idcliente=" + idcliente + " ]";
+        return "tele.costa.api.entity.Cliente[ idcliente=" + idCliente + " ]";
     }
     
 }

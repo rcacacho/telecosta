@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tele.costa.api.entity;
 
 import java.io.Serializable;
@@ -45,40 +41,43 @@ public class Tipopago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer idtipopago;
+    private Integer idTipopago;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String pago;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String usuariocreacion;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private int activo;
+    private boolean activo;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
     public Tipopago() {
     }
 
-    public Tipopago(Integer idtipopago) {
-        this.idtipopago = idtipopago;
+    public Tipopago(Integer idTipopago) {
+        this.idTipopago = idTipopago;
     }
 
-    public Tipopago(Integer idtipopago, String pago, Date fechacreacion, String usuariocreacion, int activo) {
-        this.idtipopago = idtipopago;
+    public Tipopago(Integer idTipopago, String pago, Date fechacreacion, String usuariocreacion, boolean activo) {
+        this.idTipopago = idTipopago;
         this.pago = pago;
         this.fechacreacion = fechacreacion;
         this.usuariocreacion = usuariocreacion;
@@ -86,11 +85,11 @@ public class Tipopago implements Serializable {
     }
 
     public Integer getIdtipopago() {
-        return idtipopago;
+        return idTipopago;
     }
 
-    public void setIdtipopago(Integer idtipopago) {
-        this.idtipopago = idtipopago;
+    public void setIdtipopago(Integer idTipopago) {
+        this.idTipopago = idTipopago;
     }
 
     public String getPago() {
@@ -117,11 +116,11 @@ public class Tipopago implements Serializable {
         this.usuariocreacion = usuariocreacion;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
@@ -137,7 +136,7 @@ public class Tipopago implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtipopago != null ? idtipopago.hashCode() : 0);
+        hash += (idTipopago != null ? idTipopago.hashCode() : 0);
         return hash;
     }
 
@@ -148,7 +147,7 @@ public class Tipopago implements Serializable {
             return false;
         }
         Tipopago other = (Tipopago) object;
-        if ((this.idtipopago == null && other.idtipopago != null) || (this.idtipopago != null && !this.idtipopago.equals(other.idtipopago))) {
+        if ((this.idTipopago == null && other.idTipopago != null) || (this.idTipopago != null && !this.idTipopago.equals(other.idTipopago))) {
             return false;
         }
         return true;
@@ -156,7 +155,7 @@ public class Tipopago implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Tipopago[ idtipopago=" + idtipopago + " ]";
+        return "tele.costa.api.entity.Tipopago[ idtipopago=" + idTipopago + " ]";
     }
-    
+
 }

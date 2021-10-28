@@ -35,48 +35,51 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer idusuario;
+    private Integer idUsuario;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private String nombres;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(nullable = false, length = 100)
     private String apellidos;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String usuario;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String password;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private int root;
+    private boolean root;
+    
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
-    private int activo;
+    private boolean activo;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idusuario) {
-        this.idusuario = idusuario;
+    public Usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idusuario, String nombres, String apellidos, String usuario, String password, int root, int activo) {
-        this.idusuario = idusuario;
+    public Usuario(Integer idUsuario, String nombres, String apellidos, String usuario, String password, boolean root, boolean activo) {
+        this.idUsuario = idUsuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.usuario = usuario;
@@ -86,11 +89,11 @@ public class Usuario implements Serializable {
     }
 
     public Integer getIdusuario() {
-        return idusuario;
+        return idUsuario;
     }
 
-    public void setIdusuario(Integer idusuario) {
-        this.idusuario = idusuario;
+    public void setIdusuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombres() {
@@ -125,26 +128,26 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public int getRoot() {
+    public boolean getRoot() {
         return root;
     }
 
-    public void setRoot(int root) {
+    public void setRoot(boolean root) {
         this.root = root;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idusuario != null ? idusuario.hashCode() : 0);
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
         return hash;
     }
 
@@ -155,7 +158,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
             return false;
         }
         return true;
@@ -163,7 +166,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Usuario[ idusuario=" + idusuario + " ]";
+        return "tele.costa.api.entity.Usuario[ idusuario=" + idUsuario + " ]";
     }
     
 }

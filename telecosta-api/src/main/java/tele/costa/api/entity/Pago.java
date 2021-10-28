@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tele.costa.api.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author elfo_
  */
 @Entity
-@Table(catalog = "telecosta", schema = "")
+@Table(name = "pago", catalog = "telecosta", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p"),
@@ -44,62 +42,78 @@ public class Pago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Integer idpago;
+    private Integer idPago;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
+    @Column(name = "mes", nullable = false, length = 100)
     private String mes;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "anio", nullable = false)
     private int anio;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int fechacreacion;
-    private Integer fechapago;
+    @Column(name = "fechacreacion", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    
+    @Column(name = "fechapago")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaPago;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int usuariocreacion;
-    private Integer fechamodificacion;
-    private Integer usuariomodificacion;
+    @Size(min = 1, max = 50)
+    @Column(name = "usuariocreacion", nullable = false, length = 50)
+    private String usuarioCreacion;
+    
+    @Column(name = "fechamodificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
+    
+    @Size(max = 50)
+    @Column(name = "usuariomodificacion", length = 50)
+    private String usuarioModificacion;
+    
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int activo;
+    @Column(name = "activo", nullable = false)
+    private boolean activo;
+    
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Cliente idcliente;
+    @ManyToOne(optional = false)
+    private Cliente idCliente;
+    
     @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Tipopago idtipopago;
+    @ManyToOne(optional = false)
+    private Tipopago idTipopago;
 
     public Pago() {
     }
 
-    public Pago(Integer idpago) {
-        this.idpago = idpago;
+    public Pago(Integer idPago) {
+        this.idPago = idPago;
     }
 
-    public Pago(Integer idpago, String mes, int anio, int fechacreacion, int usuariocreacion, int activo) {
-        this.idpago = idpago;
+    public Pago(Integer idPago, String mes, int anio, Date fechaCreacion, String usuarioCreacion, boolean activo) {
+        this.idPago = idPago;
         this.mes = mes;
         this.anio = anio;
-        this.fechacreacion = fechacreacion;
-        this.usuariocreacion = usuariocreacion;
+        this.fechaCreacion = fechaCreacion;
+        this.usuarioCreacion = usuarioCreacion;
         this.activo = activo;
     }
 
     public Integer getIdpago() {
-        return idpago;
+        return idPago;
     }
 
-    public void setIdpago(Integer idpago) {
-        this.idpago = idpago;
+    public void setIdpago(Integer idPago) {
+        this.idPago = idPago;
     }
 
     public String getMes() {
@@ -118,74 +132,74 @@ public class Pago implements Serializable {
         this.anio = anio;
     }
 
-    public int getFechacreacion() {
-        return fechacreacion;
+    public Date getFechacreacion() {
+        return fechaCreacion;
     }
 
-    public void setFechacreacion(int fechacreacion) {
-        this.fechacreacion = fechacreacion;
+    public void setFechacreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Integer getFechapago() {
-        return fechapago;
+    public Date getFechapago() {
+        return fechaPago;
     }
 
-    public void setFechapago(Integer fechapago) {
-        this.fechapago = fechapago;
+    public void setFechapago(Date fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
-    public int getUsuariocreacion() {
-        return usuariocreacion;
+    public String getUsuariocreacion() {
+        return usuarioCreacion;
     }
 
-    public void setUsuariocreacion(int usuariocreacion) {
-        this.usuariocreacion = usuariocreacion;
+    public void setUsuariocreacion(String usuarioCreacion) {
+        this.usuarioCreacion = usuarioCreacion;
     }
 
-    public Integer getFechamodificacion() {
-        return fechamodificacion;
+    public Date getFechamodificacion() {
+        return fechaModificacion;
     }
 
-    public void setFechamodificacion(Integer fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
+    public void setFechamodificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
 
-    public Integer getUsuariomodificacion() {
-        return usuariomodificacion;
+    public String getUsuariomodificacion() {
+        return usuarioModificacion;
     }
 
-    public void setUsuariomodificacion(Integer usuariomodificacion) {
-        this.usuariomodificacion = usuariomodificacion;
+    public void setUsuariomodificacion(String usuarioModificacion) {
+        this.usuarioModificacion = usuarioModificacion;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
     public Cliente getIdcliente() {
-        return idcliente;
+        return idCliente;
     }
 
-    public void setIdcliente(Cliente idcliente) {
-        this.idcliente = idcliente;
+    public void setIdcliente(Cliente idCliente) {
+        this.idCliente = idCliente;
     }
 
     public Tipopago getIdtipopago() {
-        return idtipopago;
+        return idTipopago;
     }
 
-    public void setIdtipopago(Tipopago idtipopago) {
-        this.idtipopago = idtipopago;
+    public void setIdtipopago(Tipopago idTipopago) {
+        this.idTipopago = idTipopago;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idpago != null ? idpago.hashCode() : 0);
+        hash += (idPago != null ? idPago.hashCode() : 0);
         return hash;
     }
 
@@ -196,7 +210,7 @@ public class Pago implements Serializable {
             return false;
         }
         Pago other = (Pago) object;
-        if ((this.idpago == null && other.idpago != null) || (this.idpago != null && !this.idpago.equals(other.idpago))) {
+        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
             return false;
         }
         return true;
@@ -204,7 +218,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Pago[ idpago=" + idpago + " ]";
+        return "tele.costa.api.entity.Pago[ idpago=" + idPago + " ]";
     }
-    
+
 }
