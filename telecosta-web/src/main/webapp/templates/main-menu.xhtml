@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"             
+                xmlns:h="http://java.sun.com/jsf/html"             
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form id="frm_menu" >
+
+        <p:menubar style="border: 1px solid #ccc; font-size: small; height: 30px;"  autoDisplay="false" >
+
+            <p:submenu label="Ventas" icon="ui-icon-document">  
+                <p:menuitem value="Lista" outcome="/ventas/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/ventas/registro.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+            <p:submenu label="Vehículos" icon="ui-icon-document" >  
+                <p:menuitem value="Lista" outcome="/vehiculos/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/vehiculos/registro.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+            <p:submenu label="Concesionario" icon="ui-icon-document" >  
+                <p:menuitem value="Lista" outcome="/concesionario/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/concesionario/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Asignación" outcome="/concesionario/asignacion/lista.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+            <p:submenu label="Pedidos" icon="ui-icon-document" >  
+                <p:menuitem value="Lista" outcome="/pedido/lista.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+            <p:submenu label="Colaboradores" icon="ui-icon-document" >  
+                <p:menuitem value="Lista" outcome="/colaborador/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/colaborador/registro.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+            <p:submenu label="Reportes" icon="ui-icon-document">  
+                <p:menuitem value="Lista" outcome="/reportes/reporte.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
+        </p:menubar>
+
+        <p:submenu label="Ayuda" icon="ui-icon-help"> 
+            <p:menuitem value="Manual" url="resources/manual/RegimenDisciplinario.pdf"  target="_" icon="ui-icon-print">
+
+            </p:menuitem>
+        </p:submenu>
+
+    </h:form>
+</ui:composition>

@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
-    
+
     <h:body style="text-align:center">
         <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
         <h:form id="form">
@@ -27,6 +27,33 @@
                     </h:panelGrid>
                 </p:panel>
             </div>
+
+            <p:dialog id="dlgReporte" widgetVar="dlgReporte" header="Generar Reporte" closable="true" width="400" height="100" modal="true" resizable="false" 
+                      position="top">
+                <p:panelGrid id="pg-anular-conv" columns="2" class="no-border" style="width: 98%">
+                    <p:outputLabel style="font-size: 12px;  font-weight: bold;" value="Fecha Inicio"/>
+                    <p:outputLabel style="font-size: 12px;  font-weight: bold;" value="Fecha Fin"/>
+
+                    <p:calendar value="#{buzonPendientesMB.fechaInicio}" 
+                                navigator="true"  locale="es" style="width: 60%;"  
+                                pattern="dd/MM/yyyy" >
+                        <p:ajax event="dateSelect" />
+                    </p:calendar>
+                    <p:calendar value="#{buzonPendientesMB.fechaFin}" 
+                                navigator="true"  locale="es" style="width: 60%;"  
+                                pattern="dd/MM/yyyy" >
+                        <p:ajax event="dateSelect" />
+                    </p:calendar>
+                </p:panelGrid>
+                <div align="right">
+                    <p:commandButton id="btnImprimir" value="" title="Imprimir" 
+                                     onclick="PrimeFaces.monitorDownload(start, stop);"
+                                     style="background-position: 5px 3px !important; background-size: 32px 32px !important;  margin-left: 2px;"
+                                     class="boton boton-img-32 b-gris4 icon-imprimir" ajax="false">
+                        <p:fileDownload value="#{buzonPendientesMB.reporteExpediente()}" />
+                    </p:commandButton>
+                </div>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>

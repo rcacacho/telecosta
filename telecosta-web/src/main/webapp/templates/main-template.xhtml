@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"                
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="es_GT">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+            <ui:insert name="titulo">
+                <ui:insert name="titulo">[TITULO AQUI]</ui:insert>
+            </ui:insert>
+            <h:outputStylesheet library="css" name="/resources/css/concesionario.css" />
+        </h:head>
+
+        <h:body id="allThePage">
+            <h:outputStylesheet library="css" name="concesionario.css" />
+            <ui:include src="session-timeout.xhtml" />
+            <div id="container">
+                <!-- ui:include src="session-timeout.xhtml" /-->
+                <p:growl id="messages" autoUpdate="true"  />
+
+                <div id="top">
+
+                    <h:graphicImage library="images" name="footer22.png"  style="width: 90%; left: 0px; top: 0px; position: relative;"  height="150px"/>
+
+
+                    <div style="float: right; margin-right: 25px;">
+
+                        <h:form>
+                            <center>
+                                <table style="width: 100%; margin-top: 15px;">
+                                    <td style="width: 50%">
+
+
+                                        <h:commandLink action="#{loginMB.loginProject()}" style="text-decoration: none;">
+                                            <h:graphicImage library="images" name="Inicio32.png"   style="float: right !important; margin-right: 10px; margin-top: 50px;" width="30px;" title="Inicio"/>
+                                        </h:commandLink>
+                                    </td>
+                                    <td style="width: 50%">
+                                        <h:commandLink action="#{loginMB.logout()}" style="text-decoration: none;" >
+                                            <h:graphicImage library="images" name="logout.png" style="float: right !important; margin-right: 10px; margin-top: 50px;" 
+                                                            width="30px;" title="Cerrar Sesión" /> 
+                                        </h:commandLink>
+                                    </td>
+                                </table>
+
+                            </center>
+                        </h:form>
+                    </div>
+
+                </div>
+
+                <div id="main-menu">
+
+                    <ui:insert name="main-menu">
+                        <ui:insert name="main-menu">[MENU AQUI]</ui:insert>
+                    </ui:insert>
+                </div>
+
+                <h:form>
+                    <div id="pageTitle">
+
+                        <center>
+                            <div style="display:inline-block" align="center">
+                                <ui:insert name="pageTitle">[NOMBRE DE LA PAGINA AQUI]</ui:insert>
+                            </div>   
+                        </center>
+
+
+                    </div> 
+
+                    <div id="help">
+                        <p:outputPanel id="panel_ayuda">
+                            <ui:insert name="help"/>
+                        </p:outputPanel>
+                    </div>
+
+                </h:form>
+                <div id="content" >
+                    <ui:include src="./confirmation-dialog.xhtml" />
+                    <h:outputScript library="js" name="utils.js" />
+                    <h:outputScript library="js"  name="calendarLabels_es_GT.js" /> 
+                    <ui:insert name="content">[CONTENIDO AQUI]</ui:insert>
+                </div>
+
+
+                <!--CLEAR FOOTER TO PREVENT BUNCHING-->
+                <div class="clear"></div>
+
+
+                <div id="bottom">
+                    <br />
+                    <ui:insert name="contentBottom">[PIE DE PÁGINA AQUI]</ui:insert>
+                    <h:graphicImage library="images" name="umg.png"  style="width: 5%; margin-left: -1250px !important; margin-top: -70px !important"  />
+                </div>
+            </div>
+        </h:body>
+    </f:view>
+</html>
