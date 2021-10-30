@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 @FacesConverter(value = "genericEntityConverter")
 public class GenericEntityConverter extends AbstractEntityConverter {
 
-    @PersistenceContext(unitName = "DiacoPU")
+    @PersistenceContext(unitName = "TeleCostaPU")
     private EntityManager em;
     private static final Logger log = Logger.getLogger(GenericEntityConverter.class);
 
