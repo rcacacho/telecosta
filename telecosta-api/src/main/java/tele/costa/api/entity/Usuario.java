@@ -141,7 +141,7 @@ public class Usuario implements Serializable {
     public boolean getActivo() {
         return activo;
     }
-
+    
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
