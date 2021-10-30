@@ -39,7 +39,7 @@ public class LoginMB implements Serializable {
     }
 
     public String loginProject() {
-        password = md5(password);
+        //password = md5(password);
         usu = loginBeanLocal.verificarUsuario(usuario, password);
         if (usu != null) {
             HttpSession session = SesionUsuarioMB.getSession();
