@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author elfo_
  */
 @Entity
-@Table(catalog = "telecosta", schema = "")
+@Table(name = "departamento")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
@@ -36,17 +36,19 @@ public class Departamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDepartamento;
+    @Basic(optional = false)
+    @Column(name = "iddepartamento")
+    private Integer iddepartamento;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(nullable = false, length = 500)
+    @Column(name = "nombre")
     private String nombre;
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "activo")
     private boolean activo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartamento", fetch = FetchType.LAZY)
@@ -55,22 +57,22 @@ public class Departamento implements Serializable {
     public Departamento() {
     }
 
-    public Departamento(Integer idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public Departamento(Integer iddepartamento) {
+        this.iddepartamento = iddepartamento;
     }
 
-    public Departamento(Integer idDepartamento, String nombre, boolean activo) {
-        this.idDepartamento = idDepartamento;
+    public Departamento(Integer iddepartamento, String nombre, boolean activo) {
+        this.iddepartamento = iddepartamento;
         this.nombre = nombre;
         this.activo = activo;
     }
 
     public Integer getIddepartamento() {
-        return idDepartamento;
+        return iddepartamento;
     }
 
     public void setIddepartamento(Integer iddepartamento) {
-        this.idDepartamento = iddepartamento;
+        this.iddepartamento = iddepartamento;
     }
 
     public String getNombre() {
@@ -101,7 +103,7 @@ public class Departamento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDepartamento != null ? idDepartamento.hashCode() : 0);
+        hash += (iddepartamento != null ? iddepartamento.hashCode() : 0);
         return hash;
     }
 
@@ -112,7 +114,7 @@ public class Departamento implements Serializable {
             return false;
         }
         Departamento other = (Departamento) object;
-        if ((this.idDepartamento == null && other.idDepartamento != null) || (this.idDepartamento != null && !this.idDepartamento.equals(other.idDepartamento))) {
+        if ((this.iddepartamento == null && other.iddepartamento != null) || (this.iddepartamento != null && !this.iddepartamento.equals(other.iddepartamento))) {
             return false;
         }
         return true;
@@ -120,7 +122,7 @@ public class Departamento implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Departamento[ iddepartamento=" + idDepartamento + " ]";
+        return "tele.costa.api.entity.Departamento[ iddepartamento=" + iddepartamento + " ]";
     }
     
 }

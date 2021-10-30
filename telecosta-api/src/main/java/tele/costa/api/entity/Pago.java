@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author elfo_
  */
 @Entity
-@Table(name = "pago", catalog = "telecosta", schema = "")
+@Table(name = "pago")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p"),
@@ -42,78 +43,80 @@ public class Pago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPago;
-
+    @Basic(optional = false)
+    @Column(name = "idpago")
+    private Integer idpago;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "mes", nullable = false, length = 100)
+    @Column(name = "mes")
     private String mes;
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "anio", nullable = false)
+    @Column(name = "anio")
     private int anio;
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechacreacion", nullable = false)
+    @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private Date fechacreacion;
     
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPago;
+    private Date fechapago;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "usuariocreacion", nullable = false, length = 50)
-    private String usuarioCreacion;
+    @Column(name = "usuariocreacion")
+    private String usuariocreacion;
     
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
+    private Date fechamodificacion;
     
     @Size(max = 50)
-    @Column(name = "usuariomodificacion", length = 50)
-    private String usuarioModificacion;
+    @Column(name = "usuariomodificacion")
+    private String usuariomodificacion;
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "activo", nullable = false)
+    @Column(name = "activo")
     private boolean activo;
     
-    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
-    @ManyToOne(optional = false)
-    private Cliente idCliente;
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Cliente idcliente;
     
-    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago", nullable = false)
-    @ManyToOne(optional = false)
-    private Tipopago idTipopago;
+    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Tipopago idtipopago;
 
     public Pago() {
     }
 
-    public Pago(Integer idPago) {
-        this.idPago = idPago;
+    public Pago(Integer idpago) {
+        this.idpago = idpago;
     }
 
-    public Pago(Integer idPago, String mes, int anio, Date fechaCreacion, String usuarioCreacion, boolean activo) {
-        this.idPago = idPago;
+    public Pago(Integer idpago, String mes, int anio, Date fechacreacion, String usuariocreacion, boolean activo) {
+        this.idpago = idpago;
         this.mes = mes;
         this.anio = anio;
-        this.fechaCreacion = fechaCreacion;
-        this.usuarioCreacion = usuarioCreacion;
+        this.fechacreacion = fechacreacion;
+        this.usuariocreacion = usuariocreacion;
         this.activo = activo;
     }
 
     public Integer getIdpago() {
-        return idPago;
+        return idpago;
     }
 
-    public void setIdpago(Integer idPago) {
-        this.idPago = idPago;
+    public void setIdpago(Integer idpago) {
+        this.idpago = idpago;
     }
 
     public String getMes() {
@@ -133,43 +136,43 @@ public class Pago implements Serializable {
     }
 
     public Date getFechacreacion() {
-        return fechaCreacion;
+        return fechacreacion;
     }
 
-    public void setFechacreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     public Date getFechapago() {
-        return fechaPago;
+        return fechapago;
     }
 
-    public void setFechapago(Date fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setFechapago(Date fechapago) {
+        this.fechapago = fechapago;
     }
 
     public String getUsuariocreacion() {
-        return usuarioCreacion;
+        return usuariocreacion;
     }
 
-    public void setUsuariocreacion(String usuarioCreacion) {
-        this.usuarioCreacion = usuarioCreacion;
+    public void setUsuariocreacion(String usuariocreacion) {
+        this.usuariocreacion = usuariocreacion;
     }
 
     public Date getFechamodificacion() {
-        return fechaModificacion;
+        return fechamodificacion;
     }
 
-    public void setFechamodificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
+    public void setFechamodificacion(Date fechamodificacion) {
+        this.fechamodificacion = fechamodificacion;
     }
 
     public String getUsuariomodificacion() {
-        return usuarioModificacion;
+        return usuariomodificacion;
     }
 
-    public void setUsuariomodificacion(String usuarioModificacion) {
-        this.usuarioModificacion = usuarioModificacion;
+    public void setUsuariomodificacion(String usuariomodificacion) {
+        this.usuariomodificacion = usuariomodificacion;
     }
 
     public boolean getActivo() {
@@ -181,25 +184,25 @@ public class Pago implements Serializable {
     }
 
     public Cliente getIdcliente() {
-        return idCliente;
+        return idcliente;
     }
 
-    public void setIdcliente(Cliente idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(Cliente idcliente) {
+        this.idcliente = idcliente;
     }
 
     public Tipopago getIdtipopago() {
-        return idTipopago;
+        return idtipopago;
     }
 
-    public void setIdtipopago(Tipopago idTipopago) {
-        this.idTipopago = idTipopago;
+    public void setIdtipopago(Tipopago idtipopago) {
+        this.idtipopago = idtipopago;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPago != null ? idPago.hashCode() : 0);
+        hash += (idpago != null ? idpago.hashCode() : 0);
         return hash;
     }
 
@@ -210,7 +213,7 @@ public class Pago implements Serializable {
             return false;
         }
         Pago other = (Pago) object;
-        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
+        if ((this.idpago == null && other.idpago != null) || (this.idpago != null && !this.idpago.equals(other.idpago))) {
             return false;
         }
         return true;
@@ -218,7 +221,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Pago[ idpago=" + idPago + " ]";
+        return "tele.costa.api.entity.Pago[ idpago=" + idpago + " ]";
     }
-
+    
 }

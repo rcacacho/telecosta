@@ -1,7 +1,7 @@
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Usuario.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Departamento.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\LoginBeanLocal.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Cliente.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Pago.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Tipopago.java
-E:\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Municipio.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\LoginBeanLocal.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Municipio.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Pago.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Departamento.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Tipopago.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Usuario.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Cliente.java

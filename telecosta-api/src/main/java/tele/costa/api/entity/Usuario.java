@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author elfo_
  */
 @Entity
-@Table(catalog = "telecosta", schema = "")
+@Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -35,51 +35,53 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+    @Basic(optional = false)
+    @Column(name = "idusuario")
+    private Integer idusuario;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
+    @Column(name = "nombres")
     private String nombres;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(nullable = false, length = 100)
+    @Column(name = "apellidos")
     private String apellidos;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(nullable = false, length = 50)
+    @Column(name = "usuario")
     private String usuario;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(nullable = false, length = 50)
+    @Column(name = "password")
     private String password;
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "root")
     private boolean root;
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "activo")
     private boolean activo;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public Usuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
-    public Usuario(Integer idUsuario, String nombres, String apellidos, String usuario, String password, boolean root, boolean activo) {
-        this.idUsuario = idUsuario;
+    public Usuario(Integer idusuario, String nombres, String apellidos, String usuario, String password, boolean root, boolean activo) {
+        this.idusuario = idusuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.usuario = usuario;
@@ -89,11 +91,11 @@ public class Usuario implements Serializable {
     }
 
     public Integer getIdusuario() {
-        return idUsuario;
+        return idusuario;
     }
 
-    public void setIdusuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdusuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
     public String getNombres() {
@@ -147,7 +149,7 @@ public class Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
         return hash;
     }
 
@@ -158,7 +160,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
             return false;
         }
         return true;
@@ -166,7 +168,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Usuario[ idusuario=" + idUsuario + " ]";
+        return "tele.costa.api.entity.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }

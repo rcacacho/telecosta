@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author elfo_
  */
 @Entity
-@Table(catalog = "telecosta", schema = "")
+@Table(name = "municipio")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Municipio.findAll", query = "SELECT m FROM Municipio m"),
@@ -38,45 +38,47 @@ public class Municipio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMunicipio;
+    @Basic(optional = false)
+    @Column(name = "idmunicipio")
+    private Integer idmunicipio;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
-    @Column(nullable = false, length = 500)
+    @Column(name = "municipio")
     private String municipio;
     
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false)
-    private int activo;
+    @Column(name = "activo")
+    private boolean activo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
     private List<Cliente> clienteList;
     
-    @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento", nullable = false)
+    @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Departamento idDepartamento;
+    private Departamento iddepartamento;
 
     public Municipio() {
     }
 
-    public Municipio(Integer idMunicipio) {
-        this.idMunicipio = idMunicipio;
+    public Municipio(Integer idmunicipio) {
+        this.idmunicipio = idmunicipio;
     }
 
-    public Municipio(Integer idMunicipio, String municipio, int activo) {
-        this.idMunicipio = idMunicipio;
+    public Municipio(Integer idmunicipio, String municipio, boolean activo) {
+        this.idmunicipio = idmunicipio;
         this.municipio = municipio;
         this.activo = activo;
     }
 
     public Integer getIdmunicipio() {
-        return idMunicipio;
+        return idmunicipio;
     }
 
-    public void setIdmunicipio(Integer idMunicipio) {
-        this.idMunicipio = idMunicipio;
+    public void setIdmunicipio(Integer idmunicipio) {
+        this.idmunicipio = idmunicipio;
     }
 
     public String getMunicipio() {
@@ -87,11 +89,11 @@ public class Municipio implements Serializable {
         this.municipio = municipio;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 
@@ -105,17 +107,17 @@ public class Municipio implements Serializable {
     }
 
     public Departamento getIddepartamento() {
-        return idDepartamento;
+        return iddepartamento;
     }
 
-    public void setIddepartamento(Departamento idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setIddepartamento(Departamento iddepartamento) {
+        this.iddepartamento = iddepartamento;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idMunicipio != null ? idMunicipio.hashCode() : 0);
+        hash += (idmunicipio != null ? idmunicipio.hashCode() : 0);
         return hash;
     }
 
@@ -126,7 +128,7 @@ public class Municipio implements Serializable {
             return false;
         }
         Municipio other = (Municipio) object;
-        if ((this.idMunicipio == null && other.idMunicipio != null) || (this.idMunicipio != null && !this.idMunicipio.equals(other.idMunicipio))) {
+        if ((this.idmunicipio == null && other.idmunicipio != null) || (this.idmunicipio != null && !this.idmunicipio.equals(other.idmunicipio))) {
             return false;
         }
         return true;
@@ -134,7 +136,7 @@ public class Municipio implements Serializable {
 
     @Override
     public String toString() {
-        return "tele.costa.api.entity.Municipio[ idmunicipio=" + idMunicipio + " ]";
+        return "tele.costa.api.entity.Municipio[ idmunicipio=" + idmunicipio + " ]";
     }
-
+    
 }
