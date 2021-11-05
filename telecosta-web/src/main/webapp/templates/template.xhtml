@@ -8,13 +8,12 @@
     xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
-        <title>CONCESIONARIO DE VEHICULOS</title>        
+        <title>TELECOST</title>        
     </ui:define>
 
     <ui:define name="main-menu">
         <ui:include src="/templates/main-menu.xhtml" />
     </ui:define>
-
 
     <ui:define name="content">
         <ui:insert name="subContent">[CONTENIDO AQUI]</ui:insert>
@@ -22,29 +21,15 @@
 
     <ui:define name="contentBottom">
         <br /><br />
-        <span style="font-size: 16px;">
-            Raul Cacacho
-            3190 05 10520 
-        </span>
-        <br /><br />
         <span style="font-size: 11px; color: #787878!important;">
-            Sistema Informatico de Concesionario de Vehiculos
+            Sistema Informatico de Tele Costa
         </span>
         <br />
 
         <h:graphicImage library="images" name="acercaDe.png"  onclick="PF('dlg_acerca_de').show();"  style="float: right; margin-right: 20px;  " width="30px;" title="#{msg.acercaDe}"/>
 
-        <p:dialog header="Sistema desarrollado por:" widgetVar="dlg_acerca_de" minHeight="50" width="300"  style="text-align: left" resizable="false" >
-
-            <ol>
-                <li>Raúl Cacacho</li>
-            </ol>
-
-        </p:dialog>
-
         <p:hotkey bind="esc" handler="PF('dlg_acerca_de').hide()" />
         <h:outputScript library="js"  name="calendarLabels_es_GT.js" /> 
-        <h:outputStylesheet library="css" name="concesionario.css" />
+        <h:outputStylesheet library="css" name="telecosta.css" />
     </ui:define>
-
 </ui:composition>

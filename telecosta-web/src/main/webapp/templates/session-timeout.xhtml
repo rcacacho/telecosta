@@ -24,32 +24,20 @@
                   closable="false"
                   draggable="false"
                   resizable="false"
-                  style="overflow: hidden;"
-                  >
+                  style="overflow: hidden;">
             <br />
 
             <div align="center" style="overflow: hidden;">
-
                 <div  class="clock" style="margin:2em; overflow: hidden;">
-
                 </div>
-
-
-
                 <p:commandLink value="Cerrar Sesión" action="#{sesionMB.logout()}" style="margin-right: 20px;" />
                 <p:commandLink value="Restaurar Sesión" action="#{sesionMB.renewSesionTimeOut('/bandeja/entrada.xhtml')}" onstart="PF('timeoutDialog').hide();" />
-
             </div>
         </p:dialog>
 
-
-
-
         <script type="text/javascript">
             var clock;
-
             $(document).ready(function () {
-
                 clock = $('.clock').FlipClock(80, {
                     clockFace: 'MinuteCounter',
                     countdown: true,
@@ -65,17 +53,11 @@
                 });
 
                 $('.start').click(function (e) {
-
                     clock.start();
                 });
-
             });
         </script>
 
         <p:remoteCommand name="logout" actionListener="#{sesionMB.logout()}" />
-
-
     </h:form>
-
-
 </ui:composition>

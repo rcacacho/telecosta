@@ -12,21 +12,17 @@
             <ui:insert name="titulo">
                 <ui:insert name="titulo">[TITULO AQUI]</ui:insert>
             </ui:insert>
-            <h:outputStylesheet library="css" name="/resources/css/concesionario.css" />
+            <h:outputStylesheet library="css" name="/resources/css/telecosta.css" />
         </h:head>
 
         <h:body id="allThePage">
             <h:outputStylesheet library="css" name="concesionario.css" />
             <ui:include src="session-timeout.xhtml" />
             <div id="container">
-                <!-- ui:include src="session-timeout.xhtml" /-->
                 <p:growl id="messages" autoUpdate="true"  />
 
                 <div id="top">
-
-                    <h:graphicImage library="images" name="footer22.png"  style="width: 90%; left: 0px; top: 0px; position: relative;"  height="150px"/>
-
-
+                    <h:graphicImage library="images" name="header.jpg"  style="width: 100%; left: 0px; top: 0px; position: relative;"  height="120px"/>
                     <div style="float: right; margin-right: 25px;">
 
                         <h:form>
@@ -46,15 +42,12 @@
                                         </h:commandLink>
                                     </td>
                                 </table>
-
                             </center>
                         </h:form>
                     </div>
-
                 </div>
 
                 <div id="main-menu">
-
                     <ui:insert name="main-menu">
                         <ui:insert name="main-menu">[MENU AQUI]</ui:insert>
                     </ui:insert>
@@ -62,14 +55,11 @@
 
                 <h:form>
                     <div id="pageTitle">
-
                         <center>
                             <div style="display:inline-block" align="center">
                                 <ui:insert name="pageTitle">[NOMBRE DE LA PAGINA AQUI]</ui:insert>
                             </div>   
                         </center>
-
-
                     </div> 
 
                     <div id="help">
@@ -77,7 +67,6 @@
                             <ui:insert name="help"/>
                         </p:outputPanel>
                     </div>
-
                 </h:form>
                 <div id="content" >
                     <ui:include src="./confirmation-dialog.xhtml" />
@@ -86,15 +75,11 @@
                     <ui:insert name="content">[CONTENIDO AQUI]</ui:insert>
                 </div>
 
-
-                <!--CLEAR FOOTER TO PREVENT BUNCHING-->
                 <div class="clear"></div>
-
 
                 <div id="bottom">
                     <br />
                     <ui:insert name="contentBottom">[PIE DE PÁGINA AQUI]</ui:insert>
-                    <h:graphicImage library="images" name="umg.png"  style="width: 5%; margin-left: -1250px !important; margin-top: -70px !important"  />
                 </div>
             </div>
         </h:body>
