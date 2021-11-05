@@ -1,15 +1,129 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-menu.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Clientes
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Nombre:"  styleClass="field-label"  />
+
+                    <p:inputText id="ac_empleado" value="#{consultaQuejaMB.idqueja}" style="width: 100%;"  placeholder="(solicitud)"
+                                 requiredMessage="(solicitud)" size="50" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+                    
+                     <p:outputLabel value="Cui:"  styleClass="field-label"  />
+                    <p:inputText id="ac_empleado" value="#{consultaQuejaMB.idqueja}" style="width: 100%;"  placeholder="(solicitud)"
+                                 requiredMessage="(solicitud)" size="50" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 150px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{consultaQuejaMB.buscarQueja()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+                        <p:commandButton value="Limpiar" 
+                                         action="#{consultaQuejaMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_queja" var="col" value="#{consultaQuejaMB.listQueja}"
+                             emptyMessage="No hay registros encontrados" rowStyleClass="#{col.styleClass}"
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="10" paginator="#{consultaQuejaMB.listQueja.size()>5}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Comercio o empresa" width="25%" >
+                        <p:outputLabel value="#{col.nombrecomercio}"/>
+                    </p:column>
+
+                    <p:column headerText="Direccion" width="25%" >
+                        <p:outputLabel value="#{col.direccioncomercio}"/>
+                    </p:column>
+
+                    <p:column headerText="Departamento" width="25%" >
+                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.departamento}"/>
+                    </p:column>
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Estado" width="18%" >
+                        <p:outputLabel value="#{col.idestadoqueja.estado}"/>
+                    </p:column>
+
+                    <p:column headerText="Estado" width="15%" >
+                        <p:outputLabel value="#{col.idestadoqueja.estado}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha de registro" width="17%" >
+                        <p:outputLabel value="#{col.fechacreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                </p:dataTable>
+
+                <div align="center" style="margin-top: 15px;">
+                    <p:panelGrid columns="4" style="text-align: center !important;" styleClass="no-border" >
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorBlanco"  style="border: 1px solid black;"/>
+                            </div>
+                            Registrada
+                        </p:outputPanel>
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorCeleste"  style="border: 1px solid black;"/>
+                            </div>
+                            Investigación
+                        </p:outputPanel>
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
+                            </div>
+                            Rechazada
+                        </p:outputPanel>
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorVerdeClaro" style="border: 1px solid black;"/>
+                            </div>
+                            Finalizada
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
