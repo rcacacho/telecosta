@@ -51,55 +51,59 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcliente")
     private Integer idcliente;
-    
+
+    @Size(min = 1, max = 20)
+    @Column(name = "cui")
+    private String cui;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "nombres")
     private String nombres;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "apellidos")
     private String apellidos;
-    
+
     @Size(max = 500)
     @Column(name = "direccion")
     private String direccion;
-    
+
     @Column(name = "telefono")
     private Integer telefono;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -240,5 +244,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Cliente[ idcliente=" + idcliente + " ]";
     }
-    
+
 }
