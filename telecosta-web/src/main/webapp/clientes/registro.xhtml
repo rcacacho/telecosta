@@ -1,15 +1,155 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="pageTitle">
+        Registro de Cliente
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
+            <div align="center">
+
+                <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Cui:" styleClass="colorTitulo" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Nombre:" styleClass="colorTitulo" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroQuejaMB.queja.nombrecomercio}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un nombre de la empresa o comercio"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{registroQuejaMB.queja.direccioncomercio}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar la dirección de la empresa o comercio"/> 
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Apellido:" styleClass="colorTitulo" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroQuejaMB.queja.telefonocomercio}" size="40" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar el teléfono de la empresa o comercio"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="consumidor" value="#{registroQuejaMB.tipoConsumidor}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un consumidor" >
+                                    <f:selectItem itemLabel="(selecciona una consumidor)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroQuejaMB.listTipoConsumidor}" var="consumidor" 
+                                                   itemLabel="#{consumidor.consumidor}" itemValue="#{consumidor}"  />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Departamento:" styleClass="colorTitulo" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu id="reg" value="#{registroQuejaMB.selectedRegion}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar una región" >
+                                    <p:ajax  listener="#{registroQuejaMB.cargarDepartamento()}" update="dep" />
+                                    <f:selectItem itemLabel="(selecciona una región)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroQuejaMB.listRegion}"  var="reg" itemLabel="#{reg.region}" itemValue="#{reg}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="dep" value="#{registroQuejaMB.departamentoSelected}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un departamento">
+                                    <p:ajax  listener="#{registroQuejaMB.cargarMunicipio()}" update="mun" />
+                                    <f:selectItem itemLabel="(selecciona un departamento)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroQuejaMB.listDepartamentos}"  var="departamento" itemLabel="#{departamento.departamento}" itemValue="#{departamento}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Género:" styleClass="colorTitulo" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu id="mun" value="#{registroQuejaMB.municipioSelected}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un municipio">
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroQuejaMB.listMunicipios}" var="municipio" itemLabel="#{municipio.municipio}" itemValue="#{municipio}"  />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="gen" value="#{registroQuejaMB.genero}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un genero">
+                                    <f:selectItem itemLabel="(selecciona género)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroQuejaMB.listGenero}" var="genero" itemLabel="#{genero.genero}" itemValue="#{genero}"  />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Descripcion de la queja:" styleClass="colorTitulo" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column  colspan="3">
+                                <p:inputTextarea rows="3" cols="160" value="#{registroQuejaMB.queja.descripcion}" counter="display" maxlength="2000" 
+                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                 required="true" requiredMessage="Debes ingresar una descripción">
+                                    <p:ajax event="blur" process="@this" />
+                                </p:inputTextarea>
+                                <h:outputText id="display" style="margin-left: 700px;" /> 
+                            </p:column>   
+                        </p:row>
+                    </p:panelGrid>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroQuejaMB.saveQueja()}" icon="ui-icon-disk" process="@form"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la queja?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroQuejaMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </div>
+
+            <p:dialog header="Correlativo Queja" widgetVar="dlgCorrelativo" id="dlgCorrelativo" 
+                      onShow="stop();"  onHide="stop();" 
+                      modal="true" position="top" resizable="false" width="450px">
+
+                <img src="../resources/images/acercaDe.png" alt=""/> <p:spacer width="10px"/>
+                <h:outputLabel  value="El correlativo de su queja es: " style="font-weight: bold;"  />
+                <h:outputLabel  value="#{registroQuejaMB.codigoQueja}" style="font-weight: bold; font-size: 12px;"  />   
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

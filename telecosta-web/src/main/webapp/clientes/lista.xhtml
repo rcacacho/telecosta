@@ -5,7 +5,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"    
                 xmlns:p="http://primefaces.org/ui"
-                template="/templates/template-menu.xhtml">
+                template="/templates/template.xhtml">
 
     <ui:define name="pageTitle">
         Consulta de Clientes
@@ -19,23 +19,24 @@
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
                 </ui:define>
 
-                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;">
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Nombre:"  styleClass="field-label"  />
+                    <p:outputLabel value="Cui:"  styleClass="field-label"  />
 
-                    <p:inputText id="ac_empleado" value="#{consultaQuejaMB.idqueja}" style="width: 100%;"  placeholder="(solicitud)"
-                                 requiredMessage="(solicitud)" size="50" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-                    
-                     <p:outputLabel value="Cui:"  styleClass="field-label"  />
-                    <p:inputText id="ac_empleado" value="#{consultaQuejaMB.idqueja}" style="width: 100%;"  placeholder="(solicitud)"
+                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(solicitud)"
                                  requiredMessage="(solicitud)" size="50" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 150px;">
+                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(solicitud)"
+                                 requiredMessage="(solicitud)" size="50" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{consultaQuejaMB.buscarQueja()}" 
+                                         action="#{listaClienteMB.buscarCliente()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -43,7 +44,7 @@
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
                         <p:commandButton value="Limpiar" 
-                                         action="#{consultaQuejaMB.limpiarCampos()}"
+                                         action="#{listaClienteMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
@@ -54,75 +55,48 @@
 
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{consultaQuejaMB.listQueja}"
-                             emptyMessage="No hay registros encontrados" rowStyleClass="#{col.styleClass}"
+                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
+                             emptyMessage="No hay clientes registrados" 
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="10" paginator="#{consultaQuejaMB.listQueja.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Comercio o empresa" width="25%" >
-                        <p:outputLabel value="#{col.nombrecomercio}"/>
+                    <p:column headerText="Nombre" width="25%" >
+                        <p:outputLabel value="#{col.nombres}"/>
                     </p:column>
 
-                    <p:column headerText="Direccion" width="25%" >
-                        <p:outputLabel value="#{col.direccioncomercio}"/>
+                    <p:column headerText="Apellido" width="25%" >
+                        <p:outputLabel value="#{col.apellidos}"/>
                     </p:column>
 
-                    <p:column headerText="Departamento" width="25%" >
-                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.departamento}"/>
+                    <p:column headerText="Dirección" width="25%" >
+                        <p:outputLabel value="#{col.direccion}"/>
                     </p:column>
 
                     <p:column headerText="Municipio" width="20%" >
                         <p:outputLabel value="#{col.idmunicipio.municipio}"/>
                     </p:column>
 
-                    <p:column headerText="Estado" width="18%" >
-                        <p:outputLabel value="#{col.idestadoqueja.estado}"/>
+                    <p:column headerText="Departamento" width="18%" >
+                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.nombre}"/>
                     </p:column>
 
-                    <p:column headerText="Estado" width="15%" >
-                        <p:outputLabel value="#{col.idestadoqueja.estado}"/>
-                    </p:column>
-
-                    <p:column headerText="Fecha de registro" width="17%" >
+                    <p:column headerText="Fecha registro" width="22%" >
                         <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
+                    <p:column width="15%" exportable="false" >
+                        <p:commandButton value="" title="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16 no-border" icon="ui-icon-search"
+                                         action="#{listaClienteMB.detalleQueja(col.idqueja)}" update="@form"/>
+                    </p:column>
                 </p:dataTable>
-
-                <div align="center" style="margin-top: 15px;">
-                    <p:panelGrid columns="4" style="text-align: center !important;" styleClass="no-border" >
-                        <p:outputPanel style="width: 75px;">
-                            <div align="center">
-                                <div id="rectangle" class="rowColorBlanco"  style="border: 1px solid black;"/>
-                            </div>
-                            Registrada
-                        </p:outputPanel>
-                        <p:outputPanel style="width: 75px;">
-                            <div align="center">
-                                <div id="rectangle" class="rowColorCeleste"  style="border: 1px solid black;"/>
-                            </div>
-                            Investigación
-                        </p:outputPanel>
-                        <p:outputPanel style="width: 75px;">
-                            <div align="center">
-                                <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
-                            </div>
-                            Rechazada
-                        </p:outputPanel>
-                        <p:outputPanel style="width: 75px;">
-                            <div align="center">
-                                <div id="rectangle" class="rowColorVerdeClaro" style="border: 1px solid black;"/>
-                            </div>
-                            Finalizada
-                        </p:outputPanel>
-                    </p:panelGrid>
-                </div>
             </div>
         </h:form>
     </ui:define>
