@@ -21,7 +21,14 @@ public class RegistroClienteMB implements Serializable {
     public RegistroClienteMB() {
     }
 
-    
+     public void cargarMunicipio() {
+        if (departamentoSelected != null) {
+            listMunicipios = catalogoBean.listMunicipioByIdDepartamento(departamentoSelected.getIddepartamento());
+        } else {
+            listMunicipios = null;
+            municipioSelected = null;
+        }
+    }
     
     /*Metodos getters y setters*/
     public Cliente getCliente() {
