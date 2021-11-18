@@ -220,6 +220,14 @@ public class Cliente implements Serializable {
         this.pagoList = pagoList;
     }
 
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(String cui) {
+        this.cui = cui;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
