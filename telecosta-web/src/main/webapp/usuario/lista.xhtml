@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Colaboradores
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{listaColaboradoresMB.cargarDatos()}" />
+        </f:metadata>
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Colaboradores</h1>            
+                </ui:define>
+                <br />
+
+                <div>
+                    <p:commandButton value="Agregar Colaborador" style="float:left!important; margin-left:7.5% !important; margin-top: -15px!important;" styleClass="button-16 b-greylight-16" icon="ui-icon-plus" 
+                                     action="#{listaColaboradoresMB.linkRegistro()}" update="@all"/>
+                </div>
+                <br />
+                <p:dataTable id="dt_colaborador" var="col" value="#{listaColaboradoresMB.listColaboradores}" widgetVar="asuetos"
+                             emptyMessage="No hay colaboradores registrados" 
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaColaboradoresMB.listColaboradores.size()>10}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Primer Nombre" width="25%" >
+                        <p:outputLabel value="#{col.primerNombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Primer Apellido" width="25%" >
+                        <p:outputLabel value="#{col.primerApellido}"/>
+                    </p:column>
+
+                    <p:column headerText="Segundo Apellido" width="25%" >
+                        <p:outputLabel value="#{col.segundoApellido}"/>
+                    </p:column>
+
+                    <p:column headerText="Dirección" width="20%" >
+                        <p:outputLabel value="#{col.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="Teléfono" width="15%" >
+                        <p:outputLabel value="#{col.telefono}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha de Inicio" width="17%" >
+                        <p:outputLabel value="#{col.fechaCreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column width="9%" exportable="false" >
+                        <p:commandLink value="Detalle" action="#{listaColaboradoresMB.verDetalle}" title="Ver detalle de Colaborador">
+                            <f:setPropertyActionListener value="#{col}" target="#{listaColaboradoresMB.selectedColaborador}"/>                                
+                        </p:commandLink>
+
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

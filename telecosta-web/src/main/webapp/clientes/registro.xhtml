@@ -70,42 +70,32 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="dep" value="#{registroClienteMB.selectedRegion}" style="width: 50%" 
+                                <p:selectOneMenu id="dep" value="#{registroClienteMB.departamentoSelected}" style="width: 50%" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccionar una región" >
-                                    <p:ajax  listener="#{registroClienteMB.cargarDepartamento()}" update="dep" />
-                                    <f:selectItem itemLabel="(selecciona una región)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroQuejaMB.listRegion}"  var="reg" itemLabel="#{reg.region}" itemValue="#{reg}"/>
+                                    <p:ajax  listener="#{registroClienteMB.cargarMunicipio()}" update="dep" />
+                                    <f:selectItem itemLabel="(selecciona una departamento)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroClienteMB.listDepartamento}"  var="dep" itemLabel="#{dep.nombre}" itemValue="#{dep}"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="mun" value="#{registroQuejaMB.departamentoSelected}" style="width: 50%" 
+                                <p:selectOneMenu id="mun" value="#{registroClienteMB.cliente.idmunicipio}" style="width: 50%" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccionar un departamento">
-                                    <p:ajax  listener="#{registroQuejaMB.cargarMunicipio()}" update="mun" />
-                                    <f:selectItem itemLabel="(selecciona un departamento)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroQuejaMB.listDepartamentos}"  var="departamento" itemLabel="#{departamento.departamento}" itemValue="#{departamento}"/>
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroQuejaMB.saveQueja()}" icon="ui-icon-disk" process="@form"  
+                        <p:commandButton value="Guardar" action="#{registroClienteMB.saveCliente()}" icon="ui-icon-disk" process="@form"  
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la queja?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{registroQuejaMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroClienteMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
             </div>
-
-            <p:dialog header="Correlativo Queja" widgetVar="dlgCorrelativo" id="dlgCorrelativo" 
-                      onShow="stop();"  onHide="stop();" 
-                      modal="true" position="top" resizable="false" width="450px">
-
-                <img src="../resources/images/acercaDe.png" alt=""/> <p:spacer width="10px"/>
-                <h:outputLabel  value="El correlativo de su queja es: " style="font-weight: bold;"  />
-                <h:outputLabel  value="#{registroQuejaMB.codigoQueja}" style="font-weight: bold; font-size: 12px;"  />   
-            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

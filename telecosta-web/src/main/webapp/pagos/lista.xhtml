@@ -1,15 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Clientes
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Nombre:"  styleClass="field-label"  />
+                    <p:outputLabel value="Cui:"  styleClass="field-label"  />
+
+                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(solicitud)"
+                                 requiredMessage="(solicitud)" size="50" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(solicitud)"
+                                 requiredMessage="(solicitud)" size="50" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
+                             emptyMessage="No hay clientes registrados" 
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Nombre" width="25%" >
+                        <p:outputLabel value="#{col.nombres}"/>
+                    </p:column>
+
+                    <p:column headerText="Apellido" width="25%" >
+                        <p:outputLabel value="#{col.apellidos}"/>
+                    </p:column>
+
+                    <p:column headerText="Dirección" width="25%" >
+                        <p:outputLabel value="#{col.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Departamento" width="18%" >
+                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha registro" width="22%" >
+                        <p:outputLabel value="#{col.fechacreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column width="15%" exportable="false" >
+                        <p:commandButton value="" title="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16 no-border" icon="ui-icon-search"
+                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

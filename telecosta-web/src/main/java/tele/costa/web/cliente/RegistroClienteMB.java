@@ -1,4 +1,4 @@
-package tele.costa.web;
+package tele.costa.web.cliente;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +7,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.entity.Cliente;
@@ -24,7 +23,7 @@ import telecosta.web.utils.JsfUtil;
 public class RegistroClienteMB implements Serializable {
 
     private static final Logger log = Logger.getLogger(RegistroClienteMB.class);
-
+    
     @EJB
     private CatalogoBeanLocal catalogoBean;
     @EJB
@@ -32,19 +31,19 @@ public class RegistroClienteMB implements Serializable {
 
     private Cliente cliente;
     private Departamento departamentoSelected;
-    private List<Municipio> listMunicipios;
-    private Municipio municipioSelected;
     private List<Departamento> listDepartamento;
+    private Municipio municipioSelected;
+    private List<Municipio> listMunicipios;
 
     public RegistroClienteMB() {
     }
-
+    
     @PostConstruct
     void cargarDatos() {
         listDepartamento = catalogoBean.listDepartamentos();
     }
 
-    public void cargarMunicipio() {
+     public void cargarMunicipio() {
         if (departamentoSelected != null) {
             listMunicipios = catalogoBean.listMunicipioByIdDepartamento(departamentoSelected.getIddepartamento());
         } else {
@@ -53,22 +52,21 @@ public class RegistroClienteMB implements Serializable {
         }
     }
     
-    public void saveCliente() {
-        Cliente responseVerificacion = clienteBean.saveCliente(cliente);
+      public void saveCliente() {
+         Cliente responseVerificacion = clienteBean.saveCliente(cliente);
         if (responseVerificacion != null) {
-            JsfUtil.addSuccessMessage("El usuario ya existe verifique");
-            return;
+            JsfUtil.addSuccessMessage("Cliente creado exitosamente");
         }
-        
+        cliente = null;
         departamentoSelected = null;
         municipioSelected = null;
-        cliente = null;
     }
 
     public void regresar() {
-        JsfUtil.redirectTo("index.xhtml");
+        JsfUtil.redirectTo("/menu/menu.xhtml");
     }
-
+     
+     
     /*Metodos getters y setters*/
     public Cliente getCliente() {
         return cliente;
@@ -78,20 +76,12 @@ public class RegistroClienteMB implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<Municipio> getListMunicipios() {
-        return listMunicipios;
+    public Departamento getDepartamentoSelected() {
+        return departamentoSelected;
     }
 
-    public void setListMunicipios(List<Municipio> listMunicipios) {
-        this.listMunicipios = listMunicipios;
-    }
-
-    public Municipio getMunicipioSelected() {
-        return municipioSelected;
-    }
-
-    public void setMunicipioSelected(Municipio municipioSelected) {
-        this.municipioSelected = municipioSelected;
+    public void setDepartamentoSelected(Departamento departamentoSelected) {
+        this.departamentoSelected = departamentoSelected;
     }
 
     public List<Departamento> getListDepartamento() {
@@ -102,12 +92,22 @@ public class RegistroClienteMB implements Serializable {
         this.listDepartamento = listDepartamento;
     }
 
-    public Departamento getDepartamentoSelected() {
-        return departamentoSelected;
+    public Municipio getMunicipioSelected() {
+        return municipioSelected;
     }
 
-    public void setDepartamentoSelected(Departamento departamentoSelected) {
-        this.departamentoSelected = departamentoSelected;
+    public void setMunicipioSelected(Municipio municipioSelected) {
+        this.municipioSelected = municipioSelected;
     }
+
+    public List<Municipio> getListMunicipios() {
+        return listMunicipios;
+    }
+
+    public void setListMunicipios(List<Municipio> listMunicipios) {
+        this.listMunicipios = listMunicipios;
+    }
+    
+    
 
 }
