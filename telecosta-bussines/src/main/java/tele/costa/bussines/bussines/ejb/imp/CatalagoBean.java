@@ -26,7 +26,24 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Municipio> listMunicipioByIdDepartamento(Integer iddepartamento) {
-          List<Municipio> lst = em.createQuery("SELECT dep FROM Municipio dep WHERE dep.activo  = true", Municipio.class)
+        if (iddepartamento == null) {
+            return null;
+        }
+
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.iddepartamento.iddepartamento =:iddepartamento", Municipio.class)
+                .setParameter("iddepartamento", iddepartamento)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Departamento> listDepartamentos() {
+        List<Departamento> lst = em.createQuery("SELECT dep FROM Departamento dep WHERE dep.activo  = true", Departamento.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
