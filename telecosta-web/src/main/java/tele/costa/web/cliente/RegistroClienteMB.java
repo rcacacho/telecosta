@@ -1,6 +1,8 @@
 package tele.costa.web.cliente;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +15,7 @@ import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Municipio;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -23,7 +26,7 @@ import telecosta.web.utils.JsfUtil;
 public class RegistroClienteMB implements Serializable {
 
     private static final Logger log = Logger.getLogger(RegistroClienteMB.class);
-    
+
     @EJB
     private CatalogoBeanLocal catalogoBean;
     @EJB
@@ -36,26 +39,22 @@ public class RegistroClienteMB implements Serializable {
     private List<Municipio> listMunicipios;
 
     public RegistroClienteMB() {
-    }
-    
-    @PostConstruct
-    void cargarDatos() {
-        listDepartamento = catalogoBean.listDepartamentos();
+        cliente = new Cliente();
     }
 
-     public void cargarMunicipio() {
-        if (departamentoSelected != null) {
-            listMunicipios = catalogoBean.listMunicipioByIdDepartamento(departamentoSelected.getIddepartamento());
-        } else {
-            listMunicipios = null;
-            municipioSelected = null;
-        }
+    @PostConstruct
+    void cargarDatos() {
+        listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
     }
-    
-      public void saveCliente() {
-         Cliente responseVerificacion = clienteBean.saveCliente(cliente);
+
+    public void saveCliente() throws IOException {
+        cliente.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        cliente.setFechacreacion(new Date());
+        Cliente responseVerificacion = clienteBean.saveCliente(cliente);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Cliente creado exitosamente");
+        }else{
+            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
         cliente = null;
         departamentoSelected = null;
@@ -65,8 +64,7 @@ public class RegistroClienteMB implements Serializable {
     public void regresar() {
         JsfUtil.redirectTo("/menu/menu.xhtml");
     }
-     
-     
+
     /*Metodos getters y setters*/
     public Cliente getCliente() {
         return cliente;
@@ -107,7 +105,5 @@ public class RegistroClienteMB implements Serializable {
     public void setListMunicipios(List<Municipio> listMunicipios) {
         this.listMunicipios = listMunicipios;
     }
-    
-    
 
 }

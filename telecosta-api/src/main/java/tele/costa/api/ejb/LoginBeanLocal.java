@@ -10,8 +10,6 @@ public interface LoginBeanLocal {
 
     Usuario verificarUsuario(String usuario, String password);
 
-    Usuario saveUsuarioNoVerificado(Usuario colaborador);
-
     String findUsuario(String usuario);
 
 }

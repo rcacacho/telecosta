@@ -40,13 +40,16 @@ public class LoginBean implements LoginBeanLocal {
     }
 
     @Override
-    public Usuario saveUsuarioNoVerificado(Usuario colaborador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public String findUsuario(String usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.usuario =:usuario ", Usuario.class)
+                .setParameter("usuario", usuario)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0).getUsuario();
     }
 
 }

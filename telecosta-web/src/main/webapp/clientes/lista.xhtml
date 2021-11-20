@@ -20,16 +20,16 @@
                 </ui:define>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Nombre:"  styleClass="field-label"  />
-                    <p:outputLabel value="Cui:"  styleClass="field-label"  />
+                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Cui:"  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(solicitud)"
-                                 requiredMessage="(solicitud)" size="50" >
+                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
+                                 requiredMessage="(nombre)" size="30" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
-                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(solicitud)"
-                                 requiredMessage="(solicitud)" size="50" >
+                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(cui)"
+                                 requiredMessage="(cui)" size="40" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
@@ -57,7 +57,7 @@
 
                 <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
                              emptyMessage="No hay clientes registrados" 
-                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
@@ -80,10 +80,6 @@
                         <p:outputLabel value="#{col.idmunicipio.municipio}"/>
                     </p:column>
 
-                    <p:column headerText="Departamento" width="18%" >
-                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.nombre}"/>
-                    </p:column>
-
                     <p:column headerText="Fecha registro" width="22%" >
                         <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -91,10 +87,9 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <p:commandButton value="" title="Detalle" 
-                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
-                                         styleClass="button-16 b-greylight-16 no-border" icon="ui-icon-search"
-                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                        <h:commandLink action="#{listaClienteMB.detalleCliente(col.idcliente)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>

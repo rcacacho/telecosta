@@ -78,8 +78,8 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public Cliente updateCliente(Cliente cliente) {
-            try {
-            em.persist(cliente);
+        try {
+            em.merge(cliente);
             em.flush();
             return (cliente);
         } catch (ConstraintViolationException ex) {
@@ -96,17 +96,50 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientesByNombre(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (nombre == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.nombres like :nombre ", Cliente.class)
+                .setParameter("nombre", nombre)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
     @Override
     public List<Cliente> ListClientesByCui(String cui) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (cui == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.cui =:cui ", Cliente.class)
+                .setParameter("cui", cui)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
     @Override
-    public Cliente findClienteById(Integer idCliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Cliente findClienteById(Integer idcliente) {
+        if (idcliente == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.idcliente =:idcliente ", Cliente.class)
+                .setParameter("idcliente", idcliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }

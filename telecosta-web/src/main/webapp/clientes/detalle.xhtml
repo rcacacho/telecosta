@@ -9,7 +9,7 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idColaborador" value="#{detalleClienteMB.idcliente}"/>
+        <f:viewParam name="idCliente" value="#{detalleClienteMB.idcliente}"/>
         <f:event type="preRenderView" listener="#{detalleClienteMB.cargarDatos()}"/>
     </f:metadata>
 
@@ -27,12 +27,14 @@
                                        style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
                     </td>
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <p:link value="Editar" outcome="editar.xhtml" styleClass="links" style="vertical-align: bottom!important; float: right; ">
-                            <f:param name="idColaborador" value="#{detalleClienteMB.idcliente}"/>
-                        </p:link>
+                        <h:commandLink action="#{detalleClienteMB.editar()}" style="text-decoration: none; ">
+                            <h:graphicImage library="images" name="editar.png"   style="float: right !important;" width="20px;" title="Editar"/>
+                        </h:commandLink>
                     </td>
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <p:link value="Regresar" outcome="lista.xhtml" styleClass="links" style="vertical-align: bottom!important; float: right; "/>
+                        <h:commandLink action="#{detalleClienteMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                            <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
+                        </h:commandLink>
                     </td>
                 </tr>
             </table>

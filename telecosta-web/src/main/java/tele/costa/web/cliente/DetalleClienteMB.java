@@ -32,6 +32,10 @@ public class DetalleClienteMB implements Serializable {
     public void regresar() {
         JsfUtil.redirectTo("/clientes/lista.xhtml");
     }
+    
+    public void editar() {
+        JsfUtil.redirectTo("/clientes/editar.xhtml?idCliente=" + idcliente);
+    }
 
     /*Metodos getters y setters*/
     public Integer getIdcliente() {

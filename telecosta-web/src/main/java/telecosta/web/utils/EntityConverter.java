@@ -40,5 +40,4 @@ public class EntityConverter implements Converter {
         }
         return null;
     }
-
 }
