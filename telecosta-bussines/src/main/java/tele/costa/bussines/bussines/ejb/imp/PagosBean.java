@@ -89,20 +89,21 @@ public class PagosBean implements PagosBeanLocal {
     }
 
     @Override
-    public Pago findPagoByIdClienteAndAnioAndMes(Integer idCliente, Integer anio, String mes) {
-       if (idCliente == null) {
+    public Pago findPagoByIdClienteAndAnioAndMes(Integer idcliente, Integer anio, String mes) {
+        if (idcliente == null) {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechacreacion >= :fechainicio and pa.fechacreacion <= :fechafin and pa.idtipopago.idtipopago = 1 ", Pago.class)
-                .setParameter("fechainicio", fechainicio)
-                .setParameter("fechafin", fechafin)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:fanio and pa.mes =:mes ", Pago.class)
+                .setParameter("idcliente", idcliente)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
             return null;
         }
-        return lst;
+        return lst.get(0);
     }
 
 }

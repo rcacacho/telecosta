@@ -33,12 +33,37 @@ public class GeneracionCobro {
             for (Cliente cc : response) {
                 Date fechaActual = new Date();
                 LocalDate localDate = fechaActual.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                int month = localDate.getMonthValue();
-                int an = localDate.getYear();
+                Integer month = localDate.getMonthValue();
+                Integer an = localDate.getYear();
+                String mes = "";
 
-                
-                
-                Pago responsePago = pagoBean.findPagoByIdClienteAndAnioAndMes(cc.getIdcliente(), an, month);
+                if (month.equals(1)) {
+                    mes = "enero";
+                } else if (month.equals(2)) {
+                    mes = "febrero";
+                } else if (month.equals(3)) {
+                    mes = "marzo";
+                } else if (month.equals(4)) {
+                    mes = "abril";
+                } else if (month.equals(5)) {
+                    mes = "mayo";
+                } else if (month.equals(6)) {
+                    mes = "junio";
+                } else if (month.equals(7)) {
+                    mes = "julio";
+                } else if (month.equals(8)) {
+                    mes = "agosto";
+                } else if (month.equals(9)) {
+                    mes = "septiembre";
+                } else if (month.equals(10)) {
+                    mes = "octubre";
+                } else if (month.equals(11)) {
+                    mes = "noviembre";
+                } else if (month.equals(12)) {
+                    mes = "diciembre";
+                }
+
+                Pago responsePago = pagoBean.findPagoByIdClienteAndAnioAndMes(cc.getIdcliente(), an, mes);
 
             }
         }
