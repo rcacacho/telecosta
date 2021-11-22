@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageTitle">
-        Registro de Colaboradores
+        Registro de Usuario
     </ui:define>
 
     <ui:define name="content">
@@ -17,56 +17,23 @@
             <div align="center">
 
                 <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
-
                     <p:panelGrid columns="2" id="pg_denunciante"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
-                        <p:outputLabel for="pNombre" value="Primer Nombre:" />
-                        <p:outputLabel for="sNombre"  value="Segundo Nombre:" />
+                        <p:outputLabel for="pNombre" value="Nombres:" />
+                        <p:outputLabel for="pApellido"  value="Apellidos:" />
 
-                        <p:inputText id="pNombre" value="#{registroColaboradorMB.colaborador.primerNombre}" style="width: 350px;"  placeholder="Ingrese primer nombre" />
-                        <p:inputText id="sNombre" value="#{registroColaboradorMB.colaborador.segundoNombre}" style="width: 350px;"  placeholder="Ingrese segundo nombre" />
+                        <p:inputText id="pNombre" value="#{registroUsuarioMB.usuario.nombres}" style="width: 350px;"  placeholder="Ingrese los nombres" />
+                        <p:inputText id="pApellido" value="#{registroUsuarioMB.usuario.apellidos}" style="width: 350px;"  placeholder="Ingrese los apellidos" />
 
-                        <p:outputLabel for="pApellido" value="Primer Apellido:" />
-                        <p:outputLabel for="sApellido"  value="Segundo Apellido:" />
+                        <p:outputLabel for="dpi" value="Usuario:" />
+                        <p:outputLabel for="nif"  value="Password:" />
 
-                        <p:inputText id="pApellido" value="#{registroColaboradorMB.colaborador.primerApellido}" style="width: 350px;"  placeholder="Ingrese primer apellido" />
-                        <p:inputText id="sApellido" value="#{registroColaboradorMB.colaborador.segundoApellido}" style="width: 350px;"  placeholder="Ingrese segundo apellido" />
-
-                        <p:outputLabel for="dpi" value="DPI:" />
-                        <p:outputLabel for="nif"  value="NIF:" />
-
-                        <p:inputText id="dpi" value="#{registroColaboradorMB.colaborador.cui}" style="width: 350px;"  placeholder="Ingrese un dpi" />
-                        <p:inputText id="nif" value="#{registroColaboradorMB.colaborador.nif}" style="width: 350px;"  placeholder="Ingrese un nùmero de empleado" />
-
-                        <p:outputLabel for="direccion" value="Dirección:" />
-                        <p:outputLabel for="telefono"  value="Teléfono:" />
-
-                        <p:inputText id="direccion" value="#{registroColaboradorMB.colaborador.direccion}" style="width: 350px;"  placeholder="Ingrese primer apellido" />
-                        <p:inputText id="telefono" value="#{registroColaboradorMB.colaborador.telefono}" style="width: 350px;"  placeholder="Ingrese segundo apellido" />
-
-                        <p:outputLabel for="tipo" value="Tipo:"/>
-                        <p:outputLabel  for="conce" value="Concesionario:"/>
-
-                        <h:selectOneMenu id="tipo"  value="#{registroColaboradorMB.colaborador.idTipoColaborador}" style="width: 342px;"
-                                         converter="entityConverter" 
-                                         required="true" requiredMessage="Debe seleccionar un tipo de colaborador">
-                            <f:selectItem itemLabel="Seleccione un Tipo de colaborador" value="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{registroColaboradorMB.listTipoColaboradores}" var="tipo" 
-                                           itemLabel="#{tipo.descripcion}" itemValue="#{tipo}"  />
-                        </h:selectOneMenu>
-                        
-                        <h:selectOneMenu id="conce"  value="#{registroColaboradorMB.colaborador.idConcesionario}" style="width: 342px;"
-                                         converter="entityConverter" 
-                                         required="true" requiredMessage="Debe seleccionar un concesionario">
-                            <f:selectItem itemLabel="Seleccione un concesionario" value="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{registroColaboradorMB.listconcesionario}" var="conce" 
-                                           itemLabel="#{conce.nombre}" itemValue="#{conce}"  />
-                        </h:selectOneMenu>
-
+                        <p:inputText id="dpi" value="#{registroUsuarioMB.usuario.usuario}" style="width: 350px;"  placeholder="Ingrese un usuario" />
+                        <p:password id="nif" value="#{registroUsuarioMB.usuario.password}" style="width: 350px;"  placeholder="Ingrese un password" />
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroColaboradorMB.saveColaborador()}" icon="ui-icon-disk" process="@form"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el colaborador?');" update="@form"/>
-                        <p:commandButton value="Cancelar"  process="@this" action="#{registroColaboradorMB.cancelarRegistro()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Guardar" action="#{registroUsuarioMB.saveColaborador()}" icon="ui-icon-disk" process="@form"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el colaborador?');" update="@form"/>
+                        <p:commandButton value="Cancelar"  process="@this" action="#{registroUsuarioMB.cancelarRegistro()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
 

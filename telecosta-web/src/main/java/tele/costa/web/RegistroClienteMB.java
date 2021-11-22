@@ -52,21 +52,20 @@ public class RegistroClienteMB implements Serializable {
             municipioSelected = null;
         }
     }
-    
+
     public void saveCliente() {
         Cliente responseVerificacion = clienteBean.saveCliente(cliente);
         if (responseVerificacion != null) {
-            JsfUtil.addSuccessMessage("El usuario ya existe verifique");
+            JsfUtil.addSuccessMessage("El cliente se registro exitosamente");
+            departamentoSelected = null;
+            municipioSelected = null;
+            cliente = null;
             return;
         }
-        
-        departamentoSelected = null;
-        municipioSelected = null;
-        cliente = null;
     }
 
     public void regresar() {
-        JsfUtil.redirectTo("index.xhtml");
+        JsfUtil.redirectTo("/clientes/lista.xhtml");
     }
 
     /*Metodos getters y setters*/
