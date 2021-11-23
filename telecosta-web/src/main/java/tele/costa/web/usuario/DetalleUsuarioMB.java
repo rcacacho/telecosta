@@ -13,31 +13,35 @@ import telecosta.web.utils.JsfUtil;
  *
  * @author elfo_
  */
-@ManagedBean(name = "registroUsuarioMB")
+@ManagedBean(name = "detalleUsuarioMB")
 @ViewScoped
-public class RegistroUsuarioMB implements Serializable {
-
-    private static final Logger log = Logger.getLogger(RegistroUsuarioMB.class);
+public class DetalleUsuarioMB implements Serializable {
+    
+    private static final Logger log = Logger.getLogger(DetalleUsuarioMB.class);
 
     @EJB
     private UsuarioBeanLocal usuarioBean;
 
+    private Integer idusuario;
     private Usuario usuario;
 
-    public void saveUsuario() {
-        Usuario responseVerificacion = usuarioBean.saveUsuario(usuario);
-        if (responseVerificacion != null) {
-            JsfUtil.addSuccessMessage("Usuario registrado exitosamente");
-            usuario = null;
-            return;
-        }
-    }
-    
-     public void regresar() {
-        JsfUtil.redirectTo("/usuario/lista.xhtml");
+    public void cargarDatos() {
+        usuario = usuarioBean.findUsuario(idusuario);
     }
 
-    /*Metodos getters y setters*/
+    public void regresar() {
+        JsfUtil.redirectTo("/usuario/lista.xhtml");
+    }
+    
+    /*Metodos getters y setteres*/
+    public Integer getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(Integer idusuario) {
+        this.idusuario = idusuario;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -45,5 +49,6 @@ public class RegistroUsuarioMB implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    
+    
 }

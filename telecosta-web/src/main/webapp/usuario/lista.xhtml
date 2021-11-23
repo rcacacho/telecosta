@@ -27,49 +27,48 @@
                                      action="#{listaColaboradoresMB.linkRegistro()}" update="@all"/>
                 </div>
                 <br />
-                <p:dataTable id="dt_colaborador" var="col" value="#{listaColaboradoresMB.listColaboradores}" widgetVar="asuetos"
+                <p:dataTable id="dt_colaborador" var="col" value="#{listaColaboradoresMB.listUsuario}" widgetVar="asuetos"
                              emptyMessage="No hay colaboradores registrados" 
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaColaboradoresMB.listColaboradores.size()>10}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaColaboradoresMB.listUsuario.size()>10}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Primer Nombre" width="25%" >
-                        <p:outputLabel value="#{col.primerNombre}"/>
+                    <p:column headerText="Nombres" width="25%" >
+                        <p:outputLabel value="#{col.nombres}"/>
                     </p:column>
 
-                    <p:column headerText="Primer Apellido" width="25%" >
-                        <p:outputLabel value="#{col.primerApellido}"/>
+                    <p:column headerText="Apellidos" width="25%" >
+                        <p:outputLabel value="#{col.apellidos}"/>
                     </p:column>
 
-                    <p:column headerText="Segundo Apellido" width="25%" >
-                        <p:outputLabel value="#{col.segundoApellido}"/>
-                    </p:column>
-
-                    <p:column headerText="Dirección" width="20%" >
-                        <p:outputLabel value="#{col.direccion}"/>
-                    </p:column>
-
-                    <p:column headerText="Teléfono" width="15%" >
-                        <p:outputLabel value="#{col.telefono}"/>
+                    <p:column headerText="Usuario" width="25%" >
+                        <p:outputLabel value="#{col.usuario}"/>
                     </p:column>
 
                     <p:column headerText="Fecha de Inicio" width="17%" >
-                        <p:outputLabel value="#{col.fechaCreacion}">
+                        <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column width="9%" exportable="false" >
-                        <p:commandLink value="Detalle" action="#{listaColaboradoresMB.verDetalle}" title="Ver detalle de Colaborador">
-                            <f:setPropertyActionListener value="#{col}" target="#{listaColaboradoresMB.selectedColaborador}"/>                                
-                        </p:commandLink>
-
+                    <p:column width="15%" exportable="false" >
+                        <h:commandLink action="#{listaClienteMB.detalleCliente(col.idcliente)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>
+              <p:dialog header="Correlativo Queja" widgetVar="dlgCorrelativo" id="dlgCorrelativo" 
+                      onShow="stop();"  onHide="stop();" 
+                      modal="true" position="top" resizable="false" width="450px">
+
+                <img src="../resources/images/acercaDe.png" alt=""/> <p:spacer width="10px"/>
+                <h:outputLabel  value="El correlativo de su queja es: " style="font-weight: bold;"  />
+                <h:outputLabel  value="#{registroQuejaMB.codigoQueja}" style="font-weight: bold; font-size: 12px;"  />   
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>
