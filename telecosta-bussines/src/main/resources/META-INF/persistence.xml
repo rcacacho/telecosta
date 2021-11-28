@@ -3,6 +3,7 @@
     <persistence-unit name="TeleCostaPU" transaction-type="JTA">
         <jta-data-source>jdbc/telecosta</jta-data-source>
         <class>tele.costa.api.entity.Cliente</class>
+        <class>tele.costa.api.entity.Configuracion</class>
         <class>tele.costa.api.entity.Departamento</class>
         <class>tele.costa.api.entity.Municipio</class>
         <class>tele.costa.api.entity.Pago</class>

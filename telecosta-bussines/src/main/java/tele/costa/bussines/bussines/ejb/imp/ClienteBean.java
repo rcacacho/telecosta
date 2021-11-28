@@ -101,7 +101,7 @@ public class ClienteBean implements ClienteBeanLocal {
         }
 
         List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.nombres like :nombre ", Cliente.class)
-                .setParameter("nombre", nombre)
+                .setParameter("nombre", '%' + nombre + '%')
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

@@ -1,5 +1,6 @@
 package tele.costa.bussines.bussines.ejb.imp;
 
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJBContext;
@@ -58,6 +59,7 @@ public class UsuarioBean implements UsuarioBeanLocal {
     @Override
     public Usuario saveUsuario(Usuario usuario) {
         try {
+            usuario.setFechacreacion(new Date());
             usuario.setActivo(true);
             em.persist(usuario);
             em.flush();
@@ -76,8 +78,21 @@ public class UsuarioBean implements UsuarioBeanLocal {
 
     @Override
     public Usuario findUsuario(Integer idusuario) {
-       List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.idusuario =:idusuario ", Usuario.class)
+        List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.idusuario =:idusuario ", Usuario.class)
                 .setParameter("idusuario", idusuario)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public Usuario findUsuario(String usuario) {
+        List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.usuario =:usuario ", Usuario.class)
+                .setParameter("usuario", usuario)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

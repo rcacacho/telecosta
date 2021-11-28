@@ -106,4 +106,9 @@ public class PagosBean implements PagosBeanLocal {
         return lst.get(0);
     }
 
+    @Override
+    public List<Pago> listPagoByIdCliente(Integer idcliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
