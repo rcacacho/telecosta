@@ -29,16 +29,35 @@
 
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="anio" value="#{registroClienteMB.cliente.idmunicipio}" style="width: 50%" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un municipio" >
-                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                                <p:selectOneMenu id="anio" value="#{registroPagoMB.pago.anio}" style="width: 50%" 
+                                                 filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un año" >
+                                    <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2020" itemValue="2020" />
+                                    <f:selectItem itemLabel="2021" itemValue="2021" />
+                                    <f:selectItem itemLabel="2022" itemValue="2022" />
+                                    <f:selectItem itemLabel="2023" itemValue="2023" />
+                                    <f:selectItem itemLabel="2024" itemValue="2024" />
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroClienteMB.cliente.telefono}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un nombre"/> 
+                                <p:selectOneMenu id="mes" value="#{registroPagoMB.pago.mes}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un municipio" >
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Enero" itemValue="Enero" />
+                                    <f:selectItem itemLabel="Febrero" itemValue="Febrero" />
+                                    <f:selectItem itemLabel="Marzo" itemValue="Marzo" />
+                                    <f:selectItem itemLabel="Abril" itemValue="Abril" />
+                                    <f:selectItem itemLabel="Mayo" itemValue="Mayo" />
+                                    <f:selectItem itemLabel="Junio" itemValue="Junio" />
+                                    <f:selectItem itemLabel="Julio" itemValue="Julio" />
+                                    <f:selectItem itemLabel="Agosto" itemValue="Agosto" />
+                                    <f:selectItem itemLabel="Septiembre" itemValue="Septiembre" />
+                                    <f:selectItem itemLabel="Octubre" itemValue="Octubre" />
+                                    <f:selectItem itemLabel="Noviembre" itemValue="Noviembre" />
+                                    <f:selectItem itemLabel="Diciembre" itemValue="Diciembre" />
+                                </p:selectOneMenu>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -51,21 +70,24 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:inputText value="#{registroClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un nombre"/> 
+                                <p:autoComplete id="pojo" value="#{registroPagoMB.cliente}"
+                                                completeMethod="#{registroPagoMB.completeCliente(query)}"
+                                                var="cli" itemLabel="#{cli.nombres}" itemValue="#{cli}"
+                                                converter="#{genericEntityConverter}" forceSelection="true" scrollHeight="250"/>
+
                             </p:column>
                             <p:column  >
-                                <p:inputText value="#{registroClienteMB.cliente.apellidos}" size="50" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroPagoMB.pago.cantidad}" size="50" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar un apellido"/>
                             </p:column>   
                         </p:row>
-                     
+
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroClienteMB.saveCliente()}" icon="ui-icon-disk" process="@form"  
-                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al cliente?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{registroClienteMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Guardar" action="#{registroPagoMB.savePago()}" icon="ui-icon-disk" process="@form"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
             </div>
