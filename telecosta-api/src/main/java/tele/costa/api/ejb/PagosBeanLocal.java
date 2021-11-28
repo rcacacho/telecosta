@@ -20,4 +20,5 @@ public interface PagosBeanLocal {
     
     Pago findPagoByIdClienteAndAnioAndMes (Integer idCliente, Integer anio, String mes);
     
+    List<Pago> listPagoByIdCliente(Integer idcliente);
 }
