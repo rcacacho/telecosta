@@ -20,18 +20,45 @@
                 </ui:define>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Año:"  styleClass="field-label"  />
+                    <p:outputLabel value="Mes:"  styleClass="field-label"  />
+
+                    <p:selectOneMenu id="anio" value="#{listaPagosMB.anio}" style="width: 50%" 
+                                     filter="true" filterMatchMode="contains"
+                                     required="true" requiredMessage="Debes selecciona un año" >
+                        <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="2020" itemValue="2020" />
+                        <f:selectItem itemLabel="2021" itemValue="2021" />
+                        <f:selectItem itemLabel="2022" itemValue="2022" />
+                        <f:selectItem itemLabel="2023" itemValue="2023" />
+                        <f:selectItem itemLabel="2024" itemValue="2024" />
+                    </p:selectOneMenu>
+
+                    <p:selectOneMenu id="mes" value="#{listaPagosMB.cliente.idmunicipio}" style="width: 50%" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains"
+                                     required="true" requiredMessage="Debes selecciona un municipio" >
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Enero" itemValue="1" />
+                        <f:selectItem itemLabel="Febrero" itemValue="2" />
+                        <f:selectItem itemLabel="Marzo" itemValue="3" />
+                        <f:selectItem itemLabel="Abril" itemValue="4" />
+                        <f:selectItem itemLabel="Mayo" itemValue="5" />
+                        <f:selectItem itemLabel="Junio" itemValue="6" />
+                        <f:selectItem itemLabel="Julio" itemValue="7" />
+                        <f:selectItem itemLabel="Agosto" itemValue="8" />
+                        <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                        <f:selectItem itemLabel="Octubre" itemValue="10" />
+                        <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                        <f:selectItem itemLabel="Dicembre" itemValue="12" />
+                    </p:selectOneMenu>
+
                     <p:outputLabel value="Nombre:"  styleClass="field-label"  />
-                    <p:outputLabel value="Cui:"  styleClass="field-label"  />
+                    <p:outputLabel value=""  styleClass="field-label"  />
 
-                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(solicitud)"
-                                 requiredMessage="(solicitud)" size="50" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
+                    <p:autoComplete id="txtnombre" value="#{listaPagosMB.cliente}" converter="entityConverter"
+                                    completeMethod="#{listaPagosMB.completeCliente}" effect="blind" scrollHeight="250"/>
 
-                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(solicitud)"
-                                 requiredMessage="(solicitud)" size="50" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
+                    <p:outputLabel value=""  styleClass="field-label"  />
 
                     <p:outputLabel value=""   />
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
@@ -55,46 +82,37 @@
 
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" 
+                <p:dataTable id="dt_pago" var="col" value="#{listaPagosMB.listPago}"
+                             emptyMessage="No hay pagos registrados" 
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaPagosMB.listPago.size()>5}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
                     <p:column headerText="Nombre" width="25%" >
-                        <p:outputLabel value="#{col.nombres}"/>
+                        <p:outputLabel value="#{col.idcliente.nombres}"/>
                     </p:column>
 
                     <p:column headerText="Apellido" width="25%" >
-                        <p:outputLabel value="#{col.apellidos}"/>
+                        <p:outputLabel value="#{col.idcliente.apellidos}"/>
                     </p:column>
 
-                    <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.direccion}"/>
-                    </p:column>
-
-                    <p:column headerText="Municipio" width="20%" >
-                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
-                    </p:column>
-
-                    <p:column headerText="Departamento" width="18%" >
-                        <p:outputLabel value="#{col.idmunicipio.iddepartamento.nombre}"/>
-                    </p:column>
-
-                    <p:column headerText="Fecha registro" width="22%" >
-                        <p:outputLabel value="#{col.fechacreacion}">
+                    <p:column headerText="Fecha pago" width="25%" >
+                        <p:outputLabel value="#{col.fechapago}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
+                    <p:column headerText="Cantidad" width="20%" >
+                        <p:outputLabel value="#{col.cantidad}"/>
+                    </p:column>
+
                     <p:column width="15%" exportable="false" >
-                        <p:commandButton value="" title="Detalle" 
-                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
-                                         styleClass="button-16 b-greylight-16 no-border" icon="ui-icon-search"
-                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                        <h:commandLink action="#{listaPagosMB.detallePago(col.idpago)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>

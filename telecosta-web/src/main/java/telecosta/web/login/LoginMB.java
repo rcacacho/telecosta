@@ -56,7 +56,7 @@ public class LoginMB implements Serializable {
     public void logout() throws IOException {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.invalidateSession();
-        ec.redirect(ec.getRequestContextPath() + "/configuracion/login.xhtml");
+        ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
     }
 
     public void regresar() {
