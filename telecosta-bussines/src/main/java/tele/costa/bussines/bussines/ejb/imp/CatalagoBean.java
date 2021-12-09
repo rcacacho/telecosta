@@ -8,8 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.CatalogoBeanLocal;
+import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Tipopago;
 
 /**
  *
@@ -46,6 +48,44 @@ public class CatalagoBean implements CatalogoBeanLocal {
     @Override
     public List<Departamento> listDepartamentos() {
         List<Departamento> lst = em.createQuery("SELECT dep FROM Departamento dep WHERE dep.activo  = true", Departamento.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public Tipopago findTipoPago(Integer idtipopago) {
+        List<Tipopago> lst = em.createQuery("SELECT dep FROM Tipopago dep WHERE dep.activo  = true and dep.idtipopago =:idtipopago", Tipopago.class)
+                .setParameter("idtipopago", idtipopago)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public Configuracionpago findConfiguracionPago(Integer idconfiguracionpago) {
+        List<Configuracionpago> lst = em.createQuery("SELECT dep FROM Configuracionpago dep WHERE dep.activo  = true and dep.idconfiguracionpago =:idconfiguracionpago ", Configuracionpago.class)
+                .setParameter("idconfiguracionpago", idconfiguracionpago)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public List<Configuracionpago> ListConfiguracionPago() {
+        List<Configuracionpago> lst = em.createQuery("SELECT dep FROM Configuracionpago dep WHERE dep.activo  = true ", Configuracionpago.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

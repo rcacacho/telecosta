@@ -8,9 +8,13 @@ import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import org.apache.log4j.Logger;
+import tele.costa.api.ejb.CatalogoBeanLocal;
+import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Tipopago;
+import tele.costa.api.enums.TipoPagoEnum;
 
 /**
  *
@@ -22,11 +26,14 @@ public class GeneracionCobro {
     private static final Logger log = Logger.getLogger(GeneracionCobro.class);
 
     @EJB
-    private ClienteBean clienteBean;
+    private ClienteBeanLocal clienteBean;
     @EJB
     private PagosBeanLocal pagoBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
-    @Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
+    //@Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
+  @Schedule(second = "0", minute = "0,5,10,15,20,25,30,35,40,45,50,55", hour = "*")
     public void registroCobro() {
         List<Cliente> response = clienteBean.ListClientes();
         if (response.size() > 0) {
@@ -64,24 +71,21 @@ public class GeneracionCobro {
                 }
 
                 Pago responsePago = pagoBean.findPagoByIdClienteAndAnioAndMes(cc.getIdcliente(), an, mes);
+                if (responsePago == null) {
+                    Tipopago tipo = catalogoBean.findTipoPago(TipoPagoEnum.COBRO.getId());
 
+                    Pago cobro = new Pago();
+                    cobro.setAnio(an);
+                    cobro.setMes(mes);
+                    cobro.setCantidad(cc.getIdconfiguracionpago().getValor());
+                    cobro.setIdtipopago(tipo);
+                    cobro.setIdconfiguracionpago(cc.getIdconfiguracionpago());
+                    cobro.setUsuariocreacion("Cobro automatico");
+                    cobro.setIdcliente(cc);
+                    Pago responseCobro = pagoBean.saveCobro(cobro);
+                }
             }
         }
-
-//        Response<List<AccDetalleAccionEmpleado>> responseDesignacion = movimientosEmpleadoBean.findDesignacionEmpleadoByFechaFin(new Date());
-//        if (responseDesignacion.isOk()) {
-//            List<PerfilEmpleadoDto> listEmpleado = empleado.listPerfilDtoByIdEmpleado(responseDesignacion.getValue().get(0).getIdAccionEmpleado().getIdEmpleado());
-//
-//            JsonObject jsonEmpleado;
-//            jsonEmpleado = Json.createObjectBuilder()
-//                    .add("nip", listEmpleado.get(0).getNipHistorial().toString())
-//                    .build();
-//            JsonObject res = MiDependenciaWsSDK.cancelarTrasladarResponsable(jsonEmpleado);
-//            bitacoraBean.infoMiDependencia(responseDesignacion.getValue().get(0).getIdAccionEmpleado().getIdAccion().getNombre(), listEmpleado.get(0).getNombreCompleto(), listEmpleado.get(0).getDependencia(), listEmpleado.get(0).getPuesto(), "Cancelar designación", jsonEmpleado.toString(), res.toString(), sesion.getUsuario());
-//            System.out.println("Entro a la actualización de Designaciones Job");
-//        } else {
-//            System.out.println("No encontro registro para actualizar las designaciones Job");
-//        }
     }
 
 }
