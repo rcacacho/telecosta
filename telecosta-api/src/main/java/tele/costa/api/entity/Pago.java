@@ -98,9 +98,9 @@ public class Pago implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tipopago idtipopago;
 
-    @JoinColumn(name = "idconfiguracion", referencedColumnName = "idconfiguracion")
+    @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Configuracion idconfiguracion;
+    private Configuracionpago idconfiguracionpago;
 
     public Pago() {
     }
@@ -214,12 +214,12 @@ public class Pago implements Serializable {
         this.idtipopago = idtipopago;
     }
 
-    public Configuracion getIdconfiguracion() {
-        return idconfiguracion;
+    public Configuracionpago getIdconfiguracionpago() {
+        return idconfiguracionpago;
     }
 
-    public void setIdconfiguracion(Configuracion idconfiguracion) {
-        this.idconfiguracion = idconfiguracion;
+    public void setIdconfiguracionpago(Configuracionpago idconfiguracionpago) {
+        this.idconfiguracionpago = idconfiguracionpago;
     }
 
     @Override

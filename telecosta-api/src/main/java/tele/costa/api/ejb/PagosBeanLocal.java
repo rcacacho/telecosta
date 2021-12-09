@@ -21,4 +21,16 @@ public interface PagosBeanLocal {
     Pago findPagoByIdClienteAndAnioAndMes (Integer idCliente, Integer anio, String mes);
     
     List<Pago> listPagoByIdCliente(Integer idcliente);
+    
+    List<Pago> listPagoByAnio(Integer anio);
+    
+    List<Pago> listPagoByMes(String mes);
+    
+     List<Pago> listCobroByIdCliente(Integer idcliente);
+    
+    List<Pago> listCobroByAnio(Integer anio);
+    
+    List<Pago> listCobroByMes(String mes);
+    
+     Pago findPagoByIdPago (Integer idPago);
 }

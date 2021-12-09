@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -103,6 +104,10 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
+
+    @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Configuracionpago idconfiguracionpago;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
@@ -226,6 +231,14 @@ public class Cliente implements Serializable {
 
     public void setCui(String cui) {
         this.cui = cui;
+    }
+
+    public Configuracionpago getIdconfiguracionpago() {
+        return idconfiguracionpago;
+    }
+
+    public void setIdconfiguracionpago(Configuracionpago idconfiguracionpago) {
+        this.idconfiguracionpago = idconfiguracionpago;
     }
 
     @Override
