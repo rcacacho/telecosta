@@ -30,11 +30,15 @@
                         <p:row>
                             <p:column>
                                 <p:inputText value="#{registroClienteMB.cliente.cui}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un CUI valido"/>
+                                             required="true" requiredMessage="Debes ingresar un CUI valido">
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText>
                             </p:column>
                             <p:column>
                                 <p:inputText value="#{registroClienteMB.cliente.telefono}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un nombre"/> 
+                                             required="true" requiredMessage="Debes ingresar un nombre">
+                                 <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
                             </p:column>
                         </p:row>
                         <p:row>
@@ -48,27 +52,42 @@
                         <p:row>
                             <p:column>
                                 <p:inputText value="#{registroClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un nombre"/> 
+                                             required="true" requiredMessage="Debes ingresar un nombre">
+                                 <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
                             </p:column>
                             <p:column  >
                                 <p:inputText value="#{registroClienteMB.cliente.apellidos}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un apellido"/>
+                                             required="true" requiredMessage="Debes ingresar un apellido">
+                                     <p:ajax event="blur" process="@this"/>
+                                </p:inputText>
                             </p:column>   
                         </p:row>
                         <p:row>
                             <p:column >
                                 <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
+                            <p:column >
+                                <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
                         </p:row>
                         <p:row>
-                            <p:column  >
+                            <p:column>
                                 <p:selectOneMenu id="mun" value="#{registroClienteMB.cliente.idmunicipio}" style="width: 50%" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes selecciona un municipio" >
                                     <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
-                            </p:column>   
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="conf" value="#{registroClienteMB.cliente.idconfiguracionpago}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona una configuración" >
+                                    <f:selectItem itemLabel="(selecciona una configuración)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroClienteMB.listConfiguracionPago}"  var="c" itemLabel="#{c.descripcion} - #{c.valor}" itemValue="#{c}"/>
+                                </p:selectOneMenu>
+                            </p:column>
                         </p:row>
 
                         <p:row>

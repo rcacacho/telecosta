@@ -1,4 +1,4 @@
-package tele.costa.web.pago;
+package tele.costa.web.cobro;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,15 +13,16 @@ import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Pago;
+import tele.costa.web.pago.ListaPagosMB;
 import telecosta.web.utils.JsfUtil;
 
 /**
  *
  * @author rcacacho
  */
-@ManagedBean(name = "listaPagosMB")
+@ManagedBean(name = "listaCobrosMB")
 @ViewScoped
-public class ListaPagosMB implements Serializable {
+public class ListaCobrosMB implements Serializable {
 
     private static final Logger log = Logger.getLogger(ListaPagosMB.class);
 
@@ -35,12 +36,12 @@ public class ListaPagosMB implements Serializable {
     private Integer anio;
     private Date fechaInicio;
     private Date fechaFin;
-    private Date fechaInicioBus;
-    private Date fechaFinBus;
     private String mes;
     List<Cliente> listClientes;
+    private Date fechaInicioBus;
+    private Date fechaFinBus;
 
-    public ListaPagosMB() {
+    public ListaCobrosMB() {
     }
 
     @PostConstruct
@@ -48,13 +49,13 @@ public class ListaPagosMB implements Serializable {
         Date fInicio = new Date();
         Date fFin = new Date();
 
-        listPago = pagosBean.listPagos(fInicio, fFin);
+        listPago = pagosBean.listCobros(fInicio, fFin);
         listClientes = clienteBean.ListClientes();
     }
 
     public void buscarPago() {
         if (idcliente != 0) {
-            List<Pago> response = pagosBean.listPagoByIdCliente(idcliente);
+            List<Pago> response = pagosBean.listCobroByIdCliente(idcliente);
             if (response != null) {
                 listPago = response;
             } else {
@@ -62,7 +63,7 @@ public class ListaPagosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null) {
-            List<Pago> response = pagosBean.listPagoByAnio(anio);
+            List<Pago> response = pagosBean.listCobroByAnio(anio);
             if (response != null) {
                 listPago = response;
             } else {
@@ -70,7 +71,7 @@ public class ListaPagosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (mes != "") {
-            List<Pago> response = pagosBean.listPagoByMes(mes);
+            List<Pago> response = pagosBean.listCobroByMes(mes);
             if (response != null) {
                 listPago = response;
             } else {
@@ -78,7 +79,7 @@ public class ListaPagosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicioBus != null && fechaFinBus != null) {
-            List<Pago> response = pagosBean.listPagos(fechaInicioBus, fechaFinBus);
+            List<Pago> response = pagosBean.listCobros(fechaInicioBus, fechaFinBus);
             if (response != null) {
                 listPago = response;
             } else {

@@ -49,6 +49,9 @@
                     <p:column >
                         <p:outputLabel value="Apellidos:" styleClass="colorTitulo" />
                     </p:column>
+                    <p:column >
+                        <p:outputLabel value="Teléfono:" styleClass="colorTitulo" />
+                    </p:column>
                 </p:row>
 
                 <p:row>
@@ -59,28 +62,15 @@
                         <p:outputLabel value="#{detalleClienteMB.cliente.apellidos}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column >
-                        <p:outputLabel value="Teléfono:" styleClass="colorTitulo" />
-                    </p:column>
-                    <p:column >
-                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
                     <p:column>
                         <p:outputLabel value="#{detalleClienteMB.cliente.telefono}" style="font-size: 16px!important;"/>
                     </p:column>
-                    <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.direccion}" style="font-size: 16px!important;" >
-                        </p:outputLabel> 
-                    </p:column>
                 </p:row>
 
                 <p:row>
+                    <p:column >
+                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
+                    </p:column>
                     <p:column >
                         <p:outputLabel value="Departamento:" styleClass="colorTitulo" />
                     </p:column>
@@ -91,11 +81,29 @@
 
                 <p:row>
                     <p:column>
+                        <p:outputLabel value="#{detalleClienteMB.cliente.direccion}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                    <p:column>
                         <p:outputLabel value="#{detalleClienteMB.cliente.idmunicipio.iddepartamento.nombre}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column>
                         <p:outputLabel value="#{detalleClienteMB.cliente.idmunicipio.municipio}" style="font-size: 16px!important;">
                         </p:outputLabel> 
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.descripcion}" style="font-size: 16px!important;" />
+
+                        <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.valor}" style="margin-left:5px; font-size: 16px!important;" />
                     </p:column>
                 </p:row>
             </p:panelGrid>

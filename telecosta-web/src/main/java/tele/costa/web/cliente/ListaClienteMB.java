@@ -1,6 +1,7 @@
 package tele.costa.web.cliente;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -39,9 +40,10 @@ public class ListaClienteMB implements Serializable {
     public void buscarCliente() {
         if (nombre != null) {
             List<Cliente> response = clienteBean.ListClientesByNombre(nombre);
-            if (response.size() > 0) {
+            if (response != null) {
                 listCliente = response;
             } else {
+                listCliente = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (cui != null) {
@@ -59,9 +61,10 @@ public class ListaClienteMB implements Serializable {
     public void limpiarCampos() {
         nombre = null;
         cui = null;
+        cargarDatos();
     }
     
-     public void detalleCliente(Integer id) {
+     public void detalle(Integer id) {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
 
