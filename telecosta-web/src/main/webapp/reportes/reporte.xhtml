@@ -17,7 +17,7 @@
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Reportes</h1>            
                 </ui:define>
-                
+
                 <h3 style="margin-right: 190px;">Reporte de pagos</h3>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
@@ -41,10 +41,37 @@
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.generarPdfFechas()}"/>
+                        <p:fileDownload value="#{reporteMB.generarPdfPago()}"/>
                     </p:commandButton>
                 </p:panelGrid>
                 <br/>
+                <h3 style="margin-right: 190px;">Reporte de cobros</h3>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
+                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+
+                    <p:calendar id="cal_fechaInicioCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteMB.fechaIncioCobro}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFinCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteMB.fechaFinCobro}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" styleClass="no-border">
+                    <p:commandButton value="Imprimir" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{reporteMB.generarPdfCobro()}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+                
             </div> 
         </h:form>
     </ui:define>

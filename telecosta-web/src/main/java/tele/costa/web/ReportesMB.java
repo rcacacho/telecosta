@@ -41,8 +41,15 @@ public class ReportesMB implements Serializable {
 
     private Date fechaIncio;
     private Date fechaFin;
+    private Date fechaIncioCobro;
+    private Date fechaFinCobro;
 
-    public StreamedContent generarPdfFechas() {
+    public ReportesMB() {
+        fechaIncio = null;
+        fechaFin = null;
+    }
+
+    public StreamedContent generarPdfPago() {
         try {
             Calendar c = Calendar.getInstance();
             c.setTime(fechaIncio);
@@ -84,6 +91,50 @@ public class ReportesMB implements Serializable {
         }
         return null;
     }
+    
+    public StreamedContent generarPdfCobro() {
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(fechaIncioCobro);
+            c.set(Calendar.HOUR_OF_DAY, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+            fechaIncioCobro = c.getTime();
+
+            Calendar c1 = Calendar.getInstance();
+            c1.setTime(fechaFinCobro);
+            c1.set(Calendar.HOUR_OF_DAY, 23);
+            c1.set(Calendar.MINUTE, 59);
+            c1.set(Calendar.SECOND, 59);
+            fechaFinCobro = c1.getTime();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.format(fechaIncioCobro);
+            sdf.format(fechaFinCobro);
+
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String realPath = servletContext.getRealPath("/");
+            String nombreReporte = "rptCobros";
+            String nombreArchivo = "Cobros.pdf";
+            HashMap parametros = new HashMap();
+            parametros.put("IMAGE", "logo.jpeg");
+            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
+            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
+            parametros.put("FECHA_INICIO", fechaIncioCobro);
+            parametros.put("FECHA_FIN", fechaFinCobro);
+
+            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
+            StreamedContent streamedContent;
+            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
+            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
+            return streamedContent;
+        } catch (Exception ex) {
+            log.error(ex);
+            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+        }
+        return null;
+    }
+
 
     /*Metodos getters y setters*/
     public Date getFechaIncio() {
@@ -100,6 +151,22 @@ public class ReportesMB implements Serializable {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public Date getFechaIncioCobro() {
+        return fechaIncioCobro;
+    }
+
+    public void setFechaIncioCobro(Date fechaIncioCobro) {
+        this.fechaIncioCobro = fechaIncioCobro;
+    }
+
+    public Date getFechaFinCobro() {
+        return fechaFinCobro;
+    }
+
+    public void setFechaFinCobro(Date fechaFinCobro) {
+        this.fechaFinCobro = fechaFinCobro;
     }
 
 }
