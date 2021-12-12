@@ -12,12 +12,13 @@
     </ui:define>
 
     <ui:define name="content">
-
         <h:form id="frm_content">
             <div align="center">
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Reportes</h1>            
                 </ui:define>
+                
+                <h3 style="margin-right: 190px;">Reporte de pagos</h3>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
@@ -35,25 +36,12 @@
 
                 </p:panelGrid>
 
-                <p:panelGrid columns="3" styleClass="no-border">
-                    <p:commandButton value="Imprimir fechas" style="float: left;"
+                <p:panelGrid columns="1" styleClass="no-border">
+                    <p:commandButton value="Imprimir" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
                         <p:fileDownload value="#{reporteMB.generarPdfFechas()}"/>
-                    </p:commandButton>
-
-                    <p:commandButton value="imprimir conteo" style="float: left;"
-                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                     immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.generarPdfRegion()}"/>
-                    </p:commandButton>
-                    <p:commandButton value="Mas quejas" style="float: left;"
-                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                     immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.generarPdfMasQuejas()}"/>
                     </p:commandButton>
                 </p:panelGrid>
                 <br/>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
@@ -47,7 +46,7 @@
     
     <session-config>
         <session-timeout>
-            60
+            30
         </session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
@@ -57,7 +56,7 @@
         <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
     
-      <error-page>
+    <error-page>
         <exception-type>java.lang.SecurityException</exception-type>
         <location>/templates/error-seguridad.xhtml</location>        
     </error-page>
@@ -65,5 +64,4 @@
     <error-page>        
         <location>/templates/error-general.xhtml</location>
     </error-page>
-
 </web-app>
