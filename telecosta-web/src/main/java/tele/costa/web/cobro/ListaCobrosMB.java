@@ -101,7 +101,7 @@ public class ListaCobrosMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/pagos/detalle.xhtml?idpago=" + id);
+        JsfUtil.redirectTo("/cobros/detalle.xhtml?idcobro=" + id);
     }
 
 

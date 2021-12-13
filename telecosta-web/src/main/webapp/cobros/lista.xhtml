@@ -107,8 +107,8 @@
                         <p:outputLabel value="#{col.idcliente.apellidos}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha pago" width="25%" >
-                        <p:outputLabel value="#{col.fechapago}">
+                    <p:column headerText="Fecha cobro" width="25%" >
+                        <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -118,7 +118,7 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaCobrosMB.detallePago(col.idpago)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaCobrosMB.detalle(col.idpago)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>
