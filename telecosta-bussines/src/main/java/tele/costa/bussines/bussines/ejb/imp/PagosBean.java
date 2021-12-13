@@ -162,7 +162,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes =:mes and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes =:mes", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .setParameter("mes", mes)
