@@ -12,7 +12,7 @@ import telecosta.web.utils.JsfUtil;
 
 /**
  *
- * @author rcacacho
+ * @author elfo_
  */
 @ManagedBean(name = "listaConfiguracionMB")
 @ViewScoped
@@ -33,11 +33,11 @@ public class ListaConfiguracionMB implements Serializable {
     }
 
     public void linkRegistro() {
-        JsfUtil.redirectTo("/configuracion/registro.xhtml");
+        JsfUtil.redirectTo("/usuario/registro.xhtml");
     }
 
     public String verDetalle(Integer id) {
-        return "detalle.xhtml?faces-redirect=true&idConfiguracionpago=" + id;
+        return "detalle.xhtml?faces-redirect=true&idColaborador=" + id;
     }
 
     /*Metodos getters y setters*/

@@ -46,7 +46,7 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientes() {
-        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj ", Cliente.class)
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true ", Cliente.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
