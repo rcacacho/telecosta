@@ -1,5 +1,6 @@
 package tele.costa.web.cobro;
 
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -15,7 +16,7 @@ import telecosta.web.utils.JsfUtil;
  */
 @ManagedBean(name = "detalleCobroMB")
 @ViewScoped
-public class DetalleCobroMB {
+public class DetalleCobroMB implements Serializable {
 
     private static final Logger log = Logger.getLogger(DetallePagoMB.class);
 

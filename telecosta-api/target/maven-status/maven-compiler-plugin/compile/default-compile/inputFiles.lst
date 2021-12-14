@@ -3,12 +3,17 @@ C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\cos
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Pago.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\CatalogoBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Tipopago.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Compra.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\enums\ConfiguracionPagoEnum.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\enums\TipoPagoEnum.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\ClienteBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\LoginBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\UsuarioBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Departamento.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Proveedor.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Tipocompra.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Tipodocumentocompra.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Usuario.java
+C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\ConfiguracionBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\ejb\PagosBeanLocal.java
 C:\Users\elfo_\OneDrive\Documents\telecosta\telecosta-api\src\main\java\tele\costa\api\entity\Cliente.java

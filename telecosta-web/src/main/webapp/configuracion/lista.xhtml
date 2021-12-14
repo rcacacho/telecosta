@@ -1,15 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Configuraciones
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{listaConfiguracionMB.cargarDatos()}" />
+        </f:metadata>
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Configuraciones</h1>            
+                </ui:define>
+                <br />
+
+                <div>
+                    <p:commandButton value="Agregar Configuracion" style="float:left!important; margin-left:7.5% !important; margin-top: -15px!important;" styleClass="button-16 b-greylight-16" icon="ui-icon-plus" 
+                                     action="#{listaConfiguracionMB.linkRegistro()}" update="@all"/>
+                </div>
+                <br />
+                <p:dataTable id="dt_colaborador" var="col" value="#{listaConfiguracionMB.listConfiguracion}" widgetVar="asuetos"
+                             emptyMessage="No hay configuraciones registradas" 
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaConfiguracionMB.listConfiguracion.size()>10}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Descripción" width="25%" >
+                        <p:outputLabel value="#{col.descripcion}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor" width="25%" >
+                        <p:outputLabel value="#{col.valor}"/>
+                    </p:column>
+
+                    <p:column width="15%" exportable="false" >
+                        <h:commandLink action="#{listaConfiguracionMB.verDetalle(col.idconfiguracionpago)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
