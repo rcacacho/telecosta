@@ -2,6 +2,7 @@ package tele.costa.web.configuracion;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -28,6 +29,7 @@ public class ListaConfiguracionMB implements Serializable {
     public ListaConfiguracionMB() {
     }
 
+    @PostConstruct
     public void cargarDatos() {
         listConfiguracion = configuracionBean.listConfiguracionPago();
     }
@@ -36,8 +38,28 @@ public class ListaConfiguracionMB implements Serializable {
         JsfUtil.redirectTo("/usuario/registro.xhtml");
     }
 
-    public String verDetalle(Integer id) {
-        return "detalle.xhtml?faces-redirect=true&idColaborador=" + id;
+    public void detalle(Integer id) {
+        JsfUtil.redirectTo("/configuracion/detalle.xhtml?idconfiguracion=" + id);
+    }
+
+    public void eliminar(Integer id) {
+        Configuracionpago response = configuracionBean.deleteConfiguracionPago(id);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Se elimino la configuración exitosamente");
+            return;
+        }
+
+        JsfUtil.addErrorMessage("Sucedio un error al elimnar");
+    }
+    
+     public void editarPerfil(Configuracionpago per) {
+        Configuracionpago response = configuracionBean.actualizarConfiguracion(per);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Se actualizo la configuración exitosamente");
+            return;
+        }
+
+        JsfUtil.addErrorMessage("Sucedio un error al actualizar");
     }
 
     /*Metodos getters y setters*/

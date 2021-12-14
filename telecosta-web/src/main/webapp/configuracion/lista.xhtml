@@ -15,68 +15,29 @@
         <h:form id="frm_content">
             <div align="center">
                 <ui:define name="pageTitle">
-                    <h1 style="margin: 0 0 0 0;">Consulta de Compras</h1>            
+                    <h1 style="margin: 0 0 0 0;">Consulta de Configuración</h1>            
                 </ui:define>
-
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Cui:"  styleClass="field-label" style="font-weight: bold;"  />
-
-                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
-                                 requiredMessage="(nombre)" size="30" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-
-                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(cui)"
-                                 requiredMessage="(cui)" size="40" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-
-                    <p:outputLabel value=""   />
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
-                        <p:commandButton value="Buscar"  
-                                         action="#{listaClienteMB.buscarCliente()}" 
-                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
-                                         style="background-size: 20px 20px !important; float: right;
-                                         background-position: 4px 1px !important;"   
-                                         id="btn_buscar"  
-                                         update="frm_content"
-                                         onstart="start();" oncomplete="stop();"/>
-                        <p:commandButton value="Limpiar" 
-                                         action="#{listaClienteMB.limpiarCampos()}"
-                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
-                                         style="background-size: 20px 20px !important; float: right;
-                                         background-position: 4px 1px !important;"
-                                         update="@form"
-                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
-                    </p:panelGrid>
-                </p:panelGrid>
-
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" 
+                <p:dataTable id="dt_queja" var="col" value="#{listaConfiguracionMB.listConfiguracion}"
+                             emptyMessage="No hay configuraciones registradas" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaConfiguracionMB.listConfiguracion.size()>5}"  paginatorPosition="bottom">
+                    
+                    <p:ajax event="rowEdit" listener="#{buzonPerfilMB.editarPerfil(per)}" 
+                            process="@this" update="@this" immediate="true"
+                            onstart="inicio();" oncomplete="fin();"></p:ajax>
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Nombre" width="25%" >
-                        <p:outputLabel value="#{col.nombres}"/>
+                    <p:column headerText="Configuración" width="25%" >
+                        <p:outputLabel value="#{col.descripcion}"/>
                     </p:column>
 
-                    <p:column headerText="Apellido" width="25%" >
-                        <p:outputLabel value="#{col.apellidos}"/>
-                    </p:column>
-
-                    <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.direccion}"/>
-                    </p:column>
-
-                    <p:column headerText="Municipio" width="20%" >
-                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    <p:column headerText="Valor" width="25%" >
+                        <p:outputLabel value="#{col.valor}"/>
                     </p:column>
 
                     <p:column headerText="Fecha registro" width="22%" >
@@ -86,9 +47,15 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaClienteMB.detalle(col.idcliente)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaConfiguracionMB.detalle(col.idconfiguracionpago)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
+                    </p:column>
+                    <p:column width="17%" exportable="false" >
+                        <p:commandButton value="Eliminar" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
+                                         action="#{listaConfiguracionMB.eliminarPerfil(per.idperfil)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>
