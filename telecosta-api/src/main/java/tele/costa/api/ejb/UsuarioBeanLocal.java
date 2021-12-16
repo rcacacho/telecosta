@@ -16,4 +16,6 @@ public interface UsuarioBeanLocal {
     Usuario findUsuario(Integer idusuario);
 
     Usuario findUsuario(String usuario);
+
+    Usuario reinicioPassword(Usuario usuario);
 }

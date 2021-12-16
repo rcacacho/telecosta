@@ -15,7 +15,7 @@ public interface ConfiguracionBeanLocal {
 
     Configuracionpago saveConfiguracionPago(Configuracionpago configuracion);
 
-    Configuracionpago deleteConfiguracionPago(Integer idconfiguracionpago);
+    Configuracionpago deleteConfiguracionPago(Integer idconfiguracionpago, String usuario);
 
     Configuracionpago findConfiguracionPago(Integer idconfiguracionpago);
 
