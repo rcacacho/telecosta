@@ -77,7 +77,7 @@ public class ConfiguracionBean implements ConfiguracionBeanLocal {
     }
     
     @Override
-    public Configuracionpago deleteConfiguracionPago(Integer idconfiguracionpago) {
+    public Configuracionpago deleteConfiguracionPago(Integer idconfiguracionpago, String usuario) {
         if (idconfiguracionpago == null) {
             context.setRollbackOnly();
             return null;
@@ -86,6 +86,8 @@ public class ConfiguracionBean implements ConfiguracionBeanLocal {
         try {
             Configuracionpago toUpdate = em.find(Configuracionpago.class, idconfiguracionpago);
             
+            toUpdate.setUsuarioeliminacion(usuario);
+            toUpdate.setFechaeliminacion(new Date());
             toUpdate.setActivo(false);
             em.merge(toUpdate);
             
@@ -107,7 +109,7 @@ public class ConfiguracionBean implements ConfiguracionBeanLocal {
             return null;
         }
         
-        List<Configuracionpago> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.idconfiguracionpago =:idconfiguracionpago ", Configuracionpago.class)
+        List<Configuracionpago> lst = em.createQuery("SELECT col FROM Configuracionpago col WHERE col.idconfiguracionpago =:idconfiguracionpago ", Configuracionpago.class)
                 .setParameter("idconfiguracionpago", idconfiguracionpago)
                 .getResultList();
         

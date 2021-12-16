@@ -19,14 +19,16 @@
                 </ui:define>
                 <br/>
 
+                <div>
+                    <p:commandButton value="Agregar Configuración" style="float:left!important; margin-left:7.5% !important; margin-top: -15px!important;" styleClass="button-16 b-greylight-16" icon="ui-icon-plus" 
+                                     action="#{listaConfiguracionMB.linkRegistro()}" update="@all"/>
+                </div>
+                <br />
+
                 <p:dataTable id="dt_queja" var="col" value="#{listaConfiguracionMB.listConfiguracion}"
                              emptyMessage="No hay configuraciones registradas" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaConfiguracionMB.listConfiguracion.size()>5}"  paginatorPosition="bottom">
-                    
-                    <p:ajax event="rowEdit" listener="#{buzonPerfilMB.editarPerfil(per)}" 
-                            process="@this" update="@this" immediate="true"
-                            onstart="inicio();" oncomplete="fin();"></p:ajax>
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -55,7 +57,7 @@
                         <p:commandButton value="Eliminar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
-                                         action="#{listaConfiguracionMB.eliminarPerfil(per.idperfil)}" update="@form"/>
+                                         action="#{listaConfiguracionMB.eliminar(col.idconfiguracionpago)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>

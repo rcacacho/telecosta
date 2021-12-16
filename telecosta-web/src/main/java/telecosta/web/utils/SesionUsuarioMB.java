@@ -40,9 +40,18 @@ public class SesionUsuarioMB {
     public static Integer getUserId() {
         HttpSession session = getSession();
         if (session != null) {
-            return (Integer) session.getAttribute("idUsuario");
+            return (Integer) session.getAttribute("idusuario");
         } else {
             return null;
+        }
+    }
+    
+      public static boolean getRootUsuario() {
+        HttpSession session = getSession();
+        if (session != null) {
+            return (boolean) session.getAttribute("root");
+        } else {
+            return false;
         }
     }
 }

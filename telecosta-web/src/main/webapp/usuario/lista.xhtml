@@ -48,26 +48,41 @@
                         <p:outputLabel value="#{col.usuario}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha de Inicio" width="17%" >
+                    <p:column headerText="Fecha Creación" width="17%" >
                         <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaColaboradoresMB.verDetalle(col.idusuario)}" style="text-decoration: none;">
-                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
-                        </h:commandLink>
+                        <p:commandButton value="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaColaboradoresMB.detalle(col.idusuario)}" update="@form"/>
+                    </p:column>
+                    <p:column width="20%" exportable="false" >
+                        <p:commandButton value="Reiniciar" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-refresh"
+                                         action="#{listaColaboradoresMB.reinicioPassword(col)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>
-              <p:dialog header="Correlativo Queja" widgetVar="dlgCorrelativo" id="dlgCorrelativo" 
+            <p:dialog header="Reinicio contraseña" widgetVar="dlgReinicio" id="dlgReinicio" 
                       onShow="stop();"  onHide="stop();" 
                       modal="true" position="top" resizable="false" width="450px">
+                <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Usuario:" styleClass="colorTitulo" />
+                    <p:outputLabel value="#{listaColaboradoresMB.selectedUsuario.usuario}" style="font-size: 16px!important;" />
 
-                <img src="../resources/images/acercaDe.png" alt=""/> <p:spacer width="10px"/>
-                <h:outputLabel  value="El correlativo de su queja es: " style="font-weight: bold;"  />
-                <h:outputLabel  value="#{registroQuejaMB.codigoQueja}" style="font-weight: bold; font-size: 12px;"  />   
+                    <p:outputLabel  value="Password:" styleClass="colorTitulo" />
+                    <p:password  value="#{listaColaboradoresMB.selectedUsuario.password}" style="font-size: 16px!important;"  placeholder="Ingrese un password" />
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{listaColaboradoresMB.reinicioUsuario()}" icon="ui-icon-disk" process="@form"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el colaborador?');" update="@form"/>
+                        <p:commandButton value="Cancelar"  process="@this" action="#{listaColaboradoresMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
             </p:dialog>
         </h:form>
     </ui:define>

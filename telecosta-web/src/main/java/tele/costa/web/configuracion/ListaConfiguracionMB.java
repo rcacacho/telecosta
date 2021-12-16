@@ -1,5 +1,6 @@
 package tele.costa.web.configuracion;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import tele.costa.api.ejb.ConfiguracionBeanLocal;
 import tele.costa.api.entity.Configuracionpago;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -35,24 +37,26 @@ public class ListaConfiguracionMB implements Serializable {
     }
 
     public void linkRegistro() {
-        JsfUtil.redirectTo("/usuario/registro.xhtml");
+        JsfUtil.redirectTo("/configuracion/registro.xhtml");
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/configuracion/detalle.xhtml?idconfiguracion=" + id);
+        JsfUtil.redirectTo("/configuracion/detalle.xhtml?idconfiguracionpago=" + id);
     }
 
-    public void eliminar(Integer id) {
-        Configuracionpago response = configuracionBean.deleteConfiguracionPago(id);
+    public void eliminar(Integer id) throws IOException {
+        String usuario = SesionUsuarioMB.getUserName();
+        Configuracionpago response = configuracionBean.deleteConfiguracionPago(id, usuario);
         if (response != null) {
             JsfUtil.addSuccessMessage("Se elimino la configuración exitosamente");
+            cargarDatos();
             return;
         }
 
         JsfUtil.addErrorMessage("Sucedio un error al elimnar");
     }
-    
-     public void editarPerfil(Configuracionpago per) {
+
+    public void editarPerfil(Configuracionpago per) {
         Configuracionpago response = configuracionBean.actualizarConfiguracion(per);
         if (response != null) {
             JsfUtil.addSuccessMessage("Se actualizo la configuración exitosamente");

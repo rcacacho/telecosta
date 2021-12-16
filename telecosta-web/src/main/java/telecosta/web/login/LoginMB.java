@@ -44,6 +44,8 @@ public class LoginMB implements Serializable {
         if (usu != null) {
             HttpSession session = SesionUsuarioMB.getSession();
             session.setAttribute("usuario", usuario);
+            session.setAttribute("idusuario", usu.getIdusuario());
+            session.setAttribute("root", usu.getRoot());
 
             return "/menu/menu.xhtml";
         } else {

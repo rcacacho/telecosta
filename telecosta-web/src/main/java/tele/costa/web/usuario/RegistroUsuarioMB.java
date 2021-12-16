@@ -21,25 +21,26 @@ import telecosta.web.utils.SesionUsuarioMB;
 @ManagedBean(name = "registroUsuarioMB")
 @ViewScoped
 public class RegistroUsuarioMB implements Serializable {
-
+    
     private static final Logger log = Logger.getLogger(RegistroUsuarioMB.class);
-
+    
     @EJB
     private UsuarioBeanLocal usuarioBean;
-
+    
     private Usuario usuario;
-
+    
     public RegistroUsuarioMB() {
         usuario = new Usuario();
     }
-
+    
     public void saveUsuario() throws IOException {
+        usuario.setUsuario(SesionUsuarioMB.getUserName());
         Usuario response = usuarioBean.findUsuario(usuario.getUsuario());
         if (response != null) {
             JsfUtil.addErrorMessage("El usuario ya existe");
             return;
         }
-
+        
         String contra = md5(usuario.getPassword());
         usuario.setPassword(contra);
         usuario.setUsuariocreacion(SesionUsuarioMB.getUserName());
@@ -50,18 +51,18 @@ public class RegistroUsuarioMB implements Serializable {
             return;
         }
     }
-
+    
     public void regresar() {
         JsfUtil.redirectTo("/usuario/lista.xhtml");
     }
-
+    
     public String md5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());
             BigInteger number = new BigInteger(1, messageDigest);
             String hashtext = number.toString(16);
-
+            
             while (hashtext.length() < 32) {
                 hashtext = "0" + hashtext;
             }
@@ -75,9 +76,9 @@ public class RegistroUsuarioMB implements Serializable {
     public Usuario getUsuario() {
         return usuario;
     }
-
+    
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    
 }
