@@ -15,7 +15,7 @@ import tele.costa.api.entity.Proveedor;
  *
  * @author elfo_
  */
-@ManagedBean(name = "listaClienteMB")
+@ManagedBean(name = "listaCompraMB")
 @ViewScoped
 public class ListaCompraMB implements Serializable {
 

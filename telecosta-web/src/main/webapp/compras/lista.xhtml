@@ -23,12 +23,12 @@
                     <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:outputLabel value="Cui:"  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
+                    <p:inputText id="txtNombre" value="#{listaCompraMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
                                  requiredMessage="(nombre)" size="30" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
-                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(cui)"
+                    <p:inputText id="txtCui" value="#{listaCompraMB.cui}" style="width: 95%;"  placeholder="(cui)"
                                  requiredMessage="(cui)" size="40" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
@@ -36,7 +36,7 @@
                     <p:outputLabel value=""   />
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         action="#{listaCompraMB.buscarCliente()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -44,7 +44,7 @@
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
                         <p:commandButton value="Limpiar" 
-                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         action="#{listaCompraMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
@@ -55,10 +55,10 @@
 
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
+                <p:dataTable id="dt_queja" var="col" value="#{listaCompraMB.listCliente}"
                              emptyMessage="No hay clientes registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaCompraMB.listCliente.size()>5}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -87,7 +87,7 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaClienteMB.detalle(col.idcliente)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaCompraMB.detalle(col.idcliente)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>
