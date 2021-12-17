@@ -3,6 +3,7 @@ package tele.costa.api.ejb;
 import java.util.List;
 import javax.ejb.Local;
 import tele.costa.api.entity.Configuracionpago;
+import tele.costa.api.entity.Tipocompra;
 
 /**
  *
@@ -20,5 +21,15 @@ public interface ConfiguracionBeanLocal {
     Configuracionpago findConfiguracionPago(Integer idconfiguracionpago);
 
     Configuracionpago actualizarConfiguracion(Configuracionpago configuracion);
+
+    List<Tipocompra> listConfiguracionGasto();
+
+    Tipocompra saveConfiguracionGasto(Tipocompra configuracionGasto);
+
+    Tipocompra deleteConfiguracionGasto(Integer idtipocompra, String usuario);
+
+    Tipocompra findConfiguracionGasto(Integer idtipocompra);
+
+    Tipocompra actualizarConfiguracionGasto(Tipocompra configuracionGasto);
 
 }
