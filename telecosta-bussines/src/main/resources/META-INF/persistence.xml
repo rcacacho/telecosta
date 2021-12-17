@@ -9,6 +9,10 @@
         <class>tele.costa.api.entity.Pago</class>
         <class>tele.costa.api.entity.Tipopago</class>
         <class>tele.costa.api.entity.Usuario</class>
+        <class>tele.costa.api.entity.Compra</class>
+        <class>tele.costa.api.entity.Tipocompra</class>
+        <class>tele.costa.api.entity.Tipodocumentocompra</class>
+        <class>tele.costa.api.entity.Proveedor</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
