@@ -15,25 +15,24 @@ import telecosta.web.utils.JsfUtil;
  */
 @ManagedBean(name = "detalleConfiguracionMB")
 @ViewScoped
-public class DetalleConfiguracionMB  implements Serializable{
-    
-     private static final Logger log = Logger.getLogger(ListaConfiguracionMB.class);
+public class DetalleConfiguracionMB implements Serializable {
+
+    private static final Logger log = Logger.getLogger(ListaConfiguracionMB.class);
 
     @EJB
     private ConfiguracionBeanLocal configuracionBean;
-    
+
     private Integer idconfiguracionpago;
     private Configuracionpago configuracion;
-    
+
     public void cargarDatos() {
         configuracion = configuracionBean.findConfiguracionPago(idconfiguracionpago);
     }
-    
-    
+
     public void regresar() {
         JsfUtil.redirectTo("/configuracion/lista.xhtml");
     }
-    
+
     public void editar() {
         JsfUtil.redirectTo("/configuracion/editar.xhtml?idconfiguracionpago=" + idconfiguracionpago);
     }
@@ -55,7 +54,5 @@ public class DetalleConfiguracionMB  implements Serializable{
     public void setConfiguracion(Configuracionpago configuracion) {
         this.configuracion = configuracion;
     }
-    
-    
-    
+
 }

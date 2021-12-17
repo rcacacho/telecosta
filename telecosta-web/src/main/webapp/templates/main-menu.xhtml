@@ -30,17 +30,13 @@
             </p:submenu>
             
             <p:submenu label="Configuración" icon="ui-icon-document" >  
-                <p:menuitem value="Lista" outcome="/configuracion/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Configuración pago" outcome="/configuracion/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Configuración compra" outcome="/configuracion/compra/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
             
              <p:submenu label="Compras" icon="ui-icon-document" >  
                 <p:menuitem value="Lista" outcome="/compras/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
         </p:menubar>
-
-        <p:submenu label="Ayuda" icon="ui-icon-help"> 
-            <p:menuitem value="Manual" url="resources/manual/RegimenDisciplinario.pdf"  target="_" icon="ui-icon-print">
-            </p:menuitem>
-        </p:submenu>
     </h:form>
 </ui:composition>

@@ -8,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.ConfiguracionBeanLocal;
 import tele.costa.api.entity.Configuracionpago;
-import static telecosta.web.login.LoginMB.usuario;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 

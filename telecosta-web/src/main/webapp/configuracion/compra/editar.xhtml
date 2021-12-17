@@ -9,12 +9,12 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idconfiguracionpago" value="#{edicionConfiguracionMB.idconfiguracionpago}"/>
-        <f:event type="preRenderView" listener="#{edicionConfiguracionMB.cargarDatos()}"/>
+        <f:viewParam name="idCliente" value="#{edicionConfiguracionGastoMB.idconfiguracionpago}"/>
+        <f:event type="preRenderView" listener="#{edicionConfiguracionGastoMB.cargarDatos()}"/>
     </f:metadata>
 
     <ui:define name="pageTitle">
-        Edición de la Configuración
+        Edición Configuración Gasto
     </ui:define>
 
     <ui:define name="content">
@@ -27,7 +27,7 @@
                                        style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
                     </td>
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <h:commandLink action="#{edicionConfiguracionMB.regresar()}" style="text-decoration: none;">
+                        <h:commandLink action="#{edicionConfiguracionGastoMB.regresar()}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
                         </h:commandLink>
                     </td>
@@ -48,18 +48,18 @@
 
                     <p:row>
                         <p:column>
-                            <p:inputText value="#{edicionConfiguracionMB.configuracion.descripcion}" size="50" style="font-size: 16px!important;"/>
+                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracion.descripcion}" size="50" style="font-size: 16px!important;"/>
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{edicionConfiguracionMB.configuracion.valor}" size="50" style="font-size: 16px!important;"/> 
+                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracion.valor}" size="50" style="font-size: 16px!important;"/> 
                         </p:column>
                     </p:row>
                 </p:panelGrid>
 
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                    <p:commandButton value="Actualizar" action="#{edicionConfiguracionMB.actualizarConfiguracion()}" icon="ui-icon-disk" process="@form"  
+                    <p:commandButton value="Actualizar" action="#{edicionConfiguracionGastoMB.actualizarConfiguracion()}" icon="ui-icon-disk" process="@form"  
                                      style=" margin-left: 5px; " onstart="return confirm('¿Confirmas actualizar al cliente?');" update="@form"/>
-                    <p:commandButton value="Cancelar" process="@this" action="#{edicionConfiguracionMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    <p:commandButton value="Cancelar" process="@this" action="#{edicionConfiguracionGastoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:outputPanel>
             </p:panelGrid>
         </h:form>
