@@ -1,5 +1,6 @@
 package tele.costa.api.ejb;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import tele.costa.api.entity.Compra;
@@ -18,8 +19,12 @@ public interface ComprasBeanLocal {
 
     Compra findCompraById(Integer idcompra);
 
-    List<Proveedor> listProveedor();
-
     Proveedor saveProveedor(Proveedor proveedor);
+
+    List<Compra> listCompraByFechaInicio(Date fechaInicio);
+
+    List<Compra> listCompraByFechaFin(Date fechaFin);
+
+    List<Compra> listCompraByFechaInicioFechaFin(Date fechaInicio, Date fechaFin);
 
 }

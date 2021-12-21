@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Municipio;
 import telecosta.web.utils.JsfUtil;
@@ -37,6 +38,7 @@ public class RegistroClienteMB implements Serializable {
     private List<Departamento> listDepartamento;
     private Municipio municipioSelected;
     private List<Municipio> listMunicipios;
+    private List<Configuracionpago> listConfiguracionPago;
 
     public RegistroClienteMB() {
         cliente = new Cliente();
@@ -45,6 +47,7 @@ public class RegistroClienteMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
+        listConfiguracionPago = catalogoBean.ListConfiguracionPago();
     }
 
     public void saveCliente() throws IOException {
@@ -53,7 +56,7 @@ public class RegistroClienteMB implements Serializable {
         Cliente responseVerificacion = clienteBean.saveCliente(cliente);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Cliente creado exitosamente");
-        }else{
+        } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
         cliente = null;
@@ -104,6 +107,14 @@ public class RegistroClienteMB implements Serializable {
 
     public void setListMunicipios(List<Municipio> listMunicipios) {
         this.listMunicipios = listMunicipios;
+    }
+
+    public List<Configuracionpago> getListConfiguracionPago() {
+        return listConfiguracionPago;
+    }
+
+    public void setListConfiguracionPago(List<Configuracionpago> listConfiguracionPago) {
+        this.listConfiguracionPago = listConfiguracionPago;
     }
 
 }

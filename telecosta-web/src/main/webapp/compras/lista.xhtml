@@ -20,18 +20,16 @@
                 </ui:define>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Cui:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:inputText id="txtNombre" value="#{listaCompraMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
-                                 requiredMessage="(nombre)" size="30" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-
-                    <p:inputText id="txtCui" value="#{listaCompraMB.cui}" style="width: 95%;"  placeholder="(cui)"
-                                 requiredMessage="(cui)" size="40" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaCompraMB.fechaInicio}" navigator="true">  
+                    </p:calendar>
+                    
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaCompraMB.fechaFin}" navigator="true">  
+                    </p:calendar>
 
                     <p:outputLabel value=""   />
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
@@ -55,39 +53,45 @@
 
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{listaCompraMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" 
+                <p:dataTable id="dt_queja" var="col" value="#{listaCompraMB.listCompra}"
+                             emptyMessage="No hay compras registradas" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaCompraMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaCompraMB.listCompra.size()>5}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Nombre" width="25%" >
-                        <p:outputLabel value="#{col.nombres}"/>
+                    <p:column headerText="Tipo Compra" width="25%" >
+                        <p:outputLabel value="#{col.idtipocompra.tipo}"/>
                     </p:column>
 
-                    <p:column headerText="Apellido" width="25%" >
-                        <p:outputLabel value="#{col.apellidos}"/>
+                    <p:column headerText="Tipo Documento" width="25%" >
+                        <p:outputLabel value="#{col.idtipodocumentocompra.documento}"/>
                     </p:column>
 
-                    <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.direccion}"/>
+                    <p:column headerText="Proveedor" width="25%" >
+                        <p:outputLabel value="#{col.idproveedor.nombre}"/>
                     </p:column>
 
-                    <p:column headerText="Municipio" width="20%" >
-                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    <p:column headerText="No Documento" width="15%" >
+                        <p:outputLabel value="#{col.nodocumento}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha registro" width="22%" >
-                        <p:outputLabel value="#{col.fechacreacion}">
+                    <p:column headerText="Fecha compra" width="22%" >
+                        <p:outputLabel value="#{col.fechacompra}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    
+                    <p:column headerText="Monto compra" width="22%" >
+                        <p:outputLabel value="#{col.montocompra}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaCompraMB.detalle(col.idcliente)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaCompraMB.detalle(col.idcompra)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>

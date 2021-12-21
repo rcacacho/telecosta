@@ -1,5 +1,7 @@
 package tele.costa.bussines.bussines.ejb.imp;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -94,18 +96,6 @@ public class ComprasBean implements ComprasBeanLocal {
     }
 
     @Override
-    public List<Proveedor> listProveedor() {
-        List<Proveedor> lst = em.createQuery("SELECT qj FROM Proveedor qj where qj.activo = true ", Proveedor.class)
-                .getResultList();
-
-        if (lst == null || lst.isEmpty()) {
-            return null;
-        }
-
-        return lst;
-    }
-
-    @Override
     public Proveedor saveProveedor(Proveedor proveedor) {
         try {
             proveedor.setActivo(true);
@@ -123,6 +113,93 @@ public class ComprasBean implements ComprasBeanLocal {
             context.setRollbackOnly();
             return null;
         }
+    }
+
+    @Override
+    public List<Compra> listCompraByFechaInicio(Date fechaInicio) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio ", Compra.class)
+                .setParameter("fechainicio", fechaInicio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Compra> listCompraByFechaFin(Date fechaFin) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra <= :fechafin ", Compra.class)
+                .setParameter("fechacompra", fechaFin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Compra> listCompraByFechaInicioFechaFin(Date fechaInicio, Date fechaFin) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+        sdf.format(fechaFin);
+
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin ", Compra.class)
+                .setParameter("fechacompra", fechaInicio)
+                .setParameter("fechacompra", fechaFin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

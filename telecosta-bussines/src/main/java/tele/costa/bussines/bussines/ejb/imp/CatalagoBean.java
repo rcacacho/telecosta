@@ -11,6 +11,9 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Proveedor;
+import tele.costa.api.entity.Tipocompra;
+import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
 
 /**
@@ -86,6 +89,42 @@ public class CatalagoBean implements CatalogoBeanLocal {
     @Override
     public List<Configuracionpago> ListConfiguracionPago() {
         List<Configuracionpago> lst = em.createQuery("SELECT dep FROM Configuracionpago dep WHERE dep.activo  = true ", Configuracionpago.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Proveedor> listProveedor() {
+        List<Proveedor> lst = em.createQuery("SELECT qj FROM Proveedor qj where qj.activo = true ", Proveedor.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Tipodocumentocompra> listTipoDocumento() {
+        List<Tipodocumentocompra> lst = em.createQuery("SELECT qj FROM Tipodocumentocompra qj where qj.activo = true ", Tipodocumentocompra.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Tipocompra> listTipoCompra() {
+        List<Tipocompra> lst = em.createQuery("SELECT qj FROM Tipocompra qj where qj.activo = true ", Tipocompra.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
