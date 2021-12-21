@@ -51,6 +51,17 @@
                                          update="@form"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
+                    
+                     <p:fileUpload fileUploadListener="#{registrarCargaMasivaMB.handleMainFileUpload}" mode="advanced" auto="true" rendered="#{registrarCargaMasivaMB.cargaMasiva.referencia ==null}"
+                              dragDropSupport="false" 
+                              sizeLimit="1024000000" allowTypes="/(\.|\/)(xlsx)$/"                  
+                              update="masiva_a" process="@this"  required="true" requiredMessage="#{msg['cargaMasiva.archivoRequerido']}"
+                              fileLimit="1" label="#{msg['cargaMasiva.adjuntarArchivo']}" uploadLabel="Cargar" cancelLabel="#{msg['general.cancelar']}" invalidSizeMessage="#{msg['tamañoArchvio']}"
+                              invalidFileMessage="#{msg['archivo.formatoNoPermitido']}"  fileLimitMessage="#{msg['archivo.unArchivo']}"
+                              styleClass="no-header" style="font-size: 13px !important; margin-left: 10px!important; width: 220px !important;" >   
+
+                </p:fileUpload>
+                    
                 </p:panelGrid>
 
                 <br/>

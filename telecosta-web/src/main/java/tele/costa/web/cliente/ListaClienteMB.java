@@ -67,6 +67,27 @@ public class ListaClienteMB implements Serializable {
     public void detalle(Integer id) {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
+    
+    public void handleMainFileUpload(FileUploadEvent event) {
+
+        String ubicacionArchivo = configuratorBean.findConfiguracionById(Configuracion.UPLOAD_DIRECTORY.getParametro()).getValor();
+        file = event.getFile();
+        String nombreArchivo = file.getFileName();
+
+        cargaMasiva.setReferencia(JsfUtil.quitarExtension(nombreArchivo));
+        nombreArchivo = JsfUtil.armarNombre(nombreArchivo, bundle.getString("cargaMasiva.nombreArchivo"));
+        try {
+            FileUtil.guardarArchivo(event.getFile().getInputstream(), nombreArchivo, ubicacionArchivo);
+            cargaMasiva.setUbicacionArchivo(ubicacionArchivo);
+            cargaMasiva.setNombreArchivo(nombreArchivo);
+
+        } catch (IOException ioe) {
+            log.error(ioe.getLocalizedMessage());
+            cargaMasiva.setReferencia(null);
+            cargaMasiva.setUbicacionArchivo(null);
+            cargaMasiva.setNombreArchivo(null);
+        }
+    }
 
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {
