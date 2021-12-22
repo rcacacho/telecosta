@@ -13,7 +13,7 @@
 
     <ui:define name="content">
 
-        <h:form id="frm_content">
+        <h:form id="frm_content" enctype="multipart/form-data"> 
             <div align="center">
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
@@ -51,22 +51,23 @@
                                          update="@form"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
-                    
-                     <p:fileUpload fileUploadListener="#{registrarCargaMasivaMB.handleMainFileUpload}" mode="advanced" auto="true" rendered="#{registrarCargaMasivaMB.cargaMasiva.referencia ==null}"
-                              dragDropSupport="false" 
-                              sizeLimit="1024000000" allowTypes="/(\.|\/)(xlsx)$/"                  
-                              update="masiva_a" process="@this"  required="true" requiredMessage="#{msg['cargaMasiva.archivoRequerido']}"
-                              fileLimit="1" label="#{msg['cargaMasiva.adjuntarArchivo']}" uploadLabel="Cargar" cancelLabel="#{msg['general.cancelar']}" invalidSizeMessage="#{msg['tamañoArchvio']}"
-                              invalidFileMessage="#{msg['archivo.formatoNoPermitido']}"  fileLimitMessage="#{msg['archivo.unArchivo']}"
-                              styleClass="no-header" style="font-size: 13px !important; margin-left: 10px!important; width: 220px !important;" >   
 
-                </p:fileUpload>
-                    
+                    <p:fileUpload fileUploadListener="#{listaClienteMB.handleMainFileUpload}" mode="advanced" auto="true"
+                                  dragDropSupport="false" 
+                                  sizeLimit="1024000000" allowTypes="/(\.|\/)(xlsx)$/"                  
+                                  update="dt_cliente" process="@this"  required="true" requiredMessage=""
+                                  fileLimit="1" label="Adjuntar" uploadLabel="Cargar" cancelLabel="#{msg['general.cancelar']}" invalidSizeMessage="#{msg['tamañoArchvio']}"
+                                  invalidFileMessage="Archivo no valido"  fileLimitMessage="#{msg['archivo.unArchivo']}"
+                                  styleClass="no-header" style="font-size: 13px !important; margin-left: 10px!important; width: 220px !important;" >   
+                    </p:fileUpload>
+
+                    <p:fileUpload fileUploadListener="#{listaClienteMB.handleMainFileUpload}" auto="true"  />                    
+
                 </p:panelGrid>
 
                 <br/>
 
-                <p:dataTable id="dt_queja" var="col" value="#{listaClienteMB.listCliente}"
+                <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMB.listCliente}"
                              emptyMessage="No hay clientes registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
