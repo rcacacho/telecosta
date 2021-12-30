@@ -15,6 +15,8 @@ import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Configuracionpago;
+import tele.costa.api.entity.Formapago;
+import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Tipopago;
 import tele.costa.api.enums.TipoPagoEnum;
@@ -41,8 +43,10 @@ public class RegistroPagoMB implements Serializable {
     private Pago pago;
     private Cliente cliente;
     private Tipopago tipoPago;
-    private List<Configuracionpago> listConfiguracion;
-    List<Cliente> listClientes;
+    private List<Formapago> listFormaPago;
+    private List<Cliente> listClientes;
+    private Municipio municipioSelected;
+    private List<Municipio> listMunicipios;
 
     public RegistroPagoMB() {
         pago = new Pago();
@@ -50,8 +54,8 @@ public class RegistroPagoMB implements Serializable {
 
     @PostConstruct
     void cargarDatos() {
-        listConfiguracion = catalogoBean.ListConfiguracionPago();
-        listClientes = clienteBean.ListClientes();
+        listFormaPago = catalogoBean.listFormaPago();
+        listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
     }
 
     public List<Cliente> completeCliente(String query) {
@@ -99,6 +103,15 @@ public class RegistroPagoMB implements Serializable {
         pago.setIdcliente(cliente);
     }
 
+    public void cargarClientesMunicipios() {
+        if (municipioSelected != null) {
+            listClientes = clienteBean.ListClientesByIdMinucipio(municipioSelected.getIdmunicipio());
+        } else {
+            listClientes = null;
+            cliente = null;
+        }
+    }
+
     /*Metodos getters y setters*/
     public Pago getPago() {
         return pago;
@@ -116,12 +129,12 @@ public class RegistroPagoMB implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<Configuracionpago> getListConfiguracion() {
-        return listConfiguracion;
+    public List<Formapago> getListFormaPago() {
+        return listFormaPago;
     }
 
-    public void setListConfiguracion(List<Configuracionpago> listConfiguracion) {
-        this.listConfiguracion = listConfiguracion;
+    public void setListFormaPago(List<Formapago> listFormaPago) {
+        this.listFormaPago = listFormaPago;
     }
 
     public List<Cliente> getListClientes() {
@@ -130,6 +143,30 @@ public class RegistroPagoMB implements Serializable {
 
     public void setListClientes(List<Cliente> listClientes) {
         this.listClientes = listClientes;
+    }
+
+    public List<Municipio> getListMunicipios() {
+        return listMunicipios;
+    }
+
+    public void setListMunicipios(List<Municipio> listMunicipios) {
+        this.listMunicipios = listMunicipios;
+    }
+
+    public Tipopago getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(Tipopago tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
+    public Municipio getMunicipioSelected() {
+        return municipioSelected;
+    }
+
+    public void setMunicipioSelected(Municipio municipioSelected) {
+        this.municipioSelected = municipioSelected;
     }
 
 }

@@ -47,58 +47,55 @@ public class Compra implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcompra")
     private Integer idcompra;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacompra")
     @Temporal(TemporalType.DATE)
     private Date fechacompra;
-    
+
     @Size(max = 200)
     @Column(name = "nodocumento")
     private String nodocumento;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "montocompra")
     private Integer montocompra;
-    
-    @Column(name = "ivacreditofiscal")
-    private Integer ivacreditofiscal;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idproveedor", referencedColumnName = "idproveedor")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Proveedor idproveedor;
-    
+
     @JoinColumn(name = "idtipocompra", referencedColumnName = "idtipocompra")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tipocompra idtipocompra;
-    
+
     @JoinColumn(name = "idtipodocumentocompra", referencedColumnName = "idtipodocumentocompra")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tipodocumentocompra idtipodocumentocompra;
@@ -149,14 +146,6 @@ public class Compra implements Serializable {
 
     public void setMontocompra(Integer montocompra) {
         this.montocompra = montocompra;
-    }
-
-    public Integer getIvacreditofiscal() {
-        return ivacreditofiscal;
-    }
-
-    public void setIvacreditofiscal(Integer ivacreditofiscal) {
-        this.ivacreditofiscal = ivacreditofiscal;
     }
 
     public Date getFechacreacion() {
@@ -247,5 +236,5 @@ public class Compra implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Compra[ idcompra=" + idcompra + " ]";
     }
-    
+
 }

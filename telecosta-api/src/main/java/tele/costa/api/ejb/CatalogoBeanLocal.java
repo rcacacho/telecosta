@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
+import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Tipocompra;
@@ -32,5 +33,7 @@ public interface CatalogoBeanLocal {
     List<Tipodocumentocompra> listTipoDocumento();
 
     List<Tipocompra> listTipoCompra();
+    
+    List<Formapago> listFormaPago();
 
 }

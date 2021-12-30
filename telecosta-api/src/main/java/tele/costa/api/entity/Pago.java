@@ -47,47 +47,55 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpago")
     private Integer idpago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
     private int anio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad")
     private int cantidad;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
-    
+
+    @Size(max = 100)
+    @Column(name = "norecibo")
+    private String norecibo;
+
+    @Size(max = 100)
+    @Column(name = "serie")
+    private String serie;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -96,11 +104,11 @@ public class Pago implements Serializable {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
-    
+
     @JoinColumn(name = "idformapago", referencedColumnName = "idformapago")
     @ManyToOne(fetch = FetchType.LAZY)
     private Formapago idformapago;
-    
+
     @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
     @ManyToOne(fetch = FetchType.LAZY)
     private Tipopago idtipopago;
@@ -226,6 +234,22 @@ public class Pago implements Serializable {
         this.idtipopago = idtipopago;
     }
 
+    public String getNorecibo() {
+        return norecibo;
+    }
+
+    public void setNorecibo(String norecibo) {
+        this.norecibo = norecibo;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -250,5 +274,5 @@ public class Pago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Pago[ idpago=" + idpago + " ]";
     }
-    
+
 }

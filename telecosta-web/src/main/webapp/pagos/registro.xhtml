@@ -62,7 +62,55 @@
                         </p:row>
                         <p:row>
                             <p:column >
-                                <p:outputLabel value="Nombre:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu id="reg" value="#{registroPagoMB.municipioSelected}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un municipio" >
+                                    <p:ajax  listener="#{registroPagoMB.cargarCliente()}" update="cl" />
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroPagoMB.listMunicipios}"  var="reg" itemLabel="#{reg.municipio}" itemValue="#{reg}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column  >
+                                <p:selectOneMenu id="cl" value="#{registroPagoMB.cliente}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccion cliente" >
+                                    <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </p:column>   
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="No. Recibo:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroPagoMB.pago.norecibo}" size="35" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un No. Recibo"/>
+
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{registroPagoMB.pago.serie}" size="35" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar una serie"/>
+
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                             <p:column >
                                 <p:outputLabel value="Cantidad a pagar:" styleClass="colorTitulo" style="font-weight: bold;" />
@@ -70,34 +118,16 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="cl" value="#{registroPagoMB.cliente}" style="width: 250px;" 
+                                <p:selectOneMenu id="tipo" value="#{registroPagoMB.pago.idformapago}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes seleccion cliente" >
-                                    <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column  >
-                                <p:inputText value="#{registroPagoMB.pago.cantidad}" size="35" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un apellido"/>
-                            </p:column>   
-                        </p:row>
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Tipo pago:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:selectOneMenu id="tipo" value="#{registroPagoMB.pago.idconfiguracionpago}" style="width: 50%" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un tipo de pago" >
+                                                 required="true" requiredMessage="Debes selecciona una forma de pago" >
                                     <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listConfiguracion}"  var="mun" itemLabel="#{mun.descripcion}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroPagoMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{registroPagoMB.pago.cantidad}" size="35" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar una cantidad"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
