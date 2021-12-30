@@ -5,9 +5,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -95,6 +98,10 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "activo")
     private boolean activo;
+
+    @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Municipio idmunicipio;
 
     public Usuario() {
     }
@@ -199,6 +206,14 @@ public class Usuario implements Serializable {
 
     public void setFechamodificacion(Date fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
+    }
+
+    public Municipio getIdmunicipio() {
+        return idmunicipio;
+    }
+
+    public void setIdmunicipio(Municipio idmunicipio) {
+        this.idmunicipio = idmunicipio;
     }
 
     @Override

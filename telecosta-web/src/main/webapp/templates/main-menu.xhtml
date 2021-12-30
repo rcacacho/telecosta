@@ -20,7 +20,7 @@
                 <p:menuitem value="Lista" outcome="/cobros/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Colaboradores" icon="ui-icon-document" >  
+            <p:submenu label="Colaboradores" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/usuario/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/usuario/registro.xhtml" style="width: 90px;"/>
             </p:submenu>
@@ -28,13 +28,13 @@
             <p:submenu label="Reportes" icon="ui-icon-document">  
                 <p:menuitem value="Reporte" outcome="/reportes/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
-            
-            <p:submenu label="Configuración" icon="ui-icon-document" >  
+
+            <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}" >  
                 <p:menuitem value="Configuración pago" outcome="/configuracion/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Configuración compra" outcome="/configuracion/compra/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
-            
-             <p:submenu label="Compras" icon="ui-icon-document" >  
+
+            <p:submenu label="Compras" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/compras/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/compras/registro.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Reporte" outcome="/compras/reporte.xhtml" style="width: 90px;"/>

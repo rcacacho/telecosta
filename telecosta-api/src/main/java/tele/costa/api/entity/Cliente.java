@@ -34,10 +34,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByIdcliente", query = "SELECT c FROM Cliente c WHERE c.idcliente = :idcliente"),
+    @NamedQuery(name = "Cliente.findByCui", query = "SELECT c FROM Cliente c WHERE c.cui = :cui"),
+    @NamedQuery(name = "Cliente.findByNit", query = "SELECT c FROM Cliente c WHERE c.nit = :nit"),
     @NamedQuery(name = "Cliente.findByNombres", query = "SELECT c FROM Cliente c WHERE c.nombres = :nombres"),
-    @NamedQuery(name = "Cliente.findByApellidos", query = "SELECT c FROM Cliente c WHERE c.apellidos = :apellidos"),
     @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion"),
+    @NamedQuery(name = "Cliente.findBySector", query = "SELECT c FROM Cliente c WHERE c.sector = :sector"),
+    @NamedQuery(name = "Cliente.findByObservacion", query = "SELECT c FROM Cliente c WHERE c.observacion = :observacion"),
     @NamedQuery(name = "Cliente.findByTelefono", query = "SELECT c FROM Cliente c WHERE c.telefono = :telefono"),
+    @NamedQuery(name = "Cliente.findByFechainicioservicio", query = "SELECT c FROM Cliente c WHERE c.fechainicioservicio = :fechainicioservicio"),
     @NamedQuery(name = "Cliente.findByUsuariocreacion", query = "SELECT c FROM Cliente c WHERE c.usuariocreacion = :usuariocreacion"),
     @NamedQuery(name = "Cliente.findByFechacreacion", query = "SELECT c FROM Cliente c WHERE c.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Cliente.findByUsuariomodificacion", query = "SELECT c FROM Cliente c WHERE c.usuariomodificacion = :usuariomodificacion"),
@@ -46,69 +50,79 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idcliente")
     private Integer idcliente;
 
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "cui")
     private String cui;
 
+    @Size(max = 50)
+    @Column(name = "nit")
+    private String nit;
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 250)
+    @Size(min = 1, max = 1000)
     @Column(name = "nombres")
     private String nombres;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 250)
-    @Column(name = "apellidos")
-    private String apellidos;
-
-    @Size(max = 500)
+    @Size(max = 2000)
     @Column(name = "direccion")
     private String direccion;
-
+    
+    @Size(max = 400)
+    @Column(name = "sector")
+    private String sector;
+    
+    @Size(max = 500)
+    @Column(name = "observacion")
+    private String observacion;
+    
+    @Size(max = 100)
     @Column(name = "telefono")
-    private Integer telefono;
-
+    private String telefono;
+    
+    @Size(max = 100)
+    @Column(name = "fechainicioservicio")
+    private String fechainicioservicio;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-
+    
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-
+    
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-
+    
+    @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Configuracionpago idconfiguracionpago;
+    
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
-
-    @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Configuracionpago idconfiguracionpago;
-
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -119,10 +133,9 @@ public class Cliente implements Serializable {
         this.idcliente = idcliente;
     }
 
-    public Cliente(Integer idcliente, String nombres, String apellidos, String usuariocreacion, Date fechacreacion, boolean activo) {
+    public Cliente(Integer idcliente, String nombres, String usuariocreacion, Date fechacreacion, boolean activo) {
         this.idcliente = idcliente;
         this.nombres = nombres;
-        this.apellidos = apellidos;
         this.usuariocreacion = usuariocreacion;
         this.fechacreacion = fechacreacion;
         this.activo = activo;
@@ -136,20 +149,28 @@ public class Cliente implements Serializable {
         this.idcliente = idcliente;
     }
 
+    public String getCui() {
+        return cui;
+    }
+
+    public void setCui(String cui) {
+        this.cui = cui;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
     public String getNombres() {
         return nombres;
     }
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
     }
 
     public String getDireccion() {
@@ -160,12 +181,36 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
-    public Integer getTelefono() {
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getFechainicioservicio() {
+        return fechainicioservicio;
+    }
+
+    public void setFechainicioservicio(String fechainicioservicio) {
+        this.fechainicioservicio = fechainicioservicio;
     }
 
     public String getUsuariocreacion() {
@@ -208,6 +253,14 @@ public class Cliente implements Serializable {
         this.activo = activo;
     }
 
+    public Configuracionpago getIdconfiguracionpago() {
+        return idconfiguracionpago;
+    }
+
+    public void setIdconfiguracionpago(Configuracionpago idconfiguracionpago) {
+        this.idconfiguracionpago = idconfiguracionpago;
+    }
+
     public Municipio getIdmunicipio() {
         return idmunicipio;
     }
@@ -223,22 +276,6 @@ public class Cliente implements Serializable {
 
     public void setPagoList(List<Pago> pagoList) {
         this.pagoList = pagoList;
-    }
-
-    public String getCui() {
-        return cui;
-    }
-
-    public void setCui(String cui) {
-        this.cui = cui;
-    }
-
-    public Configuracionpago getIdconfiguracionpago() {
-        return idconfiguracionpago;
-    }
-
-    public void setIdconfiguracionpago(Configuracionpago idconfiguracionpago) {
-        this.idconfiguracionpago = idconfiguracionpago;
     }
 
     @Override

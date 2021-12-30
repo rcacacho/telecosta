@@ -2,20 +2,24 @@ package tele.costa.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,40 +46,43 @@ public class Configuracionpago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idconfiguracionpago")
     private Integer idconfiguracionpago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
     private Integer valor;
-    
+
     @Size(max = 1000)
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuarioeliminacion")
     private String usuarioeliminacion;
-    
+
     @Column(name = "fechaeliminacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaeliminacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
+
+    @OneToMany(mappedBy = "idconfiguracionpago", fetch = FetchType.LAZY)
+    private List<Cliente> clienteList;
 
     public Configuracionpago() {
     }
@@ -98,14 +105,6 @@ public class Configuracionpago implements Serializable {
 
     public void setIdconfiguracionpago(Integer idconfiguracionpago) {
         this.idconfiguracionpago = idconfiguracionpago;
-    }
-
-    public Integer getValor() {
-        return valor;
-    }
-
-    public void setValor(Integer valor) {
-        this.valor = valor;
     }
 
     public String getDescripcion() {
@@ -180,5 +179,22 @@ public class Configuracionpago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Configuracionpago[ idconfiguracionpago=" + idconfiguracionpago + " ]";
     }
-    
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
+
 }

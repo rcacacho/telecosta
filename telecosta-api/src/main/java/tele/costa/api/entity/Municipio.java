@@ -41,21 +41,21 @@ public class Municipio implements Serializable {
     @Basic(optional = false)
     @Column(name = "idmunicipio")
     private Integer idmunicipio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "municipio")
     private String municipio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
     private List<Cliente> clienteList;
-    
+
     @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Departamento iddepartamento;
@@ -138,5 +138,5 @@ public class Municipio implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Municipio[ idmunicipio=" + idmunicipio + " ]";
     }
-    
+
 }

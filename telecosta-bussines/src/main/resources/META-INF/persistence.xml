@@ -7,6 +7,7 @@
         <class>tele.costa.api.entity.Departamento</class>
         <class>tele.costa.api.entity.Municipio</class>
         <class>tele.costa.api.entity.Pago</class>
+        <class>tele.costa.api.entity.Formapago</class>
         <class>tele.costa.api.entity.Tipopago</class>
         <class>tele.costa.api.entity.Usuario</class>
         <class>tele.costa.api.entity.Compra</class>

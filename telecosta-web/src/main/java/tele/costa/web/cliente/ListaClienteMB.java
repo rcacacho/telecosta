@@ -78,7 +78,7 @@ public class ListaClienteMB implements Serializable {
         cargarDatos();
     }
 
-    public void detalle(Integer id) {
+    public void detalleCliente(Integer id) {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
 

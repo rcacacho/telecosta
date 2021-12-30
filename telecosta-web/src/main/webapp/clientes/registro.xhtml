@@ -23,7 +23,7 @@
                                 <p:outputLabel value="Cui:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                             <p:column >
-                                <p:outputLabel value="Teléfono:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                <p:outputLabel value="Nit:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                         </p:row>
 
@@ -35,33 +35,56 @@
                                 </p:inputText>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroClienteMB.cliente.telefono}" size="50" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroClienteMB.cliente.nit}" size="50" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar un nombre">
-                                 <p:ajax event="blur" process="@this"/>
+                                    <p:ajax event="blur" process="@this"/>
                                 </p:inputText> 
                             </p:column>
                         </p:row>
+
                         <p:row>
                             <p:column >
                                 <p:outputLabel value="Nombre:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                             <p:column >
-                                <p:outputLabel value="Apellido:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
                                 <p:inputText value="#{registroClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar un nombre">
-                                 <p:ajax event="blur" process="@this"/>
+                                    <p:ajax event="blur" process="@this"/>
                                 </p:inputText> 
                             </p:column>
                             <p:column  >
-                                <p:inputText value="#{registroClienteMB.cliente.apellidos}" size="50" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroClienteMB.cliente.direccion}" size="50" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar un apellido">
-                                     <p:ajax event="blur" process="@this"/>
+                                    <p:ajax event="blur" process="@this"/>
                                 </p:inputText>
                             </p:column>   
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Sector:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="fecha Inicio servicio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroClienteMB.cliente.sector}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un CUI valido">
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{registroClienteMB.cliente.fechainicioservicio}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un nombre">
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </p:column>
                         </p:row>
                         <p:row>
                             <p:column >
@@ -103,6 +126,21 @@
                                     <p:ajax event="blur" process="@this" />
                                 </p:inputTextarea>
                                 <h:outputText id="display" style="margin-left: 700px;" /> 
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:outputLabel value="Observación::" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:inputTextarea rows="3" cols="165" value="#{registroClienteMB.cliente.observacion}" counter="display2" maxlength="2000" 
+                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                 required="true" requiredMessage="Debes ingresar una dirección">
+                                    <p:ajax event="blur" process="@this" />
+                                </p:inputTextarea>
+                                <h:outputText id="display2" style="margin-left: 700px;" /> 
                             </p:column>
                         </p:row>
                     </p:panelGrid>

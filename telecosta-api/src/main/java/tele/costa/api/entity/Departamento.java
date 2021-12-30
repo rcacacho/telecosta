@@ -39,18 +39,18 @@ public class Departamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddepartamento")
     private Integer iddepartamento;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "nombre")
     private String nombre;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddepartamento", fetch = FetchType.LAZY)
     private List<Municipio> municipioList;
 
@@ -81,10 +81,6 @@ public class Departamento implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public boolean getActivo() {
-        return activo;
     }
 
     public void setActivo(boolean activo) {
@@ -124,5 +120,5 @@ public class Departamento implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Departamento[ iddepartamento=" + iddepartamento + " ]";
     }
-    
+
 }

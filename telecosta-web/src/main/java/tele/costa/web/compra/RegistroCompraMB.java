@@ -72,18 +72,19 @@ public class RegistroCompraMB implements Serializable {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
 
-        compra = null;
+        proveedor = null;
+        cargarDatos();
     }
 
     public void regresar() {
         JsfUtil.redirectTo("/compra/lista.xhtml");
     }
-    
-    public void cargarDialog(){
+
+    public void cargarDialog() {
         RequestContext.getCurrentInstance().execute("PF('dlgProveedor').show()");
     }
-    
-     public void cerrarDialog(){
+
+    public void cerrarDialog() {
         RequestContext.getCurrentInstance().execute("PF('dlgProveedor').hide()");
     }
 

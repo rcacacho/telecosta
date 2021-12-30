@@ -25,7 +25,8 @@ import telecosta.web.utils.SesionUsuarioMB;
 @ManagedBean(name = "loginMB")
 @ViewScoped
 public class LoginMB implements Serializable {
-     private static final Logger log = Logger.getLogger(LoginMB.class);
+
+    private static final Logger log = Logger.getLogger(LoginMB.class);
 
     @EJB
     private LoginBeanLocal loginBeanLocal;
@@ -33,13 +34,14 @@ public class LoginMB implements Serializable {
     public static String usuario;
     private String password;
     private Usuario usu;
+    private boolean root;
 
     public LoginMB() {
         usu = new Usuario();
     }
 
     public String loginProject() {
-        //password = md5(password);
+        password = md5(password);
         usu = loginBeanLocal.verificarUsuario(usuario, password);
         if (usu != null) {
             HttpSession session = SesionUsuarioMB.getSession();
@@ -80,9 +82,13 @@ public class LoginMB implements Serializable {
             throw new RuntimeException(e);
         }
     }
-    
-    public void regresarMenu(){
+
+    public void regresarMenu() {
         JsfUtil.redirectTo("/menu/menu.xhtml");
+    }
+
+    public boolean validarRoot() {
+        return root = SesionUsuarioMB.getRootUsuario();
     }
 
     /*Metodos Getters y setters*/
@@ -100,6 +106,14 @@ public class LoginMB implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isRoot() {
+        return root;
+    }
+
+    public void setRoot(boolean root) {
+        this.root = root;
     }
 
 }

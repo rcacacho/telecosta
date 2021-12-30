@@ -79,7 +79,6 @@ public class GeneracionCobro {
                     cobro.setMes(mes);
                     cobro.setCantidad(cc.getIdconfiguracionpago().getValor());
                     cobro.setIdtipopago(tipo);
-                    cobro.setIdconfiguracionpago(cc.getIdconfiguracionpago());
                     cobro.setUsuariocreacion("Cobro automatico");
                     cobro.setIdcliente(cc);
                     Pago responseCobro = pagoBean.saveCobro(cobro);

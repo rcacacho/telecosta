@@ -52,7 +52,7 @@
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
 
-                    <p:fileUpload fileUploadListener="#{listaClienteMB.handleMainFileUpload}" mode="advanced" auto="true"
+                    <p:fileUpload value="#{listaClienteMB.handleMainFileUpload}" mode="advanced" auto="true"
                                   dragDropSupport="false" 
                                   sizeLimit="1024000000" allowTypes="/(\.|\/)(xlsx)$/"                  
                                   update="dt_cliente" process="@this"  required="true" requiredMessage=""
@@ -60,9 +60,6 @@
                                   invalidFileMessage="Archivo no valido"  fileLimitMessage="#{msg['archivo.unArchivo']}"
                                   styleClass="no-header" style="font-size: 13px !important; margin-left: 10px!important; width: 220px !important;" >   
                     </p:fileUpload>
-
-                    <p:fileUpload fileUploadListener="#{listaClienteMB.handleMainFileUpload}" auto="true"  />                    
-
                 </p:panelGrid>
 
                 <br/>
@@ -99,9 +96,12 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaClienteMB.detalle(col.idcliente)}" style="text-decoration: none;">
-                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
-                        </h:commandLink>
+                        <p:commandButton value="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+
+
                     </p:column>
                 </p:dataTable>
             </div>

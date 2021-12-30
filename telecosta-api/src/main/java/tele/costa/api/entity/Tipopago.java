@@ -44,30 +44,30 @@ public class Tipopago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idtipopago")
     private Integer idtipopago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "pago")
     private String pago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -159,5 +159,5 @@ public class Tipopago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Tipopago[ idtipopago=" + idtipopago + " ]";
     }
-    
+
 }

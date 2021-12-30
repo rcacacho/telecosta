@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pago.findByIdpago", query = "SELECT p FROM Pago p WHERE p.idpago = :idpago"),
     @NamedQuery(name = "Pago.findByMes", query = "SELECT p FROM Pago p WHERE p.mes = :mes"),
     @NamedQuery(name = "Pago.findByAnio", query = "SELECT p FROM Pago p WHERE p.anio = :anio"),
+    @NamedQuery(name = "Pago.findByCantidad", query = "SELECT p FROM Pago p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "Pago.findByFechacreacion", query = "SELECT p FROM Pago p WHERE p.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Pago.findByFechapago", query = "SELECT p FROM Pago p WHERE p.fechapago = :fechapago"),
     @NamedQuery(name = "Pago.findByUsuariocreacion", query = "SELECT p FROM Pago p WHERE p.usuariocreacion = :usuariocreacion"),
@@ -46,45 +47,47 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpago")
     private Integer idpago;
-
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
     private int anio;
-
+    
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "cantidad")
-    private Integer cantidad;
-
+    private int cantidad;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-
+    
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
-
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-
+    
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-
+    
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -93,14 +96,14 @@ public class Pago implements Serializable {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
-
+    
+    @JoinColumn(name = "idformapago", referencedColumnName = "idformapago")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Formapago idformapago;
+    
     @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Tipopago idtipopago;
-
-    @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Configuracionpago idconfiguracionpago;
 
     public Pago() {
     }
@@ -109,10 +112,11 @@ public class Pago implements Serializable {
         this.idpago = idpago;
     }
 
-    public Pago(Integer idpago, String mes, int anio, Date fechacreacion, String usuariocreacion, boolean activo) {
+    public Pago(Integer idpago, String mes, int anio, int cantidad, Date fechacreacion, String usuariocreacion, boolean activo) {
         this.idpago = idpago;
         this.mes = mes;
         this.anio = anio;
+        this.cantidad = cantidad;
         this.fechacreacion = fechacreacion;
         this.usuariocreacion = usuariocreacion;
         this.activo = activo;
@@ -140,6 +144,14 @@ public class Pago implements Serializable {
 
     public void setAnio(int anio) {
         this.anio = anio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Date getFechacreacion() {
@@ -190,14 +202,6 @@ public class Pago implements Serializable {
         this.activo = activo;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
     public Cliente getIdcliente() {
         return idcliente;
     }
@@ -206,20 +210,20 @@ public class Pago implements Serializable {
         this.idcliente = idcliente;
     }
 
+    public Formapago getIdformapago() {
+        return idformapago;
+    }
+
+    public void setIdformapago(Formapago idformapago) {
+        this.idformapago = idformapago;
+    }
+
     public Tipopago getIdtipopago() {
         return idtipopago;
     }
 
     public void setIdtipopago(Tipopago idtipopago) {
         this.idtipopago = idtipopago;
-    }
-
-    public Configuracionpago getIdconfiguracionpago() {
-        return idconfiguracionpago;
-    }
-
-    public void setIdconfiguracionpago(Configuracionpago idconfiguracionpago) {
-        this.idconfiguracionpago = idconfiguracionpago;
     }
 
     @Override
@@ -246,5 +250,5 @@ public class Pago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Pago[ idpago=" + idpago + " ]";
     }
-
+    
 }
