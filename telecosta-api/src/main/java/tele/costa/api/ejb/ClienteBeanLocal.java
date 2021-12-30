@@ -17,7 +17,7 @@ public interface ClienteBeanLocal {
 
     List<Cliente> ListClientesByNombre(String nombre);
 
-    List<Cliente> ListClientesByCui(String cui);
+    List<Cliente> ListClientesByCodigo(String cui);
 
     Cliente findClienteById(Integer idcliente);
 

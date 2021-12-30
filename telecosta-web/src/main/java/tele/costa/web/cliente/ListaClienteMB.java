@@ -40,7 +40,7 @@ public class ListaClienteMB implements Serializable {
 
     private List<Cliente> listCliente;
     private String nombre;
-    private String cui;
+    private String codigo;
     private UploadedFile file;
 
     public ListaClienteMB() {
@@ -60,8 +60,8 @@ public class ListaClienteMB implements Serializable {
                 listCliente = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (cui != null) {
-            List<Cliente> response = clienteBean.ListClientesByCui(cui);
+        } else if (codigo != null) {
+            List<Cliente> response = clienteBean.ListClientesByCodigo(codigo);
             if (response.size() > 0) {
                 listCliente = response;
             } else {
@@ -74,7 +74,7 @@ public class ListaClienteMB implements Serializable {
 
     public void limpiarCampos() {
         nombre = null;
-        cui = null;
+        codigo = null;
         cargarDatos();
     }
 
@@ -149,12 +149,12 @@ public class ListaClienteMB implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getCui() {
-        return cui;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setCui(String cui) {
-        this.cui = cui;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
 }

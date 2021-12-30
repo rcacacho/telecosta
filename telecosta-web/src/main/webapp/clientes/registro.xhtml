@@ -52,7 +52,7 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:inputText value="#{registroClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroClienteMB.cliente.nombres}" size="50" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar un nombre">
                                     <p:ajax event="blur" process="@this"/>
                                 </p:inputText> 
@@ -64,6 +64,29 @@
                                 </p:inputText>
                             </p:column>   
                         </p:row>
+                                                <p:row>
+                            <p:column >
+                                <p:outputLabel value="Telefono:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Codigo cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroClienteMB.cliente.telefono}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un CUI valido">
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{registroClienteMB.cliente.codigo}" size="50" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un nombre">
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </p:column>
+                        </p:row>
+                        
                         <p:row>
                             <p:column >
                                 <p:outputLabel value="Sector:" styleClass="colorTitulo" style="font-weight: bold;" />

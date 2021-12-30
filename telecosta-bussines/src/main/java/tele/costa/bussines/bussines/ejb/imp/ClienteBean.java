@@ -111,13 +111,13 @@ public class ClienteBean implements ClienteBeanLocal {
     }
 
     @Override
-    public List<Cliente> ListClientesByCui(String cui) {
-        if (cui == null) {
+    public List<Cliente> ListClientesByCodigo(String codigo) {
+        if (codigo == null) {
             return null;
         }
 
-        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.cui =:cui ", Cliente.class)
-                .setParameter("cui", cui)
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.codigo =:codigo ", Cliente.class)
+                .setParameter("codigo", codigo)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

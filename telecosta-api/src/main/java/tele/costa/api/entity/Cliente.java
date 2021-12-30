@@ -60,6 +60,10 @@ public class Cliente implements Serializable {
     @Column(name = "cui")
     private String cui;
 
+    @Size(max = 250)
+    @Column(name = "codigo")
+    private String codigo;
+
     @Size(max = 50)
     @Column(name = "nit")
     private String nit;
@@ -73,56 +77,56 @@ public class Cliente implements Serializable {
     @Size(max = 2000)
     @Column(name = "direccion")
     private String direccion;
-    
+
     @Size(max = 400)
     @Column(name = "sector")
     private String sector;
-    
+
     @Size(max = 500)
     @Column(name = "observacion")
     private String observacion;
-    
+
     @Size(max = 100)
     @Column(name = "telefono")
     private String telefono;
-    
+
     @Size(max = 100)
     @Column(name = "fechainicioservicio")
     private String fechainicioservicio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
     @ManyToOne(fetch = FetchType.LAZY)
     private Configuracionpago idconfiguracionpago;
-    
+
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -203,6 +207,14 @@ public class Cliente implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getFechainicioservicio() {

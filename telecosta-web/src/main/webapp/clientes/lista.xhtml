@@ -21,15 +21,15 @@
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Cui:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Codigo:"  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
                                  requiredMessage="(nombre)" size="30" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
-                    <p:inputText id="txtCui" value="#{listaClienteMB.cui}" style="width: 95%;"  placeholder="(cui)"
-                                 requiredMessage="(cui)" size="40" >
+                    <p:inputText id="txtCui" value="#{listaClienteMB.codigo}" style="width: 95%;"  placeholder="(codigo)"
+                                 requiredMessage="(codigo)" size="40" >
                         <p:ajax event="blur" process="@this"  />
                     </p:inputText>
 
@@ -51,15 +51,6 @@
                                          update="@form"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
-
-                    <p:fileUpload value="#{listaClienteMB.handleMainFileUpload}" mode="advanced" auto="true"
-                                  dragDropSupport="false" 
-                                  sizeLimit="1024000000" allowTypes="/(\.|\/)(xlsx)$/"                  
-                                  update="dt_cliente" process="@this"  required="true" requiredMessage=""
-                                  fileLimit="1" label="Adjuntar" uploadLabel="Cargar" cancelLabel="#{msg['general.cancelar']}" invalidSizeMessage="#{msg['tamañoArchvio']}"
-                                  invalidFileMessage="Archivo no valido"  fileLimitMessage="#{msg['archivo.unArchivo']}"
-                                  styleClass="no-header" style="font-size: 13px !important; margin-left: 10px!important; width: 220px !important;" >   
-                    </p:fileUpload>
                 </p:panelGrid>
 
                 <br/>
@@ -75,10 +66,6 @@
 
                     <p:column headerText="Nombre" width="25%" >
                         <p:outputLabel value="#{col.nombres}"/>
-                    </p:column>
-
-                    <p:column headerText="Apellido" width="25%" >
-                        <p:outputLabel value="#{col.apellidos}"/>
                     </p:column>
 
                     <p:column headerText="Dirección" width="25%" >

@@ -59,7 +59,7 @@
                             <p:outputLabel value="Nombre:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
-                            <p:outputLabel value="Apellido:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Sector:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -67,15 +67,22 @@
                             <p:inputText value="#{editarClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"/> 
                         </p:column>
                         <p:column  >
-                            <p:inputText value="#{editarClienteMB.cliente.apellidos}" size="50" style="font-size: 16px!important;"/>
+                            <p:inputText value="#{editarClienteMB.cliente.sector}" size="50" style="font-size: 16px!important;"/>
                         </p:column>   
                     </p:row>
                     <p:row>
+                        <p:column >
+                            <p:outputLabel value="Nit:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
                         <p:column >
                             <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
                     <p:row>
+                        <p:column  >
+                            <p:inputText value="#{editarClienteMB.cliente.nit}" size="50" style="font-size: 16px!important;"/>
+                        </p:column>   
+
                         <p:column>
                             <p:selectOneMenu id="mun" value="#{editarClienteMB.cliente.idmunicipio}" style="width: 50%" 
                                              converter="entityConverter" filter="true" filterMatchMode="contains">
@@ -85,6 +92,21 @@
                         </p:column>   
                     </p:row>
 
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:outputLabel value="Observación:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="3" cols="165" value="#{editarClienteMB.cliente.observacion}" counter="display2" maxlength="2000" 
+                                             counterTemplate="{0} caracteres pendientes." autoResize="false">
+                                <p:ajax event="blur" process="@this" />
+                            </p:inputTextarea>
+                            <h:outputText id="display2" style="margin-left: 700px;" /> 
+                        </p:column>
+                    </p:row>
+                    
                     <p:row>
                         <p:column colspan="3">
                             <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
