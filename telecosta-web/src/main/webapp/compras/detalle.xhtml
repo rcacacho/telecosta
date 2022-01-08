@@ -9,7 +9,7 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idpago" value="#{detalleCompraMB.idCompra}"/>
+        <f:viewParam name="idcompra" value="#{detalleCompraMB.idCompra}"/>
         <f:event type="preRenderView" listener="#{detalleCompraMB.cargarDatos()}"/>
     </f:metadata>
 
@@ -56,6 +56,28 @@
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
+                
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Serie:" styleClass="colorTitulo" />
+                    </p:column>
+
+                    <p:column >
+                        <p:outputLabel value="No. Documento:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.serie}" style="font-size: 16px!important;" />
+                    </p:column>
+
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.nodocumento}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+                
 
                 <p:row>
                     <p:column >

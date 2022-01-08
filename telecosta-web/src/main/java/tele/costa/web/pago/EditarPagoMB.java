@@ -13,28 +13,24 @@ import telecosta.web.utils.JsfUtil;
  *
  * @author rcacacho
  */
-@ManagedBean(name = "detallePagoMB")
+@ManagedBean(name = "editarPagoMB")
 @ViewScoped
-public class DetallePagoMB implements Serializable {
+public class EditarPagoMB implements Serializable {
 
-    private static final Logger log = Logger.getLogger(DetallePagoMB.class);
+    private static final Logger log = Logger.getLogger(EditarPagoMB.class);
 
     @EJB
     private PagosBeanLocal pagosBean;
 
-    private Integer idPago;
     private Pago pago;
+    private Integer idpago;
 
-    public void cargarDatos() {
-        pago = pagosBean.findPagoByIdPago(idPago);
-    }
-
-    public void regresar() {
-        JsfUtil.redirectTo("/pagos/lista.xhtml");
+     public void cargarDatos() {
+        pago = pagosBean.findPagoByIdPago(idpago);
     }
     
-    public void editar() {
-        JsfUtil.redirectTo("/pagos/editar.xhtml?idpago=" + idPago);
+    public void regresar() {
+        JsfUtil.redirectTo("/pagos/detalle.xhtml?idpago=" + idpago);
     }
 
     /*Metodos getters y setters*/
@@ -46,12 +42,12 @@ public class DetallePagoMB implements Serializable {
         this.pago = pago;
     }
 
-    public Integer getIdPago() {
-        return idPago;
+    public Integer getIdpago() {
+        return idpago;
     }
 
-    public void setIdPago(Integer idPago) {
-        this.idPago = idPago;
+    public void setIdpago(Integer idpago) {
+        this.idpago = idpago;
     }
 
 }

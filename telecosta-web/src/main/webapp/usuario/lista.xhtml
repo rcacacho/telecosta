@@ -24,7 +24,7 @@
 
                 <div>
                     <p:commandButton value="Agregar Colaborador" style="float:left!important; margin-left:7.5% !important; margin-top: -15px!important;" styleClass="button-16 b-greylight-16" icon="ui-icon-plus" 
-                                     action="#{listaColaboradoresMB.linkRegistro()}" update="@all"/>
+                                     action="#{listaColaboradoresMB.linkRegistro()}" process="@this"/>
                 </div>
                 <br />
                 <p:dataTable id="dt_colaborador" var="col" value="#{listaColaboradoresMB.listUsuario}" widgetVar="asuetos"
@@ -79,8 +79,8 @@
                     <p:password  value="#{listaColaboradoresMB.selectedUsuario.password}" style="font-size: 16px!important;"  placeholder="Ingrese un password" />
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{listaColaboradoresMB.reinicioUsuario()}" icon="ui-icon-disk" process="@form"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el colaborador?');" update="@form"/>
-                        <p:commandButton value="Cancelar"  process="@this" action="#{listaColaboradoresMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Guardar" action="#{listaColaboradoresMB.reinicioUsuario()}" icon="ui-icon-disk" process="@form"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas reiniciar la contraseña?');" update="@form"/>
+                        <p:commandButton value="Cancelar"  process="@this" action="#{listaColaboradoresMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
             </p:dialog>

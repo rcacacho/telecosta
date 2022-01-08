@@ -8,9 +8,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Municipio;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
@@ -33,10 +35,12 @@ public class EditarClienteMB implements Serializable {
     private Integer idcliente;
     private Cliente cliente;
     private List<Municipio> listMunicipios;
+    private List<Configuracionpago> listConfiguracionPago;
 
     public void cargarDatos() {
         cliente = clienteBean.findClienteById(idcliente);
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
+        listConfiguracionPago = catalogoBean.ListConfiguracionPago();
     }
 
     public void actualizarCliente() throws IOException {
@@ -45,6 +49,7 @@ public class EditarClienteMB implements Serializable {
         Cliente responseVerificacion = clienteBean.updateCliente(cliente);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Cliente actualizado exitosamente");
+            JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + idcliente);
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
@@ -52,6 +57,10 @@ public class EditarClienteMB implements Serializable {
 
     public void regresar() {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + idcliente);
+    }
+
+    public void cargarDialog() {
+        RequestContext.getCurrentInstance().execute("PF('dlgProveedor').show()");
     }
 
     /*Metodos getters y setters*/
@@ -77,6 +86,14 @@ public class EditarClienteMB implements Serializable {
 
     public void setListMunicipios(List<Municipio> listMunicipios) {
         this.listMunicipios = listMunicipios;
+    }
+
+    public List<Configuracionpago> getListConfiguracionPago() {
+        return listConfiguracionPago;
+    }
+
+    public void setListConfiguracionPago(List<Configuracionpago> listConfiguracionPago) {
+        this.listConfiguracionPago = listConfiguracionPago;
     }
 
 }

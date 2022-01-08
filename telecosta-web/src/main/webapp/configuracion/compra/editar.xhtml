@@ -9,7 +9,7 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idCliente" value="#{edicionConfiguracionGastoMB.idconfiguracionpago}"/>
+        <f:viewParam name="idtipocompra" value="#{edicionConfiguracionGastoMB.idtipocompra}"/>
         <f:event type="preRenderView" listener="#{edicionConfiguracionGastoMB.cargarDatos()}"/>
     </f:metadata>
 
@@ -39,19 +39,19 @@
                 <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                     <p:row>
                         <p:column >
-                            <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Tipo gasto:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
-                            <p:outputLabel value="Valor:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
 
                     <p:row>
                         <p:column>
-                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracion.descripcion}" size="50" style="font-size: 16px!important;"/>
+                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracionGasto.tipo}" size="50" style="font-size: 16px!important;"/>
                         </p:column>
                         <p:column>
-                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracion.valor}" size="50" style="font-size: 16px!important;"/> 
+                            <p:inputText value="#{edicionConfiguracionGastoMB.configuracionGasto.descripcion}" size="50" style="font-size: 16px!important;"/> 
                         </p:column>
                     </p:row>
                 </p:panelGrid>

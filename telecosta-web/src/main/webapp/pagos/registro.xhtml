@@ -73,7 +73,7 @@
                                 <p:selectOneMenu id="reg" value="#{registroPagoMB.municipioSelected}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccionar un municipio" >
-                                    <p:ajax  listener="#{registroPagoMB.cargarCliente()}" update="cl" />
+                                    <p:ajax  listener="#{registroPagoMB.cargarClientesMunicipios()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroPagoMB.listMunicipios}"  var="reg" itemLabel="#{reg.municipio}" itemValue="#{reg}"/>
                                 </p:selectOneMenu>
@@ -82,6 +82,7 @@
                                 <p:selectOneMenu id="cl" value="#{registroPagoMB.cliente}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccion cliente" >
+                                    <p:ajax  listener="#{registroPagoMB.cargarCliente()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>

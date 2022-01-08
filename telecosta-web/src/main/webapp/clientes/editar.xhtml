@@ -35,7 +35,7 @@
             </table>
 
             <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
-            <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
+            <p:panelGrid id="pgActualizacion"  columns="1" styleClass="no-border" style="width: 100%;"  >
                 <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                     <p:row>
                         <p:column >
@@ -91,6 +91,22 @@
                             </p:selectOneMenu>
                         </p:column>   
                     </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="conf" value="#{editarClienteMB.cliente.idconfiguracionpago}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="(selecciona una configuración)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{editarClienteMB.listConfiguracionPago}"  var="mun" itemLabel="#{mun.descripcion} - #{mun.valor}" itemValue="#{mun}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Agregar" action="#{registroCompraMB.cargarDialog()}" icon="ui-icon-plus"
+                                             style=" margin-left: 5px; "  update="dlgConfiguración" process="@this"/>
+                        </p:column>   
+                    </p:row>
 
                     <p:row>
                         <p:column colspan="3">
@@ -106,7 +122,7 @@
                             <h:outputText id="display2" style="margin-left: 700px;" /> 
                         </p:column>
                     </p:row>
-                    
+
                     <p:row>
                         <p:column colspan="3">
                             <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
@@ -124,11 +140,34 @@
                 </p:panelGrid>
 
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                    <p:commandButton value="Actualizar" action="#{editarClienteMB.actualizarCliente()}" icon="ui-icon-disk" process="@form"  
-                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas actualizar al cliente?');" update="@form"/>
+                    <p:commandButton value="Actualizar" action="#{editarClienteMB.actualizarCliente()}" icon="ui-icon-disk" process="pgActualizacion"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas actualizar al cliente?');" update="pgActualizacion"/>
                     <p:commandButton value="Cancelar" process="@this" action="#{editarClienteMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:outputPanel>
             </p:panelGrid>
+
+            <p:dialog header="Registro Configuración" widgetVar="dlgConfiguración" id="dlgConfiguración" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="450px">
+                <p:panelGrid id="pgProve" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Nit:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{registroCompraMB.proveedor.nit}" size="50" style="font-size: 16px!important;"
+                                 required="true" requiredMessage="Debes ingresar un nit">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Nombre:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{registroCompraMB.proveedor.nombre}" size="50" style="font-size: 16px!important;"
+                                 required="true" requiredMessage="Debes ingresar un nombre">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroCompraMB.saveProveedor()}" icon="ui-icon-disk" process="pgProve"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al proveedor?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroCompraMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

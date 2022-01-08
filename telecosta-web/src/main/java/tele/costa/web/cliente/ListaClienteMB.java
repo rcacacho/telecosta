@@ -1,29 +1,19 @@
 package tele.costa.web.cliente;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import static org.apache.poi.ss.util.NumberToTextConverter.toText;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.entity.Cliente;
-import telecosta.web.utils.FileUtil;
+import tele.costa.api.entity.Municipio;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -37,22 +27,80 @@ public class ListaClienteMB implements Serializable {
 
     @EJB
     private ClienteBeanLocal clienteBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private List<Cliente> listCliente;
     private String nombre;
     private String codigo;
-    private UploadedFile file;
+    private Integer idMunicipio;
+    private String sector;
+    private List<Municipio> listMunicipios;
 
     public ListaClienteMB() {
     }
 
     @PostConstruct
     void cargarDatos() {
-        listCliente = clienteBean.ListClientes();
+        if (SesionUsuarioMB.getRootUsuario()) {
+            listCliente = clienteBean.ListClientes();
+        } else {
+            listCliente = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+        }
+
+        listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
     }
 
     public void buscarCliente() {
-        if (nombre != null) {
+        if (nombre != null && idMunicipio != null && sector != null) {
+            List<Cliente> response = clienteBean.ListClientesByNombreAndSectorAndMunicipio(nombre, sector, idMunicipio);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (nombre != null && sector != null) {
+            List<Cliente> response = clienteBean.ListClientesByNombreAndSector(nombre, sector);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (nombre != null && idMunicipio != 0) {
+            List<Cliente> response = clienteBean.ListClientesByNombreAndMunicipio(nombre, idMunicipio);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idMunicipio != 0 && sector != null) {
+            List<Cliente> response = clienteBean.ListClientesBySectorAndMunicipio(sector, idMunicipio);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idMunicipio != 0) {
+            List<Cliente> response = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (sector != null) {
+            List<Cliente> response = clienteBean.ListClientesBySector(sector);
+            if (response != null) {
+                listCliente = response;
+            } else {
+                listCliente = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (nombre != null) {
             List<Cliente> response = clienteBean.ListClientesByNombre(nombre);
             if (response != null) {
                 listCliente = response;
@@ -82,55 +130,6 @@ public class ListaClienteMB implements Serializable {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
 
-    public void handleMainFileUpload(FileUploadEvent event) throws IOException {
-        file = event.getFile();
-        String nombreArchivo = file.getFileName();
-        cargarDatosArchivo(file.getInputstream());
-    }
-
-    public void cargarDatosArchivo(InputStream inputStream) throws IOException {
-        Integer totalRegistros = 0;
-        Integer totalExitosos = 0;
-        Integer totalFilas = 0;
-        BigDecimal montoTotalExitoso = new BigDecimal("0.00");
-        //List<NpDetalleCargaMasiva> listaDetalle = new ArrayList();
-
-        XSSFWorkbook book = new XSSFWorkbook(inputStream);
-        // Obtener medinte indice la hoja que se leera
-        XSSFSheet sheet = book.getSheetAt(0);
-        // Obteniendo todas las filas de la hoja leida
-        Iterator<Row> rowIterator = sheet.iterator();
-
-        // CRendo un StringBuilder donde almacenaremos los datos del 
-        // Excel temporalmente para mostrarlo en consola
-        StringBuilder sb = new StringBuilder();
-
-        Row row;
-        // Recorreremos cada fila de la hoja hasta llegar al final
-        while (rowIterator.hasNext()) {
-            row = rowIterator.next();
-            // Obteniendo las celdas de cada fila para obtener valores
-            Iterator<Cell> cellIterator = row.cellIterator();
-            Cell cell;
-            //Recorrienco las celdas de la fila obtenida
-            while (cellIterator.hasNext()) {
-                // Obteniendo el valor de la celda para ser almacenada en nuestro buffer
-                cell = cellIterator.next();
-                // Agregando a nuestro buffer los valores leidos 
-                // de las celdas incluyendo la cabecera
-                // Haremos una pequeña validacion para saber si la columna que 
-                // estamos leyendo esta en la posicion cero, si es la primera no agregaremos formato
-                // de lo contrario rellenaremos con espacios la cadena pare verlo de forma ordenada.
-                if (cell.getColumnIndex() == 0) {
-                    sb.append(cell.toString()).append("\t");
-                } else {
-                    sb.append(String.format("%-30s", cell.toString())).append("\t");
-                }
-                System.out.println(sb.toString());
-            }
-
-        }
-    }
 
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {
@@ -155,6 +154,30 @@ public class ListaClienteMB implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public List<Municipio> getListMunicipios() {
+        return listMunicipios;
+    }
+
+    public void setListMunicipios(List<Municipio> listMunicipios) {
+        this.listMunicipios = listMunicipios;
+    }
+
+    public Integer getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 
 }

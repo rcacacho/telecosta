@@ -73,7 +73,7 @@ public class ListaCompraMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/compra/detalle.xhtml?idcompra=" + id);
+        JsfUtil.redirectTo("/compras/detalle.xhtml?idcompra=" + id);
     }
 
     /*Metodos getters y setters*/

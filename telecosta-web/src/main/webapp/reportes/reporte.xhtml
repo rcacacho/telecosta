@@ -60,7 +60,6 @@
                                 value="#{reporteMB.fechaFinCobro}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
-
                 </p:panelGrid>
 
                 <p:panelGrid columns="1" styleClass="no-border">
@@ -69,6 +68,17 @@
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
                         <p:fileDownload value="#{reporteMB.generarPdfCobro()}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+                
+                <br/>
+                <h3 style="margin-right: 190px;">Reporte de Clientes</h3>
+                 <p:panelGrid columns="1" styleClass="no-border">
+                    <p:commandButton value="Imprimir" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{reporteMB.imprimirExcelCliente()}"/>
                     </p:commandButton>
                 </p:panelGrid>
                 

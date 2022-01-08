@@ -6,21 +6,21 @@
 
     <h:form id="frm_menu" >
         <p:menubar style="border: 1px solid #ccc; font-size: small; height: 30px;"  autoDisplay="false" >
-            <p:submenu label="Clientes" icon="ui-icon-document">  
+            <p:submenu label="Clientes" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros') || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/clientes/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/clientes/registro.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Pagos" icon="ui-icon-document" >  
+            <p:submenu label="Pagos" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/pagos/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/pagos/registro.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Cobros" icon="ui-icon-document" >  
+            <p:submenu label="Cobros" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/cobros/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Colaboradores" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
+            <p:submenu label="Usuarios" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/usuario/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/usuario/registro.xhtml" style="width: 90px;"/>
             </p:submenu>
@@ -29,12 +29,12 @@
                 <p:menuitem value="Reporte" outcome="/reportes/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}" >  
+            <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}" >  
                 <p:menuitem value="Configuración pago" outcome="/configuracion/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Configuración compra" outcome="/configuracion/compra/lista.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Compras" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
+            <p:submenu label="Compras" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/compras/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/compras/registro.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Reporte" outcome="/compras/reporte.xhtml" style="width: 90px;"/>

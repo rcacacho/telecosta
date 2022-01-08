@@ -45,8 +45,8 @@ public class SesionUsuarioMB {
             return null;
         }
     }
-    
-      public static boolean getRootUsuario() {
+
+    public static boolean getRootUsuario() {
         HttpSession session = getSession();
         if (session != null) {
             return (boolean) session.getAttribute("root");
@@ -54,4 +54,21 @@ public class SesionUsuarioMB {
             return false;
         }
     }
+
+    public static String getRolUsuario() throws IOException {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session.getAttribute("rol") != null) {
+            return (String) session.getAttribute("rol");
+        }
+        return null;
+    }
+
+    public static Integer getIdMunicipio() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session.getAttribute("idmunicipio") != null) {
+            return (Integer) session.getAttribute("idmunicipio");
+        }
+        return null;
+    }
+
 }

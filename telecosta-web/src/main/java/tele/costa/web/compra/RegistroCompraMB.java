@@ -77,7 +77,7 @@ public class RegistroCompraMB implements Serializable {
     }
 
     public void regresar() {
-        JsfUtil.redirectTo("/compra/lista.xhtml");
+        JsfUtil.redirectTo("/compras/lista.xhtml");
     }
 
     public void cargarDialog() {

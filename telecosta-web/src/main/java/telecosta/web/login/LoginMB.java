@@ -35,6 +35,7 @@ public class LoginMB implements Serializable {
     private String password;
     private Usuario usu;
     private boolean root;
+    private String rol;
 
     public LoginMB() {
         usu = new Usuario();
@@ -48,6 +49,11 @@ public class LoginMB implements Serializable {
             session.setAttribute("usuario", usuario);
             session.setAttribute("idusuario", usu.getIdusuario());
             session.setAttribute("root", usu.getRoot());
+            session.setAttribute("rol", usu.getTipousuario());
+            
+            if (usu.getIdmunicipio() != null) {
+                session.setAttribute("idmunicipio", usu.getIdmunicipio().getIdmunicipio());
+            }
 
             return "/menu/menu.xhtml";
         } else {
@@ -91,6 +97,10 @@ public class LoginMB implements Serializable {
         return root = SesionUsuarioMB.getRootUsuario();
     }
 
+    public String validarRol() throws IOException {
+        return rol = SesionUsuarioMB.getRolUsuario();
+    }
+
     /*Metodos Getters y setters*/
     public String getUsuario() {
         return usuario;
@@ -114,6 +124,14 @@ public class LoginMB implements Serializable {
 
     public void setRoot(boolean root) {
         this.root = root;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
 }

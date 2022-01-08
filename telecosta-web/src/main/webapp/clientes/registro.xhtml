@@ -30,7 +30,7 @@
                         <p:row>
                             <p:column>
                                 <p:inputText value="#{registroClienteMB.cliente.cui}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un CUI valido">
+                                             required="true" requiredMessage="Debes ingresar un CUI valido" maxlength="13">
                                     <p:ajax event="blur" process="@this"/>
                                 </p:inputText>
                             </p:column>

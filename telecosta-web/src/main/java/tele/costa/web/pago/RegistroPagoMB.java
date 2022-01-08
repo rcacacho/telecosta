@@ -14,7 +14,6 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
-import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
@@ -67,7 +66,7 @@ public class RegistroPagoMB implements Serializable {
         pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
         tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.PAGO.getId());
         pago.setIdcliente(cliente);
-        pago.setIdtipopago(tipoPago);
+        //pago.setIdtipopago(tipoPago);
         pago.setFechapago(new Date());
         Pago responseVerificacion = pagosBean.savePago(pago);
         if (responseVerificacion != null) {
@@ -105,7 +104,7 @@ public class RegistroPagoMB implements Serializable {
 
     public void cargarClientesMunicipios() {
         if (municipioSelected != null) {
-            listClientes = clienteBean.ListClientesByIdMinucipio(municipioSelected.getIdmunicipio());
+            listClientes = clienteBean.ListClientesByIdMunucipio(municipioSelected.getIdmunicipio());
         } else {
             listClientes = null;
             cliente = null;

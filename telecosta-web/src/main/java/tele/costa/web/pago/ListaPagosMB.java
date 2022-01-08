@@ -48,7 +48,7 @@ public class ListaPagosMB implements Serializable {
         Date fInicio = new Date();
         Date fFin = new Date();
 
-        listPago = pagosBean.listPagos(fInicio, fFin);
+        listPago = pagosBean.listPagos();
         listClientes = clienteBean.ListClientes();
     }
 
@@ -78,7 +78,7 @@ public class ListaPagosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicioBus != null && fechaFinBus != null) {
-            List<Pago> response = pagosBean.listPagos(fechaInicioBus, fechaFinBus);
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFin(fechaInicioBus, fechaFinBus);
             if (response != null) {
                 listPago = response;
             } else {
