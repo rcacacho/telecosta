@@ -44,35 +44,35 @@ public class Formapago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idformapago")
     private Integer idformapago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "forma")
     private String forma;
-    
+
     @Column(name = "descripcion")
     private Integer descripcion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(mappedBy = "idformapago", fetch = FetchType.LAZY)
-    private List<Pago> pagoList;
+    private List<Detallepago> detallepagoList;
 
     public Formapago() {
     }
@@ -129,23 +129,6 @@ public class Formapago implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    @XmlTransient
-    public List<Pago> getPagoList() {
-        return pagoList;
-    }
-
-    public void setPagoList(List<Pago> pagoList) {
-        this.pagoList = pagoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -170,5 +153,22 @@ public class Formapago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Formapago[ idformapago=" + idformapago + " ]";
     }
-    
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Detallepago> getDetallepagoList() {
+        return detallepagoList;
+    }
+
+    public void setDetallepagoList(List<Detallepago> detallepagoList) {
+        this.detallepagoList = detallepagoList;
+    }
+
 }

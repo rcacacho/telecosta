@@ -47,14 +47,14 @@ public class Configuracionpago implements Serializable {
     @Column(name = "idconfiguracionpago")
     private Integer idconfiguracionpago;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor")
-    private Integer valor;
-
     @Size(max = 1000)
     @Column(name = "descripcion")
     private String descripcion;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "valor")
+    private int valor;
 
     @Basic(optional = false)
     @NotNull
@@ -147,14 +147,6 @@ public class Configuracionpago implements Serializable {
         this.fechaeliminacion = fechaeliminacion;
     }
 
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -180,6 +172,15 @@ public class Configuracionpago implements Serializable {
         return "tele.costa.api.entity.Configuracionpago[ idconfiguracionpago=" + idconfiguracionpago + " ]";
     }
 
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
+
     public int getValor() {
         return valor;
     }
@@ -188,13 +189,12 @@ public class Configuracionpago implements Serializable {
         this.valor = valor;
     }
 
-    @XmlTransient
-    public List<Cliente> getClienteList() {
-        return clienteList;
+    public boolean getActivo() {
+        return activo;
     }
 
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }

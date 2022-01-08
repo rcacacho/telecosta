@@ -69,7 +69,7 @@ public class Tipopago implements Serializable {
     private boolean activo;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
-    private List<Pago> pagoList;
+    private List<Detallepago> detallepagoList;
 
     public Tipopago() {
     }
@@ -118,23 +118,6 @@ public class Tipopago implements Serializable {
         this.usuariocreacion = usuariocreacion;
     }
 
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    @XmlTransient
-    public List<Pago> getPagoList() {
-        return pagoList;
-    }
-
-    public void setPagoList(List<Pago> pagoList) {
-        this.pagoList = pagoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -158,6 +141,23 @@ public class Tipopago implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Tipopago[ idtipopago=" + idtipopago + " ]";
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Detallepago> getDetallepagoList() {
+        return detallepagoList;
+    }
+
+    public void setDetallepagoList(List<Detallepago> detallepagoList) {
+        this.detallepagoList = detallepagoList;
     }
 
 }

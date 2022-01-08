@@ -74,6 +74,10 @@ public class Usuario implements Serializable {
     @Column(name = "root")
     private boolean root;
 
+    @Size(min = 1, max = 200)
+    @Column(name = "tipousuario")
+    private String tipousuario;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -214,6 +218,14 @@ public class Usuario implements Serializable {
 
     public void setIdmunicipio(Municipio idmunicipio) {
         this.idmunicipio = idmunicipio;
+    }
+
+    public String getTipousuario() {
+        return tipousuario;
+    }
+
+    public void setTipousuario(String tipousuario) {
+        this.tipousuario = tipousuario;
     }
 
     @Override

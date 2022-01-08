@@ -2,7 +2,9 @@ package tele.costa.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,16 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author elfo_
+ * @author rcacacho
  */
 @Entity
 @Table(name = "pago")
@@ -30,14 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p"),
     @NamedQuery(name = "Pago.findByIdpago", query = "SELECT p FROM Pago p WHERE p.idpago = :idpago"),
-    @NamedQuery(name = "Pago.findByMes", query = "SELECT p FROM Pago p WHERE p.mes = :mes"),
     @NamedQuery(name = "Pago.findByAnio", query = "SELECT p FROM Pago p WHERE p.anio = :anio"),
-    @NamedQuery(name = "Pago.findByCantidad", query = "SELECT p FROM Pago p WHERE p.cantidad = :cantidad"),
-    @NamedQuery(name = "Pago.findByFechacreacion", query = "SELECT p FROM Pago p WHERE p.fechacreacion = :fechacreacion"),
+    @NamedQuery(name = "Pago.findByMes", query = "SELECT p FROM Pago p WHERE p.mes = :mes"),
+    @NamedQuery(name = "Pago.findByTotal", query = "SELECT p FROM Pago p WHERE p.total = :total"),
     @NamedQuery(name = "Pago.findByFechapago", query = "SELECT p FROM Pago p WHERE p.fechapago = :fechapago"),
     @NamedQuery(name = "Pago.findByUsuariocreacion", query = "SELECT p FROM Pago p WHERE p.usuariocreacion = :usuariocreacion"),
-    @NamedQuery(name = "Pago.findByFechamodificacion", query = "SELECT p FROM Pago p WHERE p.fechamodificacion = :fechamodificacion"),
+    @NamedQuery(name = "Pago.findByFechacreacion", query = "SELECT p FROM Pago p WHERE p.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Pago.findByUsuariomodificacion", query = "SELECT p FROM Pago p WHERE p.usuariomodificacion = :usuariomodificacion"),
+    @NamedQuery(name = "Pago.findByFechamodificacion", query = "SELECT p FROM Pago p WHERE p.fechamodificacion = :fechamodificacion"),
     @NamedQuery(name = "Pago.findByActivo", query = "SELECT p FROM Pago p WHERE p.activo = :activo")})
 public class Pago implements Serializable {
 
@@ -47,71 +51,54 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpago")
     private Integer idpago;
-
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "anio")
+    private int anio;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "anio")
-    private int anio;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad")
-    private int cantidad;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechacreacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechacreacion;
-
+    
+    @Column(name = "total")
+    private Integer total;
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
-
-    @Size(max = 100)
-    @Column(name = "norecibo")
-    private String norecibo;
-
-    @Size(max = 100)
-    @Column(name = "serie")
-    private String serie;
-
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-
-    @Column(name = "fechamodificacion")
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechamodificacion;
-
+    private Date fechacreacion;
+    
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-
+    
+    @Column(name = "fechamodificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechamodificacion;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpago", fetch = FetchType.LAZY)
+    private List<Detallepago> detallepagoList;
+    
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
-
-    @JoinColumn(name = "idformapago", referencedColumnName = "idformapago")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Formapago idformapago;
-
-    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Tipopago idtipopago;
 
     public Pago() {
     }
@@ -120,13 +107,12 @@ public class Pago implements Serializable {
         this.idpago = idpago;
     }
 
-    public Pago(Integer idpago, String mes, int anio, int cantidad, Date fechacreacion, String usuariocreacion, boolean activo) {
+    public Pago(Integer idpago, int anio, String mes, String usuariocreacion, Date fechacreacion, boolean activo) {
         this.idpago = idpago;
-        this.mes = mes;
         this.anio = anio;
-        this.cantidad = cantidad;
-        this.fechacreacion = fechacreacion;
+        this.mes = mes;
         this.usuariocreacion = usuariocreacion;
+        this.fechacreacion = fechacreacion;
         this.activo = activo;
     }
 
@@ -138,14 +124,6 @@ public class Pago implements Serializable {
         this.idpago = idpago;
     }
 
-    public String getMes() {
-        return mes;
-    }
-
-    public void setMes(String mes) {
-        this.mes = mes;
-    }
-
     public int getAnio() {
         return anio;
     }
@@ -154,20 +132,20 @@ public class Pago implements Serializable {
         this.anio = anio;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public String getMes() {
+        return mes;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setMes(String mes) {
+        this.mes = mes;
     }
 
-    public Date getFechacreacion() {
-        return fechacreacion;
+    public Integer getTotal() {
+        return total;
     }
 
-    public void setFechacreacion(Date fechacreacion) {
-        this.fechacreacion = fechacreacion;
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public Date getFechapago() {
@@ -186,12 +164,12 @@ public class Pago implements Serializable {
         this.usuariocreacion = usuariocreacion;
     }
 
-    public Date getFechamodificacion() {
-        return fechamodificacion;
+    public Date getFechacreacion() {
+        return fechacreacion;
     }
 
-    public void setFechamodificacion(Date fechamodificacion) {
-        this.fechamodificacion = fechamodificacion;
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     public String getUsuariomodificacion() {
@@ -202,6 +180,14 @@ public class Pago implements Serializable {
         this.usuariomodificacion = usuariomodificacion;
     }
 
+    public Date getFechamodificacion() {
+        return fechamodificacion;
+    }
+
+    public void setFechamodificacion(Date fechamodificacion) {
+        this.fechamodificacion = fechamodificacion;
+    }
+
     public boolean getActivo() {
         return activo;
     }
@@ -210,44 +196,21 @@ public class Pago implements Serializable {
         this.activo = activo;
     }
 
+    @XmlTransient
+    public List<Detallepago> getDetallepagoList() {
+        return detallepagoList;
+    }
+
+    public void setDetallepagoList(List<Detallepago> detallepagoList) {
+        this.detallepagoList = detallepagoList;
+    }
+
     public Cliente getIdcliente() {
         return idcliente;
     }
 
     public void setIdcliente(Cliente idcliente) {
         this.idcliente = idcliente;
-    }
-
-    public Formapago getIdformapago() {
-        return idformapago;
-    }
-
-    public void setIdformapago(Formapago idformapago) {
-        this.idformapago = idformapago;
-    }
-
-    public Tipopago getIdtipopago() {
-        return idtipopago;
-    }
-
-    public void setIdtipopago(Tipopago idtipopago) {
-        this.idtipopago = idtipopago;
-    }
-
-    public String getNorecibo() {
-        return norecibo;
-    }
-
-    public void setNorecibo(String norecibo) {
-        this.norecibo = norecibo;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
     }
 
     @Override

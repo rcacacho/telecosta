@@ -83,10 +83,6 @@ public class Departamento implements Serializable {
         this.nombre = nombre;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     @XmlTransient
     public List<Municipio> getMunicipioList() {
         return municipioList;
@@ -119,6 +115,14 @@ public class Departamento implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Departamento[ iddepartamento=" + iddepartamento + " ]";
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }

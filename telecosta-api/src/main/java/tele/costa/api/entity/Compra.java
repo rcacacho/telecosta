@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Compra.findByFechacompra", query = "SELECT c FROM Compra c WHERE c.fechacompra = :fechacompra"),
     @NamedQuery(name = "Compra.findByNodocumento", query = "SELECT c FROM Compra c WHERE c.nodocumento = :nodocumento"),
     @NamedQuery(name = "Compra.findByMontocompra", query = "SELECT c FROM Compra c WHERE c.montocompra = :montocompra"),
-    @NamedQuery(name = "Compra.findByIvacreditofiscal", query = "SELECT c FROM Compra c WHERE c.ivacreditofiscal = :ivacreditofiscal"),
     @NamedQuery(name = "Compra.findByFechacreacion", query = "SELECT c FROM Compra c WHERE c.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Compra.findByUsuariocreacion", query = "SELECT c FROM Compra c WHERE c.usuariocreacion = :usuariocreacion"),
     @NamedQuery(name = "Compra.findByFechamodificacion", query = "SELECT c FROM Compra c WHERE c.fechamodificacion = :fechamodificacion"),
@@ -54,6 +53,18 @@ public class Compra implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechacompra;
 
+    @Size(max = 100)
+    @Column(name = "bienoservicio")
+    private String bienoservicio;
+
+    @Size(max = 100)
+    @Column(name = "nocomprobanteegreso")
+    private String nocomprobanteegreso;
+
+    @Size(max = 100)
+    @Column(name = "serie")
+    private String serie;
+
     @Size(max = 200)
     @Column(name = "nodocumento")
     private String nodocumento;
@@ -62,6 +73,10 @@ public class Compra implements Serializable {
     @NotNull
     @Column(name = "montocompra")
     private Integer montocompra;
+
+    @Size(max = 2000)
+    @Column(name = "descripcion")
+    private String descripcion;
 
     @Basic(optional = false)
     @NotNull
@@ -210,6 +225,38 @@ public class Compra implements Serializable {
 
     public void setIdtipodocumentocompra(Tipodocumentocompra idtipodocumentocompra) {
         this.idtipodocumentocompra = idtipodocumentocompra;
+    }
+
+    public String getBienoservicio() {
+        return bienoservicio;
+    }
+
+    public void setBienoservicio(String bienoservicio) {
+        this.bienoservicio = bienoservicio;
+    }
+
+    public String getNocomprobanteegreso() {
+        return nocomprobanteegreso;
+    }
+
+    public void setNocomprobanteegreso(String nocomprobanteegreso) {
+        this.nocomprobanteegreso = nocomprobanteegreso;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

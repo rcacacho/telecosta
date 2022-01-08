@@ -10,7 +10,7 @@ import tele.costa.api.entity.Pago;
  */
 public interface PagosBeanLocal {
 
-    List<Pago> listPagos(Date fechainicio, Date fechafin);
+    List<Pago> listPagosByFechaInicioAndFin(Date fechainicio, Date fechafin);
 
     List<Pago> listCobros(Date fechainicio, Date fechafin);
 
@@ -33,5 +33,7 @@ public interface PagosBeanLocal {
     List<Pago> listCobroByMes(String mes);
 
     Pago findPagoByIdPago(Integer idPago);
+    
+    List<Pago> listPagos();
     
 }

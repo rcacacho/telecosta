@@ -53,12 +53,12 @@ public class Municipio implements Serializable {
     @Column(name = "activo")
     private boolean activo;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
-    private List<Cliente> clienteList;
-
     @JoinColumn(name = "iddepartamento", referencedColumnName = "iddepartamento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Departamento iddepartamento;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
+    private List<Cliente> clienteList;
 
     public Municipio() {
     }
@@ -87,14 +87,6 @@ public class Municipio implements Serializable {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
-    }
-
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
     }
 
     @XmlTransient
@@ -137,6 +129,14 @@ public class Municipio implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Municipio[ idmunicipio=" + idmunicipio + " ]";
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }

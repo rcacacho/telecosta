@@ -257,14 +257,6 @@ public class Cliente implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     public Configuracionpago getIdconfiguracionpago() {
         return idconfiguracionpago;
     }
@@ -313,6 +305,14 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Cliente[ idcliente=" + idcliente + " ]";
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
 }
