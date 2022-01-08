@@ -143,7 +143,7 @@ public class ClienteBean implements ClienteBeanLocal {
     }
 
     @Override
-    public List<Cliente> ListClientesByIdMinucipio(Integer idmunicipio) {
+    public List<Cliente> ListClientesByIdMunucipio(Integer idmunicipio) {
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
                 .getResultList();
@@ -152,6 +152,90 @@ public class ClienteBean implements ClienteBeanLocal {
             return null;
         }
 
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByNombreAndSectorAndMunicipio(String nombre, String sector, Integer idmunicipio) {
+        if (sector == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.sector like :sector  and col.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
+                .setParameter("sector", '%' + sector + '%')
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByNombreAndSector(String nombre, String sector) {
+         if (nombre == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.nombres like :sector and col.sector like :sector  ", Cliente.class)
+                .setParameter("nombre", '%' + nombre + '%')
+                .setParameter("sector", '%' + sector + '%')
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByNombreAndMunicipio(String nombre, Integer idmunicipio) {
+        if (nombre == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.nombres like :sector and col.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
+                .setParameter("nombre", '%' + nombre + '%')
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesBySectorAndMunicipio(String sector, Integer idmunicipio) {
+        if (sector == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.sector like :sector and col.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
+                .setParameter("sector", '%' + sector + '%')
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesBySector(String sector) {
+        if (sector == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.sector like :sector ", Cliente.class)
+                .setParameter("sector", '%' + sector + '%')
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
         return lst;
     }
 

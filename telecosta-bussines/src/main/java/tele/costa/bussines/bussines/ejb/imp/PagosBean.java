@@ -47,7 +47,7 @@ public class PagosBean implements PagosBeanLocal {
     }
 
     @Override
-    public List<Pago> listPagos(Date fechainicio, Date fechafin) {
+    public List<Pago> listPagosByFechaInicioAndFin(Date fechainicio, Date fechafin) {
         if (fechainicio == null) {
             return null;
         }
@@ -284,6 +284,18 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst.get(0);
+    }
+
+    @Override
+    public List<Pago> listPagos() {
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idtipopago.idtipopago = 2 and pa.activo = true ", Pago.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

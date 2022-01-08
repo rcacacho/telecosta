@@ -168,32 +168,32 @@ public class ComprasBean implements ComprasBeanLocal {
     }
 
     @Override
-    public List<Compra> listCompraByFechaInicioFechaFin(Date fechaInicio, Date fechaFin) {
-        if (fechaInicio == null) {
+    public List<Compra> listCompraByFechaInicioFechaFin(Date fechainicio, Date fechafin) {
+        if (fechainicio == null) {
             return null;
         }
 
         Calendar c = Calendar.getInstance();
-        c.setTime(fechaInicio);
+        c.setTime(fechainicio);
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
-        fechaInicio = c.getTime();
+        fechainicio = c.getTime();
 
         Calendar c1 = Calendar.getInstance();
-        c1.setTime(fechaFin);
+        c1.setTime(fechafin);
         c1.set(Calendar.HOUR_OF_DAY, 23);
         c1.set(Calendar.MINUTE, 59);
         c1.set(Calendar.SECOND, 59);
-        fechaFin = c1.getTime();
+        fechafin = c1.getTime();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sdf.format(fechaInicio);
-        sdf.format(fechaFin);
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
 
         List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin ", Compra.class)
-                .setParameter("fechacompra", fechaInicio)
-                .setParameter("fechacompra", fechaFin)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
