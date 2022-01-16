@@ -34,11 +34,13 @@ public interface PagosBeanLocal {
     List<Pago> listCobroByMes(String mes);
 
     Pago findPagoByIdPago(Integer idPago);
-    
+
     List<Pago> listPagos();
-    
+
     Detallepago saveDetallepago(Detallepago detalle);
-    
+
     List<Detallepago> listDetallePago(Integer idPago);
-    
+
+    Pago updatePago(Pago pago);
+
 }

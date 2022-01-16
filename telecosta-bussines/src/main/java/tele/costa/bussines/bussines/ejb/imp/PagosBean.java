@@ -335,4 +335,22 @@ public class PagosBean implements PagosBeanLocal {
         return lst;
     }
 
+    @Override
+    public Pago updatePago(Pago pago) {
+        try {
+            em.merge(pago);
+            em.flush();
+            return (pago);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
 }
