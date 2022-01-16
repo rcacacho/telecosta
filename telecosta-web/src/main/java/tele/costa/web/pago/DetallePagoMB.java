@@ -10,6 +10,7 @@ import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -39,6 +40,15 @@ public class DetallePagoMB implements Serializable {
 
     public void editar() {
         JsfUtil.redirectTo("/pagos/editar.xhtml?idpago=" + idPago);
+    }
+
+    public boolean root() {
+        if (SesionUsuarioMB.getRootUsuario()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /*Metodos getters y setters*/

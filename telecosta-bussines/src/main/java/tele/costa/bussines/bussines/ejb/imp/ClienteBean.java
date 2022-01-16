@@ -174,7 +174,7 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientesByNombreAndSector(String nombre, String sector) {
-         if (nombre == null) {
+        if (nombre == null) {
             return null;
         }
 
@@ -236,6 +236,18 @@ public class ClienteBean implements ClienteBeanLocal {
         if (lst == null || lst.isEmpty()) {
             return null;
         }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> listClientesByInMunucipio() {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio in (6,7) ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
         return lst;
     }
 
