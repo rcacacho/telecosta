@@ -319,4 +319,20 @@ public class PagosBean implements PagosBeanLocal {
         }
     }
 
+    @Override
+    public List<Detallepago> listDetallePago(Integer idpago) {
+        if (idpago == null) {
+            return null;
+        }
+
+        List<Detallepago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idpago =:idpago ", Detallepago.class)
+                .setParameter("idpago", idpago)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
 }

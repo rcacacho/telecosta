@@ -39,4 +39,6 @@ public interface PagosBeanLocal {
     
     Detallepago saveDetallepago(Detallepago detalle);
     
+    List<Detallepago> listDetallePago(Integer idPago);
+    
 }

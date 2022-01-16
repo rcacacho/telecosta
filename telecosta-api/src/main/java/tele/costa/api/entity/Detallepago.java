@@ -54,8 +54,6 @@ public class Detallepago implements Serializable {
     @Column(name = "serie")
     private String serie;
 
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "nofactura")
     private String nofactura;

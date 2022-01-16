@@ -84,19 +84,55 @@
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
-
-                <p:row>
-                    <p:column >
-                        <p:outputLabel value="Tipo de Pago:" styleClass="colorTitulo" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column>
-                        <p:outputLabel value="#{detallePagoMB.pago.idformapago.forma}" style="font-size: 16px!important;"/>
-                    </p:column>
-                </p:row>
             </p:panelGrid>
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="2. Detalle del pago" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:dataTable id="dt_pago" var="col" value="#{detallePagoMB.listDetalle}"
+                         emptyMessage="No hay detalles registrados" 
+                         styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                         rows="10" paginator="#{detallePagoMB.listDetalle.size()>5}"  paginatorPosition="bottom">
+
+                <p:column headerText="No." style="width: 5%;">
+                    #{rowId+1}
+                </p:column>
+
+                <p:column headerText="Forma Pago" width="25%" >
+                    <p:outputLabel value="#{col.idformapago.forma}"/>
+                </p:column>
+
+                <p:column headerText="No. Factura" width="20%" >
+                    <p:outputLabel value="#{col.nofactura}"/>
+                </p:column>
+
+                <p:column headerText="Serie" width="20%" >
+                    <p:outputLabel value="#{col.serie}"/>
+                </p:column>
+
+                <p:column headerText="Monto Pagado" width="20%" >
+                    <p:outputLabel value="#{col.montopagado}"/>
+                </p:column>
+
+                <p:column headerText="Monto Cobrado" width="20%" >
+                    <p:outputLabel value="#{col.montocobrado}"/>
+                </p:column>
+
+                <p:column width="15%" exportable="false" >
+                    <h:commandLink action="#{listaPagosMB.detalle(col.idpago)}" style="text-decoration: none;">
+                        <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                    </h:commandLink>
+                </p:column>
+            </p:dataTable>
+
         </h:form>
     </ui:define>
 </ui:composition>
