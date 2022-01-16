@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.PagosBeanLocal;
+import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 
 /**
@@ -296,6 +297,26 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst;
+    }
+
+    @Override
+    public Detallepago saveDetallepago(Detallepago detalle) {
+        try {
+            detalle.setActivo(true);
+            detalle.setFechacreacion(new Date());
+            em.persist(detalle);
+            em.flush();
+            return (detalle);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
     }
 
 }

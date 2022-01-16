@@ -69,7 +69,7 @@ public class Tipopago implements Serializable {
     private boolean activo;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
-    private List<Detallepago> detallepagoList;
+    private List<Pago> pagoList;
 
     public Tipopago() {
     }
@@ -152,12 +152,12 @@ public class Tipopago implements Serializable {
     }
 
     @XmlTransient
-    public List<Detallepago> getDetallepagoList() {
-        return detallepagoList;
+    public List<Pago> getPagoList() {
+        return pagoList;
     }
 
-    public void setDetallepagoList(List<Detallepago> detallepagoList) {
-        this.detallepagoList = detallepagoList;
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 
 }

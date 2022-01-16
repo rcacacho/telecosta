@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Detallepago.findByNofactura", query = "SELECT d FROM Detallepago d WHERE d.nofactura = :nofactura"),
     @NamedQuery(name = "Detallepago.findByFechapago", query = "SELECT d FROM Detallepago d WHERE d.fechapago = :fechapago"),
     @NamedQuery(name = "Detallepago.findByMontocobrado", query = "SELECT d FROM Detallepago d WHERE d.montocobrado = :montocobrado"),
-    @NamedQuery(name = "Detallepago.findByNontopagado", query = "SELECT d FROM Detallepago d WHERE d.nontopagado = :nontopagado"),
+    @NamedQuery(name = "Detallepago.findByMontopagado", query = "SELECT d FROM Detallepago d WHERE d.montopagado = :montopagado"),
     @NamedQuery(name = "Detallepago.findByTotal", query = "SELECT d FROM Detallepago d WHERE d.total = :total"),
     @NamedQuery(name = "Detallepago.findByFechacreacion", query = "SELECT d FROM Detallepago d WHERE d.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Detallepago.findByUsuariocreacion", query = "SELECT d FROM Detallepago d WHERE d.usuariocreacion = :usuariocreacion"),
@@ -49,65 +49,61 @@ public class Detallepago implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddetallepago")
     private Integer iddetallepago;
-    
+
     @Size(max = 100)
     @Column(name = "serie")
     private String serie;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "nofactura")
     private String nofactura;
-    
+
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
-    
+
     @Column(name = "montocobrado")
     private Integer montocobrado;
-    
-    @Column(name = "nontopagado")
-    private Integer nontopagado;
-    
+
+    @Column(name = "montopagado")
+    private Integer montopagado;
+
     @Column(name = "total")
     private Integer total;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     private Integer fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idformapago", referencedColumnName = "idformapago")
     @ManyToOne(fetch = FetchType.LAZY)
     private Formapago idformapago;
-    
+
     @JoinColumn(name = "idpago", referencedColumnName = "idpago")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pago idpago;
-    
-    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Tipopago idtipopago;
 
     public Detallepago() {
     }
@@ -164,12 +160,12 @@ public class Detallepago implements Serializable {
         this.montocobrado = montocobrado;
     }
 
-    public Integer getNontopagado() {
-        return nontopagado;
+    public Integer getMontopagado() {
+        return montopagado;
     }
 
-    public void setNontopagado(Integer nontopagado) {
-        this.nontopagado = nontopagado;
+    public void setMontopagado(Integer montopagado) {
+        this.montopagado = montopagado;
     }
 
     public Integer getTotal() {
@@ -236,14 +232,6 @@ public class Detallepago implements Serializable {
         this.idpago = idpago;
     }
 
-    public Tipopago getIdtipopago() {
-        return idtipopago;
-    }
-
-    public void setIdtipopago(Tipopago idtipopago) {
-        this.idtipopago = idtipopago;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -268,5 +256,5 @@ public class Detallepago implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Detallepago[ iddetallepago=" + iddetallepago + " ]";
     }
-    
+
 }

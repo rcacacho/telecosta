@@ -50,7 +50,6 @@ public class LoginMB implements Serializable {
             session.setAttribute("idusuario", usu.getIdusuario());
             session.setAttribute("root", usu.getRoot());
             session.setAttribute("rol", usu.getTipousuario());
-            
             if (usu.getIdmunicipio() != null) {
                 session.setAttribute("idmunicipio", usu.getIdmunicipio().getIdmunicipio());
             }

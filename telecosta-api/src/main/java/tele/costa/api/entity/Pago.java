@@ -51,54 +51,60 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpago")
     private Integer idpago;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
     private int anio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
-    
+
     @Column(name = "total")
     private Integer total;
+
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpago", fetch = FetchType.LAZY)
     private List<Detallepago> detallepagoList;
-    
+
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
+
+    @JoinColumn(name = "idtipopago", referencedColumnName = "idtipopago")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Tipopago idtipopago;
 
     public Pago() {
     }
@@ -194,6 +200,14 @@ public class Pago implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public Tipopago getIdtipopago() {
+        return idtipopago;
+    }
+
+    public void setIdtipopago(Tipopago idtipopago) {
+        this.idtipopago = idtipopago;
     }
 
     @XmlTransient

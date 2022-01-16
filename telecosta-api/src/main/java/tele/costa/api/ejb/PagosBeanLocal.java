@@ -2,6 +2,7 @@ package tele.costa.api.ejb;
 
 import java.util.Date;
 import java.util.List;
+import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 
 /**
@@ -35,5 +36,7 @@ public interface PagosBeanLocal {
     Pago findPagoByIdPago(Integer idPago);
     
     List<Pago> listPagos();
+    
+    Detallepago saveDetallepago(Detallepago detalle);
     
 }
