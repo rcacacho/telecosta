@@ -42,7 +42,7 @@ public class DetallePagoMB implements Serializable {
         JsfUtil.redirectTo("/pagos/editar.xhtml?idpago=" + idPago);
     }
 
-    public boolean root() {
+    public boolean obtenerRoot() {
         if (SesionUsuarioMB.getRootUsuario()) {
             return true;
         } else {

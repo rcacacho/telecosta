@@ -93,8 +93,14 @@
                         <p:outputLabel value="#{col.idmunicipio.municipio}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha registro" width="22%" >
-                        <p:outputLabel value="#{col.fechacreacion}">
+                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
+                        <p:outputLabel value="#{col.fechainicioservicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    
+                     <p:column headerText="Fecha Ultimo Pago" width="20%" >
+                         <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>

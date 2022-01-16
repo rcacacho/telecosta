@@ -2,6 +2,7 @@ package tele.costa.web.cliente;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -10,8 +11,10 @@ import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
+import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -29,6 +32,8 @@ public class ListaClienteMB implements Serializable {
     private ClienteBeanLocal clienteBean;
     @EJB
     private CatalogoBeanLocal catalogoBean;
+    @EJB
+    private PagosBeanLocal pagosBean;
 
     private List<Cliente> listCliente;
     private String nombre;
@@ -45,7 +50,7 @@ public class ListaClienteMB implements Serializable {
         if (SesionUsuarioMB.getRootUsuario()) {
             listCliente = clienteBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-              listCliente = clienteBean.listClientesByInMunucipio();
+            listCliente = clienteBean.listClientesByInMunucipio();
         } else {
             listCliente = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
         }
@@ -132,6 +137,14 @@ public class ListaClienteMB implements Serializable {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
 
+    public Date obtenerUltimoPago(Integer idcliente) {
+        Pago response = pagosBean.findUltimoPago(idcliente);
+        if (response != null) {
+            return response.getFechapago();
+        } else {
+            return null;
+        }
+    }
 
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {

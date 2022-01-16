@@ -289,8 +289,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public List<Pago> listPagos() {
-
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idtipopago.idtipopago = 2 and pa.activo = true ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idtipopago.idtipopago = 2 and pa.activo = true  order by pa.fechapago desc", Pago.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -351,6 +350,49 @@ public class PagosBean implements PagosBeanLocal {
             context.setRollbackOnly();
             return null;
         }
+    }
+
+    @Override
+    public List<Pago> listPagosByIdMunicipio(Integer idmunicicpio) {
+        if (idmunicicpio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idmunicicpio  order by pa.fechapago desc", Pago.class)
+                .setParameter("idmunicicpio", idmunicicpio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByInIdMunicipios() {
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (6,7) order by pa.fechapago desc", Pago.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public Pago findUltimoPago(Integer idcliente) {
+        if (idcliente == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("idcliente", idcliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }

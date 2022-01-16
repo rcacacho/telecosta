@@ -111,6 +111,10 @@
                     <p:column headerText="Total adeudado" width="20%" >
                         <p:outputLabel value="#{col.total}"/>
                     </p:column>
+                    
+                    <p:column headerText="Usuario registro" width="15%" >
+                        <p:outputLabel value="#{col.usuariocreacion}"/>
+                    </p:column>
 
                     <p:column width="15%" exportable="false" >
                         <h:commandLink action="#{listaPagosMB.detalle(col.idpago)}" style="text-decoration: none;">

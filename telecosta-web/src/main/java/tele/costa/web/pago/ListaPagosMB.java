@@ -14,6 +14,7 @@ import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -48,8 +49,15 @@ public class ListaPagosMB implements Serializable {
         Date fInicio = new Date();
         Date fFin = new Date();
 
-        listPago = pagosBean.listPagos();
-        listClientes = clienteBean.ListClientes();
+        if (SesionUsuarioMB.getRootUsuario()) {
+            listClientes = clienteBean.ListClientes();
+            listPago = pagosBean.listPagos();
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
+            listClientes = clienteBean.listClientesByInMunucipio();
+        } else {
+            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+            listPago = pagosBean.listPagosByInIdMunicipios();
+        }
     }
 
     public void buscarPago() {

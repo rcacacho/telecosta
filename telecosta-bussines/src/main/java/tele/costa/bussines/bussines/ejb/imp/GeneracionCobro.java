@@ -77,11 +77,13 @@ public class GeneracionCobro {
                     Pago cobro = new Pago();
                     cobro.setAnio(an);
                     cobro.setMes(mes);
-                    //cobro.set (cc.getIdconfiguracionpago().getValor());
+                    cobro.setTotal(cc.getIdconfiguracionpago().getValor());
                     cobro.setIdtipopago(tipo);
                     cobro.setUsuariocreacion("Cobro automatico");
                     cobro.setIdcliente(cc);
                     Pago responseCobro = pagoBean.saveCobro(cobro);
+                    
+                    
                 }
             }
         }

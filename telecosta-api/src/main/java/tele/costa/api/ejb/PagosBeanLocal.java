@@ -43,4 +43,10 @@ public interface PagosBeanLocal {
 
     Pago updatePago(Pago pago);
 
+    List<Pago> listPagosByIdMunicipio(Integer idmunicicpio);
+    
+    List<Pago> listPagosByInIdMunicipios();
+    
+    Pago findUltimoPago (Integer idcliente);
+
 }
