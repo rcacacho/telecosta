@@ -29,35 +29,16 @@
 
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="anio" value="#{registroPagoMB.pago.anio}" style="width:250px;" 
-                                                 filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un año" >
-                                    <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="2020" itemValue="2020" />
-                                    <f:selectItem itemLabel="2021" itemValue="2021" />
-                                    <f:selectItem itemLabel="2022" itemValue="2022" />
-                                    <f:selectItem itemLabel="2023" itemValue="2023" />
-                                    <f:selectItem itemLabel="2024" itemValue="2024" />
-                                </p:selectOneMenu>
+                                <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroMultiPagoMB.fechaFin}" navigator="true">  
+                                    <p:ajax event="dateSelect" process="@this" />
+                                </p:calendar>
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="mes" value="#{registroPagoMB.pago.mes}" style="width:250px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un municipio" >
-                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItem itemLabel="Enero" itemValue="Enero" />
-                                    <f:selectItem itemLabel="Febrero" itemValue="Febrero" />
-                                    <f:selectItem itemLabel="Marzo" itemValue="Marzo" />
-                                    <f:selectItem itemLabel="Abril" itemValue="Abril" />
-                                    <f:selectItem itemLabel="Mayo" itemValue="Mayo" />
-                                    <f:selectItem itemLabel="Junio" itemValue="Junio" />
-                                    <f:selectItem itemLabel="Julio" itemValue="Julio" />
-                                    <f:selectItem itemLabel="Agosto" itemValue="Agosto" />
-                                    <f:selectItem itemLabel="Septiembre" itemValue="Septiembre" />
-                                    <f:selectItem itemLabel="Octubre" itemValue="Octubre" />
-                                    <f:selectItem itemLabel="Noviembre" itemValue="Noviembre" />
-                                    <f:selectItem itemLabel="Diciembre" itemValue="Diciembre" />
-                                </p:selectOneMenu>
+                                <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroMultiPagoMB.fechaFin}" navigator="true">  
+                                    <p:ajax event="dateSelect" process="@this" />
+                                </p:calendar>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -70,21 +51,21 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="reg" value="#{registroPagoMB.municipioSelected}" style="width: 250px;" 
+                                <p:selectOneMenu id="reg" value="#{registroMultiPagoMB.municipioSelected}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccionar un municipio" >
-                                    <p:ajax  listener="#{registroPagoMB.cargarClientesMunicipios()}" update="cl" />
+                                    <p:ajax  listener="#{registroMultiPagoMB.cargarClientesMunicipios()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listMunicipios}"  var="reg" itemLabel="#{reg.municipio}" itemValue="#{reg}"/>
+                                    <f:selectItems value="#{registroMultiPagoMB.listMunicipios}"  var="reg" itemLabel="#{reg.municipio}" itemValue="#{reg}"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column  >
-                                <p:selectOneMenu id="cl" value="#{registroPagoMB.cliente}" style="width: 250px;" 
+                                <p:selectOneMenu id="cl" value="#{registroMultiPagoMB.cliente}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccion cliente" >
-                                    <p:ajax  listener="#{registroPagoMB.cargarCliente()}" update="cl" />
+                                    <p:ajax  listener="#{registroMultiPagoMB.cargarCliente()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroMultiPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>   
                         </p:row>
@@ -98,11 +79,11 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.nofactura}" size="35" style="font-size: 16px!important;"/>
+                                <p:inputText value="#{registroMultiPagoMB.detalle.nofactura}" size="35" style="font-size: 16px!important;"/>
 
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.serie}" size="35" style="font-size: 16px!important;"/>
+                                <p:inputText value="#{registroMultiPagoMB.detalle.serie}" size="35" style="font-size: 16px!important;"/>
 
                             </p:column>
                         </p:row>
@@ -117,24 +98,24 @@
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="tipo" value="#{registroPagoMB.detalle.idformapago}" style="width: 250px;" 
+                                <p:selectOneMenu id="tipo" value="#{registroMultiPagoMB.detalle.idformapago}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes selecciona una forma de pago" >
                                     <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroMultiPagoMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroPagoMB.pago.total}" size="35" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroMultiPagoMB.pago.total}" size="35" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar una cantidad"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroPagoMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
+                        <p:commandButton value="Guardar" action="#{registroMultiPagoMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{registroPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroMultiPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
             </div>
