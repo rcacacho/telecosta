@@ -14,7 +14,7 @@
             <p:submenu label="Pagos" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/pagos/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/pagos/registro.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Registro" outcome="/pagos/registroMultiple.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro Multiple" outcome="/pagos/registroMultiple.xhtml" style="width: 90px;"/>
             </p:submenu>
 
             <p:submenu label="Cobros" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  

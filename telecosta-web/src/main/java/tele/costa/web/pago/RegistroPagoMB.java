@@ -73,9 +73,14 @@ public class RegistroPagoMB implements Serializable {
             actualizacionPago.setAnio(pago.getAnio());
             actualizacionPago.setMes(pago.getMes());
             actualizacionPago.setIdcliente(cliente);
-            
-            Integer total = cliente.getIdconfiguracionpago().getValor() - pago.getTotal();
-            actualizacionPago.setTotal(total);
+            actualizacionPago.setFechapago(new Date());
+
+            Integer total = cliente.getIdconfiguracionpago().getValor();
+
+            if (pago.getTotal() != null) {
+                pago.setTotal(total - pago.getTotal());
+            }
+
             Pago updatePago = pagosBean.updatePago(actualizacionPago);
 
             detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());

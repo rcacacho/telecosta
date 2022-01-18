@@ -3,6 +3,7 @@ package tele.costa.web.pago;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,54 +73,73 @@ public class RegistroMultiPagoMB implements Serializable {
     public void savePago() throws IOException {
         LocalDate startDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        ZoneId defaultZoneId = ZoneId.systemDefault();
 
         Integer count = 0;
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
             count++;
-        }
-
-        Pago responseVerificacion = pagosBean.findPagoByIdClienteAndAnioAndMes(cliente.getIdcliente(), pago.getAnio(), pago.getMes());
-        if (responseVerificacion != null) {
-            Pago actualizacionPago = new Pago();
-            actualizacionPago = responseVerificacion;
-            actualizacionPago.setAnio(pago.getAnio());
-            actualizacionPago.setMes(pago.getMes());
-            actualizacionPago.setIdcliente(cliente);
-
-            Integer total = cliente.getIdconfiguracionpago().getValor() - pago.getTotal();
-            actualizacionPago.setTotal(total);
-            Pago updatePago = pagosBean.updatePago(actualizacionPago);
-
-            detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
-            detalle.setMontopagado(pago.getTotal());
-            detalle.setIdpago(actualizacionPago);
-            Detallepago responseDet = pagosBean.saveDetallepago(detalle);
-
-            JsfUtil.addSuccessMessage("El pago se registro exitosamente");
-            pago = null;
-            cliente = null;
-            detalle = null;
-            return;
-        } else {
-            pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
-            tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.PAGO.getId());
-            pago.setIdcliente(cliente);
-            pago.setIdtipopago(tipoPago);
-            pago.setFechapago(new Date());
-            Pago responsePago = pagosBean.savePago(pago);
-            if (responsePago != null) {
-                detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
-                detalle.setMontopagado(pago.getTotal());
-                detalle.setIdpago(pago);
-                Detallepago responseDet = pagosBean.saveDetallepago(detalle);
-
-                JsfUtil.addSuccessMessage("El pago se registro exitosamente");
-                pago = null;
-                cliente = null;
-                detalle = null;
-                return;
+            if (count.equals(1)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
+            } else if (count.equals(30)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
+            } else if (count.equals(60)) {
+                //registrarPago();
+                System.out.println("entro al pago 3");
+            } else if (count.equals(90)) {
+                //registrarPago();
+                System.out.println("entro al pago 4");
+            } else if (count.equals(120)) {
+                //registrarPago();
+                System.out.println("entro al pago 5");
+            } else if (count.equals(150)) {
+                //registrarPago();
+                System.out.println("entro al pago 6");
+            } else if (count.equals(180)) {
+                //registrarPago();
+                System.out.println("entro al pago 7");
+            } else if (count.equals(210)) {
+                //registrarPago();
+                System.out.println("entro al pago 8");
+            } else if (count.equals(240)) {
+                //registrarPago();
+            } else if (count.equals(270)) {
+                //registrarPago();
+            } else if (count.equals(300)) {
+                //registrarPago();
+            } else if (count.equals(330)) {
+                //registrarPago();
+            } else if (count.equals(360)) {
+                //registrarPago();
+            } else if (count.equals(390)) {
+                //registrarPago();
+            } else if (count.equals(420)) {
+                //registrarPago();
+            } else if (count.equals(450)) {
+                //registrarPago();
+            } else if (count.equals(480)) {
+                //registrarPago();
+            } else if (count.equals(510)) {
+                //registrarPago();
+            } else if (count.equals(540)) {
+                //registrarPago();
+            } else if (count.equals(570)) {
+                //registrarPago();
+            } else if (count.equals(600)) {
+                //registrarPago();
+            } else if (count.equals(630)) {
+                //registrarPago();
+            } else if (count.equals(660)) {
+                //registrarPago();
             }
         }
+
+        pago = null;
+        cliente = null;
+        detalle = null;
     }
 
     public void regresar() {
@@ -154,6 +174,81 @@ public class RegistroMultiPagoMB implements Serializable {
             listClientes = null;
             cliente = null;
         }
+    }
+
+    public void registrarPago(Integer anio, String mes, Date fechaPago) throws IOException {
+        Pago responseVerificacion = pagosBean.findPagoByIdClienteAndAnioAndMes(cliente.getIdcliente(), anio, mes);
+
+        if (responseVerificacion != null) {
+            Pago actualizacionPago = new Pago();
+            actualizacionPago = responseVerificacion;
+            actualizacionPago.setAnio(anio);
+            actualizacionPago.setMes(mes);
+            actualizacionPago.setIdcliente(cliente);
+            actualizacionPago.setFechapago(fechaPago);
+            Integer total = cliente.getIdconfiguracionpago().getValor();
+
+            if (pago.getTotal() != null) {
+                pago.setTotal(total - pago.getTotal());
+            }
+
+            Pago updatePago = pagosBean.updatePago(actualizacionPago);
+
+            detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
+            detalle.setMontopagado(pago.getTotal());
+            detalle.setIdpago(actualizacionPago);
+            Detallepago responseDet = pagosBean.saveDetallepago(detalle);
+
+            JsfUtil.addSuccessMessage("El pago se registro exitosamente");
+            return;
+        } else {
+            pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
+            tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.PAGO.getId());
+            pago.setIdcliente(cliente);
+            pago.setIdtipopago(tipoPago);
+            pago.setAnio(anio);
+            pago.setMes(mes);
+            pago.setFechapago(fechaPago);
+            Pago responsePago = pagosBean.savePago(pago);
+            if (responsePago != null) {
+                detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
+                detalle.setMontopagado(pago.getTotal());
+                detalle.setIdpago(pago);
+                Detallepago responseDet = pagosBean.saveDetallepago(detalle);
+
+                JsfUtil.addSuccessMessage("El pago se registro exitosamente");
+                return;
+            }
+        }
+    }
+
+    public String obtenerMes(Integer mes) {
+        if (mes.equals(1)) {
+            return "enero";
+        } else if (mes.equals(2)) {
+            return "febrero";
+        } else if (mes.equals(3)) {
+            return "marzo";
+        } else if (mes.equals(4)) {
+            return "abril";
+        } else if (mes.equals(5)) {
+            return "mayo";
+        } else if (mes.equals(6)) {
+            return "junio";
+        } else if (mes.equals(7)) {
+            return "julio";
+        } else if (mes.equals(8)) {
+            return "agosto";
+        } else if (mes.equals(9)) {
+            return "septiembre";
+        } else if (mes.equals(10)) {
+            return "octubre";
+        } else if (mes.equals(11)) {
+            return "noviembre";
+        } else if (mes.equals(12)) {
+            return "diciembre";
+        }
+        return null;
     }
 
     /*Metodos getters y setters*/

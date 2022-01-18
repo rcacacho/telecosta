@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="pageTitle">
-        Registro de Pago
+        Registro de Pago Multiple
     </ui:define>
 
     <ui:define name="content">
@@ -29,8 +29,8 @@
 
                         <p:row>
                             <p:column>
-                                <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                            value="#{registroMultiPagoMB.fechaFin}" navigator="true">  
+                                <p:calendar id="cal_inicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroMultiPagoMB.fechaInicio}" navigator="true">  
                                     <p:ajax event="dateSelect" process="@this" />
                                 </p:calendar>
                             </p:column>

@@ -12,6 +12,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Tipopago;
 import tele.costa.api.enums.TipoPagoEnum;
@@ -33,7 +34,7 @@ public class GeneracionCobro {
     private CatalogoBeanLocal catalogoBean;
 
     @Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
-  //@Schedule(second = "0", minute = "40", hour = "*", persistent = false)
+    //@Schedule(second = "0", minute = "40", hour = "*", persistent = false)
     public void registroCobro() {
         List<Cliente> response = clienteBean.ListClientes();
         if (response.size() > 0) {
@@ -82,8 +83,14 @@ public class GeneracionCobro {
                     cobro.setUsuariocreacion("Cobro automatico");
                     cobro.setIdcliente(cc);
                     Pago responseCobro = pagoBean.saveCobro(cobro);
-                    
-                    
+
+                    Detallepago detalle = new Detallepago();
+                    detalle.setIdpago(cobro);
+                    detalle.setMontocobrado(cc.getIdconfiguracionpago().getValor());
+                    detalle.setUsuariocreacion("Cobro automatico");
+                    detalle.setTotal(cc.getIdconfiguracionpago().getValor());
+                    Detallepago responseDetalle = pagoBean.saveDetallepago(detalle);
+
                 }
             }
         }
