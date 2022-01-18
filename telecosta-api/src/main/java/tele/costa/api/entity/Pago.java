@@ -55,7 +55,7 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
-    private int anio;
+    private Integer anio;
 
     @Basic(optional = false)
     @NotNull
@@ -130,11 +130,11 @@ public class Pago implements Serializable {
         this.idpago = idpago;
     }
 
-    public int getAnio() {
+    public Integer getAnio() {
         return anio;
     }
 
-    public void setAnio(int anio) {
+    public void setAnio(Integer anio) {
         this.anio = anio;
     }
 

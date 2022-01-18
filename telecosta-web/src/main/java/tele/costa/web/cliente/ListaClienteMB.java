@@ -137,10 +137,11 @@ public class ListaClienteMB implements Serializable {
         JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + id);
     }
 
-    public Date obtenerUltimoPago(Integer idcliente) {
+    public String obtenerUltimoPago(Integer idcliente) {
         Pago response = pagosBean.findUltimoPago(idcliente);
         if (response != null) {
-            return response.getFechapago();
+            String a = new StringBuilder(response.getAnio().toString()).append("-").append(response.getMes()).toString();
+            return a;
         } else {
             return null;
         }

@@ -107,6 +107,10 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
+                    
+                    <p:column headerText="Ultimo pago" width="25%" >
+                        <p:outputLabel value="#{col.anio} - #{col.mes}"/>
+                    </p:column>
 
                     <p:column headerText="Total adeudado" width="20%" >
                         <p:outputLabel value="#{col.total}"/>
