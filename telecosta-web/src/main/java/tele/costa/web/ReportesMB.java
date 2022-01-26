@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -41,9 +42,11 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Usuario;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.ReportFormat;
@@ -67,6 +70,8 @@ public class ReportesMB implements Serializable {
     private PagosBeanLocal pagosBean;
     @EJB
     private ClienteBeanLocal clienteBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private Date fechaIncio;
     private Date fechaFin;
@@ -75,10 +80,19 @@ public class ReportesMB implements Serializable {
     private final String LOGO = "logo.jpeg";
     private String realPath;
     private String dirSeparator;
+    private Date fechaIncioUsuario;
+    private Date fechaFinUsuario;
+    private Usuario selectedUsuario;
+    private List<Usuario> listUsuarios;
 
     public ReportesMB() {
         fechaIncio = null;
         fechaFin = null;
+    }
+
+    @PostConstruct
+    void cargarDatos() {
+        listUsuarios = catalogoBean.listaUsuarios();
     }
 
     public StreamedContent generarPdfPago() {
@@ -484,6 +498,52 @@ public class ReportesMB implements Serializable {
         }
     }
 
+    public StreamedContent generarPdfPagoUsuario() {
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(fechaIncioUsuario);
+            c.set(Calendar.HOUR_OF_DAY, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+            fechaIncioUsuario = c.getTime();
+
+            Calendar c1 = Calendar.getInstance();
+            c1.setTime(fechaFinUsuario);
+            c1.set(Calendar.HOUR_OF_DAY, 23);
+            c1.set(Calendar.MINUTE, 59);
+            c1.set(Calendar.SECOND, 59);
+            fechaFinUsuario = c1.getTime();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.format(fechaIncioUsuario);
+            sdf.format(fechaFinUsuario);
+
+            ReportFormat format = ReportFormat.EXCEL;
+
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String realPath = servletContext.getRealPath("/");
+            String nombreReporte = "rptPagoUsuario";
+            String nombreArchivo = "Pagos.pdf";
+            HashMap parametros = new HashMap();
+            parametros.put("IMAGE", "logo.jpeg");
+            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
+            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
+            parametros.put("FECHA_INICIO", fechaIncioUsuario);
+            parametros.put("FECHA_FIN", fechaFinUsuario);
+            parametros.put("USUARIOS", selectedUsuario.getUsuario());
+
+            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
+            StreamedContent streamedContent;
+            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
+            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
+            return streamedContent;
+        } catch (Exception ex) {
+            log.error(ex);
+            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+        }
+        return null;
+    }
+
     /*Metodos getters y setters*/
     public Date getFechaIncio() {
         return fechaIncio;
@@ -523,6 +583,38 @@ public class ReportesMB implements Serializable {
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public Date getFechaIncioUsuario() {
+        return fechaIncioUsuario;
+    }
+
+    public void setFechaIncioUsuario(Date fechaIncioUsuario) {
+        this.fechaIncioUsuario = fechaIncioUsuario;
+    }
+
+    public Date getFechaFinUsuario() {
+        return fechaFinUsuario;
+    }
+
+    public void setFechaFinUsuario(Date fechaFinUsuario) {
+        this.fechaFinUsuario = fechaFinUsuario;
+    }
+
+    public List<Usuario> getListUsuarios() {
+        return listUsuarios;
+    }
+
+    public void setListUsuarios(List<Usuario> listUsuarios) {
+        this.listUsuarios = listUsuarios;
+    }
+
+    public Usuario getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(Usuario selectedUsuario) {
+        this.selectedUsuario = selectedUsuario;
     }
 
 }

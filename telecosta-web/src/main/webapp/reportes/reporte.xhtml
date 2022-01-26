@@ -15,73 +15,83 @@
         <h:form id="frm_content">
             <div align="center">
                 <ui:define name="pageTitle">
-                    <h1 style="margin: 0 0 0 0;">Reportes</h1>            
+                    <h1 style="margin: 0 0 0 0;">Reporte</h1>            
                 </ui:define>
 
-                <h3 style="margin-right: 190px;">Reporte de pagos</h3>
+                <table>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <div class="menu-perfil" style="display: inline-block; width: 250px; height: auto; margin-right: 20px;">
+                                <h:form>
+                                    <ui:insert name="menu-perfil">
+                                        <ui:include src="/templates/menu-reportes.xhtml" >
+                                            <ui:param name="formulario" value="1" />
+                                        </ui:include>
+                                    </ui:insert>
+                                </h:form>
+                            </div>     
+                        </td>
+                        <td style="vertical-align: top; margin-left: 20px;">
+                            <div>
+                                <h4 style="margin-right: 190px;">Reporte de pagos</h4>
+                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
 
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
-                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteMB.fechaIncio}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
 
-                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaIncio}" navigator="true">  
-                        <p:ajax event="dateSelect" process="@this" />
-                    </p:calendar>
+                                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteMB.fechaFin}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
 
-                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaFin}" navigator="true">  
-                        <p:ajax event="dateSelect" process="@this" />
-                    </p:calendar>
+                                    <p:commandButton value="Imprimir" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.generarPdfPago()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
 
-                </p:panelGrid>
+                                <h4 style="margin-right: 190px;">Reporte de pagos por usuario</h4>
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Usuario:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
 
-                <p:panelGrid columns="1" styleClass="no-border">
-                    <p:commandButton value="Imprimir" style="float: left;"
-                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                     immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.generarPdfPago()}"/>
-                    </p:commandButton>
-                </p:panelGrid>
-                <br/>
-                <h3 style="margin-right: 190px;">Reporte de cobros</h3>
+                                    <p:calendar id="cal_fechaInicioUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteMB.fechaIncioUsuario}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
 
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
-                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:calendar id="cal_fechaFinUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteMB.fechaFinUsuario}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
 
-                    <p:calendar id="cal_fechaInicioCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaIncioCobro}" navigator="true">  
-                        <p:ajax event="dateSelect" process="@this" />
-                    </p:calendar>
+                                    <p:selectOneMenu id="cl" value="#{reporteMB.selectedUsuario}" style="width: 250px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax  update="cl" />
+                                        <f:selectItem itemLabel="(selecciona un usuario)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteMB.listUsuarios}"  var="mun" itemLabel="#{mun.usuario}" itemValue="#{mun}"/>
+                                    </p:selectOneMenu>
 
-                    <p:calendar id="cal_fechaFinCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaFinCobro}" navigator="true">  
-                        <p:ajax event="dateSelect" process="@this" />
-                    </p:calendar>
-                </p:panelGrid>
-
-                <p:panelGrid columns="1" styleClass="no-border">
-                    <p:commandButton value="Imprimir" style="float: left;"
-                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                     immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.generarPdfCobro()}"/>
-                    </p:commandButton>
-                </p:panelGrid>
-                
-                <br/>
-                <h3 style="margin-right: 190px;">Reporte de Clientes</h3>
-                 <p:panelGrid columns="1" styleClass="no-border">
-                    <p:commandButton value="Imprimir" style="float: left;"
-                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                     immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteMB.imprimirExcelCliente()}"/>
-                    </p:commandButton>
-                </p:panelGrid>
-                
+                                    <p:commandButton value="Imprimir" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.generarPdfPagoUsuario()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div> 
         </h:form>
     </ui:define>

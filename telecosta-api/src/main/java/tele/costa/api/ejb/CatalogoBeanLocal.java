@@ -10,6 +10,7 @@ import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
+import tele.costa.api.entity.Usuario;
 
 /**
  *
@@ -35,5 +36,7 @@ public interface CatalogoBeanLocal {
     List<Tipocompra> listTipoCompra();
     
     List<Formapago> listFormaPago();
+    
+    List<Usuario> listaUsuarios();
 
 }

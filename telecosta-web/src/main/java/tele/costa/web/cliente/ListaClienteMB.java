@@ -130,6 +130,8 @@ public class ListaClienteMB implements Serializable {
     public void limpiarCampos() {
         nombre = null;
         codigo = null;
+        sector = null;
+        idMunicipio = null;
         cargarDatos();
     }
 
@@ -140,7 +142,7 @@ public class ListaClienteMB implements Serializable {
     public String obtenerUltimoPago(Integer idcliente) {
         Pago response = pagosBean.findUltimoPago(idcliente);
         if (response != null) {
-            String a = new StringBuilder(response.getAnio().toString()).append("-").append(response.getMes()).toString();
+            String a = new StringBuilder(response.getMes()).append("-").append(response.getAnio().toString()).toString();
             return a;
         } else {
             return null;

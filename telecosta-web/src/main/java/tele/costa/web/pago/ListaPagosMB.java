@@ -61,7 +61,15 @@ public class ListaPagosMB implements Serializable {
     }
 
     public void buscarPago() {
-        if (idcliente != 0) {
+        if (idcliente != 0 && anio != null) {
+            List<Pago> response = pagosBean.listPagoByIdClienteAndAnio(idcliente, anio);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idcliente != 0) {
             List<Pago> response = pagosBean.listPagoByIdCliente(idcliente);
             if (response != null) {
                 listPago = response;
@@ -111,6 +119,36 @@ public class ListaPagosMB implements Serializable {
         JsfUtil.redirectTo("/pagos/detalle.xhtml?idpago=" + id);
     }
 
+    public void eliminarPago(Integer id) {
+        Pago response = pagosBean.eliminarPago(id);
+        if (response != null) {
+            buzon();
+            JsfUtil.addSuccessMessage("Se elimino el pago exitosamente");
+            return;
+        }
+
+        JsfUtil.addErrorMessage("Sucedio un error al elimnar");
+    }
+
+    public boolean obtenerRoot() {
+        if (SesionUsuarioMB.getRootUsuario()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void buzon() {
+        if (SesionUsuarioMB.getRootUsuario()) {
+            listClientes = clienteBean.ListClientes();
+            listPago = pagosBean.listPagos();
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
+            listClientes = clienteBean.listClientesByInMunucipio();
+        } else {
+            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+            listPago = pagosBean.listPagosByInIdMunicipios();
+        }
+    }
 
     /*Metodos getters y setters*/
     public List<Pago> getListPago() {

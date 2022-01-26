@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="pageTitle">
+        Registro de Cobro Multiple
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
+            <div align="center">
+
+                <p:panelGrid  id="pgPago" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Fecha Inicio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Fecha Fin:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:calendar id="cal_inicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroCobroMasivoMB.fechaInicio}" navigator="true">  
+                                    <p:ajax event="dateSelect" process="@this" />
+                                </p:calendar>
+                            </p:column>
+                            <p:column>
+                                <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroCobroMasivoMB.fechaFin}" navigator="true">  
+                                    <p:ajax event="dateSelect" process="@this" />
+                                </p:calendar>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu id="reg" value="#{registroCobroMasivoMB.municipioSelected}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un municipio" >
+                                    <p:ajax  listener="#{registroCobroMasivoMB.cargarClientesMunicipios()}" update="cl" />
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroCobroMasivoMB.listMunicipios}"  var="reg" itemLabel="#{reg.municipio}" itemValue="#{reg}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column  >
+                                <p:selectOneMenu id="cl" value="#{registroCobroMasivoMB.cliente}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccion cliente" >
+                                    <p:ajax  listener="#{registroCobroMasivoMB.cargarCliente()}" update="cl lbvalor" />
+                                    <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroCobroMasivoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </p:column>   
+                        </p:row>
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Cantidad configurada de pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel id="lbvalor" value="#{registroCobroMasivoMB.cliente.idconfiguracionpago.valor}" style="font-size: 16px!important;"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroCobroMasivoMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroCobroMasivoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -54,7 +54,7 @@ public class Configuracionpago implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "valor")
-    private int valor;
+    private Integer valor;
 
     @Basic(optional = false)
     @NotNull
@@ -181,11 +181,11 @@ public class Configuracionpago implements Serializable {
         this.clienteList = clienteList;
     }
 
-    public int getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 

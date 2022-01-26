@@ -48,7 +48,6 @@ public class DetallePagoMB implements Serializable {
         } else {
             return false;
         }
-
     }
 
     /*Metodos getters y setters*/

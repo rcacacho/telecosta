@@ -75,7 +75,7 @@
                     </p:column>
 
                     <p:column>
-                        <p:outputLabel value="#{detalleCobroMB.pago.cantidad}" style="font-size: 16px!important;" >
+                        <p:outputLabel value="#{detalleCobroMB.pago.total}" style="font-size: 16px!important;" >
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
@@ -88,7 +88,7 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleCobroMB.pago.idcliente.idconfiguracionpago.descripcion}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleCobroMB.pago.idcliente.idconfiguracionpago.descripcion} - #{detalleCobroMB.pago.idcliente.idconfiguracionpago.valor}" style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>

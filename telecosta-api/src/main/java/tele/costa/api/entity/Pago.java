@@ -66,6 +66,10 @@ public class Pago implements Serializable {
     @Column(name = "total")
     private Integer total;
 
+    @Size(max = 2000)
+    @Column(name = "observacion")
+    private String observacion;
+
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechapago;
@@ -225,6 +229,14 @@ public class Pago implements Serializable {
 
     public void setIdcliente(Cliente idcliente) {
         this.idcliente = idcliente;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     @Override

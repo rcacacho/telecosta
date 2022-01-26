@@ -20,7 +20,7 @@
 	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
 	<parameter name="FECHA_FIN" class="java.sql.Date"/>
 	<queryString>
-		<![CDATA[SELECT c.nombres, c.direccion, c.sector,  p.fechacreacion, p.cantidad, m.municipio 
+		<![CDATA[SELECT c.nombres, c.direccion, c.sector,  p.fechacreacion, p.total, m.municipio 
 FROM pago p
 JOIN cliente c on p.idcliente = c.idcliente and c.activo = 1
 JOIN municipio m on c.idmunicipio = m.idmunicipio 
@@ -49,9 +49,9 @@ and p.fechapago <= $P{FECHA_FIN}]]>
 		<property name="com.jaspersoft.studio.field.label" value="fechacreacion"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
 	</field>
-	<field name="cantidad" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
-		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+	<field name="total" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
 	</field>
 	<field name="municipio" class="java.lang.String">
@@ -263,7 +263,7 @@ and p.fechapago <= $P{FECHA_FIN}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="414" y="0" width="210" height="19" uuid="b098fb34-7973-4c40-b79f-5810eaf62c6b">

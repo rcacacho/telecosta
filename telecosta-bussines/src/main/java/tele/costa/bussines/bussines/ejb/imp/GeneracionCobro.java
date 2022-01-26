@@ -96,4 +96,14 @@ public class GeneracionCobro {
         }
     }
 
+    public void registroCobroMesAtrasado() {
+        Date fechaActual = new Date();
+        LocalDate localDate = fechaActual.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    
+        List<Pago> listPago = pagoBean.listPagos();
+        if (listPago != null){
+            
+        }
+    }
+
 }

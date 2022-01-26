@@ -19,6 +19,8 @@
 
             <p:submenu label="Cobros" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/cobros/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/cobros/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro Multiple" outcome="/cobros/registroMultiple.xhtml" style="width: 90px;"/>
             </p:submenu>
 
             <p:submenu label="Usuarios" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  

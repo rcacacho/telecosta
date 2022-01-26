@@ -78,62 +78,122 @@ public class RegistroMultiPagoMB implements Serializable {
         Integer count = 0;
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
             count++;
-            if (count.equals(1)) {
-                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
-                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
-                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
-            } else if (count.equals(30)) {
+            if (count.equals(30)) {
                 LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
                 Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
                 registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
             } else if (count.equals(60)) {
-                //registrarPago();
-                System.out.println("entro al pago 3");
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
             } else if (count.equals(90)) {
-                //registrarPago();
-                System.out.println("entro al pago 4");
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
+                System.out.println("entro al pago 3");
             } else if (count.equals(120)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
+                System.out.println("entro al pago 4");
+            } else if (count.equals(150)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
                 System.out.println("entro al pago 5");
-            } else if (count.equals(150)) {
+            } else if (count.equals(180)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
                 System.out.println("entro al pago 6");
-            } else if (count.equals(180)) {
+            } else if (count.equals(210)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
                 System.out.println("entro al pago 7");
-            } else if (count.equals(210)) {
+            } else if (count.equals(240)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
                 System.out.println("entro al pago 8");
-            } else if (count.equals(240)) {
-                //registrarPago();
             } else if (count.equals(270)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(300)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(330)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(360)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(390)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(420)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(450)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(480)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(510)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(540)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(570)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(600)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(630)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
             } else if (count.equals(660)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
                 //registrarPago();
+            } else if (count.equals(690)) {
+                LocalDate fPago = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
+                Date fechaPago = Date.from(fPago.atStartOfDay(defaultZoneId).toInstant());
+                registrarPago(date.getYear(), obtenerMes(date.getMonthValue()), fechaPago);
             }
         }
 

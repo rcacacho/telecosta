@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<ui:component 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:form>     
+
+        <h3 class="tituloDos">Catálogos Generales</h3>        
+
+        <p:menu style="background-color: white; font-size: 14px; width: 100%"> 
+
+            <p:menuitem value="Pagos" onclick="start();" style="#{formulario eq 1 ?'font-weight: bold;  background-color: #b0d5ea;  top: 50%;  font-size: 1.2em;':''}"
+                        outcome="/reportes/reporte.xhtml"/>
+
+            <p:menuitem value="Clientes" onclick="start();" style="#{formulario eq 2 ?'font-weight: bold;  background-color: #b0d5ea;  top: 50%;  font-size: 1.2em;':''}"
+                        outcome="/reportes/clientes.xhtml"/>
+
+            <p:menuitem value="Cobros" onclick="start();" style="#{formulario eq 3 ?'font-weight: bold;  background-color: #b0d5ea;  top: 50%;  font-size: 1.2em;':''}"
+                        outcome="/reportes/cobros.xhtml"/>
+
+        </p:menu>
+    </h:form>
+</ui:component>

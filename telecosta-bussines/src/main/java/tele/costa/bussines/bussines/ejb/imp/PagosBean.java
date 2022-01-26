@@ -395,4 +395,46 @@ public class PagosBean implements PagosBeanLocal {
         return lst.get(0);
     }
 
+    @Override
+    public Pago eliminarPago(Integer idpago) {
+        if (idpago == null) {
+            context.setRollbackOnly();
+            return null;
+        }
+
+        try {
+            Pago toUpdate = em.find(Pago.class, idpago);
+
+            toUpdate.setActivo(false);
+            em.merge(toUpdate);
+
+            return toUpdate;
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Pago> listPagoByIdClienteAndAnio(Integer idcliente, Integer anio) {
+       if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.idtipopago.idtipopago = 2 ", Pago.class)
+                .setParameter("idcliente", idcliente)
+                .setParameter("anio", anio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
 }
