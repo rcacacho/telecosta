@@ -27,7 +27,7 @@ public class RegistroConfiguracionMB implements Serializable {
     private Configuracionpago configuracion;
 
     public RegistroConfiguracionMB() {
-       
+       configuracion = new Configuracionpago();
     }
 
     public void regresar() {

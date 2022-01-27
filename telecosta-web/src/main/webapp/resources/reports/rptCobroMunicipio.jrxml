@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCobroMunicipio" pageWidth="922" pageHeight="612" orientation="Landscape" columnWidth="882" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3664c06d-e365-4a41-919c-4c5419485a9a">
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCobroMunicipio" pageWidth="1004" pageHeight="612" orientation="Landscape" columnWidth="964" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3664c06d-e365-4a41-919c-4c5419485a9a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="telecosta"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="303"/>
@@ -19,7 +10,7 @@
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="ID_MUNICIPIO" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, c.observacion 
+		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, p.total, c.observacion 
 FROM pago p 
 join cliente c on p.idcliente = c.idcliente and c.activo = 1 
 where p.activo =1 
@@ -45,6 +36,11 @@ order by fechapago asc]]>
 	<field name="fechapago" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="fechapago"/>
 		<property name="com.jaspersoft.studio.field.label" value="fechapago"/>
+	</field>
+	<field name="total" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
 	</field>
 	<field name="observacion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="observacion"/>
@@ -142,7 +138,7 @@ order by fechapago asc]]>
 				<text><![CDATA[ULTIMO PAGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="751" y="0" width="131" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="baf027b8-d608-4bc4-ba8e-d5c47d7686c4">
+				<reportElement mode="Opaque" x="832" y="0" width="131" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="baf027b8-d608-4bc4-ba8e-d5c47d7686c4">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -177,12 +173,30 @@ order by fechapago asc]]>
 				</textElement>
 				<text><![CDATA[CODIGO]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="751" y="0" width="81" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="52858142-57c2-4c53-a6df-6922dd22004e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box topPadding="3" leftPadding="4">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="882" height="19" backcolor="#D9DBDB" uuid="20ba2d90-3bc3-49cc-9b89-f63ee69900ee">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="964" height="19" backcolor="#D9DBDB" uuid="20ba2d90-3bc3-49cc-9b89-f63ee69900ee">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<printWhenExpression><![CDATA[new Boolean( $V{PAGE_COUNT}.intValue() % 2 ==0 )]]></printWhenExpression>
@@ -229,7 +243,7 @@ order by fechapago asc]]>
 				<textFieldExpression><![CDATA[$F{fechapago}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
-				<reportElement x="751" y="0" width="131" height="19" uuid="9266637f-0dd6-4535-b690-de6720af8e4c">
+				<reportElement x="833" y="0" width="131" height="19" uuid="9266637f-0dd6-4535-b690-de6720af8e4c">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -252,10 +266,21 @@ order by fechapago asc]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="751" y="0" width="82" height="19" uuid="f44decbc-f235-47bf-bd8b-ba5572a68917">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="3" leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="37" splitType="Stretch">
+		<band height="36" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="56" height="20" uuid="408efc1d-78ae-43bb-b39b-13af507647ed">
 					<property name="local_mesure_unitheight" value="pixel"/>

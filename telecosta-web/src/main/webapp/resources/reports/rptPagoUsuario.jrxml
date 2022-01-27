@@ -64,7 +64,7 @@ and p.usuariocreacion = $P{USUARIOS}]]>
 		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
 	</field>
 	<variable name="NO_FILA" class="java.lang.Integer">
-		<variableExpression><![CDATA[$V{NO_FILA}+1]]></variableExpression>
+		<variableExpression><![CDATA[$V{NO_FILA} + 1]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>

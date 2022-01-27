@@ -52,5 +52,7 @@ public interface PagosBeanLocal {
     Pago eliminarPago(Integer idpago);
     
     List<Pago> listPagoByIdClienteAndAnio(Integer idcliente, Integer anio);
+    
+    List<Pago> listPagosByFechaInicioAndFinandUsuario(Date fechainicio, Date fechafin, String usuario);
 
 }

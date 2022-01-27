@@ -34,9 +34,10 @@
                         <td style="vertical-align: top; margin-left: 20px;">
                             <div>
                                 <h4 style="margin-right: 190px;">Reporte de pagos</h4>
-                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
                                     <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
                                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
@@ -49,19 +50,26 @@
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
-                                    <p:commandButton value="Imprimir" style="float: left;"
+                                    <p:commandButton value="PDF" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
                                         <p:fileDownload value="#{reporteMB.generarPdfPago()}"/>
                                     </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.imprimirExcelPagos()}"/>
+                                    </p:commandButton>
                                 </p:panelGrid>
 
                                 <h4 style="margin-right: 190px;">Reporte de pagos por usuario</h4>
-                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                <p:panelGrid columns="5"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
                                     <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
                                     <p:outputLabel value="Usuario:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
                                     <p:calendar id="cal_fechaInicioUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
@@ -81,11 +89,17 @@
                                         <f:selectItems value="#{reporteMB.listUsuarios}"  var="mun" itemLabel="#{mun.usuario}" itemValue="#{mun}"/>
                                     </p:selectOneMenu>
 
-                                    <p:commandButton value="Imprimir" style="float: left;"
+                                    <p:commandButton value="PDF" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
                                         <p:fileDownload value="#{reporteMB.generarPdfPagoUsuario()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.imprimirExcelPagosUsuario()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
                             </div>
