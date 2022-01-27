@@ -60,39 +60,31 @@ public class ReporteCompraMB implements Serializable {
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
-        Sheet sheet = workbook.createSheet("REPORTE_CLIENTES");
+        Sheet sheet = workbook.createSheet("REPORTE_COMPRAS");
 
         int rownum = 0;
         int headerNum = 0;
         sheet.setColumnWidth(0, 900);
         sheet.setColumnWidth(1, 9000);
         sheet.setColumnWidth(2, 9000);
-        sheet.setColumnWidth(3, 6000);
+        sheet.setColumnWidth(3, 8000);
         sheet.setColumnWidth(4, 7000);
         sheet.setColumnWidth(5, 5000);
         sheet.setColumnWidth(6, 5000);
-        sheet.setColumnWidth(7, 5000);
+        sheet.setColumnWidth(7, 7000);
         sheet.setColumnWidth(8, 5000);
         sheet.setColumnWidth(9, 5000);
-        sheet.setColumnWidth(10, 5000);
-        sheet.setColumnWidth(11, 5000);
-        sheet.setColumnWidth(12, 11000);
-        sheet.setColumnWidth(13, 12000);
-        sheet.setColumnWidth(14, 14000);
-        sheet.setColumnWidth(15, 2000);
-        sheet.setColumnWidth(16, 6000);
-        sheet.setColumnWidth(17, 5000);
-        sheet.setColumnWidth(18, 4000);
-        sheet.setColumnWidth(19, 6000);
-        sheet.setColumnWidth(20, 6000);
-        sheet.setColumnWidth(21, 7000);
-        sheet.setColumnWidth(22, 7000);
-        sheet.setColumnWidth(23, 7000);
-        sheet.setColumnWidth(24, 19000);
+        sheet.setColumnWidth(10, 12000);
+
 
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(0, 56, 123));
         ((XSSFCellStyle) headerStyle).setFillForegroundColor(color);
+        headerStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+        
+        CellStyle headerStyleBlanco = workbook.createCellStyle();
+        XSSFColor colorBla = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) headerStyle).setFillForegroundColor(colorBla);
         headerStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 
         CellStyle cellStyle = workbook.createCellStyle();
@@ -107,7 +99,7 @@ public class ReporteCompraMB implements Serializable {
         Font fontTitulo = workbook.createFont();//Create font
         fontTitulo.setBoldweight(Font.BOLDWEIGHT_BOLD);//Make font bold
         fontTitulo.setFontName(HSSFFont.FONT_ARIAL);
-        fontTitulo.setFontHeightInPoints((short) 16);
+        fontTitulo.setFontHeightInPoints((short) 14);
         cellStyleTitulo.setFont(fontTitulo);//set it to bold
 
         CellStyle cellStyle2 = workbook.createCellStyle();
@@ -131,7 +123,7 @@ public class ReporteCompraMB implements Serializable {
             cell.setCellStyle(cellStyle);
         }
 
-        for (int i = 1; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             Fila fila = new Fila(sheet.createRow(rownum++));
             Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
             cell.setCellValue("");
@@ -147,7 +139,7 @@ public class ReporteCompraMB implements Serializable {
             cell11.setCellStyle(cellStyleTitulo);
         }
 
-        for (int i = 1; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             Fila fila = new Fila(sheet.createRow(rownum++));
             Cell cell12 = fila.getFila().createCell(fila.nextIndex().shortValue());
             cell12.setCellValue("");
@@ -181,41 +173,41 @@ public class ReporteCompraMB implements Serializable {
         //Creates a picture
         Picture pict = drawing.createPicture(anchor, pictureIdx);
         //Reset the image to the original size
-        pict.resize(0.7, 6);
+        pict.resize(0.6, 4);
 
         Cell celda0 = encabezados.createCell(headerNum++);
         celda0.setCellValue("No.");
-        celda0.setCellStyle(headerStyle);
+        celda0.setCellStyle(headerStyleBlanco);
         Cell celda1 = encabezados.createCell(headerNum++);
         celda1.setCellValue("Tipo de Compra");
-        celda1.setCellStyle(headerStyle);
+        celda1.setCellStyle(headerStyleBlanco);
         Cell celda2 = encabezados.createCell(headerNum++);
         celda2.setCellValue("Documento");
-        celda2.setCellStyle(headerStyle);
+        celda2.setCellStyle(headerStyleBlanco);
         Cell celda3 = encabezados.createCell(headerNum++);
         celda3.setCellValue("Proveedor");
-        celda3.setCellStyle(headerStyle);
+        celda3.setCellStyle(headerStyleBlanco);
         Cell celda4 = encabezados.createCell(headerNum++);
         celda4.setCellValue("Bien o Servicio");
-        celda4.setCellStyle(headerStyle);
+        celda4.setCellStyle(headerStyleBlanco);
         Cell celda5 = encabezados.createCell(headerNum++);
         celda5.setCellValue("No. Documento");
-        celda5.setCellStyle(headerStyle);
+        celda5.setCellStyle(headerStyleBlanco);
         Cell celda6 = encabezados.createCell(headerNum++);
         celda6.setCellValue("Serie");
-        celda6.setCellStyle(headerStyle);
+        celda6.setCellStyle(headerStyleBlanco);
         Cell celda7 = encabezados.createCell(headerNum++);
         celda7.setCellValue("No. Comprobante Egreso");
-        celda7.setCellStyle(headerStyle);
+        celda7.setCellStyle(headerStyleBlanco);
         Cell celda8 = encabezados.createCell(headerNum++);
         celda8.setCellValue("Fecha Compra");
-        celda8.setCellStyle(headerStyle);
+        celda8.setCellStyle(headerStyleBlanco);
         Cell celda9 = encabezados.createCell(headerNum++);
         celda9.setCellValue("Monto Compra");
-        celda9.setCellStyle(headerStyle);
+        celda9.setCellStyle(headerStyleBlanco);
         Cell celda10 = encabezados.createCell(headerNum++);
         celda10.setCellValue("Descripción");
-        celda10.setCellStyle(headerStyle);
+        celda10.setCellStyle(headerStyleBlanco);
         int correlativo = 1;
 
         for (Compra reporte : listaCompras) {
@@ -282,7 +274,7 @@ public class ReporteCompraMB implements Serializable {
                 if (reporte.getFechacompra() != null) {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell8.setCellValue(reporte.getFechacompra());
-                    cell8.setCellStyle(cellStyle);
+                    cell8.setCellStyle(cellStyleFecha);
                 } else {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell8.setCellValue("");
@@ -292,7 +284,7 @@ public class ReporteCompraMB implements Serializable {
                 if (reporte.getMontocompra() != null) {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell9.setCellValue(reporte.getMontocompra());
-                    cell9.setCellStyle(cellStyle);
+                    cell9.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell9.setCellValue("");

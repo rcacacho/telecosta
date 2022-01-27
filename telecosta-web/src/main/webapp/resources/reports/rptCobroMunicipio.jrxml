@@ -86,7 +86,7 @@ order by fechapago asc]]>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="25" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="90" y="0" width="277" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="d4df623b-f67f-479d-b310-ee4a6cf62c30">
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -180,7 +180,7 @@ order by fechapago asc]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="882" height="19" backcolor="#D9DBDB" uuid="20ba2d90-3bc3-49cc-9b89-f63ee69900ee">
 					<property name="local_mesure_unitheight" value="pixel"/>
