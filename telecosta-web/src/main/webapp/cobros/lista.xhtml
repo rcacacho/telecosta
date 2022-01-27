@@ -56,7 +56,7 @@
                     <p:selectOneMenu id="cl" value="#{listaCobrosMB.idcliente}" style="width: 250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaCobrosMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun.idcliente}"/>
+                        <f:selectItems value="#{listaCobrosMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun.idcliente}"/>
                     </p:selectOneMenu>
 
                     <p:panelGrid columns="2"  styleClass="no-border">

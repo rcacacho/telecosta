@@ -92,6 +92,7 @@ public class RegistroPagoMB implements Serializable {
             pago = null;
             cliente = null;
             detalle = null;
+            municipioSelected = null;
             return;
         } else {
             pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
@@ -110,6 +111,7 @@ public class RegistroPagoMB implements Serializable {
                 pago = null;
                 cliente = null;
                 detalle = null;
+                municipioSelected = null;
                 return;
             }
         }

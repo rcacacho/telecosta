@@ -65,7 +65,7 @@
                                                  required="true" requiredMessage="Debes seleccion cliente" >
                                     <p:ajax  listener="#{registroMultiPagoMB.cargarCliente()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroMultiPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroMultiPagoMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>   
                         </p:row>

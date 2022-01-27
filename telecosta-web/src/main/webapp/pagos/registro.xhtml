@@ -57,6 +57,7 @@
                                     <f:selectItem itemLabel="Octubre" itemValue="Octubre" />
                                     <f:selectItem itemLabel="Noviembre" itemValue="Noviembre" />
                                     <f:selectItem itemLabel="Diciembre" itemValue="Diciembre" />
+                                     <f:selectItem itemLabel="Otro" itemValue="Otro" />
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
@@ -84,7 +85,7 @@
                                                  required="true" requiredMessage="Debes seleccion cliente" >
                                     <p:ajax  listener="#{registroPagoMB.cargarCliente()}" update="cl" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.nombres}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>   
                         </p:row>

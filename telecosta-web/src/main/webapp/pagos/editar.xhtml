@@ -59,34 +59,81 @@
                             <p:outputLabel value="Cantidad:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
-                            <p:outputLabel value="No. Recibo:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Mes:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:inputText value="#{editarPagoMB.pago.cantidad}" size="40" style="font-size: 16px!important;"/> 
+                            <p:inputText value="#{editarPagoMB.pago.total}" size="40" style="font-size: 16px!important;"/> 
                         </p:column>
                         <p:column  >
-                            <p:inputText value="#{editarPagoMB.pago.norecibo}" size="50" style="font-size: 16px!important;"/>
+                            <p:inputText value="#{editarPagoMB.pago.mes}" size="50" style="font-size: 16px!important;"/>
                         </p:column>   
                     </p:row>
                     <p:row>
                         <p:column >
-                            <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Año:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
-                           
+                            <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column  >
-                            <p:inputText value="#{editarPagoMB.pago.serie}" size="50" style="font-size: 16px!important;"/>
+                            <p:inputText value="#{editarPagoMB.pago.anio}" size="50" style="font-size: 16px!important;"/>
+                        </p:column>   
+                        <p:column  >
+                            <p:calendar id="cal_inicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{editarPagoMB.pago.fechapago}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
                         </p:column>   
                     </p:row>
                 </p:panelGrid>
 
+                <table style="width: 100%; margin-top: 23px;">
+                    <tr>
+                        <td style="width: 50%;">
+                            <p:outputLabel value="2. Detalle del pago" 
+                                           style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                        </td>
+                    </tr>
+                </table>
+
+                <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+                <p:dataTable id="dt_pago" var="col" value="#{editarPagoMB.listDetalle}"
+                             emptyMessage="No hay detalles registrados" 
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="10" paginator="#{editarPagoMB.listDetalle.size()>5}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Forma Pago" width="25%" >
+                        <p:outputLabel value="#{col.idformapago.forma}"/>
+                    </p:column>
+
+                    <p:column headerText="No. Factura" width="20%" >
+                        <p:outputLabel value="#{col.nofactura}"/>
+                    </p:column>
+
+                    <p:column headerText="Serie" width="20%" >
+                        <p:outputLabel value="#{col.serie}"/>
+                    </p:column>
+
+                    <p:column headerText="Monto Pagado" width="20%" >
+                        <p:outputLabel value="#{col.montopagado}"/>
+                    </p:column>
+
+                    <p:column headerText="Monto Cobrado" width="20%" >
+                        <p:outputLabel value="#{col.montocobrado}"/>
+                    </p:column>
+                </p:dataTable>
+
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                    <p:commandButton value="Actualizar" action="#{editarClienteMB.actualizarCliente()}" icon="ui-icon-disk" process="@form"  
+                    <p:commandButton value="Actualizar" action="#{editarPagoMB.editarPago()}" icon="ui-icon-disk" process="@form"  
                                      style=" margin-left: 5px; " onstart="return confirm('¿Confirmas actualizar al cliente?');" update="@form"/>
                     <p:commandButton value="Cancelar" process="@this" action="#{editarPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:outputPanel>

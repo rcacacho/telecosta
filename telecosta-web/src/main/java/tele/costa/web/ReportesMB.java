@@ -18,9 +18,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -46,6 +44,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Usuario;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
@@ -84,6 +83,8 @@ public class ReportesMB implements Serializable {
     private Date fechaFinUsuario;
     private Usuario selectedUsuario;
     private List<Usuario> listUsuarios;
+    private List<Municipio> listMunicipio;
+    private Integer idMunicipio;
 
     public ReportesMB() {
         fechaIncio = null;
@@ -543,6 +544,30 @@ public class ReportesMB implements Serializable {
         }
         return null;
     }
+    
+        public StreamedContent generarPdfCobroMunicipio() {
+        try {
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String realPath = servletContext.getRealPath("/");
+            String nombreReporte = "rptCobroMunicipio";
+            String nombreArchivo = "CobroMunicipio.pdf";
+            HashMap parametros = new HashMap();
+            parametros.put("IMAGE", "logo.jpeg");
+            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
+            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
+            parametros.put("ID_MUNICIPIO", idMunicipio);
+
+            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
+            StreamedContent streamedContent;
+            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
+            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
+            return streamedContent;
+        } catch (Exception ex) {
+            log.error(ex);
+            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+        }
+        return null;
+    }
 
     /*Metodos getters y setters*/
     public Date getFechaIncio() {
@@ -615,6 +640,22 @@ public class ReportesMB implements Serializable {
 
     public void setSelectedUsuario(Usuario selectedUsuario) {
         this.selectedUsuario = selectedUsuario;
+    }
+
+    public List<Municipio> getListMunicipio() {
+        return listMunicipio;
+    }
+
+    public void setListMunicipio(List<Municipio> listMunicipio) {
+        this.listMunicipio = listMunicipio;
+    }
+
+    public Integer getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
 }

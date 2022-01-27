@@ -34,7 +34,6 @@
                         <td style="vertical-align: top; margin-left: 20px;">
                             <div>
                                 <h4 style="margin-right: 190px;">Reporte de cobros</h4>
-
                                 <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
                                     <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
@@ -49,6 +48,26 @@
                                                 value="#{reporteMB.fechaFinCobro}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
+
+                                    <p:commandButton value="Imprimir" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.generarPdfCobro()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">Reporte de cobros por Municipio</h4>
+                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun" value="#{reporteMB.idMunicipio}" style="width: 50%" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                     required="true" requiredMessage="Debes selecciona un municipio" >
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                    </p:selectOneMenu>
 
                                     <p:commandButton value="Imprimir" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"

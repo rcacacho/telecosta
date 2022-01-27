@@ -53,7 +53,7 @@ public class LoginMB implements Serializable {
             if (usu.getIdmunicipio() != null) {
                 session.setAttribute("idmunicipio", usu.getIdmunicipio().getIdmunicipio());
             }
-
+            usuario = "";
             return "/menu/menu.xhtml";
         } else {
 

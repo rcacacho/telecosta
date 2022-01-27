@@ -84,6 +84,28 @@
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
+                
+                 <p:row>
+                    <p:column >
+                        <p:outputLabel value="Mes:" styleClass="colorTitulo" />
+                    </p:column>
+
+                    <p:column >
+                        <p:outputLabel value="Año:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.mes}" style="font-size: 16px!important;">
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.anio}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
             </p:panelGrid>
 
             <table style="width: 100%; margin-top: 23px;">
@@ -126,7 +148,6 @@
                     <p:outputLabel value="#{col.montocobrado}"/>
                 </p:column>
             </p:dataTable>
-
         </h:form>
     </ui:define>
 </ui:composition>

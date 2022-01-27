@@ -113,6 +113,7 @@ public class ListaPagosMB implements Serializable {
         idcliente = 0;
         fechaInicioBus = null;
         fechaFinBus = null;
+        listPago = null;
     }
 
     public void detalle(Integer id) {
