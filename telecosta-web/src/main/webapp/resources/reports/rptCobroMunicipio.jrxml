@@ -12,17 +12,20 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="telecosta"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="303"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="688"/>
 	<parameter name="IMAGE" class="java.lang.String"/>
 	<parameter name="DIRECTORIO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="ID_MUNICIPIO" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, c.observacion 
-FROM pago p
-JOIN cliente c on p.idcliente = c.idcliente and c.activo = 1
-WHERE p.activo = 1
-and c.idmunicipio = $P{ID_MUNICIPIO} 
-]]>
+		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, c.observacion 
+FROM pago p 
+join cliente c on p.idcliente = c.idcliente and c.activo = 1 
+where p.activo =1 
+and p.fechapago = (SELECT max(pp.fechapago) from pago pp where pp.idpago = p.idpago GROUP by pp.fechapago) 
+and c.idmunicipio = $P{ID_MUNICIPIO}
+order by fechapago asc]]>
 	</queryString>
 	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
@@ -52,7 +55,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="91" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<staticText>
 				<reportElement x="140" y="23" width="510" height="21" uuid="f23545ae-a4be-4e8b-9326-66e3a859686a">
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -83,7 +86,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 		</band>
 	</title>
 	<columnHeader>
-		<band height="19" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="90" y="0" width="277" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="d4df623b-f67f-479d-b310-ee4a6cf62c30">
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -177,7 +180,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="882" height="19" backcolor="#D9DBDB" uuid="20ba2d90-3bc3-49cc-9b89-f63ee69900ee">
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -254,7 +257,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 	<pageFooter>
 		<band height="37" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="1" width="56" height="20" uuid="408efc1d-78ae-43bb-b39b-13af507647ed">
+				<reportElement x="0" y="0" width="56" height="20" uuid="408efc1d-78ae-43bb-b39b-13af507647ed">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -264,7 +267,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 				<text><![CDATA[Usuario:]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="56" y="21" width="78" height="16" uuid="b47c744a-5661-4398-bbf9-7b7971159a1f">
+				<reportElement x="56" y="20" width="78" height="16" uuid="b47c744a-5661-4398-bbf9-7b7971159a1f">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -274,7 +277,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
-				<reportElement x="56" y="1" width="78" height="20" uuid="47cb7548-4256-4c82-bff2-881777cc9c8d">
+				<reportElement x="56" y="0" width="78" height="20" uuid="47cb7548-4256-4c82-bff2-881777cc9c8d">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -283,7 +286,7 @@ and c.idmunicipio = $P{ID_MUNICIPIO}
 				<textFieldExpression><![CDATA[$P{USUARIO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="21" width="56" height="16" uuid="afa14d54-911b-45f1-a587-4a19f4dfe3d9">
+				<reportElement x="0" y="20" width="56" height="16" uuid="afa14d54-911b-45f1-a587-4a19f4dfe3d9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>

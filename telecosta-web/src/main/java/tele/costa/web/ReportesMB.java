@@ -94,6 +94,7 @@ public class ReportesMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listUsuarios = catalogoBean.listaUsuarios();
+        listMunicipio = catalogoBean.listMunicipioByIdDepartamento(1);
     }
 
     public StreamedContent generarPdfPago() {
@@ -544,8 +545,8 @@ public class ReportesMB implements Serializable {
         }
         return null;
     }
-    
-        public StreamedContent generarPdfCobroMunicipio() {
+
+    public StreamedContent generarPdfCobroMunicipio() {
         try {
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");

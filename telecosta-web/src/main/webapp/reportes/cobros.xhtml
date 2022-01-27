@@ -58,22 +58,23 @@
                                 </p:panelGrid>
 
                                 <h4 style="margin-right: 190px;">Reporte de cobros por Municipio</h4>
-                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Municipio:"  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
-                                    <p:selectOneMenu id="mun" value="#{reporteMB.idMunicipio}" style="width: 50%" 
+                                    <p:selectOneMenu id="mun" value="#{reporteMB.idMunicipio}" style="width: 200px;" 
                                                      converter="entityConverter" filter="true" filterMatchMode="contains"
                                                      required="true" requiredMessage="Debes selecciona un municipio" >
                                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                                         <f:selectItems value="#{reporteMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                        <p:ajax event="itemSelect" update=""/>
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="Imprimir" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.generarPdfCobro()}"/>
+                                        <p:fileDownload value="#{reporteMB.generarPdfCobroMunicipio()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
                             </div>
