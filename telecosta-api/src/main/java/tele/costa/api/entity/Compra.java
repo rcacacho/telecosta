@@ -72,7 +72,7 @@ public class Compra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "montocompra")
-    private Integer montocompra;
+    private double montocompra;
 
     @Size(max = 2000)
     @Column(name = "descripcion")
@@ -155,11 +155,11 @@ public class Compra implements Serializable {
         this.nodocumento = nodocumento;
     }
 
-    public Integer getMontocompra() {
+    public double getMontocompra() {
         return montocompra;
     }
 
-    public void setMontocompra(Integer montocompra) {
+    public void setMontocompra(double montocompra) {
         this.montocompra = montocompra;
     }
 
