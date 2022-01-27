@@ -281,7 +281,7 @@ public class ReporteCompraMB implements Serializable {
                     cell8.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getMontocompra() != null) {
+                if (reporte.getMontocompra() != 0) {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell9.setCellValue(reporte.getMontocompra());
                     cell9.setCellStyle(cellStyleNumero);
