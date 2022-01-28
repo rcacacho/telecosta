@@ -76,12 +76,11 @@ public class ReporteCompraMB implements Serializable {
         sheet.setColumnWidth(9, 5000);
         sheet.setColumnWidth(10, 12000);
 
-
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(0, 56, 123));
         ((XSSFCellStyle) headerStyle).setFillForegroundColor(color);
         headerStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-        
+
         CellStyle headerStyleBlanco = workbook.createCellStyle();
         XSSFColor colorBla = new XSSFColor(new java.awt.Color(255, 250, 250));
         ((XSSFCellStyle) headerStyle).setFillForegroundColor(colorBla);
@@ -281,15 +280,9 @@ public class ReporteCompraMB implements Serializable {
                     cell8.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getMontocompra() != 0) {
-                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell9.setCellValue(reporte.getMontocompra());
-                    cell9.setCellStyle(cellStyleNumero);
-                } else {
-                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell9.setCellValue("");
-                    cell9.setCellStyle(cellStyle);
-                }
+                Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell9.setCellValue(reporte.getMontocompra());
+                cell9.setCellStyle(cellStyleNumero);
 
                 if (reporte.getDescripcion() != null) {
                     Cell cell10 = fila.getFila().createCell(fila.nextIndex().shortValue());

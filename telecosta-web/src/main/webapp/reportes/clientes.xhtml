@@ -33,13 +33,19 @@
                         <td style="vertical-align: top; margin-left: 20px;">
                             <div>
                                 <h4 style="margin-right: 190px;">Reporte de Clientes</h4>
-                                <p:panelGrid columns="1" styleClass="no-border">
-                                    <p:commandButton value="Imprimir" style="float: left;"
+                                <p:panelGrid columns="2" styleClass="no-border">
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteMB.generarPdfClientes()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
                                         <p:fileDownload value="#{reporteMB.imprimirExcelCliente()}"/>
-                                    </p:commandButton>
+                                    </p:commandButton> 
                                 </p:panelGrid>
                             </div>
                         </td>

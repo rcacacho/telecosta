@@ -118,8 +118,6 @@ public class ReportesMB implements Serializable {
             sdf.format(fechaIncio);
             sdf.format(fechaFin);
 
-            ReportFormat format = ReportFormat.EXCEL;
-
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
             String nombreReporte = "rpt_pagos";
@@ -191,17 +189,17 @@ public class ReportesMB implements Serializable {
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
             String nombreReporte = "rptClientes";
-            String nombreArchivo = "Clientes.xls";
+            String nombreArchivo = "Clientes.pdf";
 
             HashMap parametros = new HashMap();
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
 
-            ReporteJasper reporteJasper = JasperUtil.jasperReportXLS(nombreReporte, nombreArchivo, parametros, dataSource);
+            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
             StreamedContent streamedContent;
             FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
-            streamedContent = new DefaultStreamedContent(stream, "application/vnd.ms-excel", reporteJasper.getFileName());
+            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
             return streamedContent;
         } catch (Exception ex) {
             log.error(ex);
@@ -701,7 +699,7 @@ public class ReportesMB implements Serializable {
             cell17.setCellStyle(cellStyle);
 
             Cell cell15 = fila.getFila().createCell(fila.nextIndex().shortValue());
-            cell15.setCellValue("CLIENTES");
+            cell15.setCellValue("PAGOS");
             cell15.setCellStyle(cellStyleTitulo);
         }
 
@@ -839,7 +837,7 @@ public class ReportesMB implements Serializable {
         }
 
         StreamedContent content = null;
-        List<Pago> listaPagos = pagosBean.listPagosByFechaInicioAndFinandUsuario(fechaIncioUsuario, fechaFinUsuario, selectedUsuario.getUsuario());
+        List<Pago> listaPagos = pagosBean.listPagosByFechaInicioAndFin(fechaIncio, fechaFin);
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -941,7 +939,7 @@ public class ReportesMB implements Serializable {
             cell17.setCellStyle(cellStyle);
 
             Cell cell15 = fila.getFila().createCell(fila.nextIndex().shortValue());
-            cell15.setCellValue("CLIENTES");
+            cell15.setCellValue("PAGOS");
             cell15.setCellStyle(cellStyleTitulo);
         }
 
@@ -987,9 +985,6 @@ public class ReportesMB implements Serializable {
         Cell celda6 = encabezados.createCell(headerNum++);
         celda6.setCellValue("TOTAL");
         celda6.setCellStyle(headerStyle);
-        Cell celda7 = encabezados.createCell(headerNum++);
-        celda7.setCellValue("USUARIO REGISTRO");
-        celda7.setCellStyle(headerStyle);
         int correlativo = 1;
 
         for (Pago reporte : listaPagos) {
@@ -1041,16 +1036,6 @@ public class ReportesMB implements Serializable {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell6.setCellValue("");
                     cell6.setCellStyle(cellStyle);
-                }
-
-                if (reporte.getUsuariocreacion() != null) {
-                    Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell7.setCellValue(reporte.getUsuariocreacion());
-                    cell7.setCellStyle(cellStyle);
-                } else {
-                    Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell7.setCellValue("");
-                    cell7.setCellStyle(cellStyle);
                 }
             }
         }
