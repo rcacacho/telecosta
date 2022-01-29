@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -83,6 +84,9 @@ public class Configuracionpago implements Serializable {
 
     @OneToMany(mappedBy = "idconfiguracionpago", fetch = FetchType.LAZY)
     private List<Cliente> clienteList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idconfiguracionpago", fetch = FetchType.LAZY)
+    private List<Cobro> cobroList;
 
     public Configuracionpago() {
     }
@@ -195,6 +199,15 @@ public class Configuracionpago implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Cobro> getCobroList() {
+        return cobroList;
+    }
+
+    public void setCobroList(List<Cobro> cobroList) {
+        this.cobroList = cobroList;
     }
 
 }

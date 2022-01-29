@@ -130,6 +130,12 @@ public class Cliente implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
+    private List<Cobro> cobroList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
+    private List<Atencion> atencionList;
+
     public Cliente() {
     }
 
@@ -313,6 +319,24 @@ public class Cliente implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Cobro> getCobroList() {
+        return cobroList;
+    }
+
+    public void setCobroList(List<Cobro> cobroList) {
+        this.cobroList = cobroList;
+    }
+
+    @XmlTransient
+    public List<Atencion> getAtencionList() {
+        return atencionList;
+    }
+
+    public void setAtencionList(List<Atencion> atencionList) {
+        this.atencionList = atencionList;
     }
 
 }
