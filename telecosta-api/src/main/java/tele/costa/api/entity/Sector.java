@@ -42,7 +42,6 @@ public class Sector implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idsector")
     private Integer idsector;
     

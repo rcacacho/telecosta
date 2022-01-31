@@ -127,6 +127,10 @@ public class Cliente implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
 
+    @JoinColumn(name = "idsector", referencedColumnName = "idsector")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Sector idSector;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -337,6 +341,14 @@ public class Cliente implements Serializable {
 
     public void setAtencionList(List<Atencion> atencionList) {
         this.atencionList = atencionList;
+    }
+
+    public Sector getIdSector() {
+        return idSector;
+    }
+
+    public void setIdSector(Sector idSector) {
+        this.idSector = idSector;
     }
 
 }

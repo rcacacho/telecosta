@@ -80,10 +80,12 @@
                                 </p:inputText> 
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroClienteMB.cliente.sector}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un CUI valido">
-                                    <p:ajax event="blur" process="@this"/>
-                                </p:inputText>
+                                <p:selectOneMenu id="mun" value="#{registroClienteMB.cliente.idSector}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un municipio" >
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
                             </p:column>
                         </p:row>
 

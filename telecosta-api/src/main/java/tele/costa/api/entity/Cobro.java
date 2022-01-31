@@ -47,46 +47,57 @@ public class Cobro implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcobro")
     private Integer idcobro;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
-    private int anio;
+    private Integer anio;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacobro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacobro;
+    
     @Size(max = 500)
     @Column(name = "observacion")
     private String observacion;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
+    
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+    
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
-    private int activo;
+    private boolean activo;
+    
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
+    
     @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Configuracionpago idconfiguracionpago;
@@ -98,7 +109,7 @@ public class Cobro implements Serializable {
         this.idcobro = idcobro;
     }
 
-    public Cobro(Integer idcobro, String mes, int anio, Date fechacobro, Date fechacreacion, String usuariocreacion, int activo) {
+    public Cobro(Integer idcobro, String mes, int anio, Date fechacobro, Date fechacreacion, String usuariocreacion, boolean activo) {
         this.idcobro = idcobro;
         this.mes = mes;
         this.anio = anio;
@@ -180,11 +191,11 @@ public class Cobro implements Serializable {
         this.usuariomodificacion = usuariomodificacion;
     }
 
-    public int getActivo() {
+    public boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(int activo) {
+    public void setActivo(boolean activo) {
         this.activo = activo;
     }
 

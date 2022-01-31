@@ -15,6 +15,7 @@ import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Sector;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -39,6 +40,7 @@ public class RegistroClienteMB implements Serializable {
     private Municipio municipioSelected;
     private List<Municipio> listMunicipios;
     private List<Configuracionpago> listConfiguracionPago;
+    private List<Sector> listSector;
 
     public RegistroClienteMB() {
         cliente = new Cliente();
@@ -48,6 +50,7 @@ public class RegistroClienteMB implements Serializable {
     void cargarDatos() {
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
         listConfiguracionPago = catalogoBean.ListConfiguracionPago();
+        listSector = catalogoBean.listSector();
     }
 
     public void saveCliente() throws IOException {
@@ -115,6 +118,14 @@ public class RegistroClienteMB implements Serializable {
 
     public void setListConfiguracionPago(List<Configuracionpago> listConfiguracionPago) {
         this.listConfiguracionPago = listConfiguracionPago;
+    }
+
+    public List<Sector> getListSector() {
+        return listSector;
+    }
+
+    public void setListSector(List<Sector> listSector) {
+        this.listSector = listSector;
     }
 
 }

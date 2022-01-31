@@ -45,7 +45,6 @@ public class Ruta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idruta")
     private Integer idruta;
     
