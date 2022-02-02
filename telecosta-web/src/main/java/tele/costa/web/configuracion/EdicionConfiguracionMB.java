@@ -58,7 +58,5 @@ public class EdicionConfiguracionMB implements Serializable {
     public void setConfiguracion(Configuracionpago configuracion) {
         this.configuracion = configuracion;
     }
-    
-    
 
 }

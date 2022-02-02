@@ -11,7 +11,6 @@ import javax.faces.bean.ViewScoped;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ComprasBeanLocal;
 import tele.costa.api.entity.Compra;
-import tele.costa.api.entity.Proveedor;
 import telecosta.web.utils.JsfUtil;
 
 /**
