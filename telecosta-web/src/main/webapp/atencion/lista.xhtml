@@ -1,15 +1,119 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Lista de Ticket de Trabajo
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content" enctype="multipart/form-data"> 
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Lista de Ticket de Trabajo</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha inicio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteMB.fechaIncio}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteMB.fechaFin}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel value="Ruta:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:selectOneMenu id="mun" value="#{listaClienteMB.idMunicipio}" style="width: 280px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_atencion" var="col" value="#{listaClienteMB.listCliente}"
+                             emptyMessage="No hay clientes registrados" 
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Codigo" width="15%" >
+                        <p:outputLabel value="#{col.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre" width="20%" >
+                        <p:outputLabel value="#{col.nombres}"/>
+                    </p:column>
+
+                    <p:column headerText="Dirección" width="25%" >
+                        <p:outputLabel value="#{col.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="Sector" width="20%" >
+                        <p:outputLabel value="#{col.sector}"/>
+                    </p:column>
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
+                        <p:outputLabel value="#{col.fechainicioservicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Fecha Ultimo Pago" width="20%" >
+                        <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column width="15%" exportable="false" >
+                        <p:commandButton value="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+
+
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

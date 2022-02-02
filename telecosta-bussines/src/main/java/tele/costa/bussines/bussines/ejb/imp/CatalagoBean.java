@@ -13,6 +13,7 @@ import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
+import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
@@ -164,6 +165,18 @@ public class CatalagoBean implements CatalogoBeanLocal {
     @Override
     public List<Sector> listSector() {
         List<Sector> lst = em.createQuery("SELECT qj FROM Sector qj where qj.activo = true", Sector.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Ruta> listRuta() {
+        List<Ruta> lst = em.createQuery("SELECT qj FROM Ruta qj where qj.activo = true", Ruta.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

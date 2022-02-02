@@ -23,6 +23,11 @@
                 <p:menuitem value="Registro Multiple" outcome="/cobros/registroMultiple.xhtml" style="width: 90px;"/>
             </p:submenu>
 
+            <p:submenu label="Ticket de trabajo" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
+                <p:menuitem value="Lista" outcome="/atencion/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/atencion/registro.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
             <p:submenu label="Usuarios" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/usuario/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/usuario/registro.xhtml" style="width: 90px;"/>

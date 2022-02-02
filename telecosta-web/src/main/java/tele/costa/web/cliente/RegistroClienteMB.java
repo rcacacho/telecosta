@@ -55,7 +55,6 @@ public class RegistroClienteMB implements Serializable {
 
     public void saveCliente() throws IOException {
         cliente.setUsuariocreacion(SesionUsuarioMB.getUserName());
-        cliente.setFechacreacion(new Date());
         Cliente responseVerificacion = clienteBean.saveCliente(cliente);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Cliente creado exitosamente");
@@ -68,7 +67,7 @@ public class RegistroClienteMB implements Serializable {
     }
 
     public void regresar() {
-        JsfUtil.redirectTo("/menu/menu.xhtml");
+        JsfUtil.redirectTo("/clientes/lista.xhtml");
     }
 
     /*Metodos getters y setters*/

@@ -43,7 +43,6 @@ public class Atencion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idatencion")
     private Integer idatencion;
     
