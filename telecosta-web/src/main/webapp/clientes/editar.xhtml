@@ -67,7 +67,12 @@
                             <p:inputText value="#{editarClienteMB.cliente.nombres}" size="40" style="font-size: 16px!important;"/> 
                         </p:column>
                         <p:column  >
-                            <p:inputText value="#{editarClienteMB.cliente.sector}" size="50" style="font-size: 16px!important;"/>
+                            <p:selectOneMenu id="sec" value="#{editarClienteMB.cliente.idSector}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains"
+                                             required="true" requiredMessage="Debes seleccionar un sector" >
+                                <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{registroClienteMB.listSector}"  var="mun" itemLabel="#{mun.sector}" itemValue="#{mun}"/>
+                            </p:selectOneMenu>
                         </p:column>   
                     </p:row>
                     <p:row>

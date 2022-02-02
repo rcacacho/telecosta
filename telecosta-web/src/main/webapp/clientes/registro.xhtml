@@ -80,11 +80,11 @@
                                 </p:inputText> 
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="mun" value="#{registroClienteMB.cliente.idSector}" style="width: 50%" 
+                                <p:selectOneMenu id="sec" value="#{registroClienteMB.cliente.idSector}" style="width: 50%" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un municipio" >
-                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                                                 required="true" requiredMessage="Debes seleccionar un sector" >
+                                    <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroClienteMB.listSector}"  var="mun" itemLabel="#{mun.sector}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
