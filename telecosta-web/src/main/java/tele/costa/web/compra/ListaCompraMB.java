@@ -85,6 +85,14 @@ public class ListaCompraMB implements Serializable {
         JsfUtil.addErrorMessage("Sucedio un error al elimnar");
     }
 
+    public boolean obtenerRoot() {
+        if (SesionUsuarioMB.getRootUsuario()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /*Metodos getters y setters*/
     public List<Compra> getListCompra() {

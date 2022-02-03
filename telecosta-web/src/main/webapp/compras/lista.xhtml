@@ -92,8 +92,8 @@
                         <p:commandButton value="Eliminar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
-                                         onstart="return confirm('¿Confirmas eliminar la compra?');" rendered="#{listaPagosMB.obtenerRoot()}"
-                                         action="#{listaPagosMB.eliminarPago(col.idpago)}" update="@form"/>
+                                         onstart="return confirm('¿Confirmas eliminar la compra?');" rendered="#{listaCompraMB.obtenerRoot()}"
+                                         action="#{listaCompraMB.eliminarCompra(col.idcompra)}" update="@form"/>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
