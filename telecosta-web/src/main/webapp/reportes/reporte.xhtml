@@ -41,12 +41,12 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
                                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reporteMB.fechaIncio}" navigator="true">  
+                                                value="#{reportePagoMB.fechaIncio}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
                                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reporteMB.fechaFin}" navigator="true">  
+                                                value="#{reportePagoMB.fechaFin}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
@@ -54,13 +54,13 @@
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.generarPdfPago()}"/>
+                                        <p:fileDownload value="#{reportePagoMB.generarPdfPago()}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.imprimirExcelPagos()}"/>
+                                        <p:fileDownload value="#{reportePagoMB.imprimirExcelPagos()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
 
@@ -73,33 +73,33 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
                                     <p:calendar id="cal_fechaInicioUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reporteMB.fechaIncioUsuario}" navigator="true">  
+                                                value="#{reportePagoMB.fechaIncioUsuario}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
                                     <p:calendar id="cal_fechaFinUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reporteMB.fechaFinUsuario}" navigator="true">  
+                                                value="#{reportePagoMB.fechaFinUsuario}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
-                                    <p:selectOneMenu id="cl" value="#{reporteMB.selectedUsuario}" style="width: 250px;" 
+                                    <p:selectOneMenu id="cl" value="#{reportePagoMB.selectedUsuario}" style="width: 250px;" 
                                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                                         <p:ajax  update="cl" />
                                         <f:selectItem itemLabel="(selecciona un usuario)" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{reporteMB.listUsuarios}"  var="mun" itemLabel="#{mun.usuario}" itemValue="#{mun}"/>
+                                        <f:selectItems value="#{reportePagoMB.listUsuarios}"  var="mun" itemLabel="#{mun.usuario}" itemValue="#{mun}"/>
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="PDF" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.generarPdfPagoUsuario()}"/>
+                                        <p:fileDownload value="#{reportePagoMB.generarPdfPagoUsuario()}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.imprimirExcelPagosUsuario()}"/>
+                                        <p:fileDownload value="#{reportePagoMB.imprimirExcelPagosUsuario()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
                             </div>

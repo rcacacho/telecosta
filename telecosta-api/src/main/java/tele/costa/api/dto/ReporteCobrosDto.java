@@ -41,6 +41,19 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "and p.fechapago = (SELECT max(pp.fechapago) from pago pp where pp.idpago = p.idpago GROUP by pp.fechapago) \n"
             + "and c.idsector = ? \n"
             + "order by fechapago asc",
+            resultSetMapping = "ReporteCobrosDtoMapping"),
+
+    @NamedNativeQuery(
+            name = "ReporteCobrosDto.cobroMunicipio",
+            query
+            = "SELECT p.idpago, c.codigo, c.nombres, c.direccion, c.telefono, concat(p.mes, '-',p.anio) fechapago, c2.valor, p.observacion\n"
+            + "FROM pago p \n"
+            + "join cliente c on p.idcliente = c.idcliente and c.activo = 1 \n"
+            + "join configuracionpago c2 on c.idconfiguracionpago = c2.idconfiguracionpago\n"
+            + "where p.activo =1 \n"
+            + "and p.fechapago = (SELECT max(pp.fechapago) from pago pp where pp.idpago = p.idpago GROUP by pp.fechapago) \n"
+            + "and c.idmunicipio = ? \n"
+            + "order by fechapago asc",
             resultSetMapping = "ReporteCobrosDtoMapping")
 })
 @XmlRootElement

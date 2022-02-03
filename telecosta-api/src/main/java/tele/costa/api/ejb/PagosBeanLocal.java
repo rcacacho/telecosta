@@ -51,11 +51,13 @@ public interface PagosBeanLocal {
     Pago findUltimoPago(Integer idcliente);
 
     Pago eliminarPago(Integer idpago, String usuario);
-    
+
     List<Pago> listPagoByIdClienteAndAnio(Integer idcliente, Integer anio);
-    
+
     List<Pago> listPagosByFechaInicioAndFinandUsuario(Date fechainicio, Date fechafin, String usuario);
+
+    List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector);
     
-     List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector);
+    List<ReporteCobrosDto> listCobrosByIdMunicipio(Integer idmunicipio);
 
 }

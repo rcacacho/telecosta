@@ -70,12 +70,20 @@
                                         <p:ajax event="itemSelect" update=""/>
                                     </p:selectOneMenu>
 
-                                    <p:commandButton value="Imprimir" style="float: left;"
-                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
-                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
-                                                     immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.generarPdfCobroMunicipio()}"/>
-                                    </p:commandButton>
+                                    <p:panelGrid columns="2"  styleClass="no-border" style="">
+                                        <p:commandButton value="PDF" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteMB.generarPdfCobroMunicipio()}"/>
+                                        </p:commandButton>
+                                        <p:commandButton value="Excel" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteMB.imprimirExcelCobroMunicipio()}"/>
+                                        </p:commandButton> 
+                                    </p:panelGrid>
                                 </p:panelGrid>
 
                                 <h4 style="margin-right: 190px;">Reporte de cobros por sector</h4>

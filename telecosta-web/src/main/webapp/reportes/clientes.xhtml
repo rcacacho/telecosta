@@ -38,13 +38,13 @@
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.generarPdfClientes()}"/>
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfClientes()}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reporteMB.imprimirExcelCliente()}"/>
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelCliente()}"/>
                                     </p:commandButton> 
                                 </p:panelGrid>
                             </div>

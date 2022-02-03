@@ -10,9 +10,10 @@
 	<parameter name="USUARIO" class="java.lang.String"/>
 	<parameter name="ID_MUNICIPIO" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, p.total, c.observacion 
+		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, c2.valor, p.observacion
 FROM pago p 
 join cliente c on p.idcliente = c.idcliente and c.activo = 1 
+join configuracionpago c2 on c.idconfiguracionpago = c2.idconfiguracionpago
 where p.activo =1 
 and p.fechapago = (SELECT max(pp.fechapago) from pago pp where pp.idpago = p.idpago GROUP by pp.fechapago) 
 and c.idmunicipio = $P{ID_MUNICIPIO}
@@ -37,15 +38,15 @@ order by fechapago asc]]>
 		<property name="com.jaspersoft.studio.field.name" value="fechapago"/>
 		<property name="com.jaspersoft.studio.field.label" value="fechapago"/>
 	</field>
-	<field name="total" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="total"/>
-		<property name="com.jaspersoft.studio.field.label" value="total"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
+	<field name="valor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="valor"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="configuracionpago"/>
 	</field>
 	<field name="observacion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="observacion"/>
 		<property name="com.jaspersoft.studio.field.label" value="observacion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -275,7 +276,7 @@ order by fechapago asc]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
