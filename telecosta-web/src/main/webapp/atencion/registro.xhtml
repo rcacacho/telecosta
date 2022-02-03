@@ -34,7 +34,7 @@
                                                  required="true" requiredMessage="Debes seleccion cliente" >
                                     <p:ajax  listener="#{registroAtencionMB.cargarCliente()}" update="nom tel dir" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroAtencionMB.listCliente}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroAtencionMB.listClientes}"  var="cli" itemLabel="#{cli.codigo} - #{cli.nombres}" itemValue="#{cli}"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
@@ -62,7 +62,7 @@
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccion una ruta" >
                                     <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroAtencionMB.listRuta}"  var="mun" itemLabel="#{mun.ruta}" itemValue="#{mun}"/>
+                                    <f:selectItems value="#{registroAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut}"/>
                                 </p:selectOneMenu>
                             </p:column>   
                         </p:row>

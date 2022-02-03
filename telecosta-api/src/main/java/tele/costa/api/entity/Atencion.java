@@ -45,44 +45,47 @@ public class Atencion implements Serializable {
     @Basic(optional = false)
     @Column(name = "idatencion")
     private Integer idatencion;
-    
+
     @Size(max = 2000)
     @Column(name = "motivo")
     private String motivo;
-    
+
     @Size(max = 2000)
     @Column(name = "referencia")
     private String referencia;
-    
+
+    @Column(name = "estado")
+    private boolean estado;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
-    
+
     @JoinColumn(name = "idruta", referencedColumnName = "idruta")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Ruta idruta;
@@ -123,6 +126,14 @@ public class Atencion implements Serializable {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public Date getFechacreacion() {
@@ -205,5 +216,5 @@ public class Atencion implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Atencion[ idatencion=" + idatencion + " ]";
     }
-    
+
 }

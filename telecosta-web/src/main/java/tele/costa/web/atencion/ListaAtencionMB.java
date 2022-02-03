@@ -18,17 +18,18 @@ import telecosta.web.utils.SesionUsuarioMB;
  *
  * @author rcacacho
  */
-@ManagedBean(name = "registroAtencionMB")
+@ManagedBean(name = "listaAtencionMB")
 @ViewScoped
 public class ListaAtencionMB implements Serializable {
 
-    private static final Logger log = Logger.getLogger(RegistroAtencionMB.class);
+    private static final Logger log = Logger.getLogger(ListaAtencionMB.class);
 
     @EJB
     private AtencionClienteLocal atencionBean;
     @EJB
     private CatalogoBeanLocal catalogoBean;
 
+    private Integer idRuta;
     private List<Ruta> listRuta;
     private List<Atencion> listAtencion;
     private Date fechaInicio;
@@ -38,13 +39,30 @@ public class ListaAtencionMB implements Serializable {
     void cargarDatos() {
 
         if (SesionUsuarioMB.getRootUsuario()) {
-            listClientes = atencionBean.listAtenciones();
-            listPago = pagosBean.listPagos();
+            listAtencion = atencionBean.listAtenciones();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listClientes = clienteBean.listClientesByInMunucipio();
+            listAtencion = atencionBean.listAtencionByMunicipio();
         } else {
-            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
-            listPago = pagosBean.listPagosByInIdMunicipios();
+            listAtencion = atencionBean.listAtencionByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+        }
+    }
+
+    public void limpiarCampos() {
+        idRuta = null;
+        fechaInicio = null;
+        fechaFin = null;
+        cargarDatos();
+    }
+
+    public void buscarAtencion() {
+
+    }
+
+    public String estadoAtencion(boolean estado) {
+        if (estado) {
+            return "Pendiente";
+        } else {
+            return "Finalizado";
         }
     }
 
@@ -65,12 +83,28 @@ public class ListaAtencionMB implements Serializable {
         this.listAtencion = listAtencion;
     }
 
+    public Integer getIdRuta() {
+        return idRuta;
+    }
+
+    public void setIdRuta(Integer idRuta) {
+        this.idRuta = idRuta;
+    }
+
     public Date getFechaInicio() {
         return fechaInicio;
     }
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
 }

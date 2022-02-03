@@ -24,27 +24,26 @@
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaIncio}" navigator="true">  
+                                value="#{listaAtencionMB.fechaInicio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reporteMB.fechaFin}" navigator="true">  
+                                value="#{listaAtencionMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:outputLabel value="Ruta:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:selectOneMenu id="mun" value="#{listaClienteMB.idMunicipio}" style="width: 280px;" 
+                    <p:selectOneMenu id="mun" value="#{listaAtencionMB.idRuta}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                        <f:selectItems value="#{listaAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut.idruta}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value=""   />
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 20px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         action="#{listaAtencionMB.buscarAtencion()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -52,7 +51,7 @@
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
                         <p:commandButton value="Limpiar" 
-                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         action="#{listaAtencionMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
@@ -63,43 +62,41 @@
 
                 <br/>
 
-                <p:dataTable id="dt_atencion" var="col" value="#{listaClienteMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" 
+                <p:dataTable id="dt_atencion" var="col" value="#{listaAtencionMB.listAtencion}"
+                             emptyMessage="No hay tickets registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="10" paginator="#{listaAtencionMB.listAtencion.size()>10}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Codigo" width="15%" >
-                        <p:outputLabel value="#{col.codigo}"/>
-                    </p:column>
-
                     <p:column headerText="Nombre" width="20%" >
-                        <p:outputLabel value="#{col.nombres}"/>
+                        <p:outputLabel value="#{col.idcliente.nombres}"/>
                     </p:column>
 
                     <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.direccion}"/>
+                        <p:outputLabel value="#{col.idcliente.direccion}"/>
                     </p:column>
 
-                    <p:column headerText="Sector" width="20%" >
-                        <p:outputLabel value="#{col.sector}"/>
+                    <p:column headerText="Telefono" width="20%" >
+                        <p:outputLabel value="#{col.idcliente.telefono}"/>
                     </p:column>
 
-                    <p:column headerText="Municipio" width="20%" >
-                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    <p:column headerText="Motivo" width="20%" >
+                        <p:outputLabel value="#{col.motivo}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
-                        <p:outputLabel value="#{col.fechainicioservicio}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
+                    <p:column headerText="Referencia" width="20%" >
+                        <p:outputLabel value="#{col.referencia}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha Ultimo Pago" width="20%" >
-                        <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+                    <p:column headerText="Estado" width="20%" >
+                        <p:outputLabel value="#{listaAtencionMB.estadoAtencion(col.estado)}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha registro" width="20%" >
+                        <p:outputLabel value="#{col.fechacreacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -108,7 +105,7 @@
                         <p:commandButton value="Detalle" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                                         action="#{listaAtencionMB.detalleCliente(col.idcliente)}" update="@form"/>
 
 
                     </p:column>

@@ -46,7 +46,7 @@ public class AtencionBean implements AtencionClienteLocal {
 
     @Override
     public List<Atencion> listAtenciones() {
-       List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true ", Atencion.class)
+        List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true ", Atencion.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -58,7 +58,7 @@ public class AtencionBean implements AtencionClienteLocal {
 
     @Override
     public Atencion saveAtencion(Atencion atencion) {
-         try {
+        try {
             atencion.setActivo(true);
             atencion.setFechacreacion(new Date());
             em.persist(atencion);
@@ -77,13 +77,39 @@ public class AtencionBean implements AtencionClienteLocal {
     }
 
     @Override
-    public Atencion updateAtencion(Atencion cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Atencion updateAtencion(Atencion atencion) {
+        try {
+            em.merge(atencion);
+            em.flush();
+            return (atencion);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
     }
 
     @Override
     public List<Atencion> listAtencionByIdMunicipio(Integer idmunicipio) {
         List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true and qj.idcliente.idmunicipio.idmunicipio =:idmunicipio ", Atencion.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Atencion> listAtencionByMunicipio() {
+        List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true and qj.idcliente.idmunicipio.idmunicipio in (6,7) ", Atencion.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
