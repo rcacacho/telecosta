@@ -9,8 +9,8 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idCliente" value="#{detalleClienteMB.idcliente}"/>
-        <f:event type="preRenderView" listener="#{detalleClienteMB.cargarDatos()}"/>
+        <f:viewParam name="idatencion" value="#{detalleAtencionMB.idAtencion}"/>
+        <f:event type="preRenderView" listener="#{detalleAtencionMB.cargarDatos()}"/>
     </f:metadata>
 
     <ui:define name="pageTitle">
@@ -27,12 +27,7 @@
                                        style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
                     </td>
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <h:commandLink action="#{detalleClienteMB.editar()}" style="text-decoration: none; ">
-                            <h:graphicImage library="images" name="editar.png"   style="float: right !important;" width="20px;" title="Editar"/>
-                        </h:commandLink>
-                    </td>
-                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <h:commandLink action="#{detalleClienteMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                        <h:commandLink action="#{detalleAtencionMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
                             <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
                         </h:commandLink>
                     </td>
@@ -47,7 +42,7 @@
                         <p:outputLabel value="Nombres:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="Codigo:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
                         <p:outputLabel value="Teléfono:" styleClass="colorTitulo" />
@@ -56,54 +51,33 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.nombres}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.nombres}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.codigo}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.direccion}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.telefono}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.telefono}" style="font-size: 16px!important;"/>
                     </p:column>
                 </p:row>
 
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Motivo del reporte:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="Departamento:" styleClass="colorTitulo" />
-                    </p:column>
-                    <p:column >
-                        <p:outputLabel value="Municipio:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Referencia:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.direccion}" style="font-size: 16px!important;" >
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.motivo}" style="font-size: 16px!important;" >
                         </p:outputLabel> 
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.idmunicipio.iddepartamento.nombre}" style="font-size: 16px!important;"/>
-                    </p:column>
-                    <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.idmunicipio.municipio}" style="font-size: 16px!important;">
-                        </p:outputLabel> 
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column >
-                        <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.descripcion}" style="font-size: 16px!important;" />
-
-                        <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.valor}" style="margin-left:5px; font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.referencia}" style="font-size: 16px!important;"/>
                     </p:column>
                 </p:row>
             </p:panelGrid>

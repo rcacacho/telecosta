@@ -119,4 +119,17 @@ public class AtencionBean implements AtencionClienteLocal {
         return lst;
     }
 
+    @Override
+    public Atencion findAtencionById(Integer idatencion) {
+       List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true and qj.idatencion =:idatencion ", Atencion.class)
+               .setParameter("idatencion", idatencion)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
 }

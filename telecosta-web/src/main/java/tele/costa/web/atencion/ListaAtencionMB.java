@@ -12,6 +12,7 @@ import tele.costa.api.ejb.AtencionClienteLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Ruta;
+import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
 /**
@@ -64,6 +65,10 @@ public class ListaAtencionMB implements Serializable {
         } else {
             return "Finalizado";
         }
+    }
+    
+     public void detalleAtencion(Integer id) {
+        JsfUtil.redirectTo("/atencion/detalle.xhtml?idatencion=" + id);
     }
 
     /*Metodos getters y setters */

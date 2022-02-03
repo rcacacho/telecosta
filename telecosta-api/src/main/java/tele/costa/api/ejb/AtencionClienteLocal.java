@@ -18,7 +18,9 @@ public interface AtencionClienteLocal {
     Atencion updateAtencion(Atencion cliente);
 
     List<Atencion> listAtencionByIdMunicipio(Integer idmunicipio);
-    
+
     List<Atencion> listAtencionByMunicipio();
+
+    Atencion findAtencionById(Integer idatencion);
 
 }

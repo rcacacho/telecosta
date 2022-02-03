@@ -34,7 +34,7 @@
                                                  required="true" requiredMessage="Debes seleccion cliente" >
                                     <p:ajax  listener="#{registroAtencionMB.cargarCliente()}" update="nom tel dir" />
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroAtencionMB.listClientes}"  var="cli" itemLabel="#{cli.codigo} - #{cli.nombres}" itemValue="#{cli}"/>
+                                    <f:selectItems value="#{registroAtencionMB.listCliente}"  var="cli" itemLabel="#{cli.codigo} - #{cli.nombres}" itemValue="#{cli}"/>
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
