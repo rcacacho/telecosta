@@ -1,5 +1,6 @@
 package tele.costa.web.pago;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -120,8 +121,8 @@ public class ListaPagosMB implements Serializable {
         JsfUtil.redirectTo("/pagos/detalle.xhtml?idpago=" + id);
     }
 
-    public void eliminarPago(Integer id) {
-        Pago response = pagosBean.eliminarPago(id);
+    public void eliminarPago(Integer id) throws IOException {
+        Pago response = pagosBean.eliminarPago(id, SesionUsuarioMB.getUserName());
         if (response != null) {
             buzon();
             JsfUtil.addSuccessMessage("Se elimino el pago exitosamente");

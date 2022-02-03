@@ -57,6 +57,18 @@ public class Atencion implements Serializable {
     @Column(name = "estado")
     private boolean estado;
 
+    @Size(max = 500)
+    @Column(name = "material")
+    private String material;
+
+    @Size(max = 50)
+    @Column(name = "cantidad")
+    private String cantidad;
+
+    @Size(max = 2000)
+    @Column(name = "observaciones")
+    private String observaciones;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
@@ -190,6 +202,30 @@ public class Atencion implements Serializable {
 
     public void setIdruta(Ruta idruta) {
         this.idruta = idruta;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     @Override

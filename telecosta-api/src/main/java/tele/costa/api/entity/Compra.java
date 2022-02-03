@@ -98,6 +98,14 @@ public class Compra implements Serializable {
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
 
+    @Size(max = 50)
+    @Column(name = "usuarioeliminacion")
+    private String usuarioeliminacion;
+
+    @Column(name = "fechaeliminacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaeliminacion;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -257,6 +265,22 @@ public class Compra implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getUsuarioeliminacion() {
+        return usuarioeliminacion;
+    }
+
+    public void setUsuarioeliminacion(String usuarioeliminacion) {
+        this.usuarioeliminacion = usuarioeliminacion;
+    }
+
+    public Date getFechaeliminacion() {
+        return fechaeliminacion;
+    }
+
+    public void setFechaeliminacion(Date fechaeliminacion) {
+        this.fechaeliminacion = fechaeliminacion;
     }
 
     @Override

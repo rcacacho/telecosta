@@ -1,5 +1,6 @@
 package tele.costa.web.compra;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,10 +9,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ComprasBeanLocal;
 import tele.costa.api.entity.Compra;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -23,9 +24,7 @@ public class ListaCompraMB implements Serializable {
 
     @EJB
     private ComprasBeanLocal compraBean;
-    @EJB
-    private CatalogoBeanLocal catalogoBean;
-
+    
     private List<Compra> listCompra;
     private Date fechaInicio;
     private Date fechaFin;
@@ -74,6 +73,18 @@ public class ListaCompraMB implements Serializable {
     public void detalle(Integer id) {
         JsfUtil.redirectTo("/compras/detalle.xhtml?idcompra=" + id);
     }
+    
+    public void eliminarCompra(Integer id) throws IOException {
+        Compra response = compraBean.eliminarCompra(id, SesionUsuarioMB.getUserName());
+        if (response != null) {
+            cargarDatos();
+            JsfUtil.addSuccessMessage("Se elimino el pago exitosamente");
+            return;
+        }
+
+        JsfUtil.addErrorMessage("Sucedio un error al elimnar");
+    }
+
 
     /*Metodos getters y setters*/
     public List<Compra> getListCompra() {

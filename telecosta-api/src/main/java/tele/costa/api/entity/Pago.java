@@ -94,6 +94,14 @@ public class Pago implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
 
+    @Size(max = 50)
+    @Column(name = "usuarioeliminacion")
+    private String usuarioeliminacion;
+
+    @Column(name = "fechaeliminacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaeliminacion;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -212,6 +220,22 @@ public class Pago implements Serializable {
 
     public void setIdtipopago(Tipopago idtipopago) {
         this.idtipopago = idtipopago;
+    }
+
+    public String getUsuarioeliminacion() {
+        return usuarioeliminacion;
+    }
+
+    public void setUsuarioeliminacion(String usuarioeliminacion) {
+        this.usuarioeliminacion = usuarioeliminacion;
+    }
+
+    public Date getFechaeliminacion() {
+        return fechaeliminacion;
+    }
+
+    public void setFechaeliminacion(Date fechaeliminacion) {
+        this.fechaeliminacion = fechaeliminacion;
     }
 
     @XmlTransient

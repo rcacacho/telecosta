@@ -202,4 +202,31 @@ public class ComprasBean implements ComprasBeanLocal {
         return lst;
     }
 
+    @Override
+    public Compra eliminarCompra(Integer idcompra, String usuario) {
+        if (idcompra == null) {
+            context.setRollbackOnly();
+            return null;
+        }
+
+        try {
+            Compra toUpdate = em.find(Compra.class, idcompra);
+
+            toUpdate.setActivo(false);
+            toUpdate.setFechaeliminacion(new Date());
+            toUpdate.setUsuarioeliminacion(usuario);
+            em.merge(toUpdate);
+
+            return toUpdate;
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            return null;
+        }
+    }
+
 }

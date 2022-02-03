@@ -49,7 +49,7 @@ public interface PagosBeanLocal {
 
     Pago findUltimoPago(Integer idcliente);
 
-    Pago eliminarPago(Integer idpago);
+    Pago eliminarPago(Integer idpago, String usuario);
     
     List<Pago> listPagoByIdClienteAndAnio(Integer idcliente, Integer anio);
     

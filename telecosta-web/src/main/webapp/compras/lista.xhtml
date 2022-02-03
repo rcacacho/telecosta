@@ -26,7 +26,7 @@
                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                 value="#{listaCompraMB.fechaInicio}" navigator="true">  
                     </p:calendar>
-                    
+
                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                 value="#{listaCompraMB.fechaFin}" navigator="true">  
                     </p:calendar>
@@ -83,9 +83,17 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
-                    
+
                     <p:column headerText="Monto compra" width="22%" >
                         <p:outputLabel value="#{col.montocompra}"/>
+                    </p:column>
+
+                    <p:column width="17%" exportable="false" >
+                        <p:commandButton value="Eliminar" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
+                                         onstart="return confirm('¿Confirmas eliminar la compra?');" rendered="#{listaPagosMB.obtenerRoot()}"
+                                         action="#{listaPagosMB.eliminarPago(col.idpago)}" update="@form"/>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
