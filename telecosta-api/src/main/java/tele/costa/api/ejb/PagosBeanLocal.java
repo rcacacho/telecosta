@@ -2,6 +2,7 @@ package tele.costa.api.ejb;
 
 import java.util.Date;
 import java.util.List;
+import tele.costa.api.dto.ReporteCobrosDto;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 
@@ -54,5 +55,7 @@ public interface PagosBeanLocal {
     List<Pago> listPagoByIdClienteAndAnio(Integer idcliente, Integer anio);
     
     List<Pago> listPagosByFechaInicioAndFinandUsuario(Date fechainicio, Date fechafin, String usuario);
+    
+     List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector);
 
 }

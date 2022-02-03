@@ -19,6 +19,7 @@
         <class>tele.costa.api.entity.Proveedor</class>
         <class>tele.costa.api.entity.Sector</class>
         <class>tele.costa.api.entity.Ruta</class>
+        <class>tele.costa.api.dto.ReporteCobrosDto</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>

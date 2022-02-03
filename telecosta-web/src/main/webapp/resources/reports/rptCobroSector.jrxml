@@ -89,7 +89,7 @@ order by fechapago asc]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REPORTE DE COBROS]]></text>
+				<text><![CDATA[REPORTE DE COBROS SECTOR]]></text>
 			</staticText>
 			<image hAlign="Center">
 				<reportElement x="1200" y="-12" width="100" height="91" uuid="4c7b1a7c-de81-4e1d-a8d6-217c200754bd">

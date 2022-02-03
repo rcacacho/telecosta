@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
+import tele.costa.api.dto.ReporteCobrosDto;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
@@ -473,6 +474,13 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst;
+    }
+
+    @Override
+    public List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector) {
+         return em.createNamedQuery("ReporteCobrosDto.cobrosector")
+                .setParameter(1, idsector)
+                .getResultList();
     }
     
 }
