@@ -1,12 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptAtencionFechas" pageWidth="1420" pageHeight="595" orientation="Landscape" columnWidth="1380" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e38cc445-e908-44fc-8195-9d41e53a5940">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="telecosta"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IMAGE" class="java.lang.String"/>
 	<parameter name="DIRECTORIO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
+	<parameter name="FECHA_FIN" class="java.sql.Date"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  
+from detalleatencion d 
+join atencion a on d.idatencion = a.idatencion and a.activo = 1
+join cliente c on a.idcliente = c.idcliente and c.activo = 1
+where  a.fechacreacion >= $P{FECHA_INICIO}
+and a.fechacreacion <= $P{FECHA_FIN}]]>
 	</queryString>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.label" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="motivo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="motivo"/>
+		<property name="com.jaspersoft.studio.field.label" value="motivo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="materialutilizado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="materialutilizado"/>
+		<property name="com.jaspersoft.studio.field.label" value="materialutilizado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalleatencion"/>
+	</field>
+	<field name="cantidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.label" value="observaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
+	<field name="fechacreacion" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="fechacreacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechacreacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -231,7 +285,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechacreacion}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="90" y="0" width="277" height="19" uuid="39ca35f5-7725-4b41-b0ef-16582766fcee">
@@ -243,7 +297,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="367" y="0" width="263" height="19" uuid="b05e079a-029e-4218-9c7d-749ac0fed527">
@@ -255,7 +309,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="630" y="0" width="121" height="19" uuid="5876b6a8-810e-4ee5-9776-f424706f01b0">
@@ -267,7 +321,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="751" y="0" width="139" height="19" uuid="88e75617-09b4-491d-9886-2337619c21a8">
@@ -279,7 +333,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="890" y="0" width="131" height="19" uuid="49e1c382-45a0-479e-be1c-cd2c85e5ecba">
@@ -291,7 +345,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="1230" y="0" width="150" height="19" uuid="b519d5c9-424e-4fb9-adc0-9905b03e9114">
@@ -303,7 +357,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="1021" y="0" width="131" height="19" uuid="f43dd6b6-db4f-4573-aeb0-dd245ded79a8">
@@ -315,7 +369,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materialutilizado}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="1152" y="0" width="78" height="19" uuid="1acde659-2247-4636-843d-af8f5b45e1a7">
@@ -327,7 +381,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
