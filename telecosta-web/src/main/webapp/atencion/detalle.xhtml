@@ -81,6 +81,37 @@
                     </p:column>
                 </p:row>
             </p:panelGrid>
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="2. Información del Material" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <p:dataTable id="dt_detalleatencion" var="dd" value="#{detalleAtencionMB.listDetalle}"
+                         emptyMessage="No hay detalles de tickets registrados" 
+                         styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                         rows="10" paginator="#{detalleAtencionMB.listDetalle.size()>4}"  paginatorPosition="bottom">
+
+                <p:column headerText="No." style="width: 5%;">
+                    #{rowId+1}
+                </p:column>
+
+                <p:column headerText="Material utilizado" width="20%" >
+                    <p:outputLabel value="#{dd.materialutilizado}"/>
+                </p:column>
+
+                <p:column headerText="Material utilizado" width="20%" >
+                    <p:outputLabel value="#{dd.cantidad}"/>
+                </p:column>
+
+                <p:column headerText="observación" width="25%" >
+                    <p:outputLabel value="#{dd.observacion}"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -208,7 +208,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<staticText>
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="1380" height="19" backcolor="#D9DBDB" uuid="961195ed-7921-4322-af40-e81c85ce0db5">
 					<property name="local_mesure_unitheight" value="pixel"/>

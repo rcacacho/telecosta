@@ -1,8 +1,10 @@
 package tele.costa.api.ejb;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import tele.costa.api.entity.Atencion;
+import tele.costa.api.entity.Detalleatencion;
 
 /**
  *
@@ -15,7 +17,7 @@ public interface AtencionClienteLocal {
 
     Atencion saveAtencion(Atencion atencion);
 
-    Atencion updateAtencion(Atencion cliente);
+    Atencion updateAtencion(Atencion atencion);
 
     List<Atencion> listAtencionByIdMunicipio(Integer idmunicipio);
 
@@ -23,4 +25,17 @@ public interface AtencionClienteLocal {
 
     Atencion findAtencionById(Integer idatencion);
 
+    List<Atencion> listAtencionByFechas(Date fechainicio, Date fechafin);
+
+    List<Atencion> listAtencionByFechaInicio(Date fechainicio);
+
+    List<Atencion> listAtencionByFechaFin(Date fechafin);
+
+    List<Atencion> listAtencionByFechasAndRuta(Date fechainicio, Date fechafin, Integer idruta);
+
+    List<Atencion> listAtencionByRuta(Integer idruta);
+    
+    Detalleatencion saveDetalleAtencion(Detalleatencion detalle);
+    
+    List<Detalleatencion> listDetalleAtencioByIdAtencion(Integer idatencion);
 }
