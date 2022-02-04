@@ -174,13 +174,6 @@
                     <p:column headerText="observación" width="25%" >
                         <p:outputLabel value="#{dd.observacion}"/>
                     </p:column>
-
-                    <p:column width="15%" exportable="false" >
-                        <p:commandButton value="Eliminar" 
-                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
-                                         action="#{listaAtencionMB.eliminarDet(dd.idatencion)}" update="dt_detalleatencion"/>
-                    </p:column>
                 </p:dataTable>
 
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
