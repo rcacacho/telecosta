@@ -2,6 +2,7 @@ package tele.costa.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,38 +47,38 @@ public class Sector implements Serializable {
     @Basic(optional = false)
     @Column(name = "idsector")
     private Integer idsector;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
     @Column(name = "sector")
     private String sector;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;

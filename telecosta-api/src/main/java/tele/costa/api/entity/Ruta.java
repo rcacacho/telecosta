@@ -47,42 +47,42 @@ public class Ruta implements Serializable {
     @Basic(optional = false)
     @Column(name = "idruta")
     private Integer idruta;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2000)
     @Column(name = "ruta")
     private String ruta;
-    
+
     @Size(max = 1500)
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idruta", fetch = FetchType.LAZY)
     private List<Atencion> atencionList;
 

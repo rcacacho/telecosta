@@ -14,6 +14,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
@@ -51,6 +53,8 @@ import telecosta.web.utils.SesionUsuarioMB;
  *
  * @author rcacacho
  */
+@ManagedBean(name = "reporteCobroMB")
+@ViewScoped
 public class ReporteCobroMB {
 
     private static final Logger log = Logger.getLogger(ReporteCobroMB.class);

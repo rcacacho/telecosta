@@ -185,6 +185,15 @@ public class Configuracionpago implements Serializable {
         this.clienteList = clienteList;
     }
 
+    @XmlTransient
+    public List<Cobro> getCobroList() {
+        return cobroList;
+    }
+
+    public void setCobroList(List<Cobro> cobroList) {
+        this.cobroList = cobroList;
+    }
+
     public Integer getValor() {
         return valor;
     }
@@ -199,15 +208,6 @@ public class Configuracionpago implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    @XmlTransient
-    public List<Cobro> getCobroList() {
-        return cobroList;
-    }
-
-    public void setCobroList(List<Cobro> cobroList) {
-        this.cobroList = cobroList;
     }
 
 }

@@ -2,7 +2,9 @@ package tele.costa.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,12 +15,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -101,6 +105,9 @@ public class Atencion implements Serializable {
     @JoinColumn(name = "idruta", referencedColumnName = "idruta")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Ruta idruta;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idatencion", fetch = FetchType.LAZY)
+    private List<Detalleatencion> detalleatencionList;
 
     public Atencion() {
     }
@@ -251,6 +258,15 @@ public class Atencion implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Atencion[ idatencion=" + idatencion + " ]";
+    }
+
+    @XmlTransient
+    public List<Detalleatencion> getDetalleatencionList() {
+        return detalleatencionList;
+    }
+
+    public void setDetalleatencionList(List<Detalleatencion> detalleatencionList) {
+        this.detalleatencionList = detalleatencionList;
     }
 
 }
