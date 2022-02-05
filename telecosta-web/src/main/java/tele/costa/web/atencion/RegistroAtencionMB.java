@@ -65,6 +65,7 @@ public class RegistroAtencionMB implements Serializable {
 
     public void saveAtencion() throws IOException {
         atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        atencion.setEstado(true);
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
