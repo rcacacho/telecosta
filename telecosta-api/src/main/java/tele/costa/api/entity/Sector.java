@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -82,6 +83,9 @@ public class Sector implements Serializable {
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsector", fetch = FetchType.LAZY)
+//    private List<Cliente> clienteList;
 
     public Sector() {
     }
@@ -168,6 +172,15 @@ public class Sector implements Serializable {
         hash += (idsector != null ? idsector.hashCode() : 0);
         return hash;
     }
+
+//    @XmlTransient
+//    public List<Cliente> getClienteList() {
+//        return clienteList;
+//    }
+//
+//    public void setClienteList(List<Cliente> clienteList) {
+//        this.clienteList = clienteList;
+//    }
 
     @Override
     public boolean equals(Object object) {

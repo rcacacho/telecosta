@@ -65,23 +65,12 @@
                                 </p:panelGrid>
 
                                 <h4 style="margin-right: 190px;">Reporte de Ruta</h4>
-                                <p:panelGrid columns="5"  styleClass="no-border" style="margin-top: 10px;">
-                                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
-                                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
-                                    <p:outputLabel value="Usuario:"  styleClass="field-label"  />
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Ruta:"  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
-
-                                    <p:calendar id="cal_fechaInicioUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reportePagoMB.fechaIncioUsuario}" navigator="true">  
-                                        <p:ajax event="dateSelect" process="@this" />
-                                    </p:calendar>
-
-                                    <p:calendar id="cal_fechaFinUsuario" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reportePagoMB.fechaFinUsuario}" navigator="true">  
-                                        <p:ajax event="dateSelect" process="@this" />
-                                    </p:calendar>
-
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    
                                     <p:selectOneMenu id="cl" value="#{reportePagoMB.selectedUsuario}" style="width: 250px;" 
                                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                                         <p:ajax  update="cl" />
