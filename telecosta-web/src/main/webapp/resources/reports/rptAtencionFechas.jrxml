@@ -10,8 +10,8 @@
 	<parameter name="FECHA_FIN" class="java.sql.Date"/>
 	<queryString>
 		<![CDATA[select c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  
-from detalleatencion d 
-join atencion a on d.idatencion = a.idatencion and a.activo = 1
+from atencion a
+left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1
 join cliente c on a.idcliente = c.idcliente and c.activo = 1
 where  a.fechacreacion >= $P{FECHA_INICIO}
 and a.fechacreacion <= $P{FECHA_FIN}]]>
@@ -113,7 +113,7 @@ and a.fechacreacion <= $P{FECHA_FIN}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[NOMBRES]]></text>
+				<text><![CDATA[NOMBRE DEL USUARIO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="367" y="0" width="263" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="a0c89a30-7c1b-490f-96b4-7f87c5d3b3bf">

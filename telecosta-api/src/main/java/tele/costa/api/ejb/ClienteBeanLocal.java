@@ -34,5 +34,7 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesBySector(String sector);
 
     List<Cliente> listClientesByInMunucipio();
+    
+     List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafael();
 
 }

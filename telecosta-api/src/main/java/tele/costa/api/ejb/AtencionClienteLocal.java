@@ -38,4 +38,6 @@ public interface AtencionClienteLocal {
     Detalleatencion saveDetalleAtencion(Detalleatencion detalle);
     
     List<Detalleatencion> listDetalleAtencioByIdAtencion(Integer idatencion);
+    
+    List<Detalleatencion> listDetalleAtencioByFechas(Date fechainicio, Date fechafin);
 }

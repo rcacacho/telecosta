@@ -59,5 +59,7 @@ public interface PagosBeanLocal {
     List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector);
     
     List<ReporteCobrosDto> listCobrosByIdMunicipio(Integer idmunicipio);
+    
+     List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
 
 }

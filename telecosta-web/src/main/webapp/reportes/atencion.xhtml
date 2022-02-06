@@ -15,7 +15,7 @@
         <h:form id="frm_content">
             <div align="center">
                 <ui:define name="pageTitle">
-                    <h1 style="margin: 0 0 0 0;">Reporte</h1>            
+                    <h1 style="margin: 0 0 0 0;">Reporte Atención Ticket</h1>            
                 </ui:define>
 
                 <table>
@@ -41,12 +41,12 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
                                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reportePagoMB.fechaIncio}" navigator="true">  
+                                                value="#{reporteAtencionMB.fechaIncio}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
                                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                                value="#{reportePagoMB.fechaFin}" navigator="true">  
+                                                value="#{reporteAtencionMB.fechaFin}" navigator="true">  
                                         <p:ajax event="dateSelect" process="@this" />
                                     </p:calendar>
 
@@ -54,13 +54,13 @@
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reportePagoMB.generarPdfPago()}"/>
+                                        <p:fileDownload value="#{reporteAtencionMB.generarPdfFechas()}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reportePagoMB.imprimirExcelPagos()}"/>
+                                        <p:fileDownload value="#{reporteAtencionMB.imprimirExcelAtencionFechas()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
 
@@ -71,11 +71,11 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
                                     
-                                    <p:selectOneMenu id="cl" value="#{reportePagoMB.selectedUsuario}" style="width: 250px;" 
+                                    <p:selectOneMenu id="cl" value="#{reporteAtencionMB.idRuta}" style="width: 250px;" 
                                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                                         <p:ajax  update="cl" />
-                                        <f:selectItem itemLabel="(selecciona un usuario)" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{reportePagoMB.listUsuarios}"  var="mun" itemLabel="#{mun.usuario}" itemValue="#{mun}"/>
+                                        <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteAtencionMB.listRuta}"  var="mun" itemLabel="#{mun.ruta}" itemValue="#{mun.idruta}"/>
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="PDF" style="float: left;"

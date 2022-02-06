@@ -490,4 +490,15 @@ public class PagosBean implements PagosBeanLocal {
                 .getResultList();
     }
 
+    @Override
+    public List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo() {
+      List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (3,6,7) order by pa.fechapago desc", Pago.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
 }

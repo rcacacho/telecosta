@@ -308,4 +308,40 @@ public class AtencionBean implements AtencionClienteLocal {
         return lst;
     }
 
+    @Override
+    public List<Detalleatencion> listDetalleAtencioByFechas(Date fechainicio, Date fechafin) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Detalleatencion> lst = em.createQuery("SELECT qj FROM Detalleatencion qj where qj.idatencion.fechacreacion >= :fechainicio and qj.idatencion.fechacreacion <= :fechafin and qj.activo = true ", Detalleatencion.class)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }
