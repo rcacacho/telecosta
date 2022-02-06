@@ -340,4 +340,11 @@ public class AtencionBean implements AtencionClienteLocal {
 
     }
 
+    @Override
+    public List<ReporteAtencionDto> listAtencionByIdRuta(Integer idRuta) {
+          return em.createNamedQuery("ReporteAtencionDto.atencionesRuta")
+                .setParameter(1, idRuta)
+                .getResultList();
+    }
+
 }

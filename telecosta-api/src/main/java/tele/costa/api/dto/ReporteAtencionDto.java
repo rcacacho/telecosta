@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
             query
             = "select a.idatencion, c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
             + "from atencion a \n"
-            + "left join atencion d on a.idatencion = d.idatencion and a.activo = 1\n"
+            + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
             + "join cliente c on a.idcliente = c.idcliente and c.activo = 1\n"
             + "join ruta r on a.idruta = r.idruta and r.activo = 1\n"
             + "where r.idruta = ? ",
