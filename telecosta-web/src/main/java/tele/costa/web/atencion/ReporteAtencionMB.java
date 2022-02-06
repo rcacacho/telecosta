@@ -40,6 +40,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import tele.costa.api.dto.ReporteAtencionDto;
 import tele.costa.api.ejb.AtencionClienteLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Atencion;
@@ -213,7 +214,7 @@ public class ReporteAtencionMB implements Serializable {
         }
 
         StreamedContent content = null;
-        List<Detalleatencion> listAtencion = atencionBean.listDetalleAtencioByFechas(fechaIncio, fechaFin);
+        List<ReporteAtencionDto> listAtencion = atencionBean.listAtencionFechas(fechaIncio, fechaFin);
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -372,10 +373,10 @@ public class ReporteAtencionMB implements Serializable {
         celda9.setCellStyle(headerStyle);
         int correlativo = 1;
 
-        for (Detalleatencion reporte : listAtencion) {
-            if (!mapaFilas.containsKey(reporte.getIdatencion().getIdatencion())) {
+        for (ReporteAtencionDto reporte : listAtencion) {
+            if (!mapaFilas.containsKey(reporte.getIdatencion())) {
                 Fila fila = new Fila(sheet.createRow(rownum++));
-                mapaFilas.put(reporte.getIdatencion().getIdatencion(), fila);
+                mapaFilas.put(reporte.getIdatencion(), fila);
 
                 Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
                 cell.setCellValue(correlativo++);
@@ -386,16 +387,16 @@ public class ReporteAtencionMB implements Serializable {
                 cell1.setCellStyle(cellStyleFecha);
 
                 Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell2.setCellValue(reporte.getIdatencion().getIdcliente().getNombres());
+                cell2.setCellValue(reporte.getNombres());
                 cell2.setCellStyle(cellStyle);
 
                 Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell3.setCellValue(reporte.getIdatencion().getIdcliente().getDireccion());
+                cell3.setCellValue(reporte.getDireccion());
                 cell3.setCellStyle(cellStyle);
 
-                if (reporte.getIdatencion().getIdcliente().getTelefono() != null) {
+                if (reporte.getTelefono() != null) {
                     Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue(reporte.getIdatencion().getIdcliente().getTelefono());
+                    cell4.setCellValue(reporte.getTelefono());
                     cell4.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -403,9 +404,9 @@ public class ReporteAtencionMB implements Serializable {
                     cell4.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getIdatencion().getMotivo() != null) {
+                if (reporte.getMotivo() != null) {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell5.setCellValue(reporte.getIdatencion().getMotivo());
+                    cell5.setCellValue(reporte.getMotivo());
                     cell5.setCellStyle(cellStyle);
                 } else {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -413,9 +414,9 @@ public class ReporteAtencionMB implements Serializable {
                     cell5.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getIdatencion().getReferencia() != null) {
+                if (reporte.getReferencia() != null) {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell6.setCellValue(reporte.getIdatencion().getReferencia());
+                    cell6.setCellValue(reporte.getReferencia());
                     cell6.setCellStyle(cellStyle);
                 } else {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -443,9 +444,9 @@ public class ReporteAtencionMB implements Serializable {
                     cell8.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getObservaciones() != null) {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell9.setCellValue(reporte.getObservacion());
+                    cell9.setCellValue(reporte.getObservaciones());
                     cell9.setCellStyle(cellStyle);
                 } else {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());

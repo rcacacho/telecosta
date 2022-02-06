@@ -3,6 +3,7 @@ package tele.costa.api.ejb;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import tele.costa.api.dto.ReporteAtencionDto;
 import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Detalleatencion;
 
@@ -34,10 +35,11 @@ public interface AtencionClienteLocal {
     List<Atencion> listAtencionByFechasAndRuta(Date fechainicio, Date fechafin, Integer idruta);
 
     List<Atencion> listAtencionByRuta(Integer idruta);
-    
+
     Detalleatencion saveDetalleAtencion(Detalleatencion detalle);
-    
+
     List<Detalleatencion> listDetalleAtencioByIdAtencion(Integer idatencion);
-    
-    List<Detalleatencion> listDetalleAtencioByFechas(Date fechainicio, Date fechafin);
+
+    List<ReporteAtencionDto> listAtencionFechas(Date fechainicio, Date fechafin);
+
 }

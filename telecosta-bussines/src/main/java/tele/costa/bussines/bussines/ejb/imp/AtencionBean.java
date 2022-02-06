@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
+import tele.costa.api.dto.ReporteAtencionDto;
 import tele.costa.api.ejb.AtencionClienteLocal;
 import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Detalleatencion;
@@ -252,7 +253,7 @@ public class AtencionBean implements AtencionClienteLocal {
         List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.fechacreacion >= :fechainicio and qj.fechacreacion <= :fechafin and qj.idruta.idruta =:idruta and  qj.activo = true ", Atencion.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
-                 .setParameter("idruta", idruta)
+                .setParameter("idruta", idruta)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -277,7 +278,7 @@ public class AtencionBean implements AtencionClienteLocal {
 
     @Override
     public Detalleatencion saveDetalleAtencion(Detalleatencion detalle) {
-       try {
+        try {
             detalle.setActivo(true);
             detalle.setFechacreacion(new Date());
             em.persist(detalle);
@@ -297,7 +298,7 @@ public class AtencionBean implements AtencionClienteLocal {
 
     @Override
     public List<Detalleatencion> listDetalleAtencioByIdAtencion(Integer idatencion) {
-          List<Detalleatencion> lst = em.createQuery("SELECT qj FROM Detalleatencion qj where qj.activo = true and qj.idatencion.idatencion =:idatencion ", Detalleatencion.class)
+        List<Detalleatencion> lst = em.createQuery("SELECT qj FROM Detalleatencion qj where qj.activo = true and qj.idatencion.idatencion =:idatencion ", Detalleatencion.class)
                 .setParameter("idatencion", idatencion)
                 .getResultList();
 
@@ -309,7 +310,7 @@ public class AtencionBean implements AtencionClienteLocal {
     }
 
     @Override
-    public List<Detalleatencion> listDetalleAtencioByFechas(Date fechainicio, Date fechafin) {
+    public List<ReporteAtencionDto> listAtencionFechas(Date fechainicio, Date fechafin) {
         if (fechainicio == null) {
             return null;
         }
@@ -332,16 +333,11 @@ public class AtencionBean implements AtencionClienteLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Detalleatencion> lst = em.createQuery("SELECT qj FROM Detalleatencion qj where qj.idatencion.fechacreacion >= :fechainicio and qj.idatencion.fechacreacion <= :fechafin and qj.activo = true ", Detalleatencion.class)
-                .setParameter("fechainicio", fechainicio)
-                .setParameter("fechafin", fechafin)
+        return em.createNamedQuery("ReporteAtencionDto.atencionesFechas")
+                .setParameter(1, fechainicio)
+                .setParameter(2, fechafin)
                 .getResultList();
 
-        if (lst == null || lst.isEmpty()) {
-            return null;
-        }
-
-        return lst;
     }
 
 }
