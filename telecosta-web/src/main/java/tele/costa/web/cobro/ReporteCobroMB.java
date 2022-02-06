@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,9 +42,13 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import tele.costa.api.dto.ReporteCobrosDto;
 import tele.costa.api.ejb.CatalogoBeanLocal;
+import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
+import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Sector;
+import tele.costa.api.wrapper.CobroWrapper;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.ReporteJasper;
@@ -66,6 +71,8 @@ public class ReporteCobroMB {
     private PagosBeanLocal pagosBean;
     @EJB
     private CatalogoBeanLocal catalogoBean;
+    @EJB
+    private ClienteBeanLocal clienteBean;
 
     private Date fechaIncioCobro;
     private Date fechaFinCobro;
@@ -205,6 +212,11 @@ public class ReporteCobroMB {
 
     public StreamedContent generarPdfCobroMunicipio() {
         try {
+            List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+            for (Cliente cl : listCliente) {
+                Pago findPago = pagosBean.findUltimoPago(cl.getIdcliente());
+            }
+
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
             String nombreReporte = "rptCobroMunicipio";
@@ -253,7 +265,29 @@ public class ReporteCobroMB {
 
     public StreamedContent imprimirExcelCobroSector() throws IOException {
         StreamedContent content = null;
-        List<ReporteCobrosDto> listaPagos = pagosBean.listCobrosByIdSector(idSector);
+
+        List<Cliente> listCliente = clienteBean.ListClientesByIdSector(idSector);
+        List<CobroWrapper> listCobro = new ArrayList<>();
+
+        for (Cliente cl : listCliente) {
+            Pago pag = pagosBean.findUltimoPago(cl.getIdcliente());
+            if (pag != null) {
+                CobroWrapper cobroWrapper = new CobroWrapper();
+                cobroWrapper.setCodigo(cl.getCodigo());
+                cobroWrapper.setDireccion(cl.getDireccion());
+                cobroWrapper.setFechapago(pag.getMes() + '-' + pag.getAnio());
+                cobroWrapper.setIdpago(pag.getIdpago());
+                cobroWrapper.setNombres(cl.getNombres());
+                cobroWrapper.setObservacion(pag.getObservacion());
+                if (cl.getIdSector() != null) {
+                    cobroWrapper.setSector(cl.getIdSector().getSector());
+                }
+
+                cobroWrapper.setTelefono(cl.getTelefono());
+                cobroWrapper.setValor(pag.getTotal());
+                listCobro.add(cobroWrapper);
+            }
+        }
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -262,7 +296,7 @@ public class ReporteCobroMB {
         int rownum = 0;
         int headerNum = 0;
         sheet.setColumnWidth(0, 900);
-        sheet.setColumnWidth(1, 9000);
+        sheet.setColumnWidth(1, 3000);
         sheet.setColumnWidth(2, 9000);
         sheet.setColumnWidth(3, 6000);
         sheet.setColumnWidth(4, 7000);
@@ -270,22 +304,6 @@ public class ReporteCobroMB {
         sheet.setColumnWidth(6, 5000);
         sheet.setColumnWidth(7, 5000);
         sheet.setColumnWidth(8, 5000);
-        sheet.setColumnWidth(9, 5000);
-        sheet.setColumnWidth(10, 5000);
-        sheet.setColumnWidth(11, 5000);
-        sheet.setColumnWidth(12, 11000);
-        sheet.setColumnWidth(13, 12000);
-        sheet.setColumnWidth(14, 14000);
-        sheet.setColumnWidth(15, 2000);
-        sheet.setColumnWidth(16, 6000);
-        sheet.setColumnWidth(17, 5000);
-        sheet.setColumnWidth(18, 4000);
-        sheet.setColumnWidth(19, 6000);
-        sheet.setColumnWidth(20, 6000);
-        sheet.setColumnWidth(21, 7000);
-        sheet.setColumnWidth(22, 7000);
-        sheet.setColumnWidth(23, 7000);
-        sheet.setColumnWidth(24, 19000);
 
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 250, 250));
@@ -409,7 +427,7 @@ public class ReporteCobroMB {
         celda8.setCellStyle(headerStyle);
         int correlativo = 1;
 
-        for (ReporteCobrosDto reporte : listaPagos) {
+        for (CobroWrapper reporte : listCobro) {
             if (!mapaFilas.containsKey(reporte.getIdpago())) {
                 Fila fila = new Fila(sheet.createRow(rownum++));
                 mapaFilas.put(reporte.getIdpago(), fila);
@@ -421,10 +439,10 @@ public class ReporteCobroMB {
                 Cell cell1 = fila.getFila().createCell(fila.nextIndex().shortValue());
                 cell1.setCellValue(reporte.getCodigo());
                 cell1.setCellStyle(cellStyle);
-
-                if (reporte.getTelefono() != null) {
+                
+                if (reporte.getNombres() != null) {
                     Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell2.setCellValue(reporte.getTelefono());
+                    cell2.setCellValue(reporte.getNombres());
                     cell2.setCellStyle(cellStyle);
                 } else {
                     Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -432,33 +450,33 @@ public class ReporteCobroMB {
                     cell2.setCellStyle(cellStyle);
                 }
 
-                Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell3.setCellValue(reporte.getDireccion());
-                cell3.setCellStyle(cellStyle);
-
-                if (reporte.getSector() != null) {
-                    Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue(reporte.getSector());
-                    cell4.setCellStyle(cellStyleNumero);
+                if (reporte.getTelefono() != null) {
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue(reporte.getTelefono());
+                    cell3.setCellStyle(cellStyle);
                 } else {
-                    Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue("");
-                    cell4.setCellStyle(cellStyle);
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue("");
+                    cell3.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getFechapago() != null) {
+                Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell4.setCellValue(reporte.getDireccion());
+                cell4.setCellStyle(cellStyle);
+
+                if (reporte.getSector() != null) {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell5.setCellValue(reporte.getFechapago());
-                    cell5.setCellStyle(cellStyle);
+                    cell5.setCellValue(reporte.getSector());
+                    cell5.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell5.setCellValue("");
                     cell5.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getValor() != null) {
+                if (reporte.getFechapago() != null) {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell6.setCellValue(reporte.getValor());
+                    cell6.setCellValue(reporte.getFechapago());
                     cell6.setCellStyle(cellStyle);
                 } else {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -466,14 +484,24 @@ public class ReporteCobroMB {
                     cell6.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getValor() != null) {
                     Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell7.setCellValue(reporte.getObservacion());
+                    cell7.setCellValue(reporte.getValor());
                     cell7.setCellStyle(cellStyle);
                 } else {
                     Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell7.setCellValue("");
                     cell7.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getObservacion() != null) {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue(reporte.getObservacion());
+                    cell8.setCellStyle(cellStyle);
+                } else {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue("");
+                    cell8.setCellStyle(cellStyle);
                 }
             }
         }
@@ -493,7 +521,28 @@ public class ReporteCobroMB {
 
     public StreamedContent imprimirExcelCobroMunicipio() throws IOException {
         StreamedContent content = null;
-        List<ReporteCobrosDto> listaPagos = pagosBean.listCobrosByIdMunicipio(idMunicipio);
+        List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+        List<CobroWrapper> listCobro = new ArrayList<>();
+
+        for (Cliente cl : listCliente) {
+            Pago pag = pagosBean.findUltimoPago(cl.getIdcliente());
+            if (pag != null) {
+                CobroWrapper cobroWrapper = new CobroWrapper();
+                cobroWrapper.setCodigo(cl.getCodigo());
+                cobroWrapper.setDireccion(cl.getDireccion());
+                cobroWrapper.setFechapago(pag.getMes() + '-' + pag.getAnio());
+                cobroWrapper.setIdpago(pag.getIdpago());
+                cobroWrapper.setNombres(cl.getNombres());
+                cobroWrapper.setObservacion(pag.getObservacion());
+                if (cl.getIdSector() != null) {
+                    cobroWrapper.setSector(cl.getIdSector().getSector());
+                }
+
+                cobroWrapper.setTelefono(cl.getTelefono());
+                cobroWrapper.setValor(pag.getTotal());
+                listCobro.add(cobroWrapper);
+            }
+        }
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -501,31 +550,15 @@ public class ReporteCobroMB {
 
         int rownum = 0;
         int headerNum = 0;
-        sheet.setColumnWidth(0, 900);
-        sheet.setColumnWidth(1, 9000);
+        sheet.setColumnWidth(0, 1000);
+        sheet.setColumnWidth(1, 2000);
         sheet.setColumnWidth(2, 9000);
         sheet.setColumnWidth(3, 6000);
-        sheet.setColumnWidth(4, 7000);
+        sheet.setColumnWidth(4, 9000);
         sheet.setColumnWidth(5, 5000);
         sheet.setColumnWidth(6, 5000);
         sheet.setColumnWidth(7, 5000);
-        sheet.setColumnWidth(8, 5000);
-        sheet.setColumnWidth(9, 5000);
-        sheet.setColumnWidth(10, 5000);
-        sheet.setColumnWidth(11, 5000);
-        sheet.setColumnWidth(12, 11000);
-        sheet.setColumnWidth(13, 12000);
-        sheet.setColumnWidth(14, 14000);
-        sheet.setColumnWidth(15, 2000);
-        sheet.setColumnWidth(16, 6000);
-        sheet.setColumnWidth(17, 5000);
-        sheet.setColumnWidth(18, 4000);
-        sheet.setColumnWidth(19, 6000);
-        sheet.setColumnWidth(20, 6000);
-        sheet.setColumnWidth(21, 7000);
-        sheet.setColumnWidth(22, 7000);
-        sheet.setColumnWidth(23, 7000);
-        sheet.setColumnWidth(24, 19000);
+        sheet.setColumnWidth(8, 7000);
 
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 250, 250));
@@ -649,7 +682,7 @@ public class ReporteCobroMB {
         celda8.setCellStyle(headerStyle);
         int correlativo = 1;
 
-        for (ReporteCobrosDto reporte : listaPagos) {
+        for (CobroWrapper reporte : listCobro) {
             if (!mapaFilas.containsKey(reporte.getIdpago())) {
                 Fila fila = new Fila(sheet.createRow(rownum++));
                 mapaFilas.put(reporte.getIdpago(), fila);
@@ -662,9 +695,9 @@ public class ReporteCobroMB {
                 cell1.setCellValue(reporte.getCodigo());
                 cell1.setCellStyle(cellStyle);
 
-                if (reporte.getTelefono() != null) {
+                if (reporte.getNombres() != null) {
                     Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell2.setCellValue(reporte.getTelefono());
+                    cell2.setCellValue(reporte.getNombres());
                     cell2.setCellStyle(cellStyle);
                 } else {
                     Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -672,13 +705,19 @@ public class ReporteCobroMB {
                     cell2.setCellStyle(cellStyle);
                 }
 
-                Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell3.setCellValue(reporte.getDireccion());
-                cell3.setCellStyle(cellStyle);
+                if (reporte.getTelefono() != null) {
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue(reporte.getTelefono());
+                    cell3.setCellStyle(cellStyle);
+                } else {
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue("");
+                    cell3.setCellStyle(cellStyle);
+                }
 
-                if (reporte.getSector() != null) {
+                if (reporte.getDireccion() != null) {
                     Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue(reporte.getSector());
+                    cell4.setCellValue(reporte.getDireccion());
                     cell4.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -686,19 +725,19 @@ public class ReporteCobroMB {
                     cell4.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getFechapago() != null) {
+                if (reporte.getSector() != null) {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell5.setCellValue(reporte.getFechapago());
-                    cell5.setCellStyle(cellStyle);
+                    cell5.setCellValue(reporte.getSector());
+                    cell5.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell5.setCellValue("");
                     cell5.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getValor() != null) {
+                if (reporte.getFechapago() != null) {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell6.setCellValue(reporte.getValor());
+                    cell6.setCellValue(reporte.getFechapago());
                     cell6.setCellStyle(cellStyle);
                 } else {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -706,14 +745,24 @@ public class ReporteCobroMB {
                     cell6.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getValor() != null) {
                     Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell7.setCellValue(reporte.getObservacion());
+                    cell7.setCellValue(reporte.getValor());
                     cell7.setCellStyle(cellStyle);
                 } else {
                     Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell7.setCellValue("");
                     cell7.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getObservacion() != null) {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue(reporte.getObservacion());
+                    cell8.setCellStyle(cellStyle);
+                } else {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue("");
+                    cell8.setCellStyle(cellStyle);
                 }
             }
         }

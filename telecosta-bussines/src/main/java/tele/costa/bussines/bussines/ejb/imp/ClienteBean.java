@@ -253,7 +253,20 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafael() {
-         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio in (3,6,7) ", Cliente.class)
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio in (3,6,7) ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdSector(Integer idSector) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idSector.idsector =:idSector ", Cliente.class)
+                .setParameter("idSector", idSector)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
