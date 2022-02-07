@@ -54,6 +54,8 @@ public class ListaAtencionMB implements Serializable {
             listAtencion = atencionBean.listAtenciones();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listAtencion = atencionBean.listAtencionByMunicipio();
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
+            listAtencion = atencionBean.listAtencionByMunicipioByInMunucipioSanPabloRodeoSanRafael();
         } else {
             listAtencion = atencionBean.listAtencionByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
         }

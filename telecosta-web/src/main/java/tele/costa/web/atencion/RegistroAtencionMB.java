@@ -50,6 +50,8 @@ public class RegistroAtencionMB implements Serializable {
             listCliente = clientesBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listCliente = clientesBean.listClientesByInMunucipio();
+        }else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
+            listCliente = clientesBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
         } else {
             listCliente = clientesBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
         }

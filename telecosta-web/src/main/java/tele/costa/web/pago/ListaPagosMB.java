@@ -53,12 +53,12 @@ public class ListaPagosMB implements Serializable {
         if (SesionUsuarioMB.getRootUsuario()) {
             listClientes = clienteBean.ListClientes();
             //listPago = pagosBean.listPagos();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(9)) {
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
             listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
             listPago = pagosBean.listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listClientes = clienteBean.listClientesByInMunucipio();
-             listPago = pagosBean.listPagosByInIdMunicipios();
+            listPago = pagosBean.listPagosByInIdMunicipios();
         } else {
             listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
             listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());

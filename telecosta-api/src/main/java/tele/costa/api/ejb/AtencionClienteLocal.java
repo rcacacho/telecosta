@@ -41,7 +41,9 @@ public interface AtencionClienteLocal {
     List<Detalleatencion> listDetalleAtencioByIdAtencion(Integer idatencion);
 
     List<ReporteAtencionDto> listAtencionFechas(Date fechainicio, Date fechafin);
-    
+
     List<ReporteAtencionDto> listAtencionByIdRuta(Integer idRuta);
+
+    List<Atencion> listAtencionByMunicipioByInMunucipioSanPabloRodeoSanRafael();
 
 }

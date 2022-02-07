@@ -50,7 +50,7 @@ public class ListaClienteMB implements Serializable {
             listCliente = clienteBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listCliente = clienteBean.listClientesByInMunucipio();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(9)) {
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
             listCliente = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
         } else {
             listCliente = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());

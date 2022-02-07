@@ -347,4 +347,16 @@ public class AtencionBean implements AtencionClienteLocal {
                 .getResultList();
     }
 
+    @Override
+    public List<Atencion> listAtencionByMunicipioByInMunucipioSanPabloRodeoSanRafael() {
+        List<Atencion> lst = em.createQuery("SELECT qj FROM Atencion qj where qj.activo = true and qj.idcliente.idmunicipio.idmunicipio in (3,6,7) ", Atencion.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }
