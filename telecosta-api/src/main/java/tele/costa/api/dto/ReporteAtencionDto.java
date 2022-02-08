@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
             @EntityResult(entityClass = ReporteAtencionDto.class,
                     fields = {
                         @FieldResult(name = "idatencion", column = "idatencion"),
-                        @FieldResult(name = "nombres", column = "nombres"),
+                        @FieldResult(name = "nombre", column = "nombre"),
                         @FieldResult(name = "direccion", column = "direccion"),
                         @FieldResult(name = "telefono", column = "telefono"),
                         @FieldResult(name = "motivo", column = "motivo"),
@@ -35,10 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedNativeQuery(
             name = "ReporteAtencionDto.atencionesFechas",
             query
-            = "select a.idatencion, c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
+            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
             + "from atencion a\n"
             + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
-            + "join cliente c on a.idcliente = c.idcliente and c.activo = 1\n"
             + "where  a.fechacreacion >= ? \n"
             + "and a.fechacreacion <= ? ",
             resultSetMapping = "ReporteAtencionDtoMapping"),
@@ -46,10 +45,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedNativeQuery(
             name = "ReporteAtencionDto.atencionesRuta",
             query
-            = "select a.idatencion, c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
+            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
             + "from atencion a \n"
             + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
-            + "join cliente c on a.idcliente = c.idcliente and c.activo = 1\n"
             + "join ruta r on a.idruta = r.idruta and r.activo = 1\n"
             + "where r.idruta = ? ",
             resultSetMapping = "ReporteAtencionDtoMapping")
@@ -59,7 +57,7 @@ public class ReporteAtencionDto implements Serializable {
 
     @Id
     private Integer idatencion;
-    private String nombres;
+    private String nombre;
     private String direccion;
     private String telefono;
     private String motivo;
@@ -78,12 +76,12 @@ public class ReporteAtencionDto implements Serializable {
         this.idatencion = idatencion;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDireccion() {

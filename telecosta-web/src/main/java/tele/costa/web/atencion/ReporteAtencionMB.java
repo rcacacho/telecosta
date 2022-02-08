@@ -387,7 +387,7 @@ public class ReporteAtencionMB implements Serializable {
                 cell1.setCellStyle(cellStyleFecha);
 
                 Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell2.setCellValue(reporte.getNombres());
+                cell2.setCellValue(reporte.getNombre());
                 cell2.setCellStyle(cellStyle);
 
                 Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -674,7 +674,7 @@ public class ReporteAtencionMB implements Serializable {
                 cell1.setCellStyle(cellStyleFecha);
 
                 Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell2.setCellValue(reporte.getNombres());
+                cell2.setCellValue(reporte.getNombre());
                 cell2.setCellStyle(cellStyle);
 
                 Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
