@@ -41,6 +41,7 @@ public class RegistroAtencionMB implements Serializable {
 
     public RegistroAtencionMB() {
         atencion = new Atencion();
+        clienteSelected = new Cliente();
     }
 
     @PostConstruct
@@ -50,7 +51,7 @@ public class RegistroAtencionMB implements Serializable {
             listCliente = clientesBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listCliente = clientesBean.listClientesByInMunucipio();
-        }else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
             listCliente = clientesBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
         } else {
             listCliente = clientesBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
@@ -68,10 +69,26 @@ public class RegistroAtencionMB implements Serializable {
     public void saveAtencion() throws IOException {
         atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
         atencion.setEstado(true);
+        atencion.setNombre(clienteSelected.getNombres());
+        atencion.setDireccion(clienteSelected.getDireccion());
+        atencion.setTelefono(clienteSelected.getTelefono());
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
             Cliente responseUpdate = clientesBean.updateCliente(clienteSelected);
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
+        }
+        atencion = null;
+        clienteSelected = null;
+    }
+
+    public void saveAtencionSinCliente() throws IOException {
+        atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        atencion.setEstado(true);
+        Atencion responseVerificacion = atencionBean.saveAtencion(atencion);
+        if (responseVerificacion != null) {
+            JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }

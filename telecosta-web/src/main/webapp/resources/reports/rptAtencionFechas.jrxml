@@ -9,27 +9,26 @@
 	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
 	<parameter name="FECHA_FIN" class="java.sql.Date"/>
 	<queryString>
-		<![CDATA[select c.nombres, c.direccion, c.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  
+		<![CDATA[select a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  
 from atencion a
 left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1
-join cliente c on a.idcliente = c.idcliente and c.activo = 1
 where  a.fechacreacion >= $P{FECHA_INICIO}
 and a.fechacreacion <= $P{FECHA_FIN}]]>
 	</queryString>
-	<field name="nombres" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
 	</field>
 	<field name="direccion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
 		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
 	</field>
 	<field name="telefono" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="telefono"/>
 		<property name="com.jaspersoft.studio.field.label" value="telefono"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atencion"/>
 	</field>
 	<field name="motivo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="motivo"/>
@@ -297,7 +296,7 @@ and a.fechacreacion <= $P{FECHA_FIN}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="367" y="0" width="263" height="19" uuid="b05e079a-029e-4218-9c7d-749ac0fed527">

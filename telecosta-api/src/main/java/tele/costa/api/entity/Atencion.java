@@ -50,6 +50,18 @@ public class Atencion implements Serializable {
     @Column(name = "idatencion")
     private Integer idatencion;
 
+    @Size(max = 500)
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Size(max = 2000)
+    @Column(name = "direccion")
+    private String direccion;
+
+    @Size(max = 100)
+    @Column(name = "telefono")
+    private String telefono;
+
     @Size(max = 2000)
     @Column(name = "motivo")
     private String motivo;
@@ -225,6 +237,30 @@ public class Atencion implements Serializable {
 
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getObservaciones() {

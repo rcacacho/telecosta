@@ -16,111 +16,217 @@
             <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
             <div align="center">
 
-                <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
-                    <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Nombres:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
+                <p:tabView>
+                    <p:tab id="tabCliente" title="Cliente">
+                        <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
+                            <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column >
+                                        <p:outputLabel value="Nombres:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
 
-                        <p:row>
-                            <p:column>
-                                <p:selectOneMenu id="cl" value="#{registroAtencionMB.clienteSelected}" style="width: 250px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes seleccion cliente" >
-                                    <p:ajax  listener="#{registroAtencionMB.cargarCliente()}" update="nom tel dir" />
-                                    <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroAtencionMB.listCliente}"  var="cli" itemLabel="#{cli.codigo} - #{cli.nombres}" itemValue="#{cli}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column>
-                                <p:outputLabel id="nom" value="#{registroAtencionMB.clienteSelected.nombres}" style="font-size: 16px!important;" />
-                            </p:column>
-                        </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:selectOneMenu id="cl" value="#{registroAtencionMB.clienteSelected}" style="width: 250px;" 
+                                                         converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                         required="true" requiredMessage="Debes seleccion cliente" >
+                                            <p:ajax  listener="#{registroAtencionMB.cargarCliente()}" update="nom tel dir" />
+                                            <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{registroAtencionMB.listCliente}"  var="cli" itemLabel="#{cli.codigo} - #{cli.nombres}" itemValue="#{cli}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel id="nom" value="#{registroAtencionMB.clienteSelected.nombres}" style="font-size: 16px!important;" />
+                                    </p:column>
+                                </p:row>
 
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Teléfono:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Ruta:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:inputText id="tel" value="#{registroAtencionMB.clienteSelected.telefono}" size="50" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar un teléfono">
-                                    <p:ajax event="blur" process="@this"/>
-                                </p:inputText> 
-                            </p:column>
-                            <p:column  >
-                                <p:selectOneMenu id="ruta" value="#{registroAtencionMB.atencion.idruta}" style="width: 250px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes seleccion una ruta" >
-                                    <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut}"/>
-                                </p:selectOneMenu>
-                            </p:column>   
-                        </p:row>
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:inputTextarea id="dir" rows="3" cols="165" value="#{registroAtencionMB.clienteSelected.direccion}" counter="displaydir" maxlength="2000" 
-                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
-                                                 required="true" requiredMessage="Debes ingresar una dirección">
-                                    <p:ajax event="blur" process="@this" />
-                                </p:inputTextarea>
-                                <h:outputText id="displaydir" style="margin-left: 700px;" /> 
-                            </p:column>
-                        </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Teléfono:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column >
+                                        <p:outputLabel value="Ruta:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:inputText id="tel" value="#{registroAtencionMB.clienteSelected.telefono}" size="50" style="font-size: 16px!important;"
+                                                     required="true" requiredMessage="Debes ingresar un teléfono">
+                                            <p:ajax event="blur" process="@this"/>
+                                        </p:inputText> 
+                                    </p:column>
+                                    <p:column  >
+                                        <p:selectOneMenu id="ruta" value="#{registroAtencionMB.atencion.idruta}" style="width: 250px;" 
+                                                         converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                         required="true" requiredMessage="Debes seleccion una ruta" >
+                                            <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{registroAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>   
+                                </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea id="dir" rows="3" cols="165" value="#{registroAtencionMB.clienteSelected.direccion}" counter="displaydir" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar una dirección">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="displaydir" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
 
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Motivo del reporte:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Motivo del reporte:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
 
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.motivo}" counter="display" maxlength="2000" 
-                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
-                                                 required="true" requiredMessage="Debes ingresar un motivo">
-                                    <p:ajax event="blur" process="@this" />
-                                </p:inputTextarea>
-                                <h:outputText id="display" style="margin-left: 700px;" /> 
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:outputLabel value="Referencia:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.referencia}" counter="display2" maxlength="2000" 
-                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
-                                                 required="true" requiredMessage="Debes ingresar una referencia">
-                                    <p:ajax event="blur" process="@this" />
-                                </p:inputTextarea>
-                                <h:outputText id="display2" style="margin-left: 700px;" /> 
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.motivo}" counter="display" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar un motivo">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="display" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:outputLabel value="Referencia:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.referencia}" counter="display2" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar una referencia">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="display2" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
 
-                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroAtencionMB.saveAtencion()}" icon="ui-icon-disk" process="@form"  
-                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el ticket?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{registroAtencionMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
-                    </p:outputPanel>
-                </p:panelGrid>
+                            <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                                <p:commandButton value="Guardar" action="#{registroAtencionMB.saveAtencion()}" icon="ui-icon-disk" process="tabCliente"  
+                                                 style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el ticket?');" update="@form"/>
+                                <p:commandButton value="Cancelar" process="@this" action="#{registroAtencionMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                            </p:outputPanel>
+                        </p:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab id="tabNuevoCliente" title="Nuevo Cliente">
+                        <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
+                            <p:panelGrid id="pg_clienteNuevo"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Nombres:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column >
+                                        <p:outputLabel value="Teléfono:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column>
+                                        <p:inputText id="nomNuevo" value="#{registroAtencionMB.atencion.nombre}" size="33" style="font-size: 16px!important;"
+                                                     required="true" requiredMessage="Debes ingresar un nombre">
+                                            <p:ajax event="blur" process="@this"/>
+                                        </p:inputText> 
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText id="telNuevo" value="#{registroAtencionMB.atencion.telefono}" size="33" style="font-size: 16px!important;"
+                                                     required="true" requiredMessage="Debes ingresar un teléfono">
+                                            <p:ajax event="blur" process="@this"/>
+                                        </p:inputText> 
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Ruta:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column >
+                                        <p:outputLabel value="" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:selectOneMenu id="rutaNueva" value="#{registroAtencionMB.atencion.idruta}" style="width: 250px;" 
+                                                         converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                         required="true" requiredMessage="Debes seleccion una ruta" >
+                                            <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{registroAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea id="dirNueva" rows="3" cols="165" value="#{registroAtencionMB.atencion.direccion}" counter="displaydir" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar una dirección">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="displaydirNueva" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column >
+                                        <p:outputLabel value="Motivo del reporte:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.motivo}" counter="display" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar un motivo">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="displayMot" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:outputLabel value="Referencia:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3">
+                                        <p:inputTextarea rows="3" cols="165" value="#{registroAtencionMB.atencion.referencia}" counter="display2" maxlength="2000" 
+                                                         counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                         required="true" requiredMessage="Debes ingresar una referencia">
+                                            <p:ajax event="blur" process="@this" />
+                                        </p:inputTextarea>
+                                        <h:outputText id="displayref" style="margin-left: 650px;" /> 
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+
+                            <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                                <p:commandButton value="Guardar" action="#{registroAtencionMB.saveAtencionSinCliente()}" icon="ui-icon-disk" process="tabNuevoCliente"  
+                                                 style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el ticket?');" update="pg_clienteNuevo"/>
+                                <p:commandButton value="Cancelar" process="@this" action="#{registroAtencionMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                            </p:outputPanel>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:tabView>
             </div>
         </h:form>
     </ui:define>
