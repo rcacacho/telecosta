@@ -32,6 +32,7 @@ public class EdicionConfiguracionGastoMB implements Serializable {
     public void actualizarConfiguracion() {
         Tipocompra responseVerificacion = configuracionBen.actualizarConfiguracionGasto(configuracionGasto);
         if (responseVerificacion != null) {
+            JsfUtil.redirectTo("/configuracion/compra/detalle.xhtml?idtipocompra=" + idtipocompra);
             JsfUtil.addSuccessMessage("Configuración actualizada exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");

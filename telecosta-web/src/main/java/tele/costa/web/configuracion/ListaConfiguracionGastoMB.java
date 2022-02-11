@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.event.RowEditEvent;
 import tele.costa.api.ejb.ConfiguracionBeanLocal;
 import tele.costa.api.entity.Tipocompra;
 import telecosta.web.utils.JsfUtil;
@@ -51,6 +52,19 @@ public class ListaConfiguracionGastoMB implements Serializable {
         }
 
         JsfUtil.addErrorMessage("Sucedio un error al elimnar");
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        Object value = event.getObject();
+        Tipocompra tipo = (Tipocompra) value;
+
+        if (tipo != null) {
+            Tipocompra tt = configuracionBean.actualizarConfiguracionGasto(tipo);
+            JsfUtil.addSuccessMessage("Se actualizo la configuración exitosamente");
+            cargarDatos();
+        } else {
+            JsfUtil.addErrorMessage("Sucedio un error al actulizar el registro");
+        }
     }
 
     /*Metodos getters y setters*/

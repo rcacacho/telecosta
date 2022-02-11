@@ -26,20 +26,36 @@
                 <br />
 
                 <p:dataTable id="dt_queja" var="col" value="#{listaConfiguracionGastoMB.listTipoGasto}"
-                             emptyMessage="No hay configuraciones registradas" 
+                             emptyMessage="No hay configuraciones registradas" editable="true"
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaConfiguracionGastoMB.listTipoGasto.size()>5}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaConfiguracionGastoMB.onRowEdit}" update="dt_queja" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Tipo Gasto" width="25%" >
-                        <p:outputLabel value="#{col.tipo}"/>
+                    <p:column headerText="Tipo Gasto" style="width:22%;">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{col.tipo}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputTextarea value="#{col.tipo}" id="tipo"/>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Descripción" width="25%" >
-                        <p:outputLabel value="#{col.descripcion}"/>
+                    <p:column headerText="Descripción" width="22%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{col.descripcion}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputTextarea value="#{col.descripcion}" id="descrip"/>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Fecha registro" width="22%" >
@@ -48,16 +64,19 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column width="15%" exportable="false" >
+                    <p:column width="10%" exportable="false" >
                         <h:commandLink action="#{listaConfiguracionGastoMB.detalle(col.idtipocompra)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>
-                    <p:column width="17%" exportable="false" >
+                    <p:column width="13%" exportable="false" >
                         <p:commandButton value="Eliminar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
                                          action="#{listaConfiguracionGastoMB.eliminar(col.idtipocompra)}" update="@form"/>
+                    </p:column>
+                    <p:column headerText="Editar" width="5%">
+                        <p:rowEditor />
                     </p:column>
                 </p:dataTable>
             </div>
