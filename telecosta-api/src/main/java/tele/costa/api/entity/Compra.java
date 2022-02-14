@@ -78,6 +78,10 @@ public class Compra implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Size(max = 100)
+    @Column(name = "nocheque")
+    private String nocheque;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
@@ -122,6 +126,10 @@ public class Compra implements Serializable {
     @JoinColumn(name = "idtipodocumentocompra", referencedColumnName = "idtipodocumentocompra")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Tipodocumentocompra idtipodocumentocompra;
+
+    @JoinColumn(name = "idformapago", referencedColumnName = "idformapago")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Formapago idformapago;
 
     public Compra() {
     }
@@ -281,6 +289,22 @@ public class Compra implements Serializable {
 
     public void setFechaeliminacion(Date fechaeliminacion) {
         this.fechaeliminacion = fechaeliminacion;
+    }
+
+    public Formapago getIdformapago() {
+        return idformapago;
+    }
+
+    public void setIdformapago(Formapago idformapago) {
+        this.idformapago = idformapago;
+    }
+
+    public String getNocheque() {
+        return nocheque;
+    }
+
+    public void setNocheque(String nocheque) {
+        this.nocheque = nocheque;
     }
 
     @Override

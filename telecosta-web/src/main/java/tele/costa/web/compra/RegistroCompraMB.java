@@ -12,6 +12,7 @@ import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ComprasBeanLocal;
 import tele.costa.api.entity.Compra;
+import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
@@ -36,10 +37,13 @@ public class RegistroCompraMB implements Serializable {
     private List<Proveedor> listProveedor;
     private List<Tipodocumentocompra> listTipoDocumento;
     private List<Tipocompra> listTipoCompra;
+    private List<Formapago> listFormaPago;
+    private boolean mostrarCheque;
 
     public RegistroCompraMB() {
         compra = new Compra();
         proveedor = new Proveedor();
+        mostrarCheque = Boolean.FALSE;
     }
 
     @PostConstruct
@@ -47,6 +51,7 @@ public class RegistroCompraMB implements Serializable {
         listProveedor = catalogoBean.listProveedor();
         listTipoCompra = catalogoBean.listTipoCompra();
         listTipoDocumento = catalogoBean.listTipoDocumento();
+        listFormaPago = catalogoBean.listFormaPago();
     }
 
     public void saveCompra() throws IOException {
@@ -88,6 +93,14 @@ public class RegistroCompraMB implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlgProveedor').hide()");
     }
 
+    public void cargarForma() {
+        if (compra.getIdformapago().getIdformapago().equals(5)) {
+            mostrarCheque = Boolean.TRUE;
+        }else {
+             mostrarCheque = Boolean.FALSE;
+        }
+    }
+
     /*Metodos getters y setters*/
     public Compra getCompra() {
         return compra;
@@ -127,6 +140,22 @@ public class RegistroCompraMB implements Serializable {
 
     public void setListTipoCompra(List<Tipocompra> listTipoCompra) {
         this.listTipoCompra = listTipoCompra;
+    }
+
+    public List<Formapago> getListFormaPago() {
+        return listFormaPago;
+    }
+
+    public void setListFormaPago(List<Formapago> listFormaPago) {
+        this.listFormaPago = listFormaPago;
+    }
+
+    public boolean isMostrarCheque() {
+        return mostrarCheque;
+    }
+
+    public void setMostrarCheque(boolean mostrarCheque) {
+        this.mostrarCheque = mostrarCheque;
     }
 
 }

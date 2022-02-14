@@ -74,7 +74,7 @@
                         <p:outputLabel value="#{col.idproveedor.nombre}"/>
                     </p:column>
 
-                    <p:column headerText="No Documento" width="15%" >
+                    <p:column headerText="No Documento" width="17%" >
                         <p:outputLabel value="#{col.nodocumento}"/>
                     </p:column>
 
@@ -87,8 +87,12 @@
                     <p:column headerText="Monto compra" width="22%" >
                         <p:outputLabel value="#{col.montocompra}"/>
                     </p:column>
+                    
+                    <p:column headerText="Forma Pago" width="22%" >
+                        <p:outputLabel value="#{col.idformapago.forma}"/>
+                    </p:column>
 
-                    <p:column width="17%" exportable="false" >
+                    <p:column width="20%" exportable="false" >
                         <p:commandButton value="Eliminar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
