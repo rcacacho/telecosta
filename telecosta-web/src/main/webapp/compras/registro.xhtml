@@ -128,32 +128,43 @@
                             <p:outputLabel value="Monto compra:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
-                            <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold; margin-left: 12px;" />
+                            <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold; " />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:inputText value="#{registroCompraMB.compra.montocompra}" size="18" style="font-size: 16px!important;"
+                            <p:inputText value="#{registroCompraMB.compra.montocompra}" size="24" style="font-size: 16px!important;"
                                          required="true" requiredMessage="Debes ingresar un numero de documento">
                                 <p:ajax event="blur" process="@this"/>
                             </p:inputText> 
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="tipo" value="#{registroCompraMB.compra.idformapago}" style="width: 150px; margin-left: 12px;" 
+                            <p:selectOneMenu id="tipo" value="#{registroCompraMB.compra.idformapago}"  style="width:180px;" 
                                              converter="entityConverter" filter="true" filterMatchMode="contains"
                                              required="true" requiredMessage="Debes selecciona una forma de pago"  >
                                 <p:ajax event="itemSelect" listener="#{registroCompraMB.cargarForma()}" update="pg_compra1" />
                                 <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{registroCompraMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
                             </p:selectOneMenu>
-                            <br/> <br/>
-                            <p:inputText id="cheque" value="#{registroCompraMB.compra.nocheque}" size="20" style="font-size: 16px!important; margin-left: 12px;"
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Número de Cheque:" styleClass="colorTitulo" style="font-weight: bold;" 
+                                           rendered="#{registroCompraMB.mostrarCheque}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:inputText id="cheque" value="#{registroCompraMB.compra.nocheque}" size="20" style="font-size: 16px!important;"
                                          rendered="#{registroCompraMB.mostrarCheque}" >
                                 <p:ajax event="blur" process="@this"/>
                             </p:inputText> 
                         </p:column>
                     </p:row>
-
+                </p:panelGrid>
+                
+                <p:panelGrid id="pg_obs"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                     <p:row>
                         <p:column colspan="3">
                             <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
@@ -161,12 +172,12 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="3">
-                            <p:inputTextarea rows="3" cols="165" value="#{registroCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
+                            <p:inputTextarea rows="3" cols="125" value="#{registroCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
                                              counterTemplate="{0} caracteres pendientes." autoResize="false"
                                              required="true" requiredMessage="Debes ingresar una dirección">
                                 <p:ajax event="blur" process="@this" />
                             </p:inputTextarea>
-                            <h:outputText id="display" style="margin-left: 800px;" /> 
+                            <h:outputText id="display" style="margin-left: 750px;" /> 
                         </p:column>
                     </p:row>
                 </p:panelGrid>
