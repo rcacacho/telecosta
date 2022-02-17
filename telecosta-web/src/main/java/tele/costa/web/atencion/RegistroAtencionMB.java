@@ -15,6 +15,7 @@ import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Tipoatencion;
+import tele.costa.api.enums.TipoAtencion;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -77,13 +78,21 @@ public class RegistroAtencionMB implements Serializable {
         atencion.setTelefono(clienteSelected.getTelefono());
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);
         if (responseVerificacion != null) {
-            JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
+            if (atencion.getIdtipoatencion().getIdtipoatencion().equals(TipoAtencion.SUSPENSION.getId())) {
+                clienteSelected.setSuspendido(true);
+            } else if (atencion.getIdtipoatencion().getIdtipoatencion().equals(TipoAtencion.CORTE.getId())) {
+                clienteSelected.setActivo(false);
+            }
             Cliente responseUpdate = clientesBean.updateCliente(clienteSelected);
+
+            JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
         atencion = null;
         clienteSelected = null;
+        atencion = new Atencion();
+        clienteSelected = new Cliente();
     }
 
     public void saveAtencionSinCliente() throws IOException {
