@@ -33,6 +33,10 @@ public class DetalleCompraMB implements Serializable {
         JsfUtil.redirectTo("/compras/lista.xhtml");
     }
 
+    public void editar() {
+        JsfUtil.redirectTo("/compras/editar.xhtml?idcompra=" + idCompra);
+    }
+
     /*Metodos getters y setters*/
     public Integer getIdCompra() {
         return idCompra;

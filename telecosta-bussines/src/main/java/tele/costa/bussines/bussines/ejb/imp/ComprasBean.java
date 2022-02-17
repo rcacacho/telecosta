@@ -229,4 +229,22 @@ public class ComprasBean implements ComprasBeanLocal {
         }
     }
 
+    @Override
+    public Compra updateCompra(Compra compra) {
+        try {
+            em.merge(compra);
+            em.flush();
+            return (compra);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
 }

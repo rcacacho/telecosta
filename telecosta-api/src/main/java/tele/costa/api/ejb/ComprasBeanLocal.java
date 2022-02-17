@@ -26,7 +26,9 @@ public interface ComprasBeanLocal {
     List<Compra> listCompraByFechaFin(Date fechaFin);
 
     List<Compra> listCompraByFechaInicioFechaFin(Date fechaInicio, Date fechaFin);
-    
+
     Compra eliminarCompra(Integer idcompra, String usuario);
+
+    Compra updateCompra(Compra compra);
 
 }

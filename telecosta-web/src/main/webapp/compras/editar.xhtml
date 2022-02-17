@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"     
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:shiro="http://shiro.apache.org/tags">
+
+    <f:metadata>
+        <f:viewParam name="idcompra" value="#{edicionCompraMB.idCompra}"/>
+        <f:event type="preRenderView" listener="#{edicionCompraMB.cargarDatos()}"/>
+    </f:metadata>
+
+    <ui:define name="pageTitle">
+        Edición del compra
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="1. Información del la compra" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+            <p:panelGrid id="pgActualizacion"  columns="1" styleClass="no-border" style="width: 100%;"  >
+                <p:panelGrid  id="pg_info" styleClass="no-border" style="width: 90%; margin-left: 4%;">
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Tipo compra:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Documento:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="tipocompra" value="#{edicionCompraMB.compra.idtipocompra}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains"
+                                             required="true" requiredMessage="Debes selecciona un tipo" >
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="(selecciona un tipo)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{edicionCompraMB.listTipoCompra}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="docu" value="#{edicionCompraMB.compra.idtipodocumentocompra}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains"
+                                             required="true" requiredMessage="Debes selecciona un tipo documento" >
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="(selecciona un tipo)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{edicionCompraMB.listTipoDocumento}"  var="tip" itemLabel="#{tip.documento}" itemValue="#{tip}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Proveedor:" styleClass="colorTitulo" />
+                        </p:column>
+
+                        <p:column >
+                            <p:outputLabel value="Bien o Servicio:" styleClass="colorTitulo" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="prov" value="#{edicionCompraMB.compra.idproveedor}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains"
+                                             required="true" requiredMessage="Debes selecciona un proveedor" >
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="(selecciona un proveedor)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{edicionCompraMB.listProveedor}"  var="prove" itemLabel="#{prove.nombre}" itemValue="#{prove}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="bie" value="#{edicionCompraMB.compra.bienoservicio}" style="width:250px;" 
+                                             filter="true" filterMatchMode="contains">
+                                <p:ajax event="itemSelect" process="@this"/>
+                                <f:selectItem itemLabel="(selecciona una opción)" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Bienes" itemValue="Bienes" />
+                                <f:selectItem itemLabel="Servicio" itemValue="Servicio" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="No. Documento:" styleClass="colorTitulo" />
+                        </p:column>
+
+                        <p:column >
+                            <p:outputLabel value="Serie:" styleClass="colorTitulo" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:inputText value="#{edicionCompraMB.compra.nodocumento}" size="50" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                <p:ajax event="blur" />
+                            </p:inputText> 
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText value="#{edicionCompraMB.compra.serie}" size="50" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar una serie">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Forma de pago:" styleClass="colorTitulo" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="No. Comprobante Egreso:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="tipo" value="#{edicionCompraMB.compra.idformapago}"  style="width:180px;" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains" >
+                                <p:ajax event="itemSelect" />
+                                <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{edicionCompraMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{edicionCompraMB.compra.nocomprobanteegreso}" size="50" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="3" cols="155" value="#{edicionCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
+                                             counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                             required="true" requiredMessage="Debes ingresar una dirección">
+                                <p:ajax event="blur" process="@this" />
+                            </p:inputTextarea>
+                            <h:outputText id="display" style="margin-left: 650px;" /> 
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                    <p:commandButton value="Actualizar" action="#{edicionCompraMB.actualizarCompra()}" icon="ui-icon-disk" process="pgActualizacion"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas actualizar la compra?');" update="pgActualizacion"/>
+                    <p:commandButton value="Cancelar" process="@this" action="#{edicionCompraMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                </p:outputPanel>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -28,6 +28,12 @@
                     </td>
 
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
+                        <h:commandLink action="#{detalleCompraMB.editar()}" style="text-decoration: none; ">
+                            <h:graphicImage library="images" name="editar.png"   style="float: right !important;" width="20px;" title="Editar"/>
+                        </h:commandLink>
+                    </td>
+
+                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
                         <h:commandLink action="#{detalleCompraMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
                             <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
                         </h:commandLink>
@@ -43,7 +49,7 @@
                         <p:outputLabel value="Tipo Compra:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="Proveedor:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Documento:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
 
@@ -52,40 +58,40 @@
                         <p:outputLabel value="#{detalleCompraMB.compra.idtipocompra.tipo}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.idproveedor.nombre}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleCompraMB.compra.idtipodocumentocompra.documento}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
 
                 <p:row>
+                    <p:column >
+                        <p:outputLabel value="Proveedor:" styleClass="colorTitulo" />
+                    </p:column>
+
+                    <p:column >
+                        <p:outputLabel value="Bien o servicio:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.idproveedor.nombre}" style="font-size: 16px!important;" />
+                    </p:column>
+
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.bienoservicio}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="No. Documento:" styleClass="colorTitulo" />
+                    </p:column>
+
                     <p:column >
                         <p:outputLabel value="Serie:" styleClass="colorTitulo" />
-                    </p:column>
-
-                    <p:column >
-                        <p:outputLabel value="No. Documento:" styleClass="colorTitulo" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.serie}" style="font-size: 16px!important;" />
-                    </p:column>
-
-                    <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.nodocumento}" style="font-size: 16px!important;" >
-                        </p:outputLabel> 
-                    </p:column>
-                </p:row>
-
-
-                <p:row>
-                    <p:column >
-                        <p:outputLabel value="No. Documento:" styleClass="colorTitulo" />
-                    </p:column>
-
-                    <p:column >
-                        <p:outputLabel value="Documento:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
 
@@ -95,14 +101,14 @@
                     </p:column>
 
                     <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.idtipodocumentocompra.documento}" style="font-size: 16px!important;" >
+                        <p:outputLabel value="#{detalleCompraMB.compra.serie}" style="font-size: 16px!important;" >
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
 
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="Monto:" styleClass="colorTitulo" />
+                        <p:outputLabel value="No. Comprobante Egreso:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
                         <p:outputLabel value=" Fecha Compra:" styleClass="colorTitulo" />
@@ -111,7 +117,7 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.montocompra}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleCompraMB.compra.nocomprobanteegreso}" style="font-size: 16px!important;" />
                     </p:column>
                     <p:column>
                         <p:outputLabel value="#{detalleCompraMB.compra.fechacompra}" style="font-size: 16px!important;">
@@ -119,22 +125,26 @@
                         </p:outputLabel>
                     </p:column>
                 </p:row>
-                
+
+
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="Forma de pago:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Monto:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        
+                        <p:outputLabel value=" Forma de pago:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
-                
+
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleCompraMB.compra.idformapago.forma}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleCompraMB.compra.montocompra}" style="font-size: 16px!important;" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.idformapago.forma}" style="font-size: 16px!important;"/>
                     </p:column>
                 </p:row>
-                
+
                 <p:row>
                     <p:column colspan="3">
                         <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
