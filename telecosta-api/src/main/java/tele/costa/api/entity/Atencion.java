@@ -118,6 +118,10 @@ public class Atencion implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Ruta idruta;
 
+    @JoinColumn(name = "idtipoatencion", referencedColumnName = "idtipoatencion")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Tipoatencion idtipoatencion;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idatencion", fetch = FetchType.LAZY)
     private List<Detalleatencion> detalleatencionList;
 
@@ -221,6 +225,14 @@ public class Atencion implements Serializable {
 
     public void setIdruta(Ruta idruta) {
         this.idruta = idruta;
+    }
+
+    public Tipoatencion getIdtipoatencion() {
+        return idtipoatencion;
+    }
+
+    public void setIdtipoatencion(Tipoatencion idtipoatencion) {
+        this.idtipoatencion = idtipoatencion;
     }
 
     public String getMaterial() {

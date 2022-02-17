@@ -14,6 +14,7 @@ import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Ruta;
+import tele.costa.api.entity.Tipoatencion;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -38,6 +39,7 @@ public class RegistroAtencionMB implements Serializable {
     private Cliente clienteSelected;
     private List<Cliente> listCliente;
     private Atencion atencion;
+    private List<Tipoatencion> listTipoAtencion;
 
     public RegistroAtencionMB() {
         atencion = new Atencion();
@@ -47,6 +49,7 @@ public class RegistroAtencionMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listRuta = catalogoBean.listRuta();
+        listTipoAtencion = catalogoBean.lissTipoAtencion();
         if (SesionUsuarioMB.getRootUsuario()) {
             listCliente = clientesBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
@@ -127,6 +130,14 @@ public class RegistroAtencionMB implements Serializable {
 
     public void setClienteSelected(Cliente clienteSelected) {
         this.clienteSelected = clienteSelected;
+    }
+
+    public List<Tipoatencion> getListTipoAtencion() {
+        return listTipoAtencion;
+    }
+
+    public void setListTipoAtencion(List<Tipoatencion> listTipoAtencion) {
+        this.listTipoAtencion = listTipoAtencion;
     }
 
 }

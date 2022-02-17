@@ -9,6 +9,7 @@ import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
+import tele.costa.api.entity.Tipoatencion;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
@@ -44,5 +45,7 @@ public interface CatalogoBeanLocal {
     List<Sector> listSector();
 
     List<Ruta> listRuta();
+    
+    List<Tipoatencion> lissTipoAtencion();
 
 }

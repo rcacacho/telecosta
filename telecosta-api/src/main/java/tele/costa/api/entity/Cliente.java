@@ -90,6 +90,9 @@ public class Cliente implements Serializable {
     @Column(name = "telefono")
     private String telefono;
 
+    @Column(name = "suspendido")
+    private boolean suspendido;
+
     @Size(max = 100)
     @Column(name = "fechainicioservicio")
     private String fechainicioservicio;
@@ -290,6 +293,14 @@ public class Cliente implements Serializable {
 
     public void setPagoList(List<Pago> pagoList) {
         this.pagoList = pagoList;
+    }
+
+    public boolean getSuspendido() {
+        return suspendido;
+    }
+
+    public void setSuspendido(boolean suspendido) {
+        this.suspendido = suspendido;
     }
 
     @Override

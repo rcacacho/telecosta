@@ -70,6 +70,21 @@
                                 </p:row>
                                 <p:row>
                                     <p:column >
+                                        <p:outputLabel value="Tipo atención:" styleClass="colorTitulo" style="font-weight: bold;" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:selectOneMenu id="tipo" value="#{registroAtencionMB.atencion.idtipoatencion}" style="width: 250px;" 
+                                                         converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                         required="true" requiredMessage="Debes seleccion una tipo de atención" >
+                                            <f:selectItem itemLabel="(selecciona una tipo)" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{registroAtencionMB.listTipoAtencion}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column >
                                         <p:outputLabel value="Dirección:" styleClass="colorTitulo" style="font-weight: bold;" />
                                     </p:column>
                                 </p:row>
@@ -124,7 +139,7 @@
                             </p:outputPanel>
                         </p:panelGrid>
                     </p:tab>
-                    
+
                     <p:tab id="tabNuevoCliente" title="Nuevo Cliente">
                         <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
                             <p:panelGrid id="pg_clienteNuevo"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >

@@ -22,6 +22,7 @@
         <class>tele.costa.api.entity.Ruta</class>
         <class>tele.costa.api.dto.ReporteCobrosDto</class>
         <class>tele.costa.api.dto.ReporteAtencionDto</class>
+        <class>tele.costa.api.entity.Tipoatencion</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
