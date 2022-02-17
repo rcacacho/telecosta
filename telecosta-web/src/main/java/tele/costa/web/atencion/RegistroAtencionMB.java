@@ -2,6 +2,7 @@ package tele.costa.web.atencion;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -79,8 +80,13 @@ public class RegistroAtencionMB implements Serializable {
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);
         if (responseVerificacion != null) {
             if (atencion.getIdtipoatencion().getIdtipoatencion().equals(TipoAtencion.SUSPENSION.getId())) {
+                clienteSelected.setFechamodificacion(new Date());
+                clienteSelected.setUsuariomodificacion(SesionUsuarioMB.getUserName());
                 clienteSelected.setSuspendido(true);
             } else if (atencion.getIdtipoatencion().getIdtipoatencion().equals(TipoAtencion.CORTE.getId())) {
+                clienteSelected.setMotivoeliminacion(atencion.getMotivo());
+                clienteSelected.setFechaeliminacion(new Date());
+                clienteSelected.setUsuarioeliminacion(SesionUsuarioMB.getUserName());
                 clienteSelected.setActivo(false);
             }
             Cliente responseUpdate = clientesBean.updateCliente(clienteSelected);

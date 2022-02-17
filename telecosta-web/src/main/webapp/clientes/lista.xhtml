@@ -80,7 +80,7 @@
                     <p:column headerText="Codigo" width="15%" >
                         <p:outputLabel value="#{col.codigo}"/>
                     </p:column>
-                    
+
                     <p:column headerText="Nombre" width="20%" >
                         <p:outputLabel value="#{col.nombres}"/>
                     </p:column>
@@ -102,23 +102,48 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
-                    
-                     <p:column headerText="Fecha Ultimo Pago" width="20%" >
-                         <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+
+                    <p:column headerText="Fecha Ultimo Pago" width="20%" >
+                        <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column width="15%" exportable="false" >
-                        <p:commandButton value="Detalle" 
-                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                    <p:column width="19%" exportable="false" >
+                        <p:commandButton value="Suspender" 
+                                         style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
                                          action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
 
+                        <p:commandButton value="Corte" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
+                                         action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
 
+                        <p:commandButton value="Detalle" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>
+            <p:dialog header="Corte de Servicio" widgetVar="dlgCorte" id="dlgCorte" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="550px">
+                <p:panelGrid id="pgCorte" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Motivo corte:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputTextarea rows="2" cols="90" value="#{listaClienteMB.motivoCorte}" counter="display" maxlength="1500" 
+                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputTextarea>
+                    <h:outputText id="display" style="margin-left: 330px;" /> 
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{listaClienteMB.corteCliente()}" icon="ui-icon-disk" process="pgCorte"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas dar corte al servicio?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{listaClienteMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

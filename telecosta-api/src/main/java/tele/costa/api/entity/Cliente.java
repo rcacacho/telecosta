@@ -117,6 +117,18 @@ public class Cliente implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
 
+    @Size(max = 1500)
+    @Column(name = "motivoeliminacion")
+    private String motivoeliminacion;
+
+    @Size(max = 50)
+    @Column(name = "usuarioeliminacion")
+    private String usuarioeliminacion;
+
+    @Column(name = "fechaeliminacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaeliminacion;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -301,6 +313,30 @@ public class Cliente implements Serializable {
 
     public void setSuspendido(boolean suspendido) {
         this.suspendido = suspendido;
+    }
+
+    public String getMotivoeliminacion() {
+        return motivoeliminacion;
+    }
+
+    public void setMotivoeliminacion(String motivoeliminacion) {
+        this.motivoeliminacion = motivoeliminacion;
+    }
+
+    public String getUsuarioeliminacion() {
+        return usuarioeliminacion;
+    }
+
+    public void setUsuarioeliminacion(String usuarioeliminacion) {
+        this.usuarioeliminacion = usuarioeliminacion;
+    }
+
+    public Date getFechaeliminacion() {
+        return fechaeliminacion;
+    }
+
+    public void setFechaeliminacion(Date fechaeliminacion) {
+        this.fechaeliminacion = fechaeliminacion;
     }
 
     @Override

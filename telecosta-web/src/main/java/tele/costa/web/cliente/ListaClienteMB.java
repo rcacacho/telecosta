@@ -1,13 +1,16 @@
 package tele.costa.web.cliente;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
@@ -40,6 +43,8 @@ public class ListaClienteMB implements Serializable {
     private Integer idMunicipio;
     private String sector;
     private List<Municipio> listMunicipios;
+    private String motivoCorte;
+    private Cliente clienteSelected;
 
     public ListaClienteMB() {
     }
@@ -150,6 +155,41 @@ public class ListaClienteMB implements Serializable {
         }
     }
 
+    public void suspenderCliente(Cliente cl) throws IOException {
+        cl.setSuspendido(true);
+        cl.setFechamodificacion(new Date());
+        cl.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+        Cliente response = clienteBean.updateCliente(cl);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Cliente inactivado exitosamente");
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un al inactivar al cliente");
+        }
+    }
+
+    public void dialogCorte(Cliente cl) {
+        RequestContext.getCurrentInstance().execute("PF('dlgCorte').show()");
+        motivoCorte = null;
+        clienteSelected = cl;
+    }
+
+    public void cerrarDialog() {
+        RequestContext.getCurrentInstance().execute("PF('dlgCorte').hide()");
+    }
+
+    public void corteCliente() throws IOException {
+        clienteSelected.setActivo(false);
+        clienteSelected.setFechamodificacion(new Date());
+        clienteSelected.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+        Cliente response = clienteBean.updateCliente(clienteSelected);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Cliente inactivado exitosamente");
+            cargarDatos();
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un al inactivar al cliente");
+        }
+    }
+
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {
         return listCliente;
@@ -197,6 +237,14 @@ public class ListaClienteMB implements Serializable {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+
+    public String getMotivoCorte() {
+        return motivoCorte;
+    }
+
+    public void setMotivoCorte(String motivoCorte) {
+        this.motivoCorte = motivoCorte;
     }
 
 }
