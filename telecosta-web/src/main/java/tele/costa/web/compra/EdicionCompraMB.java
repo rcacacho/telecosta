@@ -59,7 +59,7 @@ public class EdicionCompraMB implements Serializable {
         Compra responseVerificacion = compraBean.updateCompra(compra);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Compra actualizada exitosamente");
-            JsfUtil.redirectTo("/compra/detalle.xhtml?idcompra=" + compra.getIdcompra());
+            JsfUtil.redirectTo("/compras/detalle.xhtml?idcompra=" + compra.getIdcompra());
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
