@@ -113,7 +113,7 @@
                         <p:commandButton value="Suspender" 
                                          style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
-                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                                         action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
 
                         <p:commandButton value="Corte" 
                                          style="margin-top: 3px;" process="@this" 
@@ -123,7 +123,7 @@
                         <p:commandButton value="Detalle" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                         action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
+                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>

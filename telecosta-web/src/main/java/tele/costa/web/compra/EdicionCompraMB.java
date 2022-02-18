@@ -39,9 +39,11 @@ public class EdicionCompraMB implements Serializable {
     private List<Tipodocumentocompra> listTipoDocumento;
     private List<Tipocompra> listTipoCompra;
     private List<Formapago> listFormaPago;
+    private String bienoServicio;
 
     public void cargarDatos() {
         compra = compraBean.findCompraById(idCompra);
+        bienoServicio = compra.getBienoservicio();
         listProveedor = catalogoBean.listProveedor();
         listTipoCompra = catalogoBean.listTipoCompra();
         listTipoDocumento = catalogoBean.listTipoDocumento();
@@ -52,10 +54,10 @@ public class EdicionCompraMB implements Serializable {
         JsfUtil.redirectTo("/compras/detalle.xhtml?idcompra=" + idCompra);
     }
 
-    
-     public void actualizarCompra() throws IOException {
+    public void actualizarCompra() throws IOException {
         compra.setUsuariomodificacion(SesionUsuarioMB.getUserName());
         compra.setFechamodificacion(new Date());
+        compra.setBienoservicio(bienoServicio);
         Compra responseVerificacion = compraBean.updateCompra(compra);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Compra actualizada exitosamente");
@@ -112,6 +114,14 @@ public class EdicionCompraMB implements Serializable {
 
     public void setListFormaPago(List<Formapago> listFormaPago) {
         this.listFormaPago = listFormaPago;
+    }
+
+    public String getBienoServicio() {
+        return bienoServicio;
+    }
+
+    public void setBienoServicio(String bienoServicio) {
+        this.bienoServicio = bienoServicio;
     }
 
 }

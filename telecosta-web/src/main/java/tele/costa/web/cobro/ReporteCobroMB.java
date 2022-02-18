@@ -9,9 +9,11 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -49,8 +51,10 @@ import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.wrapper.CobroWrapper;
+import telecosta.web.utils.JasperReportHelper;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.ReportFormat;
 import telecosta.web.utils.ReporteJasper;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -210,32 +214,100 @@ public class ReporteCobroMB {
         }
     }
 
+//    public StreamedContent generarPdfCobroMunicipio() {
+//        try {
+//            List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+//            for (Cliente cl : listCliente) {
+//                Pago findPago = pagosBean.findUltimoPago(cl.getIdcliente());
+//            }
+//
+//            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//            String realPath = servletContext.getRealPath("/");
+//            String nombreReporte = "rptCobroMunicipio";
+//            String nombreArchivo = "CobroMunicipio.pdf";
+//            HashMap parametros = new HashMap();
+//            parametros.put("IMAGE", "logo.jpeg");
+//            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
+//            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
+//            parametros.put("ID_MUNICIPIO", idMunicipio);
+//
+//            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
+//            StreamedContent streamedContent;
+//            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
+//            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
+//            return streamedContent;
+//        } catch (Exception ex) {
+//            log.error(ex);
+//            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+//        }
+//        return null;
+//    }
     public StreamedContent generarPdfCobroMunicipio() {
-        try {
-            List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
-            for (Cliente cl : listCliente) {
-                Pago findPago = pagosBean.findUltimoPago(cl.getIdcliente());
-            }
+        List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+        List<CobroWrapper> listCobro = new ArrayList<>();
 
+        final List<CobroWrapper> data = new ArrayList<>();
+
+        String nombreArchivo = "CobroMunicipio";
+        ReportFormat format = ReportFormat.PDF;
+
+        try {
+            //PREPARANDO REPORTE
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
-            String nombreReporte = "rptCobroMunicipio";
-            String nombreArchivo = "CobroMunicipio.pdf";
+            String nombreReporte;
+            String siaf = null;
+            nombreReporte = "rptCobroMunicipio";
+
+            for (Cliente cl : listCliente) {
+                Pago pag = pagosBean.findUltimoPago(cl.getIdcliente());
+                if (pag != null) {
+                    CobroWrapper cobroWrapper = new CobroWrapper();
+                    cobroWrapper.setCodigo(cl.getCodigo());
+                    cobroWrapper.setDireccion(cl.getDireccion());
+                    cobroWrapper.setFechapago(pag.getMes() + '-' + pag.getAnio());
+                    cobroWrapper.setIdpago(pag.getIdpago());
+                    cobroWrapper.setNombres(cl.getNombres());
+                    cobroWrapper.setObservacion(pag.getObservacion());
+                    if (cl.getIdSector() != null) {
+                        cobroWrapper.setSector(cl.getIdSector().getSector());
+                    }
+
+                    cobroWrapper.setTelefono(cl.getTelefono());
+                    cobroWrapper.setValor(pag.getTotal());
+                    listCobro.add(cobroWrapper);
+                }
+            }
+
+            JasperReportHelper helper;
+            Map parameters = new HashMap<>();
+
+            helper = new JasperReportHelper(nombreReporte, nombreArchivo, format) {
+                @Override
+                public Collection getData() {
+                    return data;
+                }
+            };
+
+            //LLENANDO LOS PARAMETROS
             HashMap parametros = new HashMap();
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
             parametros.put("ID_MUNICIPIO", idMunicipio);
 
-            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
-            StreamedContent streamedContent;
-            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
-            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
-            return streamedContent;
+            StreamedContent response = helper.fillReport(parameters);
+
+            if (response == null) {
+                return null;
+            }
+            return response;
+
         } catch (Exception ex) {
             log.error(ex);
-            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+            ex.printStackTrace();
         }
+
         return null;
     }
 
@@ -439,7 +511,7 @@ public class ReporteCobroMB {
                 Cell cell1 = fila.getFila().createCell(fila.nextIndex().shortValue());
                 cell1.setCellValue(reporte.getCodigo());
                 cell1.setCellStyle(cellStyle);
-                
+
                 if (reporte.getNombres() != null) {
                     Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell2.setCellValue(reporte.getNombres());

@@ -8,45 +8,35 @@
 	<parameter name="IMAGE" class="java.lang.String"/>
 	<parameter name="DIRECTORIO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
-	<parameter name="ID_MUNICIPIO" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT c.codigo, c.nombres, c.direccion, concat(p.mes, '-',p.anio) fechapago, c2.valor, p.observacion
-FROM pago p 
-join cliente c on p.idcliente = c.idcliente and c.activo = 1 
-join configuracionpago c2 on c.idconfiguracionpago = c2.idconfiguracionpago
-where p.activo =1 
-and p.fechapago = (SELECT max(pp.fechapago) from pago pp where pp.idpago = p.idpago GROUP by pp.fechapago) 
-and c.idmunicipio = $P{ID_MUNICIPIO}
-order by fechapago asc]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="codigo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
-		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	<field name="fechapago" class="java.lang.String">
+		<fieldDescription><![CDATA[fechapago]]></fieldDescription>
 	</field>
-	<field name="nombres" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[codigo]]></fieldDescription>
+	</field>
+	<field name="idpago" class="java.lang.Integer">
+		<fieldDescription><![CDATA[idpago]]></fieldDescription>
 	</field>
 	<field name="direccion" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
-		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
-	</field>
-	<field name="fechapago" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="fechapago"/>
-		<property name="com.jaspersoft.studio.field.label" value="fechapago"/>
+		<fieldDescription><![CDATA[direccion]]></fieldDescription>
 	</field>
 	<field name="valor" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="valor"/>
-		<property name="com.jaspersoft.studio.field.label" value="valor"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="configuracionpago"/>
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[telefono]]></fieldDescription>
+	</field>
+	<field name="sector" class="java.lang.String">
+		<fieldDescription><![CDATA[sector]]></fieldDescription>
 	</field>
 	<field name="observacion" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="observacion"/>
-		<property name="com.jaspersoft.studio.field.label" value="observacion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="pago"/>
+		<fieldDescription><![CDATA[observacion]]></fieldDescription>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<fieldDescription><![CDATA[nombres]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
