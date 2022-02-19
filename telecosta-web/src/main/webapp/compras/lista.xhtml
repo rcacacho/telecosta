@@ -54,27 +54,81 @@
                 <br/>
 
                 <p:dataTable id="dt_queja" var="col" value="#{listaCompraMB.listCompra}"
-                             emptyMessage="No hay compras registradas" 
+                             emptyMessage="No hay compras registradas" editable="true"
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaCompraMB.listCompra.size()>5}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaCompraMB.onRowEdit}" update="dt_queja" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
                     <p:column headerText="Tipo Compra" width="25%" >
-                        <p:outputLabel value="#{col.idtipocompra.tipo}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idtipocompra.tipo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="tipocompra" value="#{col.idtipocompra}" style="width: 70%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un tipo" >
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona un tipo)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaCompraMB.listTipoCompra}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Tipo Documento" width="25%" >
-                        <p:outputLabel value="#{col.idtipodocumentocompra.documento}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idtipodocumentocompra.documento}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="docu" value="#{col.idtipodocumentocompra}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un tipo documento" >
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona un tipo)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaCompraMB.listTipoDocumento}"  var="tip" itemLabel="#{tip.documento}" itemValue="#{tip}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Proveedor" width="25%" >
-                        <p:outputLabel value="#{col.idproveedor.nombre}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idproveedor.nombre}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="prov" value="#{col.idproveedor}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un proveedor" >
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona un proveedor)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaCompraMB.listProveedor}"  var="prove" itemLabel="#{prove.nombre}" itemValue="#{prove}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="No Documento" width="17%" >
+                    <p:column headerText="Descripción" width="23%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.descripcion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{col.descripcion}" size="22" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="No Documento" width="24%" >
                         <p:outputLabel value="#{col.nodocumento}"/>
                     </p:column>
 
@@ -84,12 +138,33 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Monto compra" width="22%" >
-                        <p:outputLabel value="#{col.montocompra}"/>
+                    <p:column headerText="Monto compra" width="15%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.montocompra}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{col.montocompra}" size="14" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    
-                    <p:column headerText="Forma Pago" width="22%" >
-                        <p:outputLabel value="#{col.idformapago.forma}"/>
+
+                    <p:column headerText="Forma Pago" width="21%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idformapago.forma}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="tipo" value="#{col.idformapago}"  style="width:50%;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains">
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaCompraMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column width="20%" exportable="false" >
@@ -98,6 +173,10 @@
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
                                          onstart="return confirm('¿Confirmas eliminar la compra?');" rendered="#{listaCompraMB.obtenerRoot()}"
                                          action="#{listaCompraMB.eliminarCompra(col.idcompra)}" update="@form"/>
+                    </p:column>
+
+                    <p:column headerText="Editar" width="8%">
+                        <p:rowEditor />
                     </p:column>
 
                     <p:column width="15%" exportable="false" >

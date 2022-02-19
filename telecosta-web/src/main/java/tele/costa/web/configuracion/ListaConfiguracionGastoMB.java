@@ -63,7 +63,7 @@ public class ListaConfiguracionGastoMB implements Serializable {
             JsfUtil.addSuccessMessage("Se actualizo la configuración exitosamente");
             cargarDatos();
         } else {
-            JsfUtil.addErrorMessage("Sucedio un error al actulizar el registro");
+            JsfUtil.addErrorMessage("Sucedio un error al actualizar el registro");
         }
     }
 
