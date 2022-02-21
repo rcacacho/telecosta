@@ -90,7 +90,7 @@
 
                 <br/>
                 <p:dataTable id="dt_pago" var="col" value="#{listaPagosMB.listPago}"
-                             emptyMessage="No hay pagos registrados" 
+                             emptyMessage="No hay pagos registrados" rowStyleClass="#{col.getStylePago()}"
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
                              rows="10" paginator="#{listaPagosMB.listPago.size()>5}"  paginatorPosition="bottom">
 

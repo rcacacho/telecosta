@@ -1,6 +1,8 @@
 package tele.costa.api.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -261,6 +263,28 @@ public class Pago implements Serializable {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public String getStylePago() {
+        if (fechapago != null) {
+            Date fechaInicio = new Date();
+            LocalDate startDate = fechapago.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            ZoneId defaultZoneId = ZoneId.systemDefault();
+            Integer count = 0;
+            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                count++;
+            }
+            
+            if (count >= 90) {
+                return "rowColorRojo";
+            } else if (count >= 60 && count <= 89) {
+                return "rowColorAmarillo";
+            } else if (count >= 30 && count <= 59) {
+                return "rowColorAnaranjado";
+            }
+        }
+        return "";
     }
 
     @Override
