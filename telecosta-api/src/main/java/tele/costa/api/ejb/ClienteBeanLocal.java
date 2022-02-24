@@ -39,4 +39,6 @@ public interface ClienteBeanLocal {
 
     List<Cliente> ListClientesByIdSector(Integer idSector);
 
+    List<Cliente> ListClientesCobro();
+
 }
