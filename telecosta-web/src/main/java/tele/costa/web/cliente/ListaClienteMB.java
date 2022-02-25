@@ -189,6 +189,10 @@ public class ListaClienteMB implements Serializable {
             JsfUtil.addErrorMessage("Ocurrio un al inactivar al cliente");
         }
     }
+    
+    public void pagoCliente(Integer id) {
+        JsfUtil.redirectTo("/pagos/registroCliente.xhtml?idCliente=" + id);
+    }
 
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {

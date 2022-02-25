@@ -120,6 +120,11 @@
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
                                          action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
 
+                        <p:commandButton value="Pago" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
+                                         action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
+                        
                         <p:commandButton value="Detalle" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
