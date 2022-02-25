@@ -75,7 +75,10 @@ public class RegistroPagoMB implements Serializable {
             actualizacionPago.setIdcliente(cliente);
             actualizacionPago.setFechapago(new Date());
 
-            Integer total = cliente.getIdconfiguracionpago().getValor();
+             Integer total = 0;
+            if (cliente.getIdconfiguracionpago() != null) {
+                total = cliente.getIdconfiguracionpago().getValor();
+            }
 
             if (pago.getTotal() != null) {
                 pago.setTotal(total - pago.getTotal());

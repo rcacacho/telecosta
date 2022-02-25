@@ -55,6 +55,51 @@ public class RegistroCompraMB implements Serializable {
     }
 
     public void saveCompra() throws IOException {
+        if (compra.getIdtipocompra() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un tipo de compra");
+            return;
+        }
+
+        if (compra.getIdtipodocumentocompra() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un tipo de documento");
+            return;
+        }
+
+        if (compra.getIdproveedor() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un proveedor");
+            return;
+        }
+
+        if (compra.getBienoservicio() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un o servicio");
+            return;
+        }
+
+        if (compra.getNocomprobanteegreso() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un comprobante de egreso");
+            return;
+        }
+
+        if (compra.getNodocumento() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+            return;
+        }
+
+        if (compra.getSerie() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una  serie");
+            return;
+        }
+
+        if (compra.getFechacompra() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una fecha de compra");
+            return;
+        }
+
+        if (compra.getIdformapago() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una forma de pago");
+            return;
+        }
+
         compra.setUsuariocreacion(SesionUsuarioMB.getUserName());
         compra.setFechacreacion(new Date());
         Compra responseVerificacion = compraBean.saveCompra(compra);
@@ -96,8 +141,8 @@ public class RegistroCompraMB implements Serializable {
     public void cargarForma() {
         if (compra.getIdformapago().getIdformapago().equals(5)) {
             mostrarCheque = Boolean.TRUE;
-        }else {
-             mostrarCheque = Boolean.FALSE;
+        } else {
+            mostrarCheque = Boolean.FALSE;
         }
     }
 
