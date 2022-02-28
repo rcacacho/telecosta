@@ -75,15 +75,16 @@
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
-                                         id="btn_buscar"  
+                                         id="btn_buscar"  icon="ui-icon-search" 
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
+
                         <p:commandButton value="Limpiar" 
                                          action="#{listaPagosMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
-                                         update="@form"
+                                         update="@form" icon="ui-icon-refresh"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>

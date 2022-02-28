@@ -66,63 +66,77 @@
                                 </p:selectOneMenu>
                             </p:column>   
                         </p:row>
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="No. Recibo:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.nofactura}" size="35" style="font-size: 16px!important;"/>
-
-                            </p:column>
-                            <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.serie}" size="35" style="font-size: 16px!important;"/>
-
-                            </p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Cantidad a pagar:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:selectOneMenu id="tipo" value="#{registroPagoMB.detalle.idformapago}" style="width: 250px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona una forma de pago" >
-                                    <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroPagoMB.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column>
-                                <p:inputText value="#{registroPagoMB.pago.total}" size="35" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar una cantidad"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:outputLabel value="Observación:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3">
-                                <p:inputTextarea rows="3" cols="165" value="#{registroPagoMB.pago.observacion}" counter="display" maxlength="2000" 
-                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
-                                                 required="true" requiredMessage="Debes ingresar una dirección">
-                                    <p:ajax event="blur" process="@this" />
-                                </p:inputTextarea>
-                                <h:outputText id="display" style="margin-left: 700px;" /> 
-                            </p:column>
-                        </p:row>
                     </p:panelGrid>
+                    
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Buscar" action="#{registroPagoMB.savePago()}" icon="ui-icon-search" process="pg_agencia"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la caja?');" update="@form"/>
+                    </p:outputPanel>
+
+
+                    <p:dataTable id="dt_factura" var="fac" value="#{listaClienteMB.listCliente}"
+                                 emptyMessage="No hay facturas consultadas" 
+                                 styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                                 rows="25" paginator="#{listaClienteMB.listCliente.size()>25}"  paginatorPosition="bottom">
+
+                        <p:column headerText="No." style="width: 5%;">
+                            #{rowId+1}
+                        </p:column>
+
+                        <p:column headerText="Codigo" width="15%" >
+                            <p:outputLabel value="#{col.codigo}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" width="20%" >
+                            <p:outputLabel value="#{col.nombres}"/>
+                        </p:column>
+
+                        <p:column headerText="Dirección" width="25%" >
+                            <p:outputLabel value="#{col.direccion}"/>
+                        </p:column>
+
+                        <p:column headerText="Sector" width="20%" >
+                            <p:outputLabel value="#{col.sector}"/>
+                        </p:column>
+
+                        <p:column headerText="Municipio" width="20%" >
+                            <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                        </p:column>
+
+                        <p:column headerText="Fecha Inicio Servicio" width="22%" >
+                            <p:outputLabel value="#{col.fechainicioservicio}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Fecha Ultimo Pago" width="20%" >
+                            <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column width="19%" exportable="false" >
+                            <p:commandButton value="Suspender" 
+                                             style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
+                                             styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
+                                             action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
+
+                            <p:commandButton value="Corte" 
+                                             style="margin-top: 3px;" process="@this" 
+                                             styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
+                                             action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
+
+                            <p:commandButton value="Pago" 
+                                             style="margin-top: 3px;" process="@this" 
+                                             styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
+                                             action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
+
+                            <p:commandButton value="Detalle" 
+                                             style="margin-top: 3px;" process="@this" 
+                                             styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                             action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
                         <p:commandButton value="Guardar" action="#{registroPagoMB.savePago()}" icon="ui-icon-disk" process="pg_agencia"  

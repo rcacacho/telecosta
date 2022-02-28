@@ -54,15 +54,16 @@
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
-                                         id="btn_buscar"  
+                                         id="btn_buscar" icon="ui-icon-search"
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
+
                         <p:commandButton value="Limpiar" 
                                          action="#{listaClienteMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
-                                         update="@form"
+                                         update="@form" icon="ui-icon-refresh"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>
@@ -110,22 +111,7 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column width="19%" exportable="false" >
-                        <p:commandButton value="Suspender" 
-                                         style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
-                                         action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
-
-                        <p:commandButton value="Corte" 
-                                         style="margin-top: 3px;" process="@this" 
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
-                                         action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
-
-                        <p:commandButton value="Pago" 
-                                         style="margin-top: 3px;" process="@this" 
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
-                                         action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
-
+                    <p:column width="12%" exportable="false" >
                         <p:commandButton value="Detalle" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"

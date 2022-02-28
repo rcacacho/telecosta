@@ -49,14 +49,15 @@
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
                                          id="btn_buscar" process="@this"  
-                                         update="dt_atencion"
+                                         update="dt_atencion" icon="ui-icon-search"
                                          onstart="start();" oncomplete="stop();"/>
+                        
                         <p:commandButton value="Limpiar" 
                                          action="#{listaAtencionMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
-                                         update="@form"
+                                         update="@form" icon="ui-icon-refresh"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>
