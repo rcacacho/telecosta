@@ -9,6 +9,7 @@
         <class>tele.costa.api.entity.Configuracionpago</class>
         <class>tele.costa.api.entity.Departamento</class>
         <class>tele.costa.api.entity.Municipio</class>
+        <class>tele.costa.api.entity.Sectorpago</class>
         <class>tele.costa.api.entity.Pago</class>
         <class>tele.costa.api.entity.Formapago</class>
         <class>tele.costa.api.entity.Tipopago</class>
@@ -23,6 +24,7 @@
         <class>tele.costa.api.dto.ReporteCobrosDto</class>
         <class>tele.costa.api.dto.ReporteAtencionDto</class>
         <class>tele.costa.api.entity.Tipoatencion</class>
+        <class>tele.costa.api.entity.Cajaagencia</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>

@@ -54,9 +54,8 @@ public class Detallepago implements Serializable {
     @Column(name = "serie")
     private String serie;
 
-    @Size(min = 1, max = 200)
     @Column(name = "nofactura")
-    private String nofactura;
+    private Integer nofactura;
 
     @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
@@ -110,7 +109,7 @@ public class Detallepago implements Serializable {
         this.iddetallepago = iddetallepago;
     }
 
-    public Detallepago(Integer iddetallepago, String nofactura, Date fechacreacion, String usuariocreacion, boolean activo) {
+    public Detallepago(Integer iddetallepago, Integer nofactura, Date fechacreacion, String usuariocreacion, boolean activo) {
         this.iddetallepago = iddetallepago;
         this.nofactura = nofactura;
         this.fechacreacion = fechacreacion;
@@ -134,11 +133,11 @@ public class Detallepago implements Serializable {
         this.serie = serie;
     }
 
-    public String getNofactura() {
+    public Integer getNofactura() {
         return nofactura;
     }
 
-    public void setNofactura(String nofactura) {
+    public void setNofactura(Integer nofactura) {
         this.nofactura = nofactura;
     }
 

@@ -15,6 +15,7 @@ import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
+import tele.costa.api.entity.Sectorpago;
 import tele.costa.api.entity.Tipoatencion;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
@@ -188,8 +189,21 @@ public class CatalagoBean implements CatalogoBeanLocal {
     }
 
     @Override
-    public List<Tipoatencion> lissTipoAtencion() {
+    public List<Tipoatencion> listTipoAtencion() {
         List<Tipoatencion> lst = em.createQuery("SELECT qj FROM Tipoatencion qj where qj.activo = true", Tipoatencion.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Sectorpago> listSectorPagoByIdMunicipio(Integer idmunicipio) {
+              List<Sectorpago> lst = em.createQuery("SELECT dep FROM Sectorpago dep WHERE dep.activo  = true and dep.idmunicipio.idmunicipio =:idmunicipio", Sectorpago.class)
+                .setParameter("idmunicipio", idmunicipio)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

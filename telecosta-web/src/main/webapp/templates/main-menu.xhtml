@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="frm_menu" >
-        <p:menubar style="border: 1px solid #ccc; font-size: small; height: 30px;"  autoDisplay="false" >
+        <p:menubar style="border: 1px solid #ccc; font-size: small; height: 30px; width: 1000px;"  autoDisplay="false" >
             <p:submenu label="Clientes" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros') || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/clientes/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/clientes/registro.xhtml" style="width: 90px;"/>
@@ -28,6 +28,12 @@
                 <p:menuitem value="Registro" outcome="/atencion/registro.xhtml" style="width: 90px;"/>
             </p:submenu>
 
+            <p:submenu label="Caja Agencias" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros')  || loginMB.validarRoot()}">  
+                <p:menuitem value="Lista" outcome="/caja/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/caja/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Reporte" outcome="/caja/reporte.xhtml" style="width: 90px;"/>
+            </p:submenu>
+
             <p:submenu label="Usuarios" icon="ui-icon-document" rendered="#{loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/usuario/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/usuario/registro.xhtml" style="width: 90px;"/>
@@ -45,6 +51,13 @@
             <p:submenu label="Compras" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/compras/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/compras/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Reporte" outcome="/compras/reporte.xhtml" style="width: 90px;"/>
+            </p:submenu>
+            
+             <p:submenu label="Bodega" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}">  
+                <p:menuitem value="Ingresos" outcome="/compras/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Salidas" outcome="/compras/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Envios/Traslados" outcome="/compras/registro.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Reporte" outcome="/compras/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
         </p:menubar>

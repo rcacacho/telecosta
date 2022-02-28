@@ -63,6 +63,9 @@ public class Municipio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
     private List<Sector> sectorList;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmunicipio", fetch = FetchType.LAZY)
+    private List<Sectorpago> sectorpagoList;
+
     public Municipio() {
     }
 
@@ -149,6 +152,15 @@ public class Municipio implements Serializable {
 
     public void setSectorList(List<Sector> sectorList) {
         this.sectorList = sectorList;
+    }
+
+    @XmlTransient
+    public List<Sectorpago> getSectorpagoList() {
+        return sectorpagoList;
+    }
+
+    public void setSectorpagoList(List<Sectorpago> sectorpagoList) {
+        this.sectorpagoList = sectorpagoList;
     }
 
 }

@@ -51,7 +51,7 @@ public class RegistroAtencionMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listRuta = catalogoBean.listRuta();
-        listTipoAtencion = catalogoBean.lissTipoAtencion();
+        listTipoAtencion = catalogoBean.listTipoAtencion();
         if (SesionUsuarioMB.getRootUsuario()) {
             listCliente = clientesBean.ListClientes();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
