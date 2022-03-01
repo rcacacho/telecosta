@@ -106,6 +106,8 @@ public class RegistroCajaMB implements Serializable {
         listDetalle = new ArrayList<>();
         listSectorPago = new ArrayList<>();
         listMunicipios = new ArrayList<>();
+        fechaFin = null;
+        fechaInicio = null;
     }
 
     /*Metodos getters y setters*/

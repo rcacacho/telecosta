@@ -24,27 +24,29 @@
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reportePagoMB.fechaIncio}" navigator="true">  
+                                value="#{listaCajaMB.fechaInicio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{reportePagoMB.fechaFin}" navigator="true">  
+                                value="#{listaCajaMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:outputLabel value="Municipio:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:outputLabel value="Sector:"  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:selectOneMenu id="mun" value="#{listaClienteMB.idMunicipio}" style="width: 260px;" 
+                    <p:selectOneMenu id="mun" value="#{listaCajaMB.municipioSelected}" style="width: 260px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax  listener="#{listaCajaMB.cargarSector()}" update="sec" />
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                        <f:selectItems value="#{listaCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
                     </p:selectOneMenu>
-                    <p:selectOneMenu id="sec" value="#{listaClienteMB.idMunicipio}" style="width: 260px;" 
+                    <p:selectOneMenu id="sec" value="#{registroCajaMB.caja.idsectorpago}" style="width: 260px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value=""   />
