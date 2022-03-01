@@ -1,5 +1,7 @@
 package tele.costa.bussines.bussines.ejb.imp;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -212,57 +214,75 @@ public class CajaBean implements CajaBeanLocal {
     public List<Detallepago> listNoFactura(Date fechaInicio, Date fechaFin, Integer idsectorpago) {
         List<Detallepago> lst = null;
 
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+        sdf.format(fechaFin);
+
         if (idsectorpago.equals(SectorPago.CTN1.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'CTN-1' or det.serie = 'CTN1') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.CTN2.getId())){
+        } else if (idsectorpago.equals(SectorPago.CTN2.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'CTN-2' or det.serie = 'CTN2') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.MLN1.getId())){
+        } else if (idsectorpago.equals(SectorPago.MLN1.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-1' or det.serie = 'MLN1') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.MLN2.getId())){
+        } else if (idsectorpago.equals(SectorPago.MLN2.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-2' or det.serie = 'MLN2') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.ERD1.getId())){
+        } else if (idsectorpago.equals(SectorPago.ERD1.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'ERD-1' or det.serie = 'ERD1') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.MLN3.getId())){
+        } else if (idsectorpago.equals(SectorPago.MLN3.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-3' or det.serie = 'MLN3') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.MLN4.getId())){
+        } else if (idsectorpago.equals(SectorPago.MLN4.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-4' or det.serie = 'MLN4') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.MLN5.getId())){
+        } else if (idsectorpago.equals(SectorPago.MLN5.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-5' or det.serie = 'MLN5') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.SNP1.getId())){
+        } else if (idsectorpago.equals(SectorPago.SNP1.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'SNP-1' or det.serie = 'SNP1') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.SNP2.getId())){
-            lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'CTN-2' or det.serie = 'CTN2') ", Detallepago.class)
+        } else if (idsectorpago.equals(SectorPago.SNP2.getId())) {
+            lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'SNP-2' or det.serie = 'SNP2') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
                     .getResultList();
-        }else if (idsectorpago.equals(SectorPago.SNR1.getId())){
+        } else if (idsectorpago.equals(SectorPago.SNR1.getId())) {
             lst = em.createQuery("SELECT det FROM Detallepago det where det.activo = true and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'SNR-1' or det.serie = 'SNR1') ", Detallepago.class)
                     .setParameter("fechaInicio", fechaInicio)
                     .setParameter("fechaFin", fechaFin)
@@ -274,6 +294,113 @@ public class CajaBean implements CajaBeanLocal {
         }
 
         return lst;
+    }
+
+    @Override
+    public Long findMontoFacturaSerie(Integer inicio, Integer fin, Integer idsectorpago, Date fechaInicio, Date fechaFin) {
+        List<Long> lst = null;
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+        sdf.format(fechaFin);
+
+        if (idsectorpago.equals(SectorPago.CTN1.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'CTN-1' or det.serie = 'CTN1') ORDER BY det.nofactura asc", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.CTN2.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'CTN-2' or det.serie = 'CTN2') ORDER BY det.nofactura asc", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.MLN1.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-1' or det.serie = 'MLN1') ORDER BY det.nofactura asc", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.MLN2.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-2' or det.serie = 'MLN2') ORDER BY det.nofactura asc", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.ERD1.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin  and (det.serie = 'ERD-1' or det.serie = 'ERD1') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.MLN3.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-3' or det.serie = 'MLN3') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.MLN4.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-4' or det.serie = 'MLN4') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.MLN5.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'MLN-5' or det.serie = 'MLN5') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.SNP1.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'SNP-1' or det.serie = 'SNP1') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.SNP2.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and det.fechacreacion >= :fechaInicio and det.fechacreacion <= :fechaFin and (det.serie = 'SNP-2' or det.serie = 'SNP2') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        } else if (idsectorpago.equals(SectorPago.SNR1.getId())) {
+            lst = em.createQuery("SELECT sum(det.montopagado) FROM Detallepago det where det.activo = true and det.nofactura >= :inicio and det.nofactura <= :fin and (det.serie = 'SNR-1' or det.serie = 'SNR1') ", Long.class)
+                    .setParameter("inicio", inicio)
+                    .setParameter("fin", fin)
+                    .setParameter("fechaInicio", fechaInicio)
+                    .setParameter("fechaFin", fechaFin)
+                    .getResultList();
+        }
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
     }
 
 }

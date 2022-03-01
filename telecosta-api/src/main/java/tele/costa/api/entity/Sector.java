@@ -84,9 +84,6 @@ public class Sector implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Municipio idmunicipio;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsector", fetch = FetchType.LAZY)
-    private List<Cajaagencia> cajaagenciaList;
-
     public Sector() {
     }
 
@@ -189,15 +186,6 @@ public class Sector implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Sector[ idsector=" + idsector + " ]";
-    }
-
-    @XmlTransient
-    public List<Cajaagencia> getCajaagenciaList() {
-        return cajaagenciaList;
-    }
-
-    public void setCajaagenciaList(List<Cajaagencia> cajaagenciaList) {
-        this.cajaagenciaList = cajaagenciaList;
     }
 
 }

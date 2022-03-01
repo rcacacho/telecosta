@@ -36,4 +36,6 @@ public interface CajaBeanLocal {
     List<Cajaagencia> listCajaBySector(Integer idSector);
     
     List<Detallepago> listNoFactura(Date fechaInicio, Date fechaFin, Integer idsectorpago);
+    
+    Long findMontoFacturaSerie(Integer inicio, Integer fin, Integer idsectorpago, Date fechaInicio, Date fechaFin);
 }

@@ -53,13 +53,11 @@ public class Cajaagencia implements Serializable {
     @Column(name = "idcajaagencia")
     private Integer idcajaagencia;
 
-    @Size(max = 100)
     @Column(name = "correlativodel")
-    private String correlativodel;
+    private Integer correlativodel;
 
-    @Size(max = 100)
     @Column(name = "correlativoal")
-    private String correlativoal;
+    private Integer correlativoal;
 
     @Basic(optional = false)
     @NotNull
@@ -109,9 +107,9 @@ public class Cajaagencia implements Serializable {
     @Column(name = "activo")
     private boolean activo;
 
-    @JoinColumn(name = "idsector", referencedColumnName = "idsector")
+    @JoinColumn(name = "idsectorpago", referencedColumnName = "idsectorpago")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Sector idsector;
+    private Sectorpago idsectorpago;
 
     public Cajaagencia() {
     }
@@ -138,19 +136,19 @@ public class Cajaagencia implements Serializable {
         this.idcajaagencia = idcajaagencia;
     }
 
-    public String getCorrelativodel() {
+    public Integer getCorrelativodel() {
         return correlativodel;
     }
 
-    public void setCorrelativodel(String correlativodel) {
+    public void setCorrelativodel(Integer correlativodel) {
         this.correlativodel = correlativodel;
     }
 
-    public String getCorrelativoal() {
+    public Integer getCorrelativoal() {
         return correlativoal;
     }
 
-    public void setCorrelativoal(String correlativoal) {
+    public void setCorrelativoal(Integer correlativoal) {
         this.correlativoal = correlativoal;
     }
 
@@ -242,12 +240,12 @@ public class Cajaagencia implements Serializable {
         this.activo = activo;
     }
 
-    public Sector getIdsector() {
-        return idsector;
+    public Sectorpago getIdsectorpago() {
+        return idsectorpago;
     }
 
-    public void setIdsector(Sector idsector) {
-        this.idsector = idsector;
+    public void setIdsectorpago(Sectorpago idsectorpago) {
+        this.idsectorpago = idsectorpago;
     }
 
     @Override

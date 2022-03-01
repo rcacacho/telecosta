@@ -16,134 +16,127 @@
             <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
             <div align="center">
 
-                <p:panelGrid  id="pgCaja" columns="1" styleClass="no-border" style="width: 100%;"  >
-                    <p:panelGrid id="pg_agencia"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Fecha inicio:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Fecha fin:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column>
-                                <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                            value="#{registroCajaMB.fechaInicio}" navigator="true">  
-                                    <p:ajax event="dateSelect" process="@this" />
-                                </p:calendar>
-                            </p:column>
-                            <p:column>
-                                <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                            value="#{registroCajaMB.fechaFin}" navigator="true">  
-                                    <p:ajax event="dateSelect" process="@this" />
-                                </p:calendar>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column >
-                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                            <p:column >
-                                <p:outputLabel value="Sector:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:selectOneMenu id="mun" value="#{registroCajaMB.municipioSelected}" style="width: 260px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains">
-                                    <p:ajax  listener="#{registroCajaMB.cargarSector()}" update="sec" />
-                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column  >
-                                <p:selectOneMenu id="sec" value="#{registroCajaMB.caja.idsector}" style="width: 260px;" 
-                                                 converter="entityConverter" filter="true" filterMatchMode="contains">
-                                    <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{registroCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s}"/>
-                                </p:selectOneMenu>
-                            </p:column>   
-                        </p:row>
-                    </p:panelGrid>
-                    
-                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Buscar" action="#{registroPagoMB.savePago()}" icon="ui-icon-search" process="pg_agencia"  
-                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la caja?');" update="@form"/>
-                    </p:outputPanel>
-
-
-                    <p:dataTable id="dt_factura" var="fac" value="#{listaClienteMB.listCliente}"
-                                 emptyMessage="No hay facturas consultadas" 
-                                 styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                                 rows="25" paginator="#{listaClienteMB.listCliente.size()>25}"  paginatorPosition="bottom">
-
-                        <p:column headerText="No." style="width: 5%;">
-                            #{rowId+1}
+                <p:panelGrid id="pg_agencia"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Fecha inicio:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
-
-                        <p:column headerText="Codigo" width="15%" >
-                            <p:outputLabel value="#{col.codigo}"/>
+                        <p:column >
+                            <p:outputLabel value="Fecha fin:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
+                    </p:row>
 
-                        <p:column headerText="Nombre" width="20%" >
-                            <p:outputLabel value="#{col.nombres}"/>
+                    <p:row>
+                        <p:column>
+                            <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{registroCajaMB.fechaInicio}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
                         </p:column>
-
-                        <p:column headerText="Dirección" width="25%" >
-                            <p:outputLabel value="#{col.direccion}"/>
+                        <p:column>
+                            <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{registroCajaMB.fechaFin}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
                         </p:column>
-
-                        <p:column headerText="Sector" width="20%" >
-                            <p:outputLabel value="#{col.sector}"/>
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
-
-                        <p:column headerText="Municipio" width="20%" >
-                            <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                        <p:column >
+                            <p:outputLabel value="Sector:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
-
-                        <p:column headerText="Fecha Inicio Servicio" width="22%" >
-                            <p:outputLabel value="#{col.fechainicioservicio}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </p:outputLabel>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="mun" value="#{registroCajaMB.municipioSelected}" style="width: 260px;" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains">
+                                <p:ajax  listener="#{registroCajaMB.cargarSector()}" update="sec" />
+                                <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{registroCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                            </p:selectOneMenu>
                         </p:column>
-
-                        <p:column headerText="Fecha Ultimo Pago" width="20%" >
-                            <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                        <p:column width="19%" exportable="false" >
-                            <p:commandButton value="Suspender" 
-                                             style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
-                                             styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
-                                             action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
-
-                            <p:commandButton value="Corte" 
-                                             style="margin-top: 3px;" process="@this" 
-                                             styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
-                                             action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
-
-                            <p:commandButton value="Pago" 
-                                             style="margin-top: 3px;" process="@this" 
-                                             styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
-                                             action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
-
-                            <p:commandButton value="Detalle" 
-                                             style="margin-top: 3px;" process="@this" 
-                                             styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                             action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
-                        </p:column>
-                    </p:dataTable>
-
-                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroPagoMB.savePago()}" icon="ui-icon-disk" process="pg_agencia"  
-                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la caja?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{registroPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
-                    </p:outputPanel>
+                        <p:column  >
+                            <p:selectOneMenu id="sec" value="#{registroCajaMB.caja.idsectorpago}" style="width: 260px;" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains">
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{registroCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s}"/>
+                            </p:selectOneMenu>
+                        </p:column>   
+                    </p:row>
                 </p:panelGrid>
+
+                <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%;  font-size: 14px;"  >
+                    <p:commandButton value="Buscar" action="#{registroCajaMB.cargarFacturas()}" icon="ui-icon-search" process="@this"  
+                                     style=" margin-left: 5px;"  update="dt_factura"/>
+                </p:outputPanel>
+
+
+                <p:dataTable id="dt_factura" var="fac" value="#{registroCajaMB.listDetalle}"
+                             emptyMessage="No hay facturas consultadas" 
+                             styleClass="tabla-mp" style="width: 45%" rowIndexVar="rowId"
+                             rows="25" paginator="#{registroCajaMB.listDetalle.size()>25}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="serie" width="15%" >
+                        <p:outputLabel value="#{fac.serie}"/>
+                    </p:column>
+
+                    <p:column headerText="No. de Factura" width="20%" >
+                        <p:outputLabel value="#{fac.nofactura}"/>
+                    </p:column>
+
+                    <p:column headerText="No. de Factura" width="20%" >
+                        <p:outputLabel value="#{fac.montopagado}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:panelGrid id="pg_calculo"  styleClass="no-border" style="width: 50%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Serie del:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Serie al:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Total facturado:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:inputText value="#{registroCajaMB.caja.correlativodel}" size="10" style="font-size: 16px!important;">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{registroCajaMB.caja.correlativoal}" size="10" style="font-size: 16px!important;">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="#{registroCajaMB.caja.ingreso}" style="font-size: 16px!important;">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:outputLabel> 
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Calcular" action="#{registroCajaMB.calcularMonto()}" icon="ui-icon-calculator" process="@this"  
+                                             style=" margin-left: 5px;"  update="pg_calculo"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; font-size: 14px;"  >
+                    <p:commandButton value="Guardar" action="#{registroCajaMB.saveCaja()}" icon="ui-icon-disk" process="@this"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la caja?');" update="@form"/>
+                    <p:commandButton value="Cancelar" process="@this" action="#{registroCajaMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                </p:outputPanel>
             </div>
         </h:form>
     </ui:define>
