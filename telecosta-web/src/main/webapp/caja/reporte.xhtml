@@ -39,15 +39,15 @@
 
                     <p:selectOneMenu id="mun" value="#{reporteCajaMB.municipioSelected}" style="width: 260px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
-                        <p:ajax  listener="#{listaCajaMB.cargarSector()}" update="sec" />
+                        <p:ajax  listener="#{reporteCajaMB.cargarSector()}" update="sec" />
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                        <f:selectItems value="#{reporteCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
                     </p:selectOneMenu>
-                    <p:selectOneMenu id="sec" value="#{listaCajaMB.idSectorPago}" style="width: 260px;" 
+                    <p:selectOneMenu id="sec" value="#{reporteCajaMB.idSectorPago}" style="width: 260px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s.idsectorpago}"/>
+                        <f:selectItems value="#{reporteCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s.idsectorpago}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
 
@@ -56,9 +56,9 @@
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reportePagoMB.generarPdfPago()}"/>
+                        <p:fileDownload value="#{reporteCajaMB.reporteCaja()}"/>
                     </p:commandButton>
-                    <p:commandButton value="Imprimir" style="float: left;"
+                    <p:commandButton value="Excel" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">

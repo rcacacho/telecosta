@@ -64,18 +64,17 @@ public class ReporteCajaMB implements Serializable {
 
     public StreamedContent reporteCaja() {
         try {
-
             String nombreReporte = "";
             String fe = "";
             String fe2 = "";
-            
+
             if (fechaInicio != null && fechaFin != null) {
-                if (idSectorPago != null){
+                if (idSectorPago != null) {
                     nombreReporte = "rptCajaAgenciaFechasSector";
-                }else{
+                } else {
                     nombreReporte = "rptCajaAgenciaFechas";
                 }
-                
+
                 Calendar c = Calendar.getInstance();
                 c.setTime(fechaInicio);
                 c.set(Calendar.HOUR_OF_DAY, 0);
@@ -89,10 +88,12 @@ public class ReporteCajaMB implements Serializable {
                 c1.set(Calendar.MINUTE, 59);
                 c1.set(Calendar.SECOND, 59);
                 fechaFin = c1.getTime();
-                
+
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 fe = sdf.format(fechaInicio);
                 fe2 = sdf.format(fechaFin);
+            } else {
+                nombreReporte = "rptCajaAgenciaSector";
             }
 
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
