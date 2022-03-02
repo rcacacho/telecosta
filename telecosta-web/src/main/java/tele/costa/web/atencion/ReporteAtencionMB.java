@@ -104,8 +104,8 @@ public class ReporteAtencionMB implements Serializable {
             fechaFin = c1.getTime();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.format(fechaIncio);
-            sdf.format(fechaFin);
+            String fe = sdf.format(fechaIncio);
+            String fe2 = sdf.format(fechaFin);
 
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
@@ -115,8 +115,8 @@ public class ReporteAtencionMB implements Serializable {
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-            parametros.put("FECHA_INICIO", fechaIncio);
-            parametros.put("FECHA_FIN", fechaFin);
+            parametros.put("FECHA_INICIO", fe);
+            parametros.put("FECHA_FIN", fe2);
 
             ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
             StreamedContent streamedContent;
@@ -468,8 +468,7 @@ public class ReporteAtencionMB implements Serializable {
 
         return content;
     }
-    
-    
+
     public StreamedContent generarPdfRuta() {
         try {
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
@@ -493,13 +492,13 @@ public class ReporteAtencionMB implements Serializable {
         }
         return null;
     }
-    
+
     public StreamedContent imprimirExcelAtencionRuta() throws IOException {
         if (idRuta == null) {
             JsfUtil.addErrorMessage("Debe seleccionar una ruta");
             return null;
         }
-      
+
         StreamedContent content = null;
         List<ReporteAtencionDto> listAtencion = atencionBean.listAtencionByIdRuta(idRuta);
 

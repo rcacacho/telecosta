@@ -156,7 +156,7 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechaInicioAndSector(Date fechaIncio, Integer idSector) {
-        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.idsector.idsector =:idSector ", Cajaagencia.class)
+        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.idsectorpago.idsectorpago =:idSector ", Cajaagencia.class)
                 .setParameter("fechaIncio", fechaIncio)
                 .setParameter("idSector", idSector)
                 .getResultList();
@@ -170,7 +170,7 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechaFinAndSector(Date fechaFin, Integer idSector) {
-        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion <= :fechaFin and qj.idsector.idsector =:idSector ", Cajaagencia.class)
+        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion <= :fechaFin and qj.idsectorpago.idsectorpago =:idSector ", Cajaagencia.class)
                 .setParameter("fechaFin", fechaFin)
                 .setParameter("idSector", idSector)
                 .getResultList();
@@ -184,7 +184,7 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechasAndSector(Date fechaIncio, Date fechaFin, Integer idSector) {
-        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.fechacreacion <= :fechaFin and qj.idsector.idsector =:idSector", Cajaagencia.class)
+        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.fechacreacion <= :fechaFin and qj.idsectorpago.idsectorpago =:idSector", Cajaagencia.class)
                 .setParameter("fechaIncio", fechaIncio)
                 .setParameter("fechaFin", fechaFin)
                 .setParameter("idSector", idSector)
@@ -199,7 +199,7 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaBySector(Integer idSector) {
-        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.idsector.idsector =:idSector ", Cajaagencia.class)
+        List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.idsectorpago.idsectorpago =:idSector ", Cajaagencia.class)
                 .setParameter("idSector", idSector)
                 .getResultList();
 

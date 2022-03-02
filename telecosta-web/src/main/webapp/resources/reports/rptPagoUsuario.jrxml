@@ -15,8 +15,8 @@
 	<parameter name="IMAGE" class="java.lang.String"/>
 	<parameter name="DIRECTORIO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
-	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
-	<parameter name="FECHA_FIN" class="java.sql.Date"/>
+	<parameter name="FECHA_INICIO" class="java.lang.String"/>
+	<parameter name="FECHA_FIN" class="java.lang.String"/>
 	<parameter name="USUARIOS" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT c.nombres, c.direccion, c.sector, concat(p.mes, '-', p.anio) fechaPago, p.total, m.municipio, p.usuariocreacion 

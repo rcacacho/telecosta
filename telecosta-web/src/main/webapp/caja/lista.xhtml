@@ -42,17 +42,17 @@
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{listaCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
                     </p:selectOneMenu>
-                    <p:selectOneMenu id="sec" value="#{registroCajaMB.caja.idsectorpago}" style="width: 260px;" 
+                    <p:selectOneMenu id="sec" value="#{listaCajaMB.idSectorPago}" style="width: 260px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s}"/>
+                        <f:selectItems value="#{listaCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s.idsectorpago}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value=""   />
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         action="#{listaCajaMB.buscarCaja()}" process="@this"
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -61,7 +61,7 @@
                                          onstart="start();" oncomplete="stop();"/>
 
                         <p:commandButton value="Limpiar" 
-                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         action="#{listaCajaMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
@@ -72,69 +72,105 @@
 
                 <br/>
 
-                <p:dataTable id="dt_cajas" var="col" value="#{listaClienteMB.listCliente}"
+                <p:dataTable id="dt_cajas" var="caj" value="#{listaCajaMB.listCaja}"
                              emptyMessage="No hay cajas de agencias registradas" 
-                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             styleClass="tabla-mp" style="width: 100%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaCajaMB.listCaja.size()>10}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Codigo" width="15%" >
-                        <p:outputLabel value="#{col.codigo}"/>
+                    <p:column headerText="Fecha" width="12%" >
+                        <p:outputLabel value="#{caj.fechacreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Nombre" width="20%" >
-                        <p:outputLabel value="#{col.nombres}"/>
-                    </p:column>
-
-                    <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.direccion}"/>
-                    </p:column>
-
-                    <p:column headerText="Sector" width="20%" >
-                        <p:outputLabel value="#{col.sector}"/>
-                    </p:column>
 
                     <p:column headerText="Municipio" width="20%" >
-                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                        <p:outputLabel value="#{caj.idsectorpago.idmunicipio.municipio}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
-                        <p:outputLabel value="#{col.fechainicioservicio}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
+                    <p:column headerText="Sector" width="15%" >
+                        <p:outputLabel value="#{caj.idsectorpago.nombre}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha Ultimo Pago" width="20%" >
-                        <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
+                    <p:column headerText="Del" width="12%" >
+                        <p:outputLabel value="#{caj.correlativodel}"/>
                     </p:column>
 
-                    <p:column width="12%" exportable="false" >
+                    <p:column headerText="Al" width="12%" >
+                        <p:outputLabel value="#{caj.correlativoal}"/>
+                    </p:column>
+
+                    <p:column headerText="Ingreso" width="12%" >
+                        <p:outputLabel value="#{caj.ingreso}"/>
+                    </p:column>
+
+                    <p:column headerText="Egreso" width="10%" >
+                        <p:outputLabel value="#{caj.egreso}"/>
+                    </p:column>
+
+                    <p:column headerText="Saldo" width="8%" >
+                        <p:outputLabel value="#{caj.saldo}"/>
+                    </p:column>
+
+                    <p:column headerText="Forma" width="15%" >
+                        <p:outputLabel value="#{caj.forma}"/>
+                    </p:column>
+
+                    <p:column headerText="No. Documento" width="18%" >
+                        <p:outputLabel value="#{caj.nodocumento}"/>
+                    </p:column>
+
+                    <p:column headerText="observaciones" width="25%" >
+                        <p:outputLabel value="#{caj.observaciones}"/>
+                    </p:column>
+
+                    <p:column width="16%" exportable="false" >
+                        <p:commandButton value="Egreso" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-calculator"
+                                         action="#{listaCajaMB.dialogEgreso(caj)}" update="@form"/>
+
                         <p:commandButton value="Detalle" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                                         action="#{listaCajaMB.detalleCaja(caj.idcajaagencia)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>
-            <p:dialog header="Corte de Servicio" widgetVar="dlgCorte" id="dlgCorte" 
+            <p:dialog header="Registro egreso" widgetVar="dlgEgreso" id="dlgEgreso" 
                       onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="550px">
-                <p:panelGrid id="pgCorte" columns="1" styleClass="no-border" style="width: 100%;"  >
-                    <p:outputLabel value="Motivo corte:" styleClass="colorTitulo" style="font-weight: bold;" />
-                    <p:inputTextarea rows="2" cols="90" value="#{listaClienteMB.motivoCorte}" counter="display" maxlength="1500" 
+                <p:panelGrid id="pgEgreso" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Total de egreso:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.egreso}" size="10" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="Forma:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.forma}" size="20" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="No. Documento:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.nodocumento}" size="20" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="Observaciones:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputTextarea rows="2" cols="90" value="#{listaCajaMB.selectedCajaAgencia.observaciones}" counter="display" maxlength="1500" 
                                      counterTemplate="{0} caracteres pendientes." autoResize="false">
                         <p:ajax event="blur" process="@this" />
                     </p:inputTextarea>
                     <h:outputText id="display" style="margin-left: 330px;" /> 
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{listaClienteMB.corteCliente()}" icon="ui-icon-disk" process="pgCorte"  
-                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas dar corte al servicio?');" update="@form"/>
-                        <p:commandButton value="Cancelar" process="@this" action="#{listaClienteMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                        <p:commandButton value="Guardar" action="#{listaCajaMB.egresoCaja()}" icon="ui-icon-disk" process="pgEgreso"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el egreso?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{listaCajaMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px;" 
+                                         update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
             </p:dialog>

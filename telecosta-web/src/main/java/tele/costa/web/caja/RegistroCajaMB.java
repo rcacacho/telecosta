@@ -2,7 +2,6 @@ package tele.costa.web.caja;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,8 +79,7 @@ public class RegistroCajaMB implements Serializable {
         Long det = 0L;
         det = cajaBean.findMontoFacturaSerie(caja.getCorrelativodel(), caja.getCorrelativoal(), caja.getIdsectorpago().getIdsectorpago(), fechaInicio, fechaFin);
         if (det > 0) {
-            BigInteger bigInteger2 = BigInteger.valueOf(det.intValue());
-            caja.setIngreso(bigInteger2);
+            caja.setIngreso(det.intValue());
         }
     }
 

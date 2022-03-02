@@ -62,13 +62,13 @@ public class Cajaagencia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ingreso")
-    private BigInteger ingreso;
+    private Integer ingreso;
 
     @Column(name = "egreso")
-    private BigInteger egreso;
+    private Integer egreso;
 
     @Column(name = "saldo")
-    private BigInteger saldo;
+    private Integer saldo;
 
     @Size(max = 500)
     @Column(name = "forma")
@@ -118,7 +118,7 @@ public class Cajaagencia implements Serializable {
         this.idcajaagencia = idcajaagencia;
     }
 
-    public Cajaagencia(Integer idcajaagencia, BigInteger ingreso, String usuariocreacion, Date fechacreacion, String usuariomodificacion, Date fechamodificacion, boolean activo) {
+    public Cajaagencia(Integer idcajaagencia, Integer ingreso, String usuariocreacion, Date fechacreacion, String usuariomodificacion, Date fechamodificacion, boolean activo) {
         this.idcajaagencia = idcajaagencia;
         this.ingreso = ingreso;
         this.usuariocreacion = usuariocreacion;
@@ -152,29 +152,31 @@ public class Cajaagencia implements Serializable {
         this.correlativoal = correlativoal;
     }
 
-    public BigInteger getIngreso() {
+    public Integer getIngreso() {
         return ingreso;
     }
 
-    public void setIngreso(BigInteger ingreso) {
+    public void setIngreso(Integer ingreso) {
         this.ingreso = ingreso;
     }
 
-    public BigInteger getEgreso() {
+    public Integer getEgreso() {
         return egreso;
     }
 
-    public void setEgreso(BigInteger egreso) {
+    public void setEgreso(Integer egreso) {
         this.egreso = egreso;
     }
 
-    public BigInteger getSaldo() {
+    public Integer getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigInteger saldo) {
+    public void setSaldo(Integer saldo) {
         this.saldo = saldo;
     }
+
+
 
     public String getForma() {
         return forma;

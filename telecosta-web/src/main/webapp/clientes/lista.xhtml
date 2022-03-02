@@ -72,7 +72,7 @@
                 <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMB.listCliente}"
                              emptyMessage="No hay clientes registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaClienteMB.listCliente.size()>5}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{listaClienteMB.listCliente.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}

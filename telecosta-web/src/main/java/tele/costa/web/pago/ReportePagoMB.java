@@ -104,8 +104,8 @@ public class ReportePagoMB {
             fechaFin = c1.getTime();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.format(fechaIncio);
-            sdf.format(fechaFin);
+            String fe = sdf.format(fechaIncio);
+            String fe2 = sdf.format(fechaFin);
 
             ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
             String realPath = servletContext.getRealPath("/");
@@ -115,8 +115,8 @@ public class ReportePagoMB {
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-            parametros.put("FECHA_INICIO", fechaIncio);
-            parametros.put("FECHA_FIN", fechaFin);
+            parametros.put("FECHA_INICIO", fe);
+            parametros.put("FECHA_FIN", fe2);
 
             ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
             StreamedContent streamedContent;
@@ -233,8 +233,8 @@ public class ReportePagoMB {
             fechaFinUsuario = c1.getTime();
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.format(fechaIncioUsuario);
-            sdf.format(fechaFinUsuario);
+            String fe = sdf.format(fechaIncioUsuario);
+            String fe2 = sdf.format(fechaFinUsuario);
 
             ReportFormat format = ReportFormat.EXCEL;
 
@@ -246,8 +246,8 @@ public class ReportePagoMB {
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-            parametros.put("FECHA_INICIO", fechaIncioUsuario);
-            parametros.put("FECHA_FIN", fechaFinUsuario);
+            parametros.put("FECHA_INICIO", fe);
+            parametros.put("FECHA_FIN", fe2);
             parametros.put("USUARIOS", selectedUsuario.getUsuario());
 
             ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);

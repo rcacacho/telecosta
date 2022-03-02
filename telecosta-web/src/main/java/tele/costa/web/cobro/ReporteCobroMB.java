@@ -214,34 +214,6 @@ public class ReporteCobroMB {
         }
     }
 
-//    public StreamedContent generarPdfCobroMunicipio() {
-//        try {
-//            List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
-//            for (Cliente cl : listCliente) {
-//                Pago findPago = pagosBean.findUltimoPago(cl.getIdcliente());
-//            }
-//
-//            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-//            String realPath = servletContext.getRealPath("/");
-//            String nombreReporte = "rptCobroMunicipio";
-//            String nombreArchivo = "CobroMunicipio.pdf";
-//            HashMap parametros = new HashMap();
-//            parametros.put("IMAGE", "logo.jpeg");
-//            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
-//            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-//            parametros.put("ID_MUNICIPIO", idMunicipio);
-//
-//            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
-//            StreamedContent streamedContent;
-//            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
-//            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
-//            return streamedContent;
-//        } catch (Exception ex) {
-//            log.error(ex);
-//            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
-//        }
-//        return null;
-//    }
     public StreamedContent generarPdfCobroMunicipio() {
         List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
         List<CobroWrapper> listCobro = new ArrayList<>();
