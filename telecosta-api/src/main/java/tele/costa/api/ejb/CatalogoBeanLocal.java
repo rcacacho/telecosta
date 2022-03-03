@@ -50,5 +50,11 @@ public interface CatalogoBeanLocal {
     List<Tipoatencion> listTipoAtencion();
     
     List<Sectorpago> listSectorPagoByIdMunicipio(Integer idmunicipio);
+    
+    List<Municipio> listMunicipioBySanRafaelSanPableRodeo();
+    
+    List<Municipio> listMunicipioByIdMunicipio(Integer idMunicipio);
+    
+    List<Municipio> listMunicipioBySanpabloAndSanRafael();
 
 }

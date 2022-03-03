@@ -72,7 +72,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .getResultList();
@@ -164,7 +164,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes =:mes", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes like :mes", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .setParameter("mes", mes)
@@ -182,7 +182,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -198,7 +198,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio  ", Pago.class)
                 .setParameter("anio", anio)
                 .getResultList();
 
@@ -262,7 +262,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes =:mes and pa.idtipopago.idtipopago = 1 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.idtipopago.idtipopago = 1 ", Pago.class)
                 .setParameter("mes", mes)
                 .getResultList();
 
@@ -290,7 +290,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public List<Pago> listPagos() {
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idtipopago.idtipopago = 2 and pa.activo = true  order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.activo = true  order by pa.fechapago desc", Pago.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -429,7 +429,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .getResultList();
@@ -545,6 +545,41 @@ public class PagosBean implements PagosBeanLocal {
 
         List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idMunicipio ", Pago.class)
                 .setParameter("idMunicipio", idMunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByAnioAndMesAndMunicipio(Integer anio, String mes, Integer idMunicipio) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio", Pago.class)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
+                .setParameter("idMunicipio", idMunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagoByAnioAndMes(Integer anio, String mes) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes ", Pago.class)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

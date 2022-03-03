@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
@@ -32,6 +33,8 @@ public class ListaPagosMB implements Serializable {
     private PagosBeanLocal pagosBean;
     @EJB
     private ClienteBeanLocal clienteBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private List<Pago> listPago;
     private Integer idcliente;
@@ -56,29 +59,39 @@ public class ListaPagosMB implements Serializable {
         if (SesionUsuarioMB.getRootUsuario()) {
             listClientes = clienteBean.ListClientes();
             //listPago = pagosBean.listPagos();
+            listMunicipio = catalogoBean.listMunicipioByIdDepartamento(1);
         } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
             listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
             listPago = pagosBean.listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
+            listMunicipio = catalogoBean.listMunicipioBySanRafaelSanPableRodeo();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listClientes = clienteBean.listClientesByInMunucipio();
             listPago = pagosBean.listPagosByInIdMunicipios();
+            listMunicipio = catalogoBean.listMunicipioBySanpabloAndSanRafael();
         } else {
             listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
             listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+            listMunicipio = catalogoBean.listMunicipioByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
         }
     }
 
     public void buscarPago() {
         if (fechaInicioBus != null && fechaFinBus != null && idMunicipio != null) {
-            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipio(fechaInicio, fechaFin, idMunicipio);
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipio(fechaInicioBus, fechaFinBus, idMunicipio);
             if (response != null) {
                 listPago = response;
             } else {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (anio != null && mes != "" && idMunicipio != null) {
-
+        } else if (anio != null && mes != "" && idMunicipio > 0 ) {
+            List<Pago> response = pagosBean.listPagosByAnioAndMesAndMunicipio(anio, mes, idMunicipio);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
         } else if (fechaInicioBus != null && fechaFinBus != null) {
             List<Pago> response = pagosBean.listPagosByFechaInicioAndFin(fechaInicioBus, fechaFinBus);
             if (response != null) {
@@ -88,7 +101,13 @@ public class ListaPagosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null && mes != "") {
-
+            List<Pago> response = pagosBean.listPagoByAnioAndMes(anio, mes);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
         } else if (idcliente != 0 && anio != null) {
             List<Pago> response = pagosBean.listPagoByIdClienteAndAnio(idcliente, anio);
             if (response != null) {
@@ -121,7 +140,7 @@ public class ListaPagosMB implements Serializable {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (idMunicipio != null) {
+        } else if (idMunicipio > 0) {
             List<Pago> response = pagosBean.listPagosByMunicipio(idMunicipio);
             if (response != null) {
                 listPago = response;
@@ -142,6 +161,7 @@ public class ListaPagosMB implements Serializable {
         fechaInicioBus = null;
         fechaFinBus = null;
         listPago = null;
+        idMunicipio = null;
     }
 
     public void detalle(Integer id) {

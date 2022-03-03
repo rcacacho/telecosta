@@ -71,11 +71,11 @@
                     <p:outputLabel value="Municipio:"  styleClass="field-label"  />
                     <p:outputLabel value=""   />
 
-                    <p:selectOneMenu id="mun" value="#{registroCajaMB.municipioSelected}" style="width: 260px;" 
+                    <p:selectOneMenu id="mun" value="#{listaPagosMB.idMunicipio}" style="width: 250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax  event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{registroCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                        <f:selectItems value="#{listaPagosMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
                     </p:selectOneMenu>
                     
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 100px;">
@@ -102,7 +102,7 @@
                 <p:dataTable id="dt_pago" var="col" value="#{listaPagosMB.listPago}"
                              emptyMessage="No hay pagos registrados" rowStyleClass="#{col.getStylePago()}"
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaPagosMB.listPago.size()>5}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{listaPagosMB.listPago.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}

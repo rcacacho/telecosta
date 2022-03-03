@@ -202,8 +202,49 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Sectorpago> listSectorPagoByIdMunicipio(Integer idmunicipio) {
-              List<Sectorpago> lst = em.createQuery("SELECT dep FROM Sectorpago dep WHERE dep.activo  = true and dep.idmunicipio.idmunicipio =:idmunicipio", Sectorpago.class)
+        List<Sectorpago> lst = em.createQuery("SELECT dep FROM Sectorpago dep WHERE dep.activo  = true and dep.idmunicipio.idmunicipio =:idmunicipio", Sectorpago.class)
                 .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Municipio> listMunicipioBySanRafaelSanPableRodeo() {
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in (3,6,7) ", Municipio.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Municipio> listMunicipioByIdMunicipio(Integer idMunicipio) {
+        if (idMunicipio == null) {
+            return null;
+        }
+
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio =:idMunicipio", Municipio.class)
+                .setParameter("idMunicipio", idMunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Municipio> listMunicipioBySanpabloAndSanRafael() {
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in (6,7) ", Municipio.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
