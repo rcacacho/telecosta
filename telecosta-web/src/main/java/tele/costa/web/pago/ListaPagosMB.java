@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
@@ -40,7 +41,9 @@ public class ListaPagosMB implements Serializable {
     private Date fechaInicioBus;
     private Date fechaFinBus;
     private String mes;
-    List<Cliente> listClientes;
+    private List<Cliente> listClientes;
+    private Integer idMunicipio;
+    private List<Municipio> listMunicipio;
 
     public ListaPagosMB() {
     }
@@ -66,7 +69,27 @@ public class ListaPagosMB implements Serializable {
     }
 
     public void buscarPago() {
-        if (idcliente != 0 && anio != null) {
+        if (fechaInicioBus != null && fechaFinBus != null && idMunicipio != null) {
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipio(fechaInicio, fechaFin, idMunicipio);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (anio != null && mes != "" && idMunicipio != null) {
+
+        } else if (fechaInicioBus != null && fechaFinBus != null) {
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFin(fechaInicioBus, fechaFinBus);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (anio != null && mes != "") {
+
+        } else if (idcliente != 0 && anio != null) {
             List<Pago> response = pagosBean.listPagoByIdClienteAndAnio(idcliente, anio);
             if (response != null) {
                 listPago = response;
@@ -98,8 +121,8 @@ public class ListaPagosMB implements Serializable {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (fechaInicioBus != null && fechaFinBus != null) {
-            List<Pago> response = pagosBean.listPagosByFechaInicioAndFin(fechaInicioBus, fechaFinBus);
+        } else if (idMunicipio != null) {
+            List<Pago> response = pagosBean.listPagosByMunicipio(idMunicipio);
             if (response != null) {
                 listPago = response;
             } else {
@@ -227,6 +250,22 @@ public class ListaPagosMB implements Serializable {
 
     public void setFechaFinBus(Date fechaFinBus) {
         this.fechaFinBus = fechaFinBus;
+    }
+
+    public Integer getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(Integer idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    public List<Municipio> getListMunicipio() {
+        return listMunicipio;
+    }
+
+    public void setListMunicipio(List<Municipio> listMunicipio) {
+        this.listMunicipio = listMunicipio;
     }
 
 }

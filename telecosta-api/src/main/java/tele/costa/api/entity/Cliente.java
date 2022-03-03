@@ -83,6 +83,10 @@ public class Cliente implements Serializable {
     private String sector;
 
     @Size(max = 500)
+    @Column(name = "tipocliente")
+    private String tipocliente;
+
+    @Size(max = 500)
     @Column(name = "observacion")
     private String observacion;
 
@@ -337,6 +341,14 @@ public class Cliente implements Serializable {
 
     public void setFechaeliminacion(Date fechaeliminacion) {
         this.fechaeliminacion = fechaeliminacion;
+    }
+
+    public String getTipocliente() {
+        return tipocliente;
+    }
+
+    public void setTipocliente(String tipocliente) {
+        this.tipocliente = tipocliente;
     }
 
     @Override

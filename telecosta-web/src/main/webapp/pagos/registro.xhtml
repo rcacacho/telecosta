@@ -20,6 +20,9 @@
                     <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                         <p:row>
                             <p:column >
+                                <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
                                 <p:outputLabel value="Año:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                             <p:column >
@@ -29,21 +32,32 @@
 
                         <p:row>
                             <p:column>
+                                <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" 
+                                            timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroPagoMB.detalle.fechapago}" navigator="true"
+                                            required="true" requiredMessage="Debes seleccionar un fecha" >  
+                                    <p:ajax event="dateSelect" process="@this" />
+                                </p:calendar> 
+                            </p:column>
+
+                            <p:column>
                                 <p:selectOneMenu id="anio" value="#{registroPagoMB.pago.anio}" style="width:250px;" 
                                                  filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un año" >
+                                                 required="true" requiredMessage="Debes seleccionar un año" >
                                     <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
                                     <f:selectItem itemLabel="2020" itemValue="2020" />
                                     <f:selectItem itemLabel="2021" itemValue="2021" />
                                     <f:selectItem itemLabel="2022" itemValue="2022" />
                                     <f:selectItem itemLabel="2023" itemValue="2023" />
                                     <f:selectItem itemLabel="2024" itemValue="2024" />
+                                    <f:selectItem itemLabel="2025" itemValue="2025" />
+                                    <f:selectItem itemLabel="2026" itemValue="2026" />
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="mes" value="#{registroPagoMB.pago.mes}" style="width:250px;" 
+                                <p:selectOneMenu id="mes" value="#{registroPagoMB.pago.mes}" style="width:220px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                 required="true" requiredMessage="Debes selecciona un municipio" >
+                                                 required="true" requiredMessage="Debes seleccionar un municipio" >
                                     <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                                     <f:selectItem itemLabel="Enero" itemValue="Enero" />
                                     <f:selectItem itemLabel="Febrero" itemValue="Febrero" />
@@ -57,7 +71,7 @@
                                     <f:selectItem itemLabel="Octubre" itemValue="Octubre" />
                                     <f:selectItem itemLabel="Noviembre" itemValue="Noviembre" />
                                     <f:selectItem itemLabel="Diciembre" itemValue="Diciembre" />
-                                     <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                                    <f:selectItem itemLabel="Otro" itemValue="Otro" />
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
@@ -67,6 +81,9 @@
                             </p:column>
                             <p:column >
                                 <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="No. Factura" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -87,28 +104,16 @@
                                     <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroPagoMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun}"/>
                                 </p:selectOneMenu>
-                            </p:column>   
+                            </p:column>  
+                            <p:column>
+                                <p:inputText value="#{registroPagoMB.detalle.nofactura}" size="30" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un nuevo de factura"/>
+                            </p:column>
                         </p:row>
                         <p:row>
-                            <p:column >
-                                <p:outputLabel value="No. Recibo:" styleClass="colorTitulo" style="font-weight: bold;" />
-                            </p:column>
                             <p:column >
                                 <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.nofactura}" size="35" style="font-size: 16px!important;"/>
-
-                            </p:column>
-                            <p:column>
-                                <p:inputText value="#{registroPagoMB.detalle.serie}" size="35" style="font-size: 16px!important;"/>
-
-                            </p:column>
-                        </p:row>
-
-                        <p:row>
                             <p:column >
                                 <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
@@ -118,6 +123,10 @@
                         </p:row>
                         <p:row>
                             <p:column>
+                                <p:inputText value="#{registroPagoMB.detalle.serie}" size="30" style="font-size: 16px!important;"
+                                              required="true" requiredMessage="Debes ingresar una serie"/>
+                            </p:column>
+                            <p:column>
                                 <p:selectOneMenu id="tipo" value="#{registroPagoMB.detalle.idformapago}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes selecciona una forma de pago" >
@@ -126,7 +135,7 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroPagoMB.pago.total}" size="35" style="font-size: 16px!important;"
+                                <p:inputText value="#{registroPagoMB.pago.total}" size="30" style="font-size: 16px!important;"
                                              required="true" requiredMessage="Debes ingresar una cantidad"/>
                             </p:column>
                         </p:row>
@@ -137,7 +146,7 @@
                         </p:row>
                         <p:row>
                             <p:column colspan="3">
-                                <p:inputTextarea rows="3" cols="165" value="#{registroPagoMB.pago.observacion}" counter="display" maxlength="2000" 
+                                <p:inputTextarea rows="3" cols="170" value="#{registroPagoMB.pago.observacion}" counter="display" maxlength="2000" 
                                                  counterTemplate="{0} caracteres pendientes." autoResize="false"
                                                  required="true" requiredMessage="Debes ingresar una dirección">
                                     <p:ajax event="blur" process="@this" />
@@ -147,7 +156,7 @@
                         </p:row>
                     </p:panelGrid>
 
-                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 42%;  font-size: 14px;"  >
                         <p:commandButton value="Guardar" action="#{registroPagoMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
                         <p:commandButton value="Cancelar" process="@this" action="#{registroPagoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>

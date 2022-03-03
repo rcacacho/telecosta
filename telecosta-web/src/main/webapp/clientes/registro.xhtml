@@ -113,7 +113,7 @@
                                 <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                             <p:column >
-                                <p:outputLabel value="" styleClass="colorTitulo" style="font-weight: bold;" />
+                                <p:outputLabel value="Tipo cliente" styleClass="colorTitulo" style="font-weight: bold;" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -123,6 +123,15 @@
                                                  required="true" requiredMessage="Debes selecciona una configuración" >
                                     <f:selectItem itemLabel="(selecciona una configuración)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroClienteMB.listConfiguracionPago}"  var="c" itemLabel="#{c.descripcion} - #{c.valor}" itemValue="#{c}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="tipoCl" value="#{registroClienteMB.cliente.tipocliente}" style="width:250px;" 
+                                                 filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar un tipo de cliente" >
+                                    <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                    <f:selectItem itemLabel="Internet" itemValue="Internet" />
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>

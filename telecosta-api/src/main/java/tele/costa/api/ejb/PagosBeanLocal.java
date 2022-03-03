@@ -57,9 +57,13 @@ public interface PagosBeanLocal {
     List<Pago> listPagosByFechaInicioAndFinandUsuario(Date fechainicio, Date fechafin, String usuario);
 
     List<ReporteCobrosDto> listCobrosByIdSector(Integer idsector);
-    
+
     List<ReporteCobrosDto> listCobrosByIdMunicipio(Integer idmunicipio);
+
+    List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
     
-     List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
+    List<Pago> listPagosByFechaInicioAndFinAndIdMunicipio(Date fechainicio, Date fechafin, Integer idMunicipio);
+    
+    List<Pago> listPagosByMunicipio(Integer idMunicipio);
 
 }

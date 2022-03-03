@@ -214,8 +214,8 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes =:mes and pa.idtipopago.idtipopago = 2 ", Pago.class)
-                .setParameter("mes", mes)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.idtipopago.idtipopago = 2 ", Pago.class)
+                .setParameter("mes", '%' + mes + '%')
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -492,7 +492,59 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo() {
-      List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (3,6,7) order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (3,6,7) order by pa.fechapago desc", Pago.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaInicioAndFinAndIdMunicipio(Date fechainicio, Date fechafin, Integer idMunicipio) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio ", Pago.class)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
+                .setParameter("idMunicipio", idMunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByMunicipio(Integer idMunicipio) {
+        if (idMunicipio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idMunicipio ", Pago.class)
+                .setParameter("idMunicipio", idMunicipio)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

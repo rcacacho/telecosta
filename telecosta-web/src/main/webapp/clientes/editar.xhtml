@@ -118,6 +118,21 @@
                             <p:inputText value="#{editarClienteMB.cliente.codigo}" size="50" style="font-size: 16px!important;"/>
                         </p:column>   
                     </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="tipoCl" value="#{registroClienteMB.cliente.tipocliente}" style="width:250px;" 
+                                             filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
 
                     <p:row>
                         <p:column colspan="3">

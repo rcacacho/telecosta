@@ -100,6 +100,10 @@ public class LoginMB implements Serializable {
         return rol = SesionUsuarioMB.getRolUsuario();
     }
 
+    public void renewSesionTimeOut(String pageTo) {
+        JsfUtil.redirectTo(pageTo);
+    }
+
     /*Metodos Getters y setters*/
     public String getUsuario() {
         return usuario;

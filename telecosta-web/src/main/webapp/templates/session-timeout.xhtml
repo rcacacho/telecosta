@@ -30,8 +30,8 @@
             <div align="center" style="overflow: hidden;">
                 <div  class="clock" style="margin:2em; overflow: hidden;">
                 </div>
-                <p:commandLink value="Cerrar Sesión" action="#{sesionMB.logout()}" style="margin-right: 20px;" />
-                <p:commandLink value="Restaurar Sesión" action="#{sesionMB.renewSesionTimeOut('/bandeja/entrada.xhtml')}" onstart="PF('timeoutDialog').hide();" />
+                <p:commandLink value="Cerrar Sesión" action="#{loginMB.logout()}" style="margin-right: 20px;" />
+                <p:commandLink value="Restaurar Sesión" action="#{sesionMB.renewSesionTimeOut('/menu/menu.xhtml')}" onstart="PF('timeoutDialog').hide();" />
             </div>
         </p:dialog>
 
@@ -58,6 +58,6 @@
             });
         </script>
 
-        <p:remoteCommand name="logout" actionListener="#{sesionMB.logout()}" />
+        <p:remoteCommand name="logout" actionListener="#{loginMB.logout()}" />
     </h:form>
 </ui:composition>
