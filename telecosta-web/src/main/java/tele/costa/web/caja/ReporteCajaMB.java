@@ -104,8 +104,15 @@ public class ReporteCajaMB implements Serializable {
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-            parametros.put("FECHA_INICIO", fe);
-            parametros.put("FECHA_FIN", fe2);
+
+            if (fechaInicio != null && fechaFin != null) {
+                parametros.put("FECHA_INICIO", fe);
+                parametros.put("FECHA_FIN", fe2);
+            }
+
+            if (idSectorPago != null) {
+                parametros.put("ID_SECTOR_PAGO", idSectorPago);
+            }
 
             ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
             StreamedContent streamedContent;
