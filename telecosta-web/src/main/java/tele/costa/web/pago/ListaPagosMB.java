@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
@@ -32,6 +33,8 @@ public class ListaPagosMB implements Serializable {
     private PagosBeanLocal pagosBean;
     @EJB
     private ClienteBeanLocal clienteBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private List<Pago> listPago;
     private Integer idcliente;
@@ -56,15 +59,19 @@ public class ListaPagosMB implements Serializable {
         if (SesionUsuarioMB.getRootUsuario()) {
             listClientes = clienteBean.ListClientes();
             //listPago = pagosBean.listPagos();
+            listMunicipio = catalogoBean.listMunicipioByIdDepartamento(1);
         } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
             listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
             listPago = pagosBean.listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
+            listMunicipio = catalogoBean.listMunicipioBySanRafaelSanPableRodeo();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
             listClientes = clienteBean.listClientesByInMunucipio();
             listPago = pagosBean.listPagosByInIdMunicipios();
+            listMunicipio = catalogoBean.listMunicipioBySanpabloAndSanRafael();
         } else {
             listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
             listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+            listMunicipio = catalogoBean.listMunicipioByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
         }
     }
 
@@ -142,6 +149,7 @@ public class ListaPagosMB implements Serializable {
         fechaInicioBus = null;
         fechaFinBus = null;
         listPago = null;
+        idMunicipio = null;
     }
 
     public void detalle(Integer id) {
