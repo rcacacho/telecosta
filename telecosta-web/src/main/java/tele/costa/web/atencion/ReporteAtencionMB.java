@@ -43,8 +43,6 @@ import org.primefaces.model.StreamedContent;
 import tele.costa.api.dto.ReporteAtencionDto;
 import tele.costa.api.ejb.AtencionClienteLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
-import tele.costa.api.entity.Atencion;
-import tele.costa.api.entity.Detalleatencion;
 import tele.costa.api.entity.Ruta;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
