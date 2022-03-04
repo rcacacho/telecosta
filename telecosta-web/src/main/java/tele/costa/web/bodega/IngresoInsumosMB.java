@@ -43,7 +43,7 @@ public class IngresoInsumosMB implements Serializable {
     private String descripcion;
     private Insumos insumoSelected;
     private Boolean verAgencia;
-    private Integer vercampos
+    private Integer vercampos;
 
     @PostConstruct
     void cargarDatos() {
@@ -156,7 +156,7 @@ public class IngresoInsumosMB implements Serializable {
     }
 
     public void showCampoAgencia() {
-        if (this.tipoPuesto == 1) {
+        if (vercampos == 1) {
             this.verCamposActa = true;
         } else {
             this.verCamposActa = false;
