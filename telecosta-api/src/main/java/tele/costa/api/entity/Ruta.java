@@ -86,6 +86,9 @@ public class Ruta implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idruta", fetch = FetchType.LAZY)
     private List<Atencion> atencionList;
 
+    @OneToMany(mappedBy = "idruta", fetch = FetchType.LAZY)
+    private List<Insumos> insumosList;
+
     public Ruta() {
     }
 
@@ -197,6 +200,15 @@ public class Ruta implements Serializable {
     @Override
     public String toString() {
         return "tele.costa.api.entity.Ruta[ idruta=" + idruta + " ]";
+    }
+
+    @XmlTransient
+    public List<Insumos> getInsumosList() {
+        return insumosList;
+    }
+
+    public void setInsumosList(List<Insumos> insumosList) {
+        this.insumosList = insumosList;
     }
 
 }

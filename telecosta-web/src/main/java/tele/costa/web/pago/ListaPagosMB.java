@@ -84,7 +84,7 @@ public class ListaPagosMB implements Serializable {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (anio != null && mes != "" && idMunicipio > 0 ) {
+        } else if (anio != null && mes != "" && idMunicipio > 0) {
             List<Pago> response = pagosBean.listPagosByAnioAndMesAndMunicipio(anio, mes, idMunicipio);
             if (response != null) {
                 listPago = response;
@@ -142,6 +142,22 @@ public class ListaPagosMB implements Serializable {
             }
         } else if (idMunicipio > 0) {
             List<Pago> response = pagosBean.listPagosByMunicipio(idMunicipio);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicioBus != null) {
+            List<Pago> response = pagosBean.listPagosByFechaInicio(fechaInicioBus);
+            if (response != null) {
+                listPago = response;
+            } else {
+                listPago = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaFinBus != null) {
+            List<Pago> response = pagosBean.listPagosByFechaFin(fechaFinBus);
             if (response != null) {
                 listPago = response;
             } else {

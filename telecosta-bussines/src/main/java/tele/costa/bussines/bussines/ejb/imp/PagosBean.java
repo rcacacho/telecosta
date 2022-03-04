@@ -588,4 +588,56 @@ public class PagosBean implements PagosBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Pago> listPagosByFechaInicio(Date fechainicio) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio  ", Pago.class)
+                .setParameter("fechainicio", fechainicio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaFin(Date fechaFin) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago <= :fechaFin ", Pago.class)
+                .setParameter("fechaFin", fechaFin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
 }

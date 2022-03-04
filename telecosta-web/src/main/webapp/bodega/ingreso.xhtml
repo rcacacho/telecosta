@@ -8,7 +8,7 @@
                 template="/templates/template.xhtml">
 
     <ui:define name="pageTitle">
-        Lista de Ticket de Trabajo
+        Lista de Insumos
     </ui:define>
 
     <ui:define name="content">
@@ -16,7 +16,7 @@
         <h:form id="frm_content" enctype="multipart/form-data"> 
             <div align="center">
                 <ui:define name="pageTitle">
-                    <h1 style="margin: 0 0 0 0;">Lista de Ticket de Trabajo</h1>            
+                    <h1 style="margin: 0 0 0 0;">Lista de Insumos</h1>            
                 </ui:define>
 
                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
@@ -24,90 +24,89 @@
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{listaAtencionMB.fechaInicio}" navigator="true">  
+                                value="#{ingresoInsumosMB.fechaInicio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{listaAtencionMB.fechaFin}" navigator="true">  
+                                value="#{ingresoInsumosMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
-                    <p:outputLabel value="Ruta:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:selectOneMenu id="mun" value="#{listaAtencionMB.idRuta}" style="width: 150px;" 
+                    <p:selectOneMenu id="agencia" value="#{ingresoInsumosMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
-                        <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaAtencionMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut.idruta}"/>
+                        <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut.idruta}"/>
                     </p:selectOneMenu>
 
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 20px;">
+                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
                         <p:commandButton value="Buscar"  
                                          action="#{listaAtencionMB.buscarAtencion()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
                                          id="btn_buscar" process="@this"  
-                                         update="dt_atencion" icon="ui-icon-search"
+                                         update="dt_insumo" icon="ui-icon-search"
                                          onstart="start();" oncomplete="stop();"/>
-                        
+
                         <p:commandButton value="Limpiar" 
-                                         action="#{listaAtencionMB.limpiarCampos()}"
+                                         action="#{ingresoInsumosMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
                                          update="@form" icon="ui-icon-refresh"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Agregar"  
+                                         action="#{ingresoInsumosMB.dialogRegistro()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_agregar" process="@this"  
+                                         update="dt_insumo" icon="ui-icon-plus"
+                                         onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>
 
                 <br/>
 
-                <p:dataTable id="dt_atencion" var="col" value="#{listaAtencionMB.listAtencion}"
-                             emptyMessage="No hay tickets registrados" 
+                <p:dataTable id="dt_insumo" var="ins" value="#{ingresoInsumosMB.listinsumos}"
+                             emptyMessage="No hay insumos registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaAtencionMB.listAtencion.size()>10}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{ingresoInsumosMB.listinsumos.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Nombre" width="20%" >
-                        <p:outputLabel value="#{col.idcliente.nombres}"/>
+                    <p:column headerText="Código" width="10%" >
+                        <p:outputLabel value="#{ins.codigo}"/>
                     </p:column>
 
-                    <p:column headerText="Dirección" width="25%" >
-                        <p:outputLabel value="#{col.idcliente.direccion}"/>
+                    <p:column headerText="Descripción" width="25%" >
+                        <p:outputLabel value="#{ins.descripcion}"/>
                     </p:column>
 
-                    <p:column headerText="Telefono" width="20%" >
-                        <p:outputLabel value="#{col.idcliente.telefono}"/>
+                    <p:column headerText="Existencia" width="12%" >
+                        <p:outputLabel value="#{ins.cantidad}"/>
                     </p:column>
 
-                    <p:column headerText="Motivo" width="20%" >
-                        <p:outputLabel value="#{col.motivo}"/>
+                    <p:column headerText="Precio unitario" width="15%" >
+                        <p:outputLabel value="#{ins.precio}"/>
                     </p:column>
 
-                    <p:column headerText="Referencia" width="20%" >
-                        <p:outputLabel value="#{col.referencia}"/>
-                    </p:column>
-
-                    <p:column headerText="Estado" width="20%" >
-                        <p:outputLabel value="#{listaAtencionMB.estadoAtencion(col.estado)}"/>
-                    </p:column>
-
-                    <p:column headerText="Fecha registro" width="20%" >
-                        <p:outputLabel value="#{col.fechacreacion}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
+                    <p:column headerText="Total" width="16%" >
+                        <p:outputLabel value="#{ins.total}"/>
                     </p:column>
 
                     <p:column width="21%" exportable="false" >
-                        <p:commandButton value="Finalizar" 
+                        <p:commandButton value="Ingresar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-refresh"
-                                         action="#{listaAtencionMB.finalizacionAtencion(col)}" update="@form"/>
+                                         action="#{ingresoInsumosMB.dialogRegistro()}" update="@form"/>
                     </p:column>
 
                     <p:column width="18%" exportable="false" >
@@ -119,68 +118,33 @@
                 </p:dataTable>
             </div>
 
-            <p:dialog header="Finalización de Ticket" widgetVar="dlgTicket" id="dlgTicket" 
+            <p:dialog header="Agregar insumo" widgetVar="dlgAgregar" id="dlgAgregar" 
                       onShow="stop();"  onHide="stop();" 
                       modal="true" position="top" resizable="false" width="700px">
 
-                <p:panelGrid id="pgTicket"  columns="2" styleClass="no-border" style="width: 80%;"  >
-                    <p:outputLabel  value="Material Utilizado:" styleClass="colorTitulo" />
-                    <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
+                <p:panelGrid id="pgTicket"  columns="3" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Fecha:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Código:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Descipción:" styleClass="colorTitulo" />
 
-                    <p:selectOneMenu id="mate" value="#{listaAtencionMB.detalle.materialutilizado}" style="width:250px;" 
-                                     filter="true" filterMatchMode="contains">
-                        <p:ajax event="itemSelect"/>
-                        <f:selectItem itemLabel="(selecciona un Material)" itemValue="" noSelectionOption="true" />
-                        <f:selectItem itemLabel="RG-6 mts" itemValue="RG-6 mts" />
-                        <f:selectItem itemLabel="RG-11 mts" itemValue="RG-11 mts" />
-                        <f:selectItem itemLabel="Conectores" itemValue="Conectores" />
-                        <f:selectItem itemLabel="Otros" itemValue="Otros" />
-                    </p:selectOneMenu>
-                    <p:inputText id="cant" value="#{listaAtencionMB.detalle.cantidad}" size="25" style="font-size: 16px!important;">
+                    <p:calendar id="cal_fecha" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{ingresoInsumosMB.fechaInsumo}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:inputText id="cod" value="#{listaAtencionMB.detalle.cantidad}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:inputText id="desc" value="#{listaAtencionMB.detalle.cantidad}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
                 </p:panelGrid>
 
-                <p:panelGrid id="pgTicketObs"  columns="1" styleClass="no-border" style="width: 80%;"  >
-                    <p:outputLabel  value="Observación:" styleClass="colorTitulo" />
-                    <p:inputTextarea cols="120" value="#{listaAtencionMB.detalle.observacion}" counter="display2" maxlength="2000" 
-                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
-                        <p:ajax event="blur" process="@this" />
-                    </p:inputTextarea>
-                    <h:outputText id="display2" style="margin-left: 480px;" />
-
-                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 80%;  font-size: 14px;"  >
-                        <p:commandButton value="Agregar" action="#{listaAtencionMB.cargarDetalle()}" icon="ui-icon-plus" process="@this"  
-                                         style=" margin-left: 5px; " onstart="start();" oncomplete="stop();" update="pgTicket dt_detalleatencion pgTicketObs"/>
-                    </p:outputPanel>
-                </p:panelGrid>
-
-                <p:dataTable id="dt_detalleatencion" var="dd" value="#{listaAtencionMB.listDetalle}"
-                             emptyMessage="No hay detalles de tickets registrados" 
-                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaAtencionMB.listDetalle.size()>4}"  paginatorPosition="bottom">
-
-                    <p:column headerText="No." style="width: 5%;">
-                        #{rowId+1}
-                    </p:column>
-
-                    <p:column headerText="Material utilizado" width="20%" >
-                        <p:outputLabel value="#{dd.materialutilizado}"/>
-                    </p:column>
-
-                    <p:column headerText="Material utilizado" width="20%" >
-                        <p:outputLabel value="#{dd.cantidad}"/>
-                    </p:column>
-
-                    <p:column headerText="observación" width="25%" >
-                        <p:outputLabel value="#{dd.observacion}"/>
-                    </p:column>
-                </p:dataTable>
-
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                    <p:commandButton value="Guardar" action="#{listaAtencionMB.GuardarDetalleAtencion()}" icon="ui-icon-disk" process="@this"  
-                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas finalizar el ticket?');" update="@form" />
-                    <p:commandButton value="Cancelar" process="@this" action="#{listaAtencionMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    <p:commandButton value="Guardar" action="#{ingresoInsumosMB.saveInsumo()}" icon="ui-icon-disk" process="@this"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas finalizar el insumo?');" update="@form" />
+                    <p:commandButton value="Cancelar" process="@this" action="#{ingresoInsumosMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:outputPanel>
             </p:dialog>
         </h:form>

@@ -2,6 +2,7 @@ package tele.costa.api.ejb;
 
 import java.util.List;
 import javax.ejb.Local;
+import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Formapago;
@@ -56,5 +57,7 @@ public interface CatalogoBeanLocal {
     List<Municipio> listMunicipioByIdMunicipio(Integer idMunicipio);
     
     List<Municipio> listMunicipioBySanpabloAndSanRafael();
+    
+    List<Agencia> listAgencias();
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.CatalogoBeanLocal;
+import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Formapago;
@@ -245,6 +246,18 @@ public class CatalagoBean implements CatalogoBeanLocal {
     @Override
     public List<Municipio> listMunicipioBySanpabloAndSanRafael() {
         List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in (6,7) ", Municipio.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Agencia> listAgencias() {
+        List<Agencia> lst = em.createQuery("SELECT ag FROM Agencia ag WHERE ag.activo= true ", Agencia.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

@@ -31,7 +31,7 @@
                 <div  class="clock" style="margin:2em; overflow: hidden;">
                 </div>
                 <p:commandLink value="Cerrar Sesión" action="#{loginMB.logout()}" style="margin-right: 20px;" />
-                <p:commandLink value="Restaurar Sesión" action="#{sesionMB.renewSesionTimeOut('/menu/menu.xhtml')}" onstart="PF('timeoutDialog').hide();" />
+                <p:commandLink value="Restaurar Sesión" action="#{loginMB.renewSesionTimeOut('/menu/menu.xhtml')}" onstart="PF('timeoutDialog').hide();" />
             </div>
         </p:dialog>
 
