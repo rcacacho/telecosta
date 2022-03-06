@@ -223,4 +223,20 @@ public class BodegaBean implements BodegaBeanLocal {
         }
     }
 
+    @Override
+    public Insumos findInsumoById(Integer idinsumo) {
+        if (idinsumo == null) {
+            return null;
+        }
+
+        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.idinsumo =:idinsumo and pa.activo = true ", Insumos.class)
+                .setParameter("idinsumo", idinsumo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
+    }
+
 }

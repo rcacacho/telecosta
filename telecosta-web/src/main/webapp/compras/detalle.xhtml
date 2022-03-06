@@ -132,7 +132,7 @@
                         <p:outputLabel value="Monto:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        <p:outputLabel value=" Forma de pago:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Forma de pago:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
 
@@ -153,6 +153,69 @@
                 <p:row>
                     <p:column colspan="3">
                         <p:outputLabel value="#{detalleCompraMB.compra.descripcion}" styleClass="colorTitulo" style="font-weight: bold;" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="2. Información de Registro y Actualización" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid styleClass="no-border" style="width: 90%; margin-left: 4%;" >
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Fecha ingreso sistema:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Usuario ingreso al sistema:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Fecha última modificación:" styleClass="colorTitulo"/>
+                    </p:column>    
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleCompraMB.compra.fechacreacion}"  style="font-size: 16px!important;">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="#{detalleCompraMB.compra.usuariocreacion}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column style="width:40%">
+                        <p:outputLabel value="#{detalleCompraMB.compra.fechamodificacion}" style="font-size: 16px!important;">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Usuario modifico:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Fecha supresión sistema:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Nip supresión sistema:" styleClass="colorTitulo"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="#{detalleCompraMB.compra.usuariomodificacion}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="#{detalleCompraMB.compra.fechaeliminacion}" style="font-size: 16px!important;">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="#{detalleCompraMB.compra.usuarioeliminacion}" style="font-size: 16px!important;"/>
                     </p:column>
                 </p:row>
             </p:panelGrid>

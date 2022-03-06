@@ -66,8 +66,17 @@ public class Insumos implements Serializable {
     @Column(name = "stock")
     private Integer stock;
 
-    @Column(name = "cantidad")
-    private Integer cantidad;
+    @Column(name = "saldoinicial")
+    private Integer saldoinicial;
+
+    @Column(name = "entradas")
+    private Integer entradas;
+
+    @Column(name = "salidas")
+    private Integer salidas;
+
+    @Column(name = "existencia")
+    private Integer existencia;
 
     @Column(name = "precio")
     private Float precio;
@@ -83,11 +92,13 @@ public class Insumos implements Serializable {
     @Column(name = "nodocumento")
     private String nodocumento;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+
+    @Size(min = 1, max = 1000)
+    @Column(name = "observacion")
+    private String observacion;
 
     @Basic(optional = false)
     @NotNull
@@ -117,6 +128,10 @@ public class Insumos implements Serializable {
     @JoinColumn(name = "idagencia", referencedColumnName = "idagencia")
     @ManyToOne(fetch = FetchType.LAZY)
     private Agencia idagencia;
+
+    @JoinColumn(name = "idagenciaenvio", referencedColumnName = "idagencia")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Agencia idagenciaenvio;
 
     @JoinColumn(name = "idruta", referencedColumnName = "idruta")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -167,12 +182,36 @@ public class Insumos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Integer getSaldoinicial() {
+        return saldoinicial;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setSaldoinicial(Integer saldoinicial) {
+        this.saldoinicial = saldoinicial;
+    }
+
+    public Integer getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(Integer entradas) {
+        this.entradas = entradas;
+    }
+
+    public Integer getSalidas() {
+        return salidas;
+    }
+
+    public void setSalidas(Integer salidas) {
+        this.salidas = salidas;
+    }
+
+    public Integer getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(Integer existencia) {
+        this.existencia = existencia;
     }
 
     public Float getPrecio() {
@@ -285,6 +324,22 @@ public class Insumos implements Serializable {
 
     public void setTotal(Float total) {
         this.total = total;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public Agencia getIdagenciaenvio() {
+        return idagenciaenvio;
+    }
+
+    public void setIdagenciaenvio(Agencia idagenciaenvio) {
+        this.idagenciaenvio = idagenciaenvio;
     }
 
     @Override

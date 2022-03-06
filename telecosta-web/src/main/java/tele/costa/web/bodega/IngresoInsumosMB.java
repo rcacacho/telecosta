@@ -43,7 +43,10 @@ public class IngresoInsumosMB implements Serializable {
     private String descripcion;
     private Insumos insumoSelected;
     private Boolean verAgencia;
+    private Boolean verProveedor;
     private Integer vercampos;
+    private Integer saldoInicial;
+    private float precio;
 
     @PostConstruct
     void cargarDatos() {
@@ -60,6 +63,7 @@ public class IngresoInsumosMB implements Serializable {
     public void dialogRegistro() {
         codigo = null;
         descripcion = null;
+        idAgenciaSelected = null;
         RequestContext.getCurrentInstance().execute("PF('dlgAgregar').show()");
     }
 
@@ -83,6 +87,10 @@ public class IngresoInsumosMB implements Serializable {
         insumo.setCodigo(codigo);
         insumo.setDescripcion(descripcion);
         insumo.setIdagencia(idAgenciaSelected);
+        insumo.setSaldoinicial(saldoInicial);
+        insumo.setExistencia(saldoInicial);
+        insumo.setPrecio(precio);
+        insumo.setTotal(precio * saldoInicial);
         insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
 
         Insumos response = bodegaBeanLocal.saveInsumo(insumo);
@@ -157,11 +165,70 @@ public class IngresoInsumosMB implements Serializable {
 
     public void showCampoAgencia() {
         if (vercampos == 1) {
-            this.verCamposActa = true;
+            verAgencia = true;
         } else {
-            this.verCamposActa = false;
+            verAgencia = false;
         }
-        this.verBotonImprimir = false;
+
+        if (vercampos == 2) {
+            verProveedor = true;
+        } else {
+            verProveedor = false;
+        }
+    }
+
+    public void cerrarDialogIngreso() {
+        RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
+    }
+
+    public void updateInsumo() throws IOException {
+        if (insumoSelected.getEntradas() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
+            return;
+        }
+
+        if (insumoSelected.getPrecio() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un precio");
+            return;
+        }
+
+        if (insumoSelected.getNodocumento() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+            return;
+        }
+
+        if (insumoSelected.getProveedor() == null && insumoSelected.getIdagenciaenvio() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una agencia o Proveedor");
+            return;
+        }
+
+        if (insumoSelected.getFecha() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una fecha");
+            return;
+        }
+
+        if (insumoSelected.getObservacion() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+            return;
+        }
+
+        //insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getCantidad());
+
+        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
+        }
+
+        idAgenciaSelected = null;
+        codigo = null;
+        descripcion = null;
+        RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
+    }
+
+    public void detalle(Integer id) {
+        JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
     }
 
     /*Metodos getters y setters*/
@@ -243,6 +310,38 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setVerAgencia(Boolean verAgencia) {
         this.verAgencia = verAgencia;
+    }
+
+    public Integer getVercampos() {
+        return vercampos;
+    }
+
+    public void setVercampos(Integer vercampos) {
+        this.vercampos = vercampos;
+    }
+
+    public Boolean getVerProveedor() {
+        return verProveedor;
+    }
+
+    public void setVerProveedor(Boolean verProveedor) {
+        this.verProveedor = verProveedor;
+    }
+
+    public Integer getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(Integer saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
 }

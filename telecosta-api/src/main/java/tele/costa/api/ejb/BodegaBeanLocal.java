@@ -26,4 +26,6 @@ public interface BodegaBeanLocal {
 
     Insumos updateInsumo(Insumos insumo);
 
+    Insumos findInsumoById(Integer idinsumo);
+
 }
