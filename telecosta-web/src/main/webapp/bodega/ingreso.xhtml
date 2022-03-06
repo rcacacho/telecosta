@@ -56,7 +56,7 @@
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
-                                         update="@form" icon="ui-icon-refresh"
+                                         update="@form" icon="ui-icon-refresh" process="@this"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
 
                         <p:commandButton value="Agregar"  
@@ -90,7 +90,7 @@
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
-                        <p:outputLabel value="#{ins.cantidad}"/>
+                        <p:outputLabel value="#{ins.existencia}"/>
                     </p:column>
 
                     <p:column headerText="Precio unitario" width="15%" >
@@ -101,14 +101,22 @@
                         <p:outputLabel value="#{ins.total}"/>
                     </p:column>
 
-                    <p:column width="12%" exportable="false" >
+                    <p:column width="30%" exportable="false" >
                         <p:commandButton value="Ingresar" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-plus"
                                          action="#{ingresoInsumosMB.dialogAgregar(ins)}" update="@form"/>
-                    </p:column>
 
-                    <p:column width="12%" exportable="false" >
+                        <p:commandButton value="Salida" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
+                                         action="#{ingresoInsumosMB.dialogSalida(ins)}" update="dlgSalida"/>
+
+                        <p:commandButton value="Traslados" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-n"
+                                         action="#{ingresoInsumosMB.dialogAgregar(ins)}" update="@form"/>
+
                         <p:commandButton value="Detalle" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
@@ -139,11 +147,11 @@
                     <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
 
-                    <p:inputText id="cant1" value="#{ingresoInsumosMB.insumoSelected.cantidad}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="cant1" value="#{ingresoInsumosMB.saldoInicial}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
 
-                    <p:inputText id="prec1" value="#{ingresoInsumosMB.insumoSelected.precio}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="prec1" value="#{ingresoInsumosMB.precio}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
                 </p:panelGrid>
@@ -177,11 +185,11 @@
                     <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
 
-                    <p:inputText id="cant" value="#{ingresoInsumosMB.insumoSelected.cantidad}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="cant" value="#{ingresoInsumosMB.insumoSelected.entradas}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
 
-                    <p:inputText id="prec" value="#{ingresoInsumosMB.insumoSelected.precio}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="prec" value="#{ingresoInsumosMB.precioActualizado}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
 
@@ -196,26 +204,12 @@
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
-                    <p:selectOneRadio   value="#{ingresoInsumosMB.vercampos}"  converter="entityConverter">            
-                        <f:selectItem itemLabel="Bodega" itemValue="1" />
-                        <f:selectItem itemLabel="Proveedor" itemValue="2" />
-                        <p:ajax listener="#{ingresoInsumosMB.showCampoAgencia()}" update="pgEnvio" />
-                    </p:selectOneRadio>
+                    <p:outputLabel  value="Proveedor:" styleClass="colorTitulo" />
                     <p:outputLabel  value="" styleClass="colorTitulo" />
 
-                    <p:panelGrid id="pgEnvio"  columns="2" styleClass="no-border" style="width: 80%;"  >
-                        <p:selectOneMenu id="agenciadi1" value="#{ingresoInsumosMB.insumoSelected.idagenciaenvio}" style="width: 150px;" 
-                                         converter="entityConverter" filter="true" filterMatchMode="contains" rendered="#{ingresoInsumosMB.verAgencia}">
-                            <p:ajax event="itemSelect"/>
-                            <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen}"/>
-                        </p:selectOneMenu>
-                        <p:inputText id="cod2" value="#{ingresoInsumosMB.insumoSelected.proveedor}" size="25" style="font-size: 16px!important;"
-                                     rendered="#{ingresoInsumosMB.verProveedor}">
-                            <p:ajax event="blur" process="@this"/>
-                        </p:inputText>    
-                    </p:panelGrid>
-
+                    <p:inputText id="cod2" value="#{ingresoInsumosMB.insumoSelected.proveedor}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>    
                 </p:panelGrid>
 
                 <p:panelGrid id="pgObs2"  columns="1" styleClass="no-border" style="width: 80%;"  >
@@ -233,6 +227,63 @@
                     <p:commandButton value="Cancelar" process="@this" action="#{ingresoInsumosMB.cerrarDialogIngreso()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:outputPanel>
             </p:dialog>
+
+            <p:dialog header="Salida insumo" widgetVar="dlgSalida" id="dlgSalida" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="700px">
+
+                <p:panelGrid id="pgSalida"  columns="2" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Código:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
+
+                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.codigo}" style="font-size: 16px!important;" />
+                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.descripcion}" style="font-size: 16px!important;" />
+
+                    <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
+
+                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.existencia}" style="font-size: 16px!important;" />
+                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.precio}" style="font-size: 16px!important;" />
+
+                    <p:outputLabel  value="Cantidad a enviar:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Ruta:" styleClass="colorTitulo" />
+
+                    <p:inputText value="#{ingresoInsumosMB.insumoSelected.nodocumento}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+                    <p:selectOneMenu id="ruta" value="#{ingresoInsumosMB.idAgencia}" style="width: 150px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Responsable:" styleClass="colorTitulo" />
+
+                    <p:inputText value="#{ingresoInsumosMB.insumoSelected.proveedor}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                    <p:inputText value="#{ingresoInsumosMB.insumoSelected.proveedor}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                </p:panelGrid>
+
+                <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
+                    <p:inputTextarea cols="120" value="#{ingresoInsumosMB.insumoSelected.observacion}" counter="display2" maxlength="500" 
+                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputTextarea>
+                    <h:outputText id="display3" style="margin-left: 480px;" />
+                </p:panelGrid>
+
+                <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                    <p:commandButton value="Guardar" action="#{ingresoInsumosMB.updateInsumo()}" icon="ui-icon-disk" process="@this"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas agregar cantidad?');" update="pgAdd" />
+                    <p:commandButton value="Cancelar" process="@this" action="#{ingresoInsumosMB.cerrarDialogIngreso()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                </p:outputPanel>
+            </p:dialog>
+
         </h:form>
     </ui:define>
 </ui:composition>

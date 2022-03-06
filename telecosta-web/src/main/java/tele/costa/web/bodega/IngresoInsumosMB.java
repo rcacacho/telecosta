@@ -42,11 +42,13 @@ public class IngresoInsumosMB implements Serializable {
     private String codigo;
     private String descripcion;
     private Insumos insumoSelected;
-    private Boolean verAgencia;
-    private Boolean verProveedor;
-    private Integer vercampos;
     private Integer saldoInicial;
     private float precio;
+    private float precioActualizado;
+
+    public IngresoInsumosMB() {
+        idAgencia = null;
+    }
 
     @PostConstruct
     void cargarDatos() {
@@ -163,20 +165,6 @@ public class IngresoInsumosMB implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').show()");
     }
 
-    public void showCampoAgencia() {
-        if (vercampos == 1) {
-            verAgencia = true;
-        } else {
-            verAgencia = false;
-        }
-
-        if (vercampos == 2) {
-            verProveedor = true;
-        } else {
-            verProveedor = false;
-        }
-    }
-
     public void cerrarDialogIngreso() {
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
     }
@@ -212,8 +200,9 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
-        //insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getCantidad());
-
+        insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
+        insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
+        insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getExistencia());
         Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
@@ -224,11 +213,17 @@ public class IngresoInsumosMB implements Serializable {
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
+       insumoSelected = new Insumos();
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
     }
 
     public void detalle(Integer id) {
         JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
+    }
+    
+     public void dialogSalida(Insumos insumo) {
+        insumoSelected = insumo;
+        RequestContext.getCurrentInstance().execute("PF('dlgSalida').show()");
     }
 
     /*Metodos getters y setters*/
@@ -304,30 +299,6 @@ public class IngresoInsumosMB implements Serializable {
         this.insumoSelected = insumoSelected;
     }
 
-    public Boolean getVerAgencia() {
-        return verAgencia;
-    }
-
-    public void setVerAgencia(Boolean verAgencia) {
-        this.verAgencia = verAgencia;
-    }
-
-    public Integer getVercampos() {
-        return vercampos;
-    }
-
-    public void setVercampos(Integer vercampos) {
-        this.vercampos = vercampos;
-    }
-
-    public Boolean getVerProveedor() {
-        return verProveedor;
-    }
-
-    public void setVerProveedor(Boolean verProveedor) {
-        this.verProveedor = verProveedor;
-    }
-
     public Integer getSaldoInicial() {
         return saldoInicial;
     }
@@ -342,6 +313,14 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+    public float getPrecioActualizado() {
+        return precioActualizado;
+    }
+
+    public void setPrecioActualizado(float precioActualizado) {
+        this.precioActualizado = precioActualizado;
     }
 
 }
