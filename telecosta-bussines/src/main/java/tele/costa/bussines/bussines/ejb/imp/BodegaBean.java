@@ -239,4 +239,9 @@ public class BodegaBean implements BodegaBeanLocal {
         return lst.get(0);
     }
 
+    @Override
+    public Insumos findInsumoByIdInsumoAndDescrcipcion(Integer idinsumo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

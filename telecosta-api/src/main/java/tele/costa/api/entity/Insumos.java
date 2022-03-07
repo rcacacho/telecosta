@@ -95,6 +95,10 @@ public class Insumos implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
 
+    @Size(max = 500)
+    @Column(name = "responsable")
+    private String responsable;
+
     @Size(min = 1, max = 1000)
     @Column(name = "observacion")
     private String observacion;
@@ -339,6 +343,14 @@ public class Insumos implements Serializable {
 
     public void setIdagenciaenvio(Agencia idagenciaenvio) {
         this.idagenciaenvio = idagenciaenvio;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
     }
 
     @Override
