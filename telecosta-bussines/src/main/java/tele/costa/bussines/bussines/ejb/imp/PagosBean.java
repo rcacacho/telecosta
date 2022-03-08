@@ -107,7 +107,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechacreacion >= :fechainicio and pa.fechacreacion <= :fechafin and pa.idtipopago.idtipopago = 1 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechacreacion >= :fechainicio and pa.fechacreacion <= :fechafin and pa.idtipopago.idtipopago = 1 and pa.activo = true", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .getResultList();
@@ -164,7 +164,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes like :mes", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes like :mes and pa.activo = true", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .setParameter("mes", mes)
@@ -182,7 +182,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -198,7 +198,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio  ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.activo = true ", Pago.class)
                 .setParameter("anio", anio)
                 .getResultList();
 
@@ -214,7 +214,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.idtipopago.idtipopago = 2 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.activo = true ", Pago.class)
                 .setParameter("mes", '%' + mes + '%')
                 .getResultList();
 
@@ -230,7 +230,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.idtipopago.idtipopago = 1 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.idtipopago.idtipopago = 1 and pa.activo = true ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -246,7 +246,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.idtipopago.idtipopago = 1 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.idtipopago.idtipopago = 1 and pa.activo = true ", Pago.class)
                 .setParameter("anio", anio)
                 .getResultList();
 
@@ -262,7 +262,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.idtipopago.idtipopago = 1 ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.idtipopago.idtipopago = 1 and pa.activo = true", Pago.class)
                 .setParameter("mes", mes)
                 .getResultList();
 
@@ -278,7 +278,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idpago =:idPago ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idpago =:idPago and pa.activo = true", Pago.class)
                 .setParameter("idPago", idPago)
                 .getResultList();
 
@@ -325,7 +325,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Detallepago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idpago =:idpago ", Detallepago.class)
+        List<Detallepago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idpago =:idpago and pa.activo = true ", Detallepago.class)
                 .setParameter("idpago", idpago)
                 .getResultList();
 
@@ -359,7 +359,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idmunicicpio  order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idmunicicpio and pa.activo = true order by pa.fechapago desc", Pago.class)
                 .setParameter("idmunicicpio", idmunicicpio)
                 .getResultList();
 
@@ -371,7 +371,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public List<Pago> listPagosByInIdMunicipios() {
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (6,7) order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (6,7) and pa.activo = true order by pa.fechapago desc", Pago.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -386,7 +386,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente order by pa.fechapago desc ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true order by pa.fechapago desc ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -429,7 +429,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.activo = true ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .getResultList();
@@ -464,7 +464,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.usuariocreacion =:usuariocreacion ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.usuariocreacion =:usuariocreacion and pa.activo = true ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .setParameter("usuariocreacion", usuariocreacion)
@@ -492,7 +492,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public List<Pago> listPagosByInIdMunicipiosSanRafaelSanPabloRodeo() {
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (3,6,7) order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in (3,6,7) and pa.activo = true order by pa.fechapago desc", Pago.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -525,7 +525,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.activo = true ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .setParameter("idMunicipio", idMunicipio)
@@ -604,7 +604,7 @@ public class PagosBean implements PagosBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechainicio);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio  ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio  and pa.activo = true ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .getResultList();
 
@@ -630,7 +630,7 @@ public class PagosBean implements PagosBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaFin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago <= :fechaFin ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago <= :fechaFin and pa.activo = true", Pago.class)
                 .setParameter("fechaFin", fechaFin)
                 .getResultList();
 

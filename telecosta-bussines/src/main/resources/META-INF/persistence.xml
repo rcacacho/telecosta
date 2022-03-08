@@ -27,6 +27,7 @@
         <class>tele.costa.api.dto.ReporteAtencionDto</class>
         <class>tele.costa.api.entity.Tipoatencion</class>
         <class>tele.costa.api.entity.Cajaagencia</class>
+        <class>tele.costa.api.entity.Tipocarga</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>

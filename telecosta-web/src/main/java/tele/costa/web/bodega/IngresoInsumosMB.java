@@ -15,6 +15,8 @@ import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
+import tele.costa.api.entity.Tipocarga;
+import tele.costa.api.enums.TipoCarga;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -201,6 +203,8 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
+        Tipocarga findTipo = catalogoBean.findTipoCarga(TipoCarga.ENVIO.getId());
+        insumoSelected.setIdtipocarga(findTipo);
         insumoSelected.setEntradas(saldoIngreso);
         insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
         insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
@@ -319,6 +323,14 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setPrecioActualizado(float precioActualizado) {
         this.precioActualizado = precioActualizado;
+    }
+
+    public Integer getSaldoIngreso() {
+        return saldoIngreso;
+    }
+
+    public void setSaldoIngreso(Integer saldoIngreso) {
+        this.saldoIngreso = saldoIngreso;
     }
 
 }

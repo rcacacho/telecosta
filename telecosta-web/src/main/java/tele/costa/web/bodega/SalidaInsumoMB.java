@@ -16,6 +16,8 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Ruta;
+import tele.costa.api.entity.Tipocarga;
+import tele.costa.api.enums.TipoCarga;
 import telecosta.web.utils.JsfUtil;
 
 /**
@@ -89,6 +91,8 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
+        Tipocarga findTipo = catalogoBean.findTipoCarga(TipoCarga.SALIDA.getId());
+        insumoSelectedSalida.setIdtipocarga(findTipo);
         insumoSelectedSalida.setSalidas(saldoSalida);
         insumoSelectedSalida.setExistencia(insumoSelectedSalida.getExistencia() - insumoSelectedSalida.getSalidas());
         insumoSelectedSalida.setTotal(insumoSelectedSalida.getPrecio() * insumoSelectedSalida.getExistencia());

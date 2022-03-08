@@ -144,6 +144,10 @@ public class Insumos implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Sectorpago idsectorpago;
 
+    @JoinColumn(name = "idtipocarga", referencedColumnName = "idtipocarga")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tipocarga idtipocarga;
+
     public Insumos() {
     }
 
@@ -351,6 +355,14 @@ public class Insumos implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public Tipocarga getIdtipocarga() {
+        return idtipocarga;
+    }
+
+    public void setIdtipocarga(Tipocarga idtipocarga) {
+        this.idtipocarga = idtipocarga;
     }
 
     @Override
