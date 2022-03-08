@@ -240,8 +240,20 @@ public class BodegaBean implements BodegaBeanLocal {
     }
 
     @Override
-    public Insumos findInsumoByIdInsumoAndDescrcipcion(Integer idinsumo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo) {
+        if (idagencia == null) {
+            return null;
+        }
+
+        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.idagencia.idagencia =:idagencia and pa.codigo =:codigo and pa.activo = true ", Insumos.class)
+                .setParameter("idagencia", idagencia)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }

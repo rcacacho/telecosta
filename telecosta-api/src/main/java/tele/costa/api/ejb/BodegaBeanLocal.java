@@ -28,6 +28,6 @@ public interface BodegaBeanLocal {
 
     Insumos findInsumoById(Integer idinsumo);
 
-    Insumos findInsumoByIdInsumoAndDescrcipcion(Integer idinsumo);
+    Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo);
 
 }

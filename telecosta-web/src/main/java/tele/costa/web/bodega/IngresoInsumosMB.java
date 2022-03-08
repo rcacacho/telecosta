@@ -15,7 +15,6 @@ import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
-import tele.costa.api.entity.Ruta;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -46,12 +45,7 @@ public class IngresoInsumosMB implements Serializable {
     private Integer saldoInicial;
     private float precio;
     private float precioActualizado;
-    private Insumos insumoSelectedSalida;
-    private List<Ruta> listRuta;
     private Integer saldoIngreso;
-    private Integer saldoSalida;
-    private Integer saldoTraslado;
-    private Insumos insumoSelectedTraslado;
 
     public IngresoInsumosMB() {
         idAgencia = null;
@@ -60,7 +54,6 @@ public class IngresoInsumosMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listAgencia = catalogoBean.listAgencias();
-        listRuta = catalogoBean.listRuta();
     }
 
     public void limpiarCampos() {
@@ -178,7 +171,7 @@ public class IngresoInsumosMB implements Serializable {
     }
 
     public void updateInsumo() throws IOException {
-        if (insumoSelected.getEntradas() == null) {
+        if (saldoIngreso == null) {
             JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
             return;
         }
@@ -222,130 +215,13 @@ public class IngresoInsumosMB implements Serializable {
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
-        insumoSelected = new Insumos();
+        insumoSelected = null;
+        saldoIngreso = null;
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
     }
 
     public void detalle(Integer id) {
         JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
-    }
-
-    public void dialogSalida(Insumos insumo) {
-        insumoSelectedSalida = insumo;
-        RequestContext.getCurrentInstance().execute("PF('dlgSalida').show()");
-    }
-
-    public void cerrarDialogSalida() {
-        RequestContext.getCurrentInstance().execute("PF('dlgSalida').hide()");
-    }
-
-    public void salidaInsumo() throws IOException {
-        if (insumoSelectedSalida.getSalidas() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
-            return;
-        }
-
-        if (insumoSelectedSalida.getIdruta() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
-            return;
-        }
-
-        if (insumoSelectedSalida.getNodocumento() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-            return;
-        }
-
-        if (insumoSelectedSalida.getResponsable() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
-            return;
-        }
-
-        if (insumoSelectedSalida.getObservacion() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-            return;
-        }
-
-        if (insumoSelectedSalida.getSalidas() > insumoSelectedSalida.getExistencia()) {
-            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
-            return;
-        }
-
-        insumoSelectedSalida.setSalidas(saldoSalida);
-        insumoSelectedSalida.setExistencia(insumoSelectedSalida.getExistencia() - insumoSelectedSalida.getSalidas());
-        insumoSelectedSalida.setTotal(insumoSelectedSalida.getPrecio() * insumoSelectedSalida.getExistencia());
-        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelectedSalida);
-        if (response != null) {
-            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
-        } else {
-            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
-        }
-
-        idAgenciaSelected = null;
-        codigo = null;
-        descripcion = null;
-        insumoSelectedSalida = new Insumos();
-        RequestContext.getCurrentInstance().execute("PF('dlgSalida').hide()");
-    }
-
-    public void dialogTraslado(Insumos insumo) {
-        insumoSelectedTraslado = insumo;
-        RequestContext.getCurrentInstance().execute("PF('dlgTraslado').show()");
-    }
-
-    public void cerrarDialogTraslado() {
-        RequestContext.getCurrentInstance().execute("PF('dlgTraslado').hide()");
-    }
-    
-    public void trasladoInsumo() throws IOException {
-        if (insumoSelectedTraslado.getSalidas() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getIdruta() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getNodocumento() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getResponsable() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getObservacion() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getSalidas() > insumoSelectedTraslado.getExistencia()) {
-            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
-            return;
-        }
-
-        insumoSelectedTraslado.setSalidas(saldoTraslado);
-        insumoSelectedTraslado.setExistencia(insumoSelectedTraslado.getExistencia() - insumoSelectedTraslado.getSalidas());
-        insumoSelectedTraslado.setTotal(insumoSelectedTraslado.getPrecio() * insumoSelectedTraslado.getExistencia());
-        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelectedTraslado);
-        
-        Insumos insumoSuma = bodegaBeanLocal.findInsumoById(idAgencia);
-        
-        
-        if (response != null) {
-            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
-        } else {
-            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
-        }
-
-        idAgenciaSelected = null;
-        codigo = null;
-        descripcion = null;
-        insumoSelectedSalida = new Insumos();
-        RequestContext.getCurrentInstance().execute("PF('dlgSalida').hide()");
     }
 
     /*Metodos getters y setters*/
@@ -443,54 +319,6 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setPrecioActualizado(float precioActualizado) {
         this.precioActualizado = precioActualizado;
-    }
-
-    public Insumos getInsumoSelectedSalida() {
-        return insumoSelectedSalida;
-    }
-
-    public void setInsumoSelectedSalida(Insumos insumoSelectedSalida) {
-        this.insumoSelectedSalida = insumoSelectedSalida;
-    }
-
-    public List<Ruta> getListRuta() {
-        return listRuta;
-    }
-
-    public void setListRuta(List<Ruta> listRuta) {
-        this.listRuta = listRuta;
-    }
-
-    public Integer getSaldoIngreso() {
-        return saldoIngreso;
-    }
-
-    public void setSaldoIngreso(Integer saldoIngreso) {
-        this.saldoIngreso = saldoIngreso;
-    }
-
-    public Integer getSaldoSalida() {
-        return saldoSalida;
-    }
-
-    public void setSaldoSalida(Integer saldoSalida) {
-        this.saldoSalida = saldoSalida;
-    }
-
-    public Integer getSaldoTraslado() {
-        return saldoTraslado;
-    }
-
-    public void setSaldoTraslado(Integer saldoTraslado) {
-        this.saldoTraslado = saldoTraslado;
-    }
-
-    public Insumos getInsumoSelectedTraslado() {
-        return insumoSelectedTraslado;
-    }
-
-    public void setInsumoSelectedTraslado(Insumos insumoSelectedTraslado) {
-        this.insumoSelectedTraslado = insumoSelectedTraslado;
     }
 
 }
