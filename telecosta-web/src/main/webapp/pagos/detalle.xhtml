@@ -120,7 +120,7 @@
             <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
 
             <p:dataTable id="dt_pago" var="col" value="#{detallePagoMB.listDetalle}"
-                         emptyMessage="No hay detalles registrados" 
+                         emptyMessage="No hay detalles registrados" editable="true"
                          styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
                          rows="10" paginator="#{detallePagoMB.listDetalle.size()>5}"  paginatorPosition="bottom">
 
@@ -133,19 +133,50 @@
                 </p:column>
 
                 <p:column headerText="No. Factura" width="20%" >
-                    <p:outputLabel value="#{col.nofactura}"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{col.nofactura}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{col.nofactura}" size="15" >
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
                 <p:column headerText="Serie" width="20%" >
-                    <p:outputLabel value="#{col.serie}"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{col.serie}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{col.serie}" size="15" >
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
                 <p:column headerText="Monto Pagado" width="20%" >
-                    <p:outputLabel value="#{col.montopagado}"/>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{col.montopagado}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{col.montopagado}" size="15" >
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
                 <p:column headerText="Monto Cobrado" width="20%" >
                     <p:outputLabel value="#{col.montocobrado}"/>
+                </p:column>
+
+                <p:column headerText="Editar" width="8%">
+                    <p:rowEditor />
                 </p:column>
             </p:dataTable>
 
