@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.event.RowEditEvent;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
@@ -48,6 +49,19 @@ public class DetallePagoMB implements Serializable {
         } else {
             return false;
         }
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        Object value = event.getObject();
+        Detallepago tipo = (Detallepago) value;
+
+        if (tipo != null) {
+            Detallepago tt = pagosBean.updateDetallePago(tipo);
+            JsfUtil.addSuccessMessage("Se actualizo el pago exitosamente");
+        } else {
+            JsfUtil.addErrorMessage("Sucedio un error al actualizar el registro");
+        }
+        listDetalle = pagosBean.listDetallePago(idPago);
     }
 
     /*Metodos getters y setters*/

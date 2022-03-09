@@ -71,7 +71,9 @@ public interface PagosBeanLocal {
     List<Pago> listPagoByAnioAndMes(Integer anio, String mes);
 
     List<Pago> listPagosByFechaInicio(Date fechainicio);
-    
+
     List<Pago> listPagosByFechaFin(Date fechaFin);
+
+    Detallepago updateDetallePago(Detallepago detalle);
 
 }

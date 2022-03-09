@@ -56,7 +56,7 @@
                                          id="btn_buscar"  icon="ui-icon-search"
                                          update="frm_content" 
                                          onstart="start();" oncomplete="stop();"/>
-                        
+
                         <p:commandButton value="Limpiar" 
                                          action="#{listaClienteMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
@@ -70,9 +70,11 @@
                 <br/>
 
                 <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" 
+                             emptyMessage="No hay clientes registrados" editable="true"
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="15" paginator="#{listaClienteMB.listCliente.size()>15}"  paginatorPosition="bottom">
+                    
+                        <p:ajax event="rowEdit" listener="#{listaClienteMB.onRowEdit}" update="dt_cliente" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -98,6 +100,23 @@
                         <p:outputLabel value="#{col.idmunicipio.municipio}"/>
                     </p:column>
 
+                    <p:column headerText="Tipo Cliente" width="20%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.tipocliente}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="tipoCl" value="#{col.tipocliente}" style="width:50px;" 
+                                                 filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                    <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+
+                    </p:column>
+
                     <p:column headerText="Fecha Inicio Servicio" width="22%" >
                         <p:outputLabel value="#{col.fechainicioservicio}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -110,7 +129,11 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column width="19%" exportable="false" >
+                    <p:column width="24%" exportable="false" >
+                        <p:column headerText="Editar" width="8%">
+                            <p:rowEditor />
+                        </p:column>
+
                         <p:commandButton value="Suspender" 
                                          style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
@@ -125,7 +148,7 @@
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
                                          action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
-                        
+
                         <p:commandButton value="Detalle" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"

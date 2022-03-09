@@ -640,4 +640,22 @@ public class PagosBean implements PagosBeanLocal {
         return lst;
     }
 
+    @Override
+    public Detallepago updateDetallePago(Detallepago detalle) {
+        try {
+            em.merge(detalle);
+            em.flush();
+            return (detalle);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
 }

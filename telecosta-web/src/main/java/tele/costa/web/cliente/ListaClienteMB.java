@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
@@ -189,9 +190,22 @@ public class ListaClienteMB implements Serializable {
             JsfUtil.addErrorMessage("Ocurrio un al inactivar al cliente");
         }
     }
-    
+
     public void pagoCliente(Integer id) {
         JsfUtil.redirectTo("/pagos/registroCliente.xhtml?idCliente=" + id);
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        Object value = event.getObject();
+        Cliente tipo = (Cliente) value;
+
+        if (tipo != null) {
+            Cliente tt = clienteBean.updateCliente(tipo);
+            JsfUtil.addSuccessMessage("Se actualizo el cliente exitosamente");
+            cargarDatos();
+        } else {
+            JsfUtil.addErrorMessage("Sucedio un error al actualizar el registro");
+        }
     }
 
     /*Metodos getters y setters*/

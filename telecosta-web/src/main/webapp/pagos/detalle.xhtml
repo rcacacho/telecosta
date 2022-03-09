@@ -124,6 +124,8 @@
                          styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
                          rows="10" paginator="#{detallePagoMB.listDetalle.size()>5}"  paginatorPosition="bottom">
 
+                <p:ajax event="rowEdit" listener="#{detallePagoMB.onRowEdit}" update="dt_pago" />
+
                 <p:column headerText="No." style="width: 5%;">
                     #{rowId+1}
                 </p:column>
@@ -132,7 +134,7 @@
                     <p:outputLabel value="#{col.idformapago.forma}"/>
                 </p:column>
 
-                <p:column headerText="No. Factura" width="20%" >
+                <p:column id="no" headerText="No. Factura" width="20%" >
                     <p:cellEditor>
                         <f:facet name="output">
                             <p:outputLabel value="#{col.nofactura}"/>
