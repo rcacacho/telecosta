@@ -48,47 +48,44 @@ public class Insumos implements Serializable {
     @Basic(optional = false)
     @Column(name = "idinsumo")
     private Integer idinsumo;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "codigo")
     private String codigo;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "descripcion")
     private String descripcion;
-    
-    @Column(name = "saldoinicial")
-    private Integer saldoinicial;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idinsumo", fetch = FetchType.LAZY)
     private List<Inventario> inventarioList;
 
@@ -130,14 +127,6 @@ public class Insumos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Integer getSaldoinicial() {
-        return saldoinicial;
-    }
-
-    public void setSaldoinicial(Integer saldoinicial) {
-        this.saldoinicial = saldoinicial;
     }
 
     public String getUsuariocreacion() {
@@ -213,5 +202,5 @@ public class Insumos implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Insumos[ idinsumo=" + idinsumo + " ]";
     }
-    
+
 }

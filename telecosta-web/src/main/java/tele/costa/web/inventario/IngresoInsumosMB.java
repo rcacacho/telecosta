@@ -90,7 +90,7 @@ public class IngresoInsumosMB implements Serializable {
         insumo.setCodigo(codigo);
         insumo.setDescripcion(descripcion);
         //insumo.setIdagencia(idAgenciaSelected);
-        insumo.setSaldoinicial(saldoInicial);
+        //insumo.setSaldoinicial(saldoInicial);
         //insumo.setExistencia(saldoInicial);
         //insumo.setPrecio(precio);
         //insumo.setTotal(precio * saldoInicial);
