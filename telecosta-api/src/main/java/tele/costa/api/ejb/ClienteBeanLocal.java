@@ -41,4 +41,8 @@ public interface ClienteBeanLocal {
 
     List<Cliente> ListClientesCobro();
 
+    List<Cliente> ListClientesByTipoCliente(String tipocliente);
+
+    List<Cliente> ListClientesByIdMunucipioAndTipo(Integer idmunicipio, String tipocliente);
+
 }

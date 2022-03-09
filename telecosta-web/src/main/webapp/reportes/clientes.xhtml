@@ -47,6 +47,68 @@
                                         <p:fileDownload value="#{reporteClienteMB.imprimirExcelCliente()}"/>
                                     </p:commandButton> 
                                 </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">Reporte de tipo de cliente</h4>
+                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
+                                                     filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                        <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfTipoCliente()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelTipoCliente()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">Reporte de Clientes por municipio</h4>
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun" value="#{reporteClienteMB.idmunicipio}" style="width: 50%" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                     required="true" requiredMessage="Debes selecciona un municipio" >
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
+                                                     filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                        <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reportePagoMB.generarPdfPagoUsuario()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reportePagoMB.imprimirExcelPagosUsuario()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
                             </div>
                         </td>
                     </tr>
