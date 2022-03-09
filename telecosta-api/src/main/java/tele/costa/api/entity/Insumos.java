@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Insumos.findByIdinsumo", query = "SELECT i FROM Insumos i WHERE i.idinsumo = :idinsumo"),
     @NamedQuery(name = "Insumos.findByCodigo", query = "SELECT i FROM Insumos i WHERE i.codigo = :codigo"),
     @NamedQuery(name = "Insumos.findByDescripcion", query = "SELECT i FROM Insumos i WHERE i.descripcion = :descripcion"),
-    @NamedQuery(name = "Insumos.findBySaldoinicial", query = "SELECT i FROM Insumos i WHERE i.saldoinicial = :saldoinicial"),
     @NamedQuery(name = "Insumos.findByUsuariocreacion", query = "SELECT i FROM Insumos i WHERE i.usuariocreacion = :usuariocreacion"),
     @NamedQuery(name = "Insumos.findByFechacreacion", query = "SELECT i FROM Insumos i WHERE i.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Insumos.findByUsuariomodificacion", query = "SELECT i FROM Insumos i WHERE i.usuariomodificacion = :usuariomodificacion"),
