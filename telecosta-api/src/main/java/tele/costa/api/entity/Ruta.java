@@ -87,7 +87,7 @@ public class Ruta implements Serializable {
     private List<Atencion> atencionList;
 
     @OneToMany(mappedBy = "idruta", fetch = FetchType.LAZY)
-    private List<Insumos> insumosList;
+    private List<Inventario> inventarioList;
 
     public Ruta() {
     }
@@ -203,12 +203,12 @@ public class Ruta implements Serializable {
     }
 
     @XmlTransient
-    public List<Insumos> getInsumosList() {
-        return insumosList;
+    public List<Inventario> getInventarioList() {
+        return inventarioList;
     }
 
-    public void setInsumosList(List<Insumos> insumosList) {
-        this.insumosList = insumosList;
+    public void setInventarioList(List<Inventario> inventarioList) {
+        this.inventarioList = inventarioList;
     }
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,42 +39,44 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Agencia.findByActivo", query = "SELECT a FROM Agencia a WHERE a.activo = :activo")})
 public class Agencia implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idagencia", fetch = FetchType.LAZY)
+    private List<Inventario> inventarioList;
+    @OneToMany(mappedBy = "idagenciaenvio", fetch = FetchType.LAZY)
+    private List<Inventario> inventarioList1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idagencia")
     private Integer idagencia;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "agencia")
     private String agencia;
-    
+
     @Size(max = 500)
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
-    @OneToMany(mappedBy = "idagencia", fetch = FetchType.LAZY)
-    private List<Insumos> insumosList;
 
     public Agencia() {
     }
@@ -138,15 +141,6 @@ public class Agencia implements Serializable {
         this.activo = activo;
     }
 
-    @XmlTransient
-    public List<Insumos> getInsumosList() {
-        return insumosList;
-    }
-
-    public void setInsumosList(List<Insumos> insumosList) {
-        this.insumosList = insumosList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -171,5 +165,23 @@ public class Agencia implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Agencia[ idagencia=" + idagencia + " ]";
     }
-    
+
+    @XmlTransient
+    public List<Inventario> getInventarioList() {
+        return inventarioList;
+    }
+
+    public void setInventarioList(List<Inventario> inventarioList) {
+        this.inventarioList = inventarioList;
+    }
+
+    @XmlTransient
+    public List<Inventario> getInventarioList1() {
+        return inventarioList1;
+    }
+
+    public void setInventarioList1(List<Inventario> inventarioList1) {
+        this.inventarioList1 = inventarioList1;
+    }
+
 }

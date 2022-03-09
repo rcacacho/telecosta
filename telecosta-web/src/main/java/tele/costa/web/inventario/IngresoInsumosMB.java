@@ -1,4 +1,4 @@
-package tele.costa.web.bodega;
+package tele.costa.web.inventario;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,14 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
-import tele.costa.api.entity.Tipocarga;
-import tele.costa.api.enums.TipoCarga;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
+import tele.costa.api.ejb.InsumoBeanLocal;
 
 /**
  *
@@ -33,7 +31,7 @@ public class IngresoInsumosMB implements Serializable {
     @EJB
     private CatalogoBeanLocal catalogoBean;
     @EJB
-    private BodegaBeanLocal bodegaBeanLocal;
+    private InsumoBeanLocal bodegaBeanLocal;
 
     private Integer idAgencia;
     private Agencia idAgenciaSelected;
@@ -91,11 +89,11 @@ public class IngresoInsumosMB implements Serializable {
         Insumos insumo = new Insumos();
         insumo.setCodigo(codigo);
         insumo.setDescripcion(descripcion);
-        insumo.setIdagencia(idAgenciaSelected);
+        //insumo.setIdagencia(idAgenciaSelected);
         insumo.setSaldoinicial(saldoInicial);
-        insumo.setExistencia(saldoInicial);
-        insumo.setPrecio(precio);
-        insumo.setTotal(precio * saldoInicial);
+        //insumo.setExistencia(saldoInicial);
+        //insumo.setPrecio(precio);
+        //insumo.setTotal(precio * saldoInicial);
         insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
 
         Insumos response = bodegaBeanLocal.saveInsumo(insumo);
@@ -178,37 +176,35 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
-        if (insumoSelected.getPrecio() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un precio");
-            return;
-        }
-
-        if (insumoSelected.getNodocumento() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-            return;
-        }
-
-        if (insumoSelected.getProveedor() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una agencia o Proveedor");
-            return;
-        }
-
-        if (insumoSelected.getFecha() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una fecha");
-            return;
-        }
-
-        if (insumoSelected.getObservacion() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-            return;
-        }
-
-        Tipocarga findTipo = catalogoBean.findTipoCarga(TipoCarga.ENVIO.getId());
-        insumoSelected.setIdtipocarga(findTipo);
-        insumoSelected.setEntradas(saldoIngreso);
-        insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
-        insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
-        insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getExistencia());
+//        if (insumoSelected.getPrecio() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un precio");
+//            return;
+//        }
+//
+//        if (insumoSelected.getNodocumento() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+//            return;
+//        }
+//
+//        if (insumoSelected.getProveedor() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una agencia o Proveedor");
+//            return;
+//        }
+//
+//        if (insumoSelected.getFecha() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una fecha");
+//            return;
+//        }
+//
+//        if (insumoSelected.getObservacion() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+//            return;
+//        }
+//
+//        insumoSelected.setEntradas(saldoIngreso);
+        //insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
+        //insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
+        //insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getExistencia());
         Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");

@@ -1,4 +1,4 @@
-package tele.costa.web.bodega;
+package tele.costa.web.inventario;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,12 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
+import tele.costa.api.ejb.InsumoBeanLocal;
 
 /**
  *
@@ -31,7 +31,7 @@ public class TrasladoInsumoMB implements Serializable {
     @EJB
     private CatalogoBeanLocal catalogoBean;
     @EJB
-    private BodegaBeanLocal bodegaBeanLocal;
+    private InsumoBeanLocal bodegaBeanLocal;
 
     private Integer idAgencia;
     private Agencia idAgenciaSelected;
@@ -104,60 +104,60 @@ public class TrasladoInsumoMB implements Serializable {
     }
 
     public void trasladoInsumo() throws IOException {
-        if (insumoSelectedTraslado.getSalidas() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
-            return;
-        }
+//        if (insumoSelectedTraslado.getSalidas() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
+//            return;
+//        }
+//
+//        if (insumoSelectedTraslado.getIdruta() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
+//            return;
+//        }
+//
+//        if (insumoSelectedTraslado.getNodocumento() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+//            return;
+//        }
+//
+//        if (insumoSelectedTraslado.getResponsable() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
+//            return;
+//        }
+//
+//        if (insumoSelectedTraslado.getObservacion() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+//            return;
+//        }
+//
+//        if (insumoSelectedTraslado.getSalidas() > insumoSelectedTraslado.getExistencia()) {
+//            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
+//            return;
+//        }
 
-        if (insumoSelectedTraslado.getIdruta() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getNodocumento() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getResponsable() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getObservacion() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-            return;
-        }
-
-        if (insumoSelectedTraslado.getSalidas() > insumoSelectedTraslado.getExistencia()) {
-            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
-            return;
-        }
-
-        insumoSelectedTraslado.setSalidas(saldoTraslado);
-        insumoSelectedTraslado.setExistencia(insumoSelectedTraslado.getExistencia() - insumoSelectedTraslado.getSalidas());
-        insumoSelectedTraslado.setTotal(insumoSelectedTraslado.getPrecio() * insumoSelectedTraslado.getExistencia());
+        //insumoSelectedTraslado.setSalidas(saldoTraslado);
+        //insumoSelectedTraslado.setExistencia(insumoSelectedTraslado.getExistencia() - insumoSelectedTraslado.getSalidas());
+        //insumoSelectedTraslado.setTotal(insumoSelectedTraslado.getPrecio() * insumoSelectedTraslado.getExistencia());
         Insumos response = bodegaBeanLocal.updateInsumo(insumoSelectedTraslado);
 
-        Insumos insumoSuma = bodegaBeanLocal.findInsumoByIdAgenciaAndCodigo(insumoSelectedTraslado.getIdagenciaenvio().getIdagencia(), insumoSelectedTraslado.getCodigo());
-        if (insumoSuma != null) {
-            insumoSuma.setEntradas(saldoTraslado);
-            insumoSuma.setExistencia(insumoSuma.getEntradas() + insumoSuma.getExistencia());
-            insumoSuma.setTotal(insumoSuma.getPrecio() * insumoSuma.getExistencia());
-            Insumos responseUpdate = bodegaBeanLocal.updateInsumo(insumoSuma);
-        } else {
-            Insumos insumo = new Insumos();
-            insumo.setCodigo(insumoSelectedTraslado.getCodigo());
-            insumo.setDescripcion(insumoSelectedTraslado.getDescripcion());
-            insumo.setIdagencia(insumoSelectedTraslado.getIdagenciaenvio());
-            insumo.setSaldoinicial(saldoTraslado);
-            insumo.setExistencia(saldoTraslado);
-            insumo.setPrecio(insumoSelectedTraslado.getPrecio());
-            insumo.setTotal(insumoSelectedTraslado.getPrecio() * saldoTraslado);
-            insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
-
-            Insumos responseCreate = bodegaBeanLocal.saveInsumo(insumo);
-        }
+        //Insumos insumoSuma = bodegaBeanLocal.findInsumoByIdAgenciaAndCodigo(insumoSelectedTraslado.getIdagenciaenvio().getIdagencia(), insumoSelectedTraslado.getCodigo());
+//        if (insumoSuma != null) {
+//            //insumoSuma.setEntradas(saldoTraslado);
+//            //insumoSuma.setExistencia(insumoSuma.getEntradas() + insumoSuma.getExistencia());
+//            //insumoSuma.setTotal(insumoSuma.getPrecio() * insumoSuma.getExistencia());
+//            Insumos responseUpdate = bodegaBeanLocal.updateInsumo(insumoSuma);
+//        } else {
+//            Insumos insumo = new Insumos();
+//            insumo.setCodigo(insumoSelectedTraslado.getCodigo());
+//            insumo.setDescripcion(insumoSelectedTraslado.getDescripcion());
+//            //insumo.setIdagencia(insumoSelectedTraslado.getIdagenciaenvio());
+//            insumo.setSaldoinicial(saldoTraslado);
+//            //insumo.setExistencia(saldoTraslado);
+//            //insumo.setPrecio(insumoSelectedTraslado.getPrecio());
+//            //insumo.setTotal(insumoSelectedTraslado.getPrecio() * saldoTraslado);
+//            insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
+//
+//            Insumos responseCreate = bodegaBeanLocal.saveInsumo(insumo);
+//        }
 
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo trasladado exitosamente");

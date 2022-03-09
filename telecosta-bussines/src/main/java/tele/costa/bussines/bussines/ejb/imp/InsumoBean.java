@@ -12,17 +12,17 @@ import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
-import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.entity.Insumos;
+import tele.costa.api.ejb.InsumoBeanLocal;
 
 /**
  *
  * @author rcacacho
  */
 @Singleton
-public class BodegaBean implements BodegaBeanLocal {
+public class InsumoBean implements InsumoBeanLocal {
 
-    private static final Logger log = Logger.getLogger(BodegaBean.class);
+    private static final Logger log = Logger.getLogger(InsumoBean.class);
 
     @PersistenceContext(unitName = "TeleCostaPU")
     EntityManager em;
@@ -254,6 +254,44 @@ public class BodegaBean implements BodegaBeanLocal {
             return null;
         }
         return lst.get(0);
+    }
+
+    @Override
+    public List<Insumos> listInsumo() {
+        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.activo = true ", Insumos.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public Insumos deleteInsumo(Integer idinsumo, String usuario) {
+        if (idinsumo == null) {
+            context.setRollbackOnly();
+            return null;
+        }
+
+        try {
+            Insumos toUpdate = em.find(Insumos.class, idinsumo);
+
+            toUpdate.setUsuariomodificacion(usuario);
+            toUpdate.setFechamodificacion(new Date());
+            toUpdate.setActivo(false);
+            em.merge(toUpdate);
+
+            return toUpdate;
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            return null;
+        }
     }
 
 }

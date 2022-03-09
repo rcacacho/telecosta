@@ -10,8 +10,10 @@ import tele.costa.api.entity.Insumos;
  * @author rcacacho
  */
 @Local
-public interface BodegaBeanLocal {
+public interface InsumoBeanLocal {
 
+     List<Insumos> listInsumo();
+    
     List<Insumos> listInsumoByFechaInicio(Date fechaInicio);
 
     List<Insumos> listInsumoByFechaFin(Date fechaFin);
@@ -29,5 +31,7 @@ public interface BodegaBeanLocal {
     Insumos findInsumoById(Integer idinsumo);
 
     Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo);
+    
+    Insumos deleteInsumo(Integer idinsumo, String usuario);
 
 }

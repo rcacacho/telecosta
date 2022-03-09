@@ -2,23 +2,25 @@ package tele.costa.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,10 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Insumos.findByIdinsumo", query = "SELECT i FROM Insumos i WHERE i.idinsumo = :idinsumo"),
     @NamedQuery(name = "Insumos.findByCodigo", query = "SELECT i FROM Insumos i WHERE i.codigo = :codigo"),
     @NamedQuery(name = "Insumos.findByDescripcion", query = "SELECT i FROM Insumos i WHERE i.descripcion = :descripcion"),
-    @NamedQuery(name = "Insumos.findByPrecio", query = "SELECT i FROM Insumos i WHERE i.precio = :precio"),
-    @NamedQuery(name = "Insumos.findByProveedor", query = "SELECT i FROM Insumos i WHERE i.proveedor = :proveedor"),
-    @NamedQuery(name = "Insumos.findByNodocumento", query = "SELECT i FROM Insumos i WHERE i.nodocumento = :nodocumento"),
-    @NamedQuery(name = "Insumos.findByFecha", query = "SELECT i FROM Insumos i WHERE i.fecha = :fecha"),
+    @NamedQuery(name = "Insumos.findBySaldoinicial", query = "SELECT i FROM Insumos i WHERE i.saldoinicial = :saldoinicial"),
     @NamedQuery(name = "Insumos.findByUsuariocreacion", query = "SELECT i FROM Insumos i WHERE i.usuariocreacion = :usuariocreacion"),
     @NamedQuery(name = "Insumos.findByFechacreacion", query = "SELECT i FROM Insumos i WHERE i.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "Insumos.findByUsuariomodificacion", query = "SELECT i FROM Insumos i WHERE i.usuariomodificacion = :usuariomodificacion"),
@@ -49,104 +48,49 @@ public class Insumos implements Serializable {
     @Basic(optional = false)
     @Column(name = "idinsumo")
     private Integer idinsumo;
-
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "codigo")
     private String codigo;
-
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "descripcion")
     private String descripcion;
-
-    @Column(name = "stock")
-    private Integer stock;
-
+    
     @Column(name = "saldoinicial")
     private Integer saldoinicial;
-
-    @Column(name = "entradas")
-    private Integer entradas;
-
-    @Column(name = "salidas")
-    private Integer salidas;
-
-    @Column(name = "existencia")
-    private Integer existencia;
-
-    @Column(name = "precio")
-    private Float precio;
-
-    @Column(name = "total")
-    private Float total;
-
-    @Size(max = 500)
-    @Column(name = "proveedor")
-    private String proveedor;
-
-    @Size(max = 200)
-    @Column(name = "nodocumento")
-    private String nodocumento;
-
-    @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
-
-    @Size(max = 500)
-    @Column(name = "responsable")
-    private String responsable;
-
-    @Size(min = 1, max = 1000)
-    @Column(name = "observacion")
-    private String observacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-
+    
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-
+    
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-
-    @JoinColumn(name = "idagencia", referencedColumnName = "idagencia")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Agencia idagencia;
-
-    @JoinColumn(name = "idagenciaenvio", referencedColumnName = "idagencia")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Agencia idagenciaenvio;
-
-    @JoinColumn(name = "idruta", referencedColumnName = "idruta")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Ruta idruta;
-
-    @JoinColumn(name = "idsectorpago", referencedColumnName = "idsectorpago")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Sectorpago idsectorpago;
-
-    @JoinColumn(name = "idtipocarga", referencedColumnName = "idtipocarga")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Tipocarga idtipocarga;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idinsumo", fetch = FetchType.LAZY)
+    private List<Inventario> inventarioList;
 
     public Insumos() {
     }
@@ -155,11 +99,10 @@ public class Insumos implements Serializable {
         this.idinsumo = idinsumo;
     }
 
-    public Insumos(Integer idinsumo, String codigo, String descripcion, Date fecha, String usuariocreacion, Date fechacreacion, boolean activo) {
+    public Insumos(Integer idinsumo, String codigo, String descripcion, String usuariocreacion, Date fechacreacion, boolean activo) {
         this.idinsumo = idinsumo;
         this.codigo = codigo;
         this.descripcion = descripcion;
-        this.fecha = fecha;
         this.usuariocreacion = usuariocreacion;
         this.fechacreacion = fechacreacion;
         this.activo = activo;
@@ -195,62 +138,6 @@ public class Insumos implements Serializable {
 
     public void setSaldoinicial(Integer saldoinicial) {
         this.saldoinicial = saldoinicial;
-    }
-
-    public Integer getEntradas() {
-        return entradas;
-    }
-
-    public void setEntradas(Integer entradas) {
-        this.entradas = entradas;
-    }
-
-    public Integer getSalidas() {
-        return salidas;
-    }
-
-    public void setSalidas(Integer salidas) {
-        this.salidas = salidas;
-    }
-
-    public Integer getExistencia() {
-        return existencia;
-    }
-
-    public void setExistencia(Integer existencia) {
-        this.existencia = existencia;
-    }
-
-    public Float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Float precio) {
-        this.precio = precio;
-    }
-
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public String getNodocumento() {
-        return nodocumento;
-    }
-
-    public void setNodocumento(String nodocumento) {
-        this.nodocumento = nodocumento;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public String getUsuariocreacion() {
@@ -293,76 +180,13 @@ public class Insumos implements Serializable {
         this.activo = activo;
     }
 
-    public Agencia getIdagencia() {
-        return idagencia;
+    @XmlTransient
+    public List<Inventario> getInventarioList() {
+        return inventarioList;
     }
 
-    public void setIdagencia(Agencia idagencia) {
-        this.idagencia = idagencia;
-    }
-
-    public Ruta getIdruta() {
-        return idruta;
-    }
-
-    public void setIdruta(Ruta idruta) {
-        this.idruta = idruta;
-    }
-
-    public Sectorpago getIdsectorpago() {
-        return idsectorpago;
-    }
-
-    public void setIdsectorpago(Sectorpago idsectorpago) {
-        this.idsectorpago = idsectorpago;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Float getTotal() {
-        return total;
-    }
-
-    public void setTotal(Float total) {
-        this.total = total;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public Agencia getIdagenciaenvio() {
-        return idagenciaenvio;
-    }
-
-    public void setIdagenciaenvio(Agencia idagenciaenvio) {
-        this.idagenciaenvio = idagenciaenvio;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public Tipocarga getIdtipocarga() {
-        return idtipocarga;
-    }
-
-    public void setIdtipocarga(Tipocarga idtipocarga) {
-        this.idtipocarga = idtipocarga;
+    public void setInventarioList(List<Inventario> inventarioList) {
+        this.inventarioList = inventarioList;
     }
 
     @Override
@@ -389,5 +213,5 @@ public class Insumos implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Insumos[ idinsumo=" + idinsumo + " ]";
     }
-
+    
 }

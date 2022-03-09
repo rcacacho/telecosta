@@ -1,4 +1,4 @@
-package tele.costa.web.bodega;
+package tele.costa.web.inventario;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,14 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import tele.costa.api.ejb.BodegaBeanLocal;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Ruta;
-import tele.costa.api.entity.Tipocarga;
-import tele.costa.api.enums.TipoCarga;
 import telecosta.web.utils.JsfUtil;
+import tele.costa.api.ejb.InsumoBeanLocal;
 
 /**
  *
@@ -33,7 +31,7 @@ public class SalidaInsumoMB implements Serializable {
     @EJB
     private CatalogoBeanLocal catalogoBean;
     @EJB
-    private BodegaBeanLocal bodegaBeanLocal;
+    private InsumoBeanLocal bodegaBeanLocal;
 
     private Integer idAgencia;
     private Agencia idAgenciaSelected;
@@ -66,36 +64,34 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
-        if (insumoSelectedSalida.getIdruta() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
-            return;
-        }
-
-        if (insumoSelectedSalida.getNodocumento() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-            return;
-        }
-
-        if (insumoSelectedSalida.getResponsable() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
-            return;
-        }
-
-        if (insumoSelectedSalida.getObservacion() == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-            return;
-        }
-
-        if (insumoSelectedSalida.getSalidas() > insumoSelectedSalida.getExistencia()) {
-            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
-            return;
-        }
-
-        Tipocarga findTipo = catalogoBean.findTipoCarga(TipoCarga.SALIDA.getId());
-        insumoSelectedSalida.setIdtipocarga(findTipo);
-        insumoSelectedSalida.setSalidas(saldoSalida);
-        insumoSelectedSalida.setExistencia(insumoSelectedSalida.getExistencia() - insumoSelectedSalida.getSalidas());
-        insumoSelectedSalida.setTotal(insumoSelectedSalida.getPrecio() * insumoSelectedSalida.getExistencia());
+//        if (insumoSelectedSalida.getIdruta() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
+//            return;
+//        }
+//
+//        if (insumoSelectedSalida.getNodocumento() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+//            return;
+//        }
+//
+//        if (insumoSelectedSalida.getResponsable() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
+//            return;
+//        }
+//
+//        if (insumoSelectedSalida.getObservacion() == null) {
+//            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+//            return;
+//        }
+//
+//        if (insumoSelectedSalida.getSalidas() > insumoSelectedSalida.getExistencia()) {
+//            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
+//            return;
+//        }
+//
+//        insumoSelectedSalida.setSalidas(saldoSalida);
+//        insumoSelectedSalida.setExistencia(insumoSelectedSalida.getExistencia() - insumoSelectedSalida.getSalidas());
+//        insumoSelectedSalida.setTotal(insumoSelectedSalida.getPrecio() * insumoSelectedSalida.getExistencia());
         Insumos response = bodegaBeanLocal.updateInsumo(insumoSelectedSalida);
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");

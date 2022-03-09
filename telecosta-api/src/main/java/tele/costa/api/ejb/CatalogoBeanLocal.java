@@ -12,7 +12,6 @@ import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.entity.Sectorpago;
 import tele.costa.api.entity.Tipoatencion;
-import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
@@ -60,7 +59,5 @@ public interface CatalogoBeanLocal {
     List<Municipio> listMunicipioBySanpabloAndSanRafael();
 
     List<Agencia> listAgencias();
-
-    Tipocarga findTipoCarga(Integer idTipoCarga);
 
 }

@@ -18,7 +18,6 @@ import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.entity.Sectorpago;
 import tele.costa.api.entity.Tipoatencion;
-import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
@@ -266,19 +265,6 @@ public class CatalagoBean implements CatalogoBeanLocal {
         }
 
         return lst;
-    }
-
-    @Override
-    public Tipocarga findTipoCarga(Integer idTipoCarga) {
-     List<Tipocarga> lst = em.createQuery("SELECT dep FROM Tipocarga dep WHERE dep.activo  = true and dep.idtipocarga =:idTipoCarga ", Tipocarga.class)
-                .setParameter("idTipoCarga", idTipoCarga)
-                .getResultList();
-
-        if (lst == null || lst.isEmpty()) {
-            return null;
-        }
-
-        return lst.get(0);
     }
 
 }
