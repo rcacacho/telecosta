@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
 import tele.costa.api.entity.Insumos;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Inventario;
 
 /**
  *
@@ -292,6 +293,76 @@ public class InsumoBean implements InsumoBeanLocal {
             processException(ex);
             return null;
         }
+    }
+
+    @Override
+    public Insumos findInsumoByCodigo(String codigo) {
+        if (codigo == null) {
+            return null;
+        }
+
+        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.codigo =:codigo and pa.activo = true ", Insumos.class)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
+    }
+
+    @Override
+    public Inventario saveInventario(Inventario inventario) {
+        try {
+            inventario.setActivo(true);
+            inventario.setFechacreacion(new Date());
+            em.persist(inventario);
+            em.flush();
+            return (inventario);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
+    @Override
+    public Inventario updateInventario(Inventario inventario) {
+        try {
+            em.merge(inventario);
+            em.flush();
+            return (inventario);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
+    @Override
+    public Inventario findInventarioById(Integer idinventario) {
+        if (idinventario == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idinventario =:idinventario and pa.activo = true ", Inventario.class)
+                .setParameter("idinventario", idinventario)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }
