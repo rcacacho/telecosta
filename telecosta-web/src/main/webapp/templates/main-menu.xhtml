@@ -55,12 +55,7 @@
                 <p:menuitem value="Reporte" outcome="/compras/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Bodega" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('bodega_central') || loginMB.validarRoot()}">  
-                <p:menuitem value="Ingresos" outcome="/bodega/ingreso.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Salidas" outcome="/bodega/salidas.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Traslados" outcome="/bodega/traslados.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Reporte" outcome="/bodega/reporte.xhtml" style="width: 90px;"/>
-            </p:submenu>
+
 
         </p:menubar>
     </h:form>

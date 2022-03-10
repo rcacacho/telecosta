@@ -70,6 +70,7 @@ public class ReporteClienteMB implements Serializable {
     private String realPath;
     private String dirSeparator;
     private String tipocliente;
+    private String tipoclienteMun;
     private List<Municipio> listMunicipios;
     private Integer idmunicipio;
 
@@ -650,7 +651,7 @@ public class ReporteClienteMB implements Serializable {
             parametros.put("IMAGE", "logo.jpeg");
             parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
             parametros.put("USUARIO", SesionUsuarioMB.getUserName());
-            parametros.put("TIPO_CLIENTE", tipocliente);
+            parametros.put("TIPO_CLIENTE", tipoclienteMun);
             parametros.put("ID_MUNICIPIO", idmunicipio);
 
             ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
@@ -667,7 +668,7 @@ public class ReporteClienteMB implements Serializable {
 
     public StreamedContent imprimirExcelClienteMuncipio() throws IOException {
         StreamedContent content = null;
-        List<Cliente> listaCliente = clienteBean.ListClientesByIdMunucipioAndTipo(idmunicipio, tipocliente);
+        List<Cliente> listaCliente = clienteBean.ListClientesByIdMunucipioAndTipo(idmunicipio, tipoclienteMun);
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -914,6 +915,14 @@ public class ReporteClienteMB implements Serializable {
 
     public void setIdmunicipio(Integer idmunicipio) {
         this.idmunicipio = idmunicipio;
+    }
+
+    public String getTipoclienteMun() {
+        return tipoclienteMun;
+    }
+
+    public void setTipoclienteMun(String tipoclienteMun) {
+        this.tipoclienteMun = tipoclienteMun;
     }
 
 }

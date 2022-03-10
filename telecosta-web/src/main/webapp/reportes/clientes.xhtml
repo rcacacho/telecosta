@@ -54,8 +54,9 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
-                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
+                                    <p:selectOneMenu id="tip" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
                                                      filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
                                         <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
                                         <f:selectItem itemLabel="Cable" itemValue="Cable" />
                                         <f:selectItem itemLabel="Internet" itemValue="Internet" />
@@ -82,15 +83,16 @@
                                     <p:outputLabel value=""  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
 
-                                    <p:selectOneMenu id="mun" value="#{reporteClienteMB.idmunicipio}" style="width: 50%" 
-                                                     converter="entityConverter" filter="true" filterMatchMode="contains"
-                                                     required="true" requiredMessage="Debes selecciona un municipio" >
+                                    <p:selectOneMenu id="mun" value="#{reporteClienteMB.idmunicipio}" style="width: 250px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
                                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                                         <f:selectItems value="#{reporteClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
                                     </p:selectOneMenu>
 
-                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
+                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipoclienteMun}" style="width:250px;" 
                                                      filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
                                         <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
                                         <f:selectItem itemLabel="Cable" itemValue="Cable" />
                                         <f:selectItem itemLabel="Internet" itemValue="Internet" />
@@ -100,13 +102,13 @@
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reportePagoMB.generarPdfPagoUsuario()}"/>
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfMunicipioCliente()}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Excel" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                      immediate="true" process="@this" update="@form" ajax="false">
-                                        <p:fileDownload value="#{reportePagoMB.imprimirExcelPagosUsuario()}"/>
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteMuncipio()}"/>
                                     </p:commandButton>
                                 </p:panelGrid>
                             </div>
