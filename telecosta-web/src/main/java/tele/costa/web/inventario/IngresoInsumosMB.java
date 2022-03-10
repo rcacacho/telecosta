@@ -48,6 +48,7 @@ public class IngresoInsumosMB implements Serializable {
     private float precioActualizado;
     private Integer saldoIngreso;
     private Insumos insumoSelected;
+    private String codigoBusqueda;
 
     public IngresoInsumosMB() {
         idAgencia = null;
@@ -89,6 +90,7 @@ public class IngresoInsumosMB implements Serializable {
         }
 
         Inventario inventario = new Inventario();
+        inventario.setIdinsumo(insumoSelected);
         inventario.setSaldoinicial(saldoInicial);
         inventario.setIdagencia(idAgenciaSelected);
         inventario.setExistencia(saldoInicial);
@@ -104,6 +106,7 @@ public class IngresoInsumosMB implements Serializable {
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
+        insumoSelected = null;
         RequestContext.getCurrentInstance().execute("PF('dlgAgregar').hide()");
     }
 
@@ -113,15 +116,15 @@ public class IngresoInsumosMB implements Serializable {
 
     public void buscarInventario() {
         if (fechaInicio != null && fechaFin != null && idAgencia != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
             if (response != null) {
-                // listinsumos = response;
+                listInventario = response;
             } else {
                 listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null && fechaFin != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
                 //listinsumos = response;
             } else {
@@ -129,25 +132,33 @@ public class IngresoInsumosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
                 listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaFin != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
                 listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idAgencia != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
             if (response != null) {
-                // listinsumos = response;
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (codigoBusqueda != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
+            if (response != null) {
+                listInventario = response;
             } else {
                 listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
@@ -158,8 +169,8 @@ public class IngresoInsumosMB implements Serializable {
         }
     }
 
-    public void dialogAgregar(Insumos insumo) {
-        //insumoSelected = insumo;
+    public void dialogAgregar(Inventario invent) {
+        inventarioSelected = invent;
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').show()");
     }
 
@@ -173,41 +184,46 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
-//        if (insumoSelected.getPrecio() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar un precio");
-//            return;
-//        }
-//
-//        if (insumoSelected.getNodocumento() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-//            return;
-//        }
-//
-//        if (insumoSelected.getProveedor() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una agencia o Proveedor");
-//            return;
-//        }
-//
-//        if (insumoSelected.getFecha() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una fecha");
-//            return;
-//        }
-//
-//        if (insumoSelected.getObservacion() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-//            return;
-//        }
-//
-//        insumoSelected.setEntradas(saldoIngreso);
-        //insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
-        //insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
-        //insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getExistencia());
-//        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
-//        if (response != null) {
-//            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
-//        } else {
-//            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
-//        }
+        if (saldoIngreso == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una cantidad a agregar");
+            return;
+        }
+
+        if (saldoIngreso == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una cantidad a agregar");
+            return;
+        }
+
+        if (inventarioSelected.getNodocumento() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+            return;
+        }
+
+        if (inventarioSelected.getProveedor() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una agencia o Proveedor");
+            return;
+        }
+
+        if (inventarioSelected.getFecha() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una fecha");
+            return;
+        }
+
+        if (inventarioSelected.getObservacion() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+            return;
+        }
+
+        inventarioSelected.setEntradas(saldoIngreso);
+        inventarioSelected.setPrecio((precioActualizado + inventarioSelected.getPrecio()) / 2);
+        inventarioSelected.setExistencia(inventarioSelected.getEntradas() + inventarioSelected.getExistencia());
+        inventarioSelected.setTotal(inventarioSelected.getPrecio() * inventarioSelected.getExistencia());
+        Inventario response = bodegaBeanLocal.updateInventario(inventarioSelected);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
+        }
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
@@ -346,6 +362,14 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setInsumoSelected(Insumos insumoSelected) {
         this.insumoSelected = insumoSelected;
+    }
+
+    public String getCodigoBusqueda() {
+        return codigoBusqueda;
+    }
+
+    public void setCodigoBusqueda(String codigoBusqueda) {
+        this.codigoBusqueda = codigoBusqueda;
     }
 
 }

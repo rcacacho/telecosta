@@ -40,14 +40,14 @@
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
                     </p:selectOneMenu>
-                    <p:inputText value="#{registroCajaMB.caja.correlativodel}" size="19" style="font-size: 16px!important;">
+                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
 
                     <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
                     <p:panelGrid columns="3" styleClass="no-border">
                         <p:commandButton value="Buscar"  
-                                         action="#{ingresoInsumosMB.buscarInsumo()}" 
+                                         action="#{ingresoInsumosMB.buscarInventario()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -97,6 +97,10 @@
                         <p:outputLabel value="#{ins.total}"/>
                     </p:column>
 
+                    <p:column headerText="Agencia" width="16%" >
+                        <p:outputLabel value="#{ins.idagencia.agencia}"/>
+                    </p:column>
+
                     <p:column width="20%" exportable="false" >
                         <p:commandButton value="Ingresar" 
                                          style="float:left!important;" process="@this" 
@@ -106,7 +110,7 @@
                         <p:commandButton value="Detalle" 
                                          style="float:left!important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                         action="#{ingresoInsumosMB.detalle(ins.idinsumo)}" update="@form"/>
+                                         action="#{ingresoInsumosMB.detalle(ins.idinventario)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>            
@@ -161,6 +165,9 @@
                 <p:panelGrid id="pgAdd"  columns="2" styleClass="no-border" style="width: 80%;"  >
                     <p:outputLabel  value="Código:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
+
+                    <p:outputLabel  value="#{ingresoInsumosMB.inventarioSelected.idinsumo.codigo}" styleClass="colorTitulo" />
+                    <p:outputLabel  value="#{ingresoInsumosMB.inventarioSelected.idinsumo.descripcion}" styleClass="colorTitulo" />
 
                     <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />

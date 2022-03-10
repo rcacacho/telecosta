@@ -17,6 +17,7 @@ import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Inventario;
 
 /**
  *
@@ -49,41 +50,41 @@ public class TrasladoInsumoMB implements Serializable {
 
     public void buscarInsumo() {
         if (fechaInicio != null && fechaFin != null && idAgencia != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
                 listinsumos = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null && fechaFin != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
                 listinsumos = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
                 listinsumos = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaFin != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
                 listinsumos = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idAgencia != null) {
-            List<Insumos> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
                 listinsumos = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");

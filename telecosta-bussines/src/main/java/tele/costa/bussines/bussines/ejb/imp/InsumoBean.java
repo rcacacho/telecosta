@@ -48,7 +48,7 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public List<Insumos> listInsumoByFechaInicio(Date fechaInicio) {
+    public List<Inventario> listInsumoByFechaInicio(Date fechaInicio) {
         if (fechaInicio == null) {
             return null;
         }
@@ -63,7 +63,7 @@ public class InsumoBean implements InsumoBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaInicio);
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.fecha >= :fechaInicio and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.activo = true ", Inventario.class)
                 .setParameter("fechaInicio", fechaInicio)
                 .getResultList();
 
@@ -74,7 +74,7 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public List<Insumos> listInsumoByFechaFin(Date fechaFin) {
+    public List<Inventario> listInsumoByFechaFin(Date fechaFin) {
         if (fechaFin == null) {
             return null;
         }
@@ -89,7 +89,7 @@ public class InsumoBean implements InsumoBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaFin);
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.fecha <= :fechaFin and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha <= :fechaFin and pa.activo = true ", Inventario.class)
                 .setParameter("fechaFin", fechaFin)
                 .getResultList();
 
@@ -100,7 +100,7 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public List<Insumos> listInsumoByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin) {
+    public List<Inventario> listInsumoByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin) {
         if (fechaInicio == null) {
             return null;
         }
@@ -123,7 +123,7 @@ public class InsumoBean implements InsumoBeanLocal {
         sdf.format(fechaInicio);
         sdf.format(fechaFin);
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.activo = true ", Inventario.class)
                 .setParameter("fechaInicio", fechaInicio)
                 .setParameter("fechaFin", fechaFin)
                 .getResultList();
@@ -135,12 +135,12 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public List<Insumos> listInsumoByIdAgencia(Integer idAgencia) {
+    public List<Inventario> listInsumoByIdAgencia(Integer idAgencia) {
         if (idAgencia == null) {
             return null;
         }
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.idagencia.idagencia =:idAgencia and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idagencia.idagencia =:idAgencia and pa.activo = true ", Inventario.class)
                 .setParameter("idAgencia", idAgencia)
                 .getResultList();
 
@@ -151,7 +151,7 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public List<Insumos> listInsumoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia) {
+    public List<Inventario> listInsumoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia) {
         if (fechaInicio == null) {
             return null;
         }
@@ -174,7 +174,7 @@ public class InsumoBean implements InsumoBeanLocal {
         sdf.format(fechaInicio);
         sdf.format(fechaFin);
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.idagencia.idagencia =:idAgencia and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.idagencia.idagencia =:idAgencia and pa.activo = true ", Inventario.class)
                 .setParameter("fechaInicio", fechaInicio)
                 .setParameter("fechaFin", fechaFin)
                 .setParameter("idAgencia", idAgencia)

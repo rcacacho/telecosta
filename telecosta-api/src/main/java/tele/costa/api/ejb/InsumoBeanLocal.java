@@ -15,15 +15,15 @@ public interface InsumoBeanLocal {
 
     List<Insumos> listInsumo();
 
-    List<Insumos> listInsumoByFechaInicio(Date fechaInicio);
+    List<Inventario> listInsumoByFechaInicio(Date fechaInicio);
 
-    List<Insumos> listInsumoByFechaFin(Date fechaFin);
+    List<Inventario> listInsumoByFechaFin(Date fechaFin);
 
-    List<Insumos> listInsumoByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin);
+    List<Inventario> listInsumoByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin);
 
-    List<Insumos> listInsumoByIdAgencia(Integer idAgencia);
+    List<Inventario> listInsumoByIdAgencia(Integer idAgencia);
 
-    List<Insumos> listInsumoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia);
+    List<Inventario> listInsumoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia);
 
     Insumos saveInsumo(Insumos insumo);
 
