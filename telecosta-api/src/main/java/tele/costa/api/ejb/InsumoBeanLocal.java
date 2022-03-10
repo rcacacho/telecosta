@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import tele.costa.api.entity.Insumos;
+import tele.costa.api.entity.Inventario;
 
 /**
  *
@@ -12,8 +13,8 @@ import tele.costa.api.entity.Insumos;
 @Local
 public interface InsumoBeanLocal {
 
-     List<Insumos> listInsumo();
-    
+    List<Insumos> listInsumo();
+
     List<Insumos> listInsumoByFechaInicio(Date fechaInicio);
 
     List<Insumos> listInsumoByFechaFin(Date fechaFin);
@@ -31,7 +32,15 @@ public interface InsumoBeanLocal {
     Insumos findInsumoById(Integer idinsumo);
 
     Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo);
-    
+
     Insumos deleteInsumo(Integer idinsumo, String usuario);
+
+    Insumos findInsumoByCodigo(String codigo);
+
+    Inventario saveInventario(Inventario inventario);
+
+    Inventario updateInventario(Inventario inventario);
+
+    Inventario findInventarioById(Integer idinventario);
 
 }
