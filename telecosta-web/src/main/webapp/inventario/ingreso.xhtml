@@ -33,15 +33,19 @@
                     </p:calendar>
 
                     <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:selectOneMenu id="agencia" value="#{ingresoInsumosMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
                     </p:selectOneMenu>
+                    <p:inputText value="#{registroCajaMB.caja.correlativodel}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
 
-                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:panelGrid columns="3" styleClass="no-border">
                         <p:commandButton value="Buscar"  
                                          action="#{ingresoInsumosMB.buscarInsumo()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
@@ -59,7 +63,7 @@
                                          update="@form" icon="ui-icon-refresh" process="@this"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
 
-                        <p:commandButton value="Agregar"  
+                        <p:commandButton value="Carga Incial"  
                                          action="#{ingresoInsumosMB.dialogRegistro()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
@@ -72,21 +76,13 @@
 
                 <br/>
 
-                <p:dataTable id="dt_insumo" var="ins" value="#{ingresoInsumosMB.listinsumos}"
+                <p:dataTable id="dt_insumo" var="ins" value="#{ingresoInsumosMB.listInventario}"
                              emptyMessage="No hay insumos registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="15" paginator="#{ingresoInsumosMB.listinsumos.size()>15}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{ingresoInsumosMB.listInventario.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
-                    </p:column>
-
-                    <p:column headerText="Código" width="10%" >
-                        <p:outputLabel value="#{ins.codigo}"/>
-                    </p:column>
-
-                    <p:column headerText="Descripción" width="25%" >
-                        <p:outputLabel value="#{ins.descripcion}"/>
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
@@ -115,18 +111,23 @@
                 </p:dataTable>
             </div>            
 
-            <p:dialog header="Agregar insumo" widgetVar="dlgAgregar" id="dlgAgregar" 
+            <p:dialog header="Carga inicial" widgetVar="dlgAgregar" id="dlgAgregar" 
                       onShow="stop();"  onHide="stop();" 
                       modal="true" position="top" resizable="false" width="700px">
 
+                <p:panelGrid id="pgBusInsumo"  columns="3" styleClass="no-border" style="width: 50%;"  >
+                    <p:outputLabel  value="Código insumo:" styleClass="colorTitulo" />
+                    <p:inputText value="#{ingresoInsumosMB.codigo}" size="20" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                    <p:commandButton value="Buscar" action="#{ingresoInsumosMB.buscarInsumo()}" icon="ui-icon-search" process="@this" update="pgAddInsumo" />
+                </p:panelGrid>
+
                 <p:panelGrid id="pgAddInsumo"  columns="2" styleClass="no-border" style="width: 80%;"  >
-                    <p:outputLabel  value="Código:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Agencia:" styleClass="colorTitulo" />
 
-                    <p:inputText id="cod" value="#{ingresoInsumosMB.codigo}" size="25" style="font-size: 16px!important;">
-                        <p:ajax event="blur" process="@this"/>
-                    </p:inputText> 
-
+                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.descripcion}" style="font-size: 16px!important;" />
                     <p:selectOneMenu id="agenciadi" value="#{ingresoInsumosMB.idAgenciaSelected}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
@@ -146,18 +147,9 @@
                     </p:inputText> 
                 </p:panelGrid>
 
-                <p:panelGrid id="pgObs"  columns="1" styleClass="no-border" style="width: 80%;"  >
-                    <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
-                    <p:inputTextarea cols="120" value="#{ingresoInsumosMB.descripcion}" counter="display6" maxlength="500" 
-                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
-                        <p:ajax event="blur" process="@this" />
-                    </p:inputTextarea>
-                    <h:outputText id="display6" style="margin-left: 480px;" />
-                </p:panelGrid>
-
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                    <p:commandButton value="Guardar" action="#{ingresoInsumosMB.saveInsumo()}" icon="ui-icon-disk" process="@this"  
-                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el insumo?');" update="pgAddInsumo" />
+                    <p:commandButton value="Guardar" action="#{ingresoInsumosMB.saveInventario()}" icon="ui-icon-disk" process="@this"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la existencia?');" update="pgAddInsumo" />
                     <p:commandButton value="Cancelar" process="@this" action="#{ingresoInsumosMB.cerrarDialog()}" icon="ui-icon-close" 
                                      style="margin-left: 12px; " update="dlgAgregar"/>
                 </p:outputPanel>
@@ -169,9 +161,6 @@
                 <p:panelGrid id="pgAdd"  columns="2" styleClass="no-border" style="width: 80%;"  >
                     <p:outputLabel  value="Código:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
-
-                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.codigo}" style="font-size: 16px!important;" />
-                    <p:outputLabel  value="#{ingresoInsumosMB.insumoSelected.descripcion}" style="font-size: 16px!important;" />
 
                     <p:outputLabel  value="Cantidad:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
@@ -187,25 +176,25 @@
                     <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
                     <p:outputLabel  value="Fecha:" styleClass="colorTitulo" />
 
-                    <p:inputText id="doc" value="#{ingresoInsumosMB.insumoSelected.nodocumento}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="doc" value="#{ingresoInsumosMB.inventarioSelected.nodocumento}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
                     <p:calendar id="cal_fecha2" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                value="#{ingresoInsumosMB.insumoSelected.fecha}" navigator="true">  
+                                value="#{ingresoInsumosMB.inventarioSelected.fecha}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:outputLabel  value="Proveedor:" styleClass="colorTitulo" />
                     <p:outputLabel  value="" styleClass="colorTitulo" />
 
-                    <p:inputText id="cod2" value="#{ingresoInsumosMB.insumoSelected.proveedor}" size="25" style="font-size: 16px!important;">
+                    <p:inputText id="cod2" value="#{ingresoInsumosMB.inventarioSelected.proveedor}" size="25" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>    
                 </p:panelGrid>
 
                 <p:panelGrid id="pgObs2"  columns="1" styleClass="no-border" style="width: 80%;"  >
                     <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
-                    <p:inputTextarea cols="120" value="#{ingresoInsumosMB.insumoSelected.observacion}" counter="display" maxlength="500" 
+                    <p:inputTextarea cols="120" value="#{ingresoInsumosMB.inventarioSelected.observacion}" counter="display" maxlength="500" 
                                      counterTemplate="{0} caracteres pendientes." autoResize="false">
                         <p:ajax event="blur" process="@this" />
                     </p:inputTextarea>

@@ -15,8 +15,9 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
-import telecosta.web.utils.SesionUsuarioMB;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Inventario;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -38,14 +39,15 @@ public class IngresoInsumosMB implements Serializable {
     private List<Agencia> listAgencia;
     private Date fechaInicio;
     private Date fechaFin;
-    private List<Insumos> listinsumos;
+    private List<Inventario> listInventario;
     private String codigo;
     private String descripcion;
-    private Insumos insumoSelected;
+    private Inventario inventarioSelected;
     private Integer saldoInicial;
     private float precio;
     private float precioActualizado;
     private Integer saldoIngreso;
+    private Insumos insumoSelected;
 
     public IngresoInsumosMB() {
         idAgencia = null;
@@ -70,14 +72,14 @@ public class IngresoInsumosMB implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlgAgregar').show()");
     }
 
-    public void saveInsumo() throws IOException {
-        if (codigo == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar un código");
+    public void saveInventario() throws IOException {
+        if (insumoSelected == null) {
+            JsfUtil.addErrorMessage("Debe buscar un insumo");
             return;
         }
 
-        if (descripcion == null) {
-            JsfUtil.addErrorMessage("Debe de ingresar una descripción");
+        if (saldoInicial == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un saldo inicial");
             return;
         }
 
@@ -86,24 +88,19 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
-        Insumos insumo = new Insumos();
-        insumo.setCodigo(codigo);
-        insumo.setDescripcion(descripcion);
-        //insumo.setIdagencia(idAgenciaSelected);
-        //insumo.setSaldoinicial(saldoInicial);
-        //insumo.setExistencia(saldoInicial);
-        //insumo.setPrecio(precio);
-        //insumo.setTotal(precio * saldoInicial);
-        insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
-
-        Insumos response = bodegaBeanLocal.saveInsumo(insumo);
-
+        Inventario inventario = new Inventario();
+        inventario.setSaldoinicial(saldoInicial);
+        inventario.setIdagencia(idAgenciaSelected);
+        inventario.setExistencia(saldoInicial);
+        inventario.setPrecio(precio);
+        inventario.setTotal(precio * saldoInicial);
+        inventario.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        Inventario response = bodegaBeanLocal.saveInventario(inventario);
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo registrado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
-
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
@@ -114,55 +111,55 @@ public class IngresoInsumosMB implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlgAgregar').hide()");
     }
 
-    public void buscarInsumo() {
+    public void buscarInventario() {
         if (fechaInicio != null && fechaFin != null && idAgencia != null) {
             List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
             if (response != null) {
-                listinsumos = response;
+                // listinsumos = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null && fechaFin != null) {
             List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null) {
             List<Insumos> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaFin != null) {
             List<Insumos> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
             if (response != null) {
-                listinsumos = response;
+                //listinsumos = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idAgencia != null) {
             List<Insumos> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
             if (response != null) {
-                listinsumos = response;
+                // listinsumos = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else {
-            listinsumos = new ArrayList<>();
+            listInventario = new ArrayList<>();
             JsfUtil.addErrorMessage("No se encontraron datos");
         }
     }
 
     public void dialogAgregar(Insumos insumo) {
-        insumoSelected = insumo;
+        //insumoSelected = insumo;
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').show()");
     }
 
@@ -205,23 +202,37 @@ public class IngresoInsumosMB implements Serializable {
         //insumoSelected.setPrecio((precioActualizado + insumoSelected.getPrecio()) / 2);
         //insumoSelected.setExistencia(insumoSelected.getEntradas() + insumoSelected.getExistencia());
         //insumoSelected.setTotal(insumoSelected.getPrecio() * insumoSelected.getExistencia());
-        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
-        if (response != null) {
-            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
-        } else {
-            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
-        }
-
+//        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelected);
+//        if (response != null) {
+//            JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
+//        } else {
+//            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
+//        }
         idAgenciaSelected = null;
         codigo = null;
         descripcion = null;
-        insumoSelected = null;
+        inventarioSelected = null;
         saldoIngreso = null;
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
     }
 
     public void detalle(Integer id) {
         JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
+    }
+
+    public void buscarInsumo() {
+        if (codigo == null) {
+            JsfUtil.addErrorMessage("Debe ingresar un código para realizar la busqueda");
+            return;
+        }
+
+        Insumos response = bodegaBeanLocal.findInsumoByCodigo(codigo);
+        if (response != null) {
+            insumoSelected = response;
+        } else {
+            codigo = null;
+            JsfUtil.addErrorMessage("No se encontraron datos");
+        }
     }
 
     /*Metodos getters y setters*/
@@ -257,14 +268,6 @@ public class IngresoInsumosMB implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public List<Insumos> getListinsumos() {
-        return listinsumos;
-    }
-
-    public void setListinsumos(List<Insumos> listinsumos) {
-        this.listinsumos = listinsumos;
-    }
-
     public String getCodigo() {
         return codigo;
     }
@@ -287,14 +290,6 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setIdAgenciaSelected(Agencia idAgenciaSelected) {
         this.idAgenciaSelected = idAgenciaSelected;
-    }
-
-    public Insumos getInsumoSelected() {
-        return insumoSelected;
-    }
-
-    public void setInsumoSelected(Insumos insumoSelected) {
-        this.insumoSelected = insumoSelected;
     }
 
     public Integer getSaldoInicial() {
@@ -327,6 +322,30 @@ public class IngresoInsumosMB implements Serializable {
 
     public void setSaldoIngreso(Integer saldoIngreso) {
         this.saldoIngreso = saldoIngreso;
+    }
+
+    public List<Inventario> getListInventario() {
+        return listInventario;
+    }
+
+    public void setListInventario(List<Inventario> listInventario) {
+        this.listInventario = listInventario;
+    }
+
+    public Inventario getInventarioSelected() {
+        return inventarioSelected;
+    }
+
+    public void setInventarioSelected(Inventario inventarioSelected) {
+        this.inventarioSelected = inventarioSelected;
+    }
+
+    public Insumos getInsumoSelected() {
+        return insumoSelected;
+    }
+
+    public void setInsumoSelected(Insumos insumoSelected) {
+        this.insumoSelected = insumoSelected;
     }
 
 }
