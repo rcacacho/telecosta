@@ -56,6 +56,12 @@ public class RegistroUsuarioMB implements Serializable {
         String contra = md5(usuario.getPassword());
         usuario.setPassword(contra);
         usuario.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        if (usuario.getTipousuario().equals("admin")){
+            usuario.setRoot(true);
+        }else{
+            usuario.setRoot(false);
+        }
+        
         Usuario responseVerificacion = usuarioBean.saveUsuario(usuario);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Usuario registrado exitosamente");
