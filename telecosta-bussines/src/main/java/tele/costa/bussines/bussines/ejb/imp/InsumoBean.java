@@ -241,12 +241,12 @@ public class InsumoBean implements InsumoBeanLocal {
     }
 
     @Override
-    public Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo) {
+    public Inventario findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo) {
         if (idagencia == null) {
             return null;
         }
 
-        List<Insumos> lst = em.createQuery("SELECT pa FROM Insumos pa WHERE pa.idagencia.idagencia =:idagencia and pa.codigo =:codigo and pa.activo = true ", Insumos.class)
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idagencia.idagencia =:idagencia and pa.idinsumo.codigo =:codigo and pa.activo = true ", Inventario.class)
                 .setParameter("idagencia", idagencia)
                 .setParameter("codigo", codigo)
                 .getResultList();
@@ -363,6 +363,39 @@ public class InsumoBean implements InsumoBeanLocal {
             return null;
         }
         return lst.get(0);
+    }
+
+    @Override
+    public List<Inventario> listInsumoByCodigo(String codigo) {
+        if (codigo == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idinsumo.codigo =:codigo and pa.activo = true ", Inventario.class)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoByIdAgenciaAndCodigo(Integer idAgencia, String codigo) {
+        if (idAgencia == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idagencia.idagencia =:idAgencia and pa.idinsumo.codigo =:codigo and pa.activo = true ", Inventario.class)
+                .setParameter("idAgencia", idAgencia)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

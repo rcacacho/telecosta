@@ -56,7 +56,7 @@
                 <p:menuitem value="Traslados" outcome="/inventario/traslados.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Ticket de trabajo" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('bodega_central')  || loginMB.validarRoot()}">  
+            <p:submenu label="Ticket de trabajo" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('bodega_central')  || loginMB.validarRoot() || loginMB.validarRol().equals('cobros')}">  
                 <p:menuitem value="Lista" outcome="/atencion/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/atencion/registro.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Reporte" outcome="/atencion/reporte.xhtml" style="width: 90px;"/>

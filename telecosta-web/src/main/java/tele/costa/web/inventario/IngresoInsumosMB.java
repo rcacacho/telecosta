@@ -63,6 +63,8 @@ public class IngresoInsumosMB implements Serializable {
         idAgencia = null;
         fechaInicio = null;
         fechaFin = null;
+        codigoBusqueda = null;
+        listInventario = new ArrayList<>();
         cargarDatos();
     }
 
@@ -126,7 +128,15 @@ public class IngresoInsumosMB implements Serializable {
         } else if (fechaInicio != null && fechaFin != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idAgencia != null && codigoBusqueda != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgenciaAndCodigo(idAgencia, codigoBusqueda);
+            if (response != null) {
+                listInventario = response;
             } else {
                 listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
@@ -156,7 +166,7 @@ public class IngresoInsumosMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (codigoBusqueda != null) {
-            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
+            List<Inventario> response = bodegaBeanLocal.listInsumoByCodigo(codigoBusqueda);
             if (response != null) {
                 listInventario = response;
             } else {
@@ -229,6 +239,7 @@ public class IngresoInsumosMB implements Serializable {
         descripcion = null;
         inventarioSelected = null;
         saldoIngreso = null;
+        precioActualizado = 0;
         RequestContext.getCurrentInstance().execute("PF('dlgExistencia').hide()");
     }
 

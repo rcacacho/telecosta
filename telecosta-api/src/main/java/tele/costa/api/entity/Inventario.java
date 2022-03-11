@@ -54,94 +54,102 @@ public class Inventario implements Serializable {
     @Basic(optional = false)
     @Column(name = "idinventario")
     private Integer idinventario;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "saldoinicial")
     private int saldoinicial;
-    
+
     @Column(name = "entradas")
     private Integer entradas;
-    
+
     @Column(name = "salidas")
     private Integer salidas;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "existencia")
     private int existencia;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "precio")
     private float precio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "total")
     private float total;
-    
+
     @Size(max = 500)
     @Column(name = "proveedor")
     private String proveedor;
-    
+
     @Size(max = 200)
     @Column(name = "nodocumento")
     private String nodocumento;
-    
+
+    @Size(max = 100)
+    @Column(name = "nodocumentosalida")
+    private String nodocumentosalida;
+
+    @Size(max = 100)
+    @Column(name = "nodocumentotraslado")
+    private String nodocumentotraslado;
+
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
-    
+
     @Size(max = 250)
     @Column(name = "responsable")
     private String responsable;
-    
+
     @Size(max = 1000)
     @Column(name = "observacion")
     private String observacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idagencia", referencedColumnName = "idagencia")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Agencia idagencia;
-    
+
     @JoinColumn(name = "idagenciaenvio", referencedColumnName = "idagencia")
     @ManyToOne(fetch = FetchType.LAZY)
     private Agencia idagenciaenvio;
-    
+
     @JoinColumn(name = "idinsumo", referencedColumnName = "idinsumo")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Insumos idinsumo;
-    
+
     @JoinColumn(name = "idruta", referencedColumnName = "idruta")
     @ManyToOne(fetch = FetchType.LAZY)
     private Ruta idruta;
-    
+
     @JoinColumn(name = "idsectorpago", referencedColumnName = "idsectorpago")
     @ManyToOne(fetch = FetchType.LAZY)
     private Sectorpago idsectorpago;
@@ -340,6 +348,22 @@ public class Inventario implements Serializable {
         this.idsectorpago = idsectorpago;
     }
 
+    public String getNodocumentosalida() {
+        return nodocumentosalida;
+    }
+
+    public void setNodocumentosalida(String nodocumentosalida) {
+        this.nodocumentosalida = nodocumentosalida;
+    }
+
+    public String getNodocumentotraslado() {
+        return nodocumentotraslado;
+    }
+
+    public void setNodocumentotraslado(String nodocumentotraslado) {
+        this.nodocumentotraslado = nodocumentotraslado;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -364,5 +388,5 @@ public class Inventario implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Inventario[ idinventario=" + idinventario + " ]";
     }
-    
+
 }

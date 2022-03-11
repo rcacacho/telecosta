@@ -33,13 +33,18 @@
                     </p:calendar>
 
                     <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:selectOneMenu id="agencia" value="#{trasladoInsumoMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{trasladoInsumoMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
                     </p:selectOneMenu>
+                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
                         <p:commandButton value="Buscar"  
@@ -63,21 +68,21 @@
 
                 <br/>
 
-                <p:dataTable id="dt_insumo" var="ins" value="#{trasladoInsumoMB.listinsumos}"
+                <p:dataTable id="dt_insumo" var="ins" value="#{trasladoInsumoMB.listInventario}"
                              emptyMessage="No hay insumos registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="15" paginator="#{trasladoInsumoMB.listinsumos.size()>15}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{trasladoInsumoMB.listInventario.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
                     <p:column headerText="Código" width="10%" >
-                        <p:outputLabel value="#{ins.codigo}"/>
+                        <p:outputLabel value="#{ins.idinsumo.codigo}"/>
                     </p:column>
 
                     <p:column headerText="Descripción" width="25%" >
-                        <p:outputLabel value="#{ins.descripcion}"/>
+                        <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
@@ -90,6 +95,10 @@
 
                     <p:column headerText="Total" width="16%" >
                         <p:outputLabel value="#{ins.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Agencia" width="16%" >
+                        <p:outputLabel value="#{ins.idagencia.agencia}"/>
                     </p:column>
 
                     <p:column width="30%" exportable="false" >
@@ -114,22 +123,22 @@
                 <p:outputLabel  value="Código:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
 
-                <p:outputLabel  value="#{trasladoInsumoMB.insumoSelectedTraslado.codigo}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{trasladoInsumoMB.insumoSelectedTraslado.descripcion}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{trasladoInsumoMB.inventarioSelectedTraslado.idinsumo.codigo}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{trasladoInsumoMB.inventarioSelectedTraslado.codigo.descripcion}" style="font-size: 16px!important;" />
 
                 <p:outputLabel  value="Cantidad existencia:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
 
-                <p:outputLabel  value="#{trasladoInsumoMB.insumoSelectedTraslado.existencia}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{trasladoInsumoMB.insumoSelectedTraslado.precio}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{trasladoInsumoMB.inventarioSelectedTraslado.existencia}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{trasladoInsumoMB.inventarioSelectedTraslado.precio}" style="font-size: 16px!important;" />
 
                 <p:outputLabel  value="Cantidad a enviar:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Agencia:" styleClass="colorTitulo" />
 
-                <p:inputText value="#{trasladoInsumoMB.insumoSelectedTraslado.salidas}" size="25" style="font-size: 16px!important;">
+                <p:inputText value="#{trasladoInsumoMB.inventarioSelectedTraslado.salidas}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText> 
-                <p:selectOneMenu id="agencia" value="#{trasladoInsumoMB.insumoSelectedTraslado.idagenciaenvio}" style="width: 150px;" 
+                <p:selectOneMenu id="agencia" value="#{trasladoInsumoMB.inventarioSelectedTraslado.idagenciaenvio}" style="width: 150px;" 
                                  converter="entityConverter" filter="true" filterMatchMode="contains">
                     <p:ajax event="itemSelect"/>
                     <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
@@ -139,17 +148,17 @@
                 <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Responsable:" styleClass="colorTitulo" />
 
-                <p:inputText value="#{trasladoInsumoMB.insumoSelectedTraslado.nodocumento}" size="25" style="font-size: 16px!important;">
+                <p:inputText value="#{trasladoInsumoMB.inventarioSelectedTraslado.nodocumentotraslado}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText>
-                <p:inputText value="#{trasladoInsumoMB.insumoSelectedTraslado.responsable}" size="25" style="font-size: 16px!important;">
+                <p:inputText value="#{trasladoInsumoMB.inventarioSelectedTraslado.responsable}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText>
             </p:panelGrid>
 
             <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
                 <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
-                <p:inputTextarea cols="120" value="#{trasladoInsumoMB.insumoSelectedTraslado.observacion}" counter="display3" maxlength="500" 
+                <p:inputTextarea cols="120" value="#{trasladoInsumoMB.inventarioSelectedTraslado.observacion}" counter="display3" maxlength="500" 
                                  counterTemplate="{0} caracteres pendientes." autoResize="false">
                     <p:ajax event="blur" process="@this" />
                 </p:inputTextarea>

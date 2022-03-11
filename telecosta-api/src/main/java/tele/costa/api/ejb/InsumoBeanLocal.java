@@ -31,7 +31,7 @@ public interface InsumoBeanLocal {
 
     Insumos findInsumoById(Integer idinsumo);
 
-    Insumos findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo);
+    Inventario findInsumoByIdAgenciaAndCodigo(Integer idagencia, String codigo);
 
     Insumos deleteInsumo(Integer idinsumo, String usuario);
 
@@ -42,5 +42,9 @@ public interface InsumoBeanLocal {
     Inventario updateInventario(Inventario inventario);
 
     Inventario findInventarioById(Integer idinventario);
+
+    List<Inventario> listInsumoByCodigo(String codigo);
+
+    List<Inventario> listInsumoByIdAgenciaAndCodigo(Integer idAgencia, String codigo);
 
 }

@@ -39,9 +39,10 @@ public class TrasladoInsumoMB implements Serializable {
     private List<Agencia> listAgencia;
     private Date fechaInicio;
     private Date fechaFin;
-    private List<Insumos> listinsumos;
+    private List<Inventario> listInventario;
     private Integer saldoTraslado;
-    private Insumos insumoSelectedTraslado;
+    private Inventario inventarioSelectedTraslado;
+    private String codigoBusqueda;
 
     @PostConstruct
     void cargarDatos() {
@@ -52,51 +53,59 @@ public class TrasladoInsumoMB implements Serializable {
         if (fechaInicio != null && fechaFin != null && idAgencia != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null && fechaFin != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaFin != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idAgencia != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (codigoBusqueda != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByCodigo(codigoBusqueda);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else {
-            listinsumos = new ArrayList<>();
+            listInventario = new ArrayList<>();
             JsfUtil.addErrorMessage("No se encontraron datos");
         }
     }
 
-    public void dialogTraslado(Insumos insumo) {
-        insumoSelectedTraslado = insumo;
+    public void dialogTraslado(Inventario insumo) {
+        inventarioSelectedTraslado = insumo;
         RequestContext.getCurrentInstance().execute("PF('dlgTraslado').show()");
     }
 
@@ -105,61 +114,59 @@ public class TrasladoInsumoMB implements Serializable {
     }
 
     public void trasladoInsumo() throws IOException {
-//        if (insumoSelectedTraslado.getSalidas() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
-//            return;
-//        }
-//
-//        if (insumoSelectedTraslado.getIdruta() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
-//            return;
-//        }
-//
-//        if (insumoSelectedTraslado.getNodocumento() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
-//            return;
-//        }
-//
-//        if (insumoSelectedTraslado.getResponsable() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
-//            return;
-//        }
-//
-//        if (insumoSelectedTraslado.getObservacion() == null) {
-//            JsfUtil.addErrorMessage("Debe de ingresar una observación");
-//            return;
-//        }
-//
-//        if (insumoSelectedTraslado.getSalidas() > insumoSelectedTraslado.getExistencia()) {
-//            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
-//            return;
-//        }
+        if (inventarioSelectedTraslado.getSalidas() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
+            return;
+        }
 
-        //insumoSelectedTraslado.setSalidas(saldoTraslado);
-        //insumoSelectedTraslado.setExistencia(insumoSelectedTraslado.getExistencia() - insumoSelectedTraslado.getSalidas());
-        //insumoSelectedTraslado.setTotal(insumoSelectedTraslado.getPrecio() * insumoSelectedTraslado.getExistencia());
-        Insumos response = bodegaBeanLocal.updateInsumo(insumoSelectedTraslado);
+        if (inventarioSelectedTraslado.getIdruta() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una ruta");
+            return;
+        }
 
-        //Insumos insumoSuma = bodegaBeanLocal.findInsumoByIdAgenciaAndCodigo(insumoSelectedTraslado.getIdagenciaenvio().getIdagencia(), insumoSelectedTraslado.getCodigo());
-//        if (insumoSuma != null) {
-//            //insumoSuma.setEntradas(saldoTraslado);
-//            //insumoSuma.setExistencia(insumoSuma.getEntradas() + insumoSuma.getExistencia());
-//            //insumoSuma.setTotal(insumoSuma.getPrecio() * insumoSuma.getExistencia());
-//            Insumos responseUpdate = bodegaBeanLocal.updateInsumo(insumoSuma);
-//        } else {
-//            Insumos insumo = new Insumos();
-//            insumo.setCodigo(insumoSelectedTraslado.getCodigo());
-//            insumo.setDescripcion(insumoSelectedTraslado.getDescripcion());
-//            //insumo.setIdagencia(insumoSelectedTraslado.getIdagenciaenvio());
-//            insumo.setSaldoinicial(saldoTraslado);
-//            //insumo.setExistencia(saldoTraslado);
-//            //insumo.setPrecio(insumoSelectedTraslado.getPrecio());
-//            //insumo.setTotal(insumoSelectedTraslado.getPrecio() * saldoTraslado);
-//            insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
-//
-//            Insumos responseCreate = bodegaBeanLocal.saveInsumo(insumo);
-//        }
+        if (inventarioSelectedTraslado.getNodocumento() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
+            return;
+        }
 
+        if (inventarioSelectedTraslado.getResponsable() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un responsable");
+            return;
+        }
+
+        if (inventarioSelectedTraslado.getObservacion() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una observación");
+            return;
+        }
+
+        if (inventarioSelectedTraslado.getSalidas() > inventarioSelectedTraslado.getExistencia()) {
+            JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
+            return;
+        }
+
+        inventarioSelectedTraslado.setSalidas(saldoTraslado);
+        inventarioSelectedTraslado.setExistencia(inventarioSelectedTraslado.getExistencia() - inventarioSelectedTraslado.getSalidas());
+        inventarioSelectedTraslado.setTotal(inventarioSelectedTraslado.getPrecio() * inventarioSelectedTraslado.getExistencia());
+        Inventario response = bodegaBeanLocal.updateInventario(inventarioSelectedTraslado);
+
+        Inventario insumoSuma = bodegaBeanLocal.findInsumoByIdAgenciaAndCodigo(inventarioSelectedTraslado.getIdagenciaenvio().getIdagencia(), inventarioSelectedTraslado.getIdinsumo().getCodigo());
+        if (insumoSuma != null) {
+            insumoSuma.setEntradas(saldoTraslado);
+            insumoSuma.setExistencia(insumoSuma.getEntradas() + insumoSuma.getExistencia());
+            insumoSuma.setTotal(insumoSuma.getPrecio() * insumoSuma.getExistencia());
+            Inventario responseUpdate = bodegaBeanLocal.updateInventario(insumoSuma);
+        } else {
+            Inventario insumo = new Inventario();
+            insumo.setIdinsumo(inventarioSelectedTraslado.getIdinsumo());
+            insumo.setIdagencia(inventarioSelectedTraslado.getIdagenciaenvio());
+            insumo.setSaldoinicial(saldoTraslado);
+            insumo.setExistencia(saldoTraslado);
+            insumo.setPrecio(inventarioSelectedTraslado.getPrecio());
+            insumo.setTotal(inventarioSelectedTraslado.getPrecio() * saldoTraslado);
+            insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
+
+            Inventario responseCreate = bodegaBeanLocal.saveInventario(insumo);
+        }
         if (response != null) {
             JsfUtil.addSuccessMessage("Insumo trasladado exitosamente");
         } else {
@@ -167,7 +174,7 @@ public class TrasladoInsumoMB implements Serializable {
         }
 
         idAgenciaSelected = null;
-        insumoSelectedTraslado = null;
+        inventarioSelectedTraslado = null;
         RequestContext.getCurrentInstance().execute("PF('dlgTraslado').hide()");
     }
 
@@ -223,14 +230,6 @@ public class TrasladoInsumoMB implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public List<Insumos> getListinsumos() {
-        return listinsumos;
-    }
-
-    public void setListinsumos(List<Insumos> listinsumos) {
-        this.listinsumos = listinsumos;
-    }
-
     public Integer getSaldoTraslado() {
         return saldoTraslado;
     }
@@ -239,12 +238,28 @@ public class TrasladoInsumoMB implements Serializable {
         this.saldoTraslado = saldoTraslado;
     }
 
-    public Insumos getInsumoSelectedTraslado() {
-        return insumoSelectedTraslado;
+    public List<Inventario> getListInventario() {
+        return listInventario;
     }
 
-    public void setInsumoSelectedTraslado(Insumos insumoSelectedTraslado) {
-        this.insumoSelectedTraslado = insumoSelectedTraslado;
+    public void setListInventario(List<Inventario> listInventario) {
+        this.listInventario = listInventario;
+    }
+
+    public Inventario getInventarioSelectedTraslado() {
+        return inventarioSelectedTraslado;
+    }
+
+    public void setInventarioSelectedTraslado(Inventario inventarioSelectedTraslado) {
+        this.inventarioSelectedTraslado = inventarioSelectedTraslado;
+    }
+
+    public String getCodigoBusqueda() {
+        return codigoBusqueda;
+    }
+
+    public void setCodigoBusqueda(String codigoBusqueda) {
+        this.codigoBusqueda = codigoBusqueda;
     }
 
 }

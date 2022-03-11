@@ -33,15 +33,19 @@
                     </p:calendar>
 
                     <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:selectOneMenu id="agencia" value="#{salidaInsumoMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{salidaInsumoMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
                     </p:selectOneMenu>
+                    <p:inputText value="#{salidaInsumoMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 20px;">
                         <p:commandButton value="Buscar"  
                                          action="#{salidaInsumoMB.buscarInsumo()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
@@ -63,21 +67,21 @@
 
                 <br/>
 
-                <p:dataTable id="dt_insumo" var="ins" value="#{salidaInsumoMB.listinsumos}"
+                <p:dataTable id="dt_insumo" var="ins" value="#{salidaInsumoMB.listInventario}"
                              emptyMessage="No hay insumos registrados" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
-                             rows="15" paginator="#{salidaInsumoMB.listinsumos.size()>15}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{salidaInsumoMB.listInventario.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
                     </p:column>
 
                     <p:column headerText="Código" width="10%" >
-                        <p:outputLabel value="#{ins.codigo}"/>
+                        <p:outputLabel value="#{ins.idinsumo.codigo}"/>
                     </p:column>
 
                     <p:column headerText="Descripción" width="25%" >
-                        <p:outputLabel value="#{ins.descripcion}"/>
+                        <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
@@ -90,6 +94,10 @@
 
                     <p:column headerText="Total" width="16%" >
                         <p:outputLabel value="#{ins.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Agencia" width="16%" >
+                        <p:outputLabel value="#{ins.idagencia.agencia}"/>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
@@ -114,14 +122,14 @@
                 <p:outputLabel  value="Código:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
 
-                <p:outputLabel  value="#{salidaInsumoMB.insumoSelectedSalida.codigo}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{salidaInsumoMB.insumoSelectedSalida.descripcion}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.codigo}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.descripcion}" style="font-size: 16px!important;" />
 
                 <p:outputLabel  value="Cantidad existencia:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
 
-                <p:outputLabel  value="#{salidaInsumoMB.insumoSelectedSalida.existencia}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{salidaInsumoMB.insumoSelectedSalida.precio}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.existencia}" style="font-size: 16px!important;" />
+                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.precio}" style="font-size: 16px!important;" />
 
                 <p:outputLabel  value="Cantidad a salida:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Ruta:" styleClass="colorTitulo" />
@@ -129,7 +137,7 @@
                 <p:inputText value="#{salidaInsumoMB.saldoSalida}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText> 
-                <p:selectOneMenu id="ruta" value="#{salidaInsumoMB.insumoSelectedSalida.idruta}" style="width: 150px;" 
+                <p:selectOneMenu id="ruta" value="#{salidaInsumoMB.inventarioSelectedSalida.idruta}" style="width: 150px;" 
                                  converter="entityConverter" filter="true" filterMatchMode="contains">
                     <p:ajax event="itemSelect"/>
                     <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
@@ -139,17 +147,17 @@
                 <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
                 <p:outputLabel  value="Responsable:" styleClass="colorTitulo" />
 
-                <p:inputText value="#{salidaInsumoMB.insumoSelectedSalida.nodocumento}" size="25" style="font-size: 16px!important;">
+                <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.nodocumentosalida}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText>
-                <p:inputText value="#{salidaInsumoMB.insumoSelectedSalida.responsable}" size="25" style="font-size: 16px!important;">
+                <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.responsable}" size="25" style="font-size: 16px!important;">
                     <p:ajax event="blur" process="@this"/>
                 </p:inputText>
             </p:panelGrid>
 
             <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
                 <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
-                <p:inputTextarea cols="120" value="#{salidaInsumoMB.insumoSelectedSalida.observacion}" counter="display2" maxlength="500" 
+                <p:inputTextarea cols="120" value="#{salidaInsumoMB.inventarioSelectedSalida    .observacion}" counter="display2" maxlength="500" 
                                  counterTemplate="{0} caracteres pendientes." autoResize="false">
                     <p:ajax event="blur" process="@this" />
                 </p:inputTextarea>

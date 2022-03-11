@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
-import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Ruta;
 import telecosta.web.utils.JsfUtil;
 import tele.costa.api.ejb.InsumoBeanLocal;
@@ -43,6 +42,7 @@ public class SalidaInsumoMB implements Serializable {
     private Inventario inventarioSelectedSalida;
     private List<Ruta> listRuta;
     private Integer saldoSalida;
+    private String codigoBusqueda;
 
     @PostConstruct
     void cargarDatos() {
@@ -102,6 +102,7 @@ public class SalidaInsumoMB implements Serializable {
 
         idAgenciaSelected = null;
         inventarioSelectedSalida = null;
+        saldoSalida = null;
         RequestContext.getCurrentInstance().execute("PF('dlgSalida').hide()");
     }
 
@@ -109,45 +110,61 @@ public class SalidaInsumoMB implements Serializable {
         if (fechaInicio != null && fechaFin != null && idAgencia != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFinAndIdAgencia(fechaInicio, fechaFin, idAgencia);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null && fechaFin != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicio, fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idAgencia != null && codigoBusqueda != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgenciaAndCodigo(idAgencia, codigoBusqueda);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicio != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicio);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaFin != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByFechaFin(fechaFin);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idAgencia != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByIdAgencia(idAgencia);
             if (response != null) {
-                //listinsumos = response;
+                listInventario = response;
             } else {
-                listinsumos = new ArrayList<>();
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (codigoBusqueda != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByCodigo(codigoBusqueda);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else {
-            listinsumos = new ArrayList<>();
+            listInventario = new ArrayList<>();
             JsfUtil.addErrorMessage("No se encontraron datos");
         }
     }
@@ -156,6 +173,8 @@ public class SalidaInsumoMB implements Serializable {
         idAgencia = null;
         fechaInicio = null;
         fechaFin = null;
+        codigoBusqueda = null;
+        listInventario = new ArrayList<>();
         cargarDatos();
     }
 
@@ -204,20 +223,20 @@ public class SalidaInsumoMB implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public List<Insumos> getListinsumos() {
-        return listinsumos;
+    public List<Inventario> getListInventario() {
+        return listInventario;
     }
 
-    public void setListinsumos(List<Insumos> listinsumos) {
-        this.listinsumos = listinsumos;
+    public void setListInventario(List<Inventario> listInventario) {
+        this.listInventario = listInventario;
     }
 
-    public Insumos getInsumoSelectedSalida() {
-        return insumoSelectedSalida;
+    public Inventario getInventarioSelectedSalida() {
+        return inventarioSelectedSalida;
     }
 
-    public void setInsumoSelectedSalida(Insumos insumoSelectedSalida) {
-        this.insumoSelectedSalida = insumoSelectedSalida;
+    public void setInventarioSelectedSalida(Inventario inventarioSelectedSalida) {
+        this.inventarioSelectedSalida = inventarioSelectedSalida;
     }
 
     public List<Ruta> getListRuta() {
@@ -234,6 +253,14 @@ public class SalidaInsumoMB implements Serializable {
 
     public void setSaldoSalida(Integer saldoSalida) {
         this.saldoSalida = saldoSalida;
+    }
+
+    public String getCodigoBusqueda() {
+        return codigoBusqueda;
+    }
+
+    public void setCodigoBusqueda(String codigoBusqueda) {
+        this.codigoBusqueda = codigoBusqueda;
     }
 
 }

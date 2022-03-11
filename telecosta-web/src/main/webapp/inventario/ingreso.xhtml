@@ -33,7 +33,7 @@
                     </p:calendar>
 
                     <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Código"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:selectOneMenu id="agencia" value="#{ingresoInsumosMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
@@ -83,6 +83,14 @@
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Código" width="10%" >
+                        <p:outputLabel value="#{ins.idinsumo.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Descripción" width="25%" >
+                        <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
