@@ -73,8 +73,8 @@
                              emptyMessage="No hay clientes registrados" editable="true"
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="15" paginator="#{listaClienteMB.listCliente.size()>15}"  paginatorPosition="bottom">
-                    
-                        <p:ajax event="rowEdit" listener="#{listaClienteMB.onRowEdit}" update="dt_cliente" />
+
+                    <p:ajax event="rowEdit" listener="#{listaClienteMB.onRowEdit}" update="dt_cliente" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -114,7 +114,21 @@
                                 </p:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
+                    </p:column>
 
+                    <p:column headerText="Configuración pago" width="20%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idconfiguracionpago.descripcion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="conf" value="#{col.idconfiguracionpago}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="(selecciona una configuración)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaClienteMB.listConfiguracionPago}"  var="mun" itemLabel="#{mun.descripcion} - #{mun.valor}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Fecha Inicio Servicio" width="22%" >
@@ -133,6 +147,10 @@
                         <p:column headerText="Editar" width="8%">
                             <p:rowEditor />
                         </p:column>
+
+                        <p:commandButton value="Ticket" 
+                                         style="" process="@this" styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
+                                         action="#{listaClienteMB.ticketCliente(col.idcliente)}" update="@form"/>
 
                         <p:commandButton value="Suspender" 
                                          style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"

@@ -16,6 +16,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
@@ -46,6 +47,7 @@ public class ListaClienteMB implements Serializable {
     private List<Municipio> listMunicipios;
     private String motivoCorte;
     private Cliente clienteSelected;
+    private List<Configuracionpago> listConfiguracionPago;
 
     public ListaClienteMB() {
     }
@@ -63,6 +65,7 @@ public class ListaClienteMB implements Serializable {
         }
 
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
+        listConfiguracionPago = catalogoBean.ListConfiguracionPago();
     }
 
     public void buscarCliente() {
@@ -208,6 +211,10 @@ public class ListaClienteMB implements Serializable {
         }
     }
 
+    public void ticketCliente(Integer id) {
+        JsfUtil.redirectTo("/atencion/registroCliente.xhtml?idcliente=" + id);
+    }
+    
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {
         return listCliente;
@@ -263,6 +270,14 @@ public class ListaClienteMB implements Serializable {
 
     public void setMotivoCorte(String motivoCorte) {
         this.motivoCorte = motivoCorte;
+    }
+
+    public List<Configuracionpago> getListConfiguracionPago() {
+        return listConfiguracionPago;
+    }
+
+    public void setListConfiguracionPago(List<Configuracionpago> listConfiguracionPago) {
+        this.listConfiguracionPago = listConfiguracionPago;
     }
 
 }
