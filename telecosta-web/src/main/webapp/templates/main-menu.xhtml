@@ -38,10 +38,10 @@
                 <p:menuitem value="Reporte" outcome="/reportes/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
 
-            <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}" >  
-                <p:menuitem value="Configuración pago" outcome="/configuracion/lista.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Configuración compra" outcome="/configuracion/compra/lista.xhtml" style="width: 90px;"/>
-                <p:menuitem value="Insumos" outcome="/configuracion/insumos/lista.xhtml" style="width: 90px;"/>
+            <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRol().equals('bodega_central') || loginMB.validarRoot()}" >  
+                <p:menuitem value="Configuración pago" outcome="/configuracion/lista.xhtml" style="width: 90px;" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}"/>
+                <p:menuitem value="Configuración compra" outcome="/configuracion/compra/lista.xhtml" style="width: 90px;" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}"/>
+                <p:menuitem value="Insumos" outcome="/configuracion/insumos/lista.xhtml" style="width: 90px;" rendered="#{loginMB.validarRol().equals('bodega_central') || loginMB.validarRoot()}"/>
             </p:submenu>
 
             <p:submenu label="Compras" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRoot()}">  
