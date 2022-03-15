@@ -36,11 +36,31 @@ public class ReporteInventarioMB implements Serializable {
     private Boolean mostrarTraslado;
     private List<Agencia> listAgencia;
 
+    public ReporteInventarioMB() {
+        mostrarIngreso = Boolean.FALSE;
+        mostrarSalida = Boolean.FALSE;
+        mostrarTraslado = Boolean.FALSE;
+    }
+
     @PostConstruct
     void cargarDatos() {
         listAgencia = catalogoBean.listAgencias();
     }
-    
+
+    public void cargarIngreso() {
+        if (tipoCarga.equals("Ingreso")) {
+            mostrarIngreso = Boolean.TRUE;
+        } else if (tipoCarga.equals("")) {
+            mostrarSalida = Boolean.TRUE;
+        } else if (tipoCarga.equals("")) {
+            mostrarTraslado = Boolean.TRUE;
+        }
+    }
+
+    public void cargarSalida() {
+
+    }
+
     /*Metodos getters y setters*/
     public String getTipoCarga() {
         return tipoCarga;
@@ -105,7 +125,5 @@ public class ReporteInventarioMB implements Serializable {
     public void setListAgencia(List<Agencia> listAgencia) {
         this.listAgencia = listAgencia;
     }
-    
-    
 
 }

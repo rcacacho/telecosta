@@ -18,12 +18,13 @@
                     <h1 style="margin: 0 0 0 0;">Reportes de Bodega</h1>            
                 </ui:define>
 
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                <p:panelGrid id="pgFiltro" columns="2"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Tipo carga:"  styleClass="field-label"  />
                     <p:outputLabel value="Agencia:"  styleClass="field-label"  />
 
                     <p:selectOneMenu id="tipoCl" value="#{reporteInventarioMB.tipoCarga}" style="width:250px;" 
                                      filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect" listener="#{reporteInventarioMB.cargarIngreso()}" update="@form"/>
                         <f:selectItem itemLabel="(selecciona un tipo de carga)" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="Ingreso" itemValue="Ingreso" />
                         <f:selectItem itemLabel="Salida" itemValue="Salida" />
@@ -69,9 +70,18 @@
                 </p:panelGrid>
 
                 <p:panelGrid id="pgIngreso" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
-                    <p:outputLabel value="No. documento:"  styleClass="field-label"  />
+                    <p:outputLabel id="labdoc" value="No. documento:"  styleClass="field-label"  />
                     <p:outputLabel value="Insumo:"  styleClass="field-label"  />
 
+                    <p:inputText id="txtdoc" value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                </p:panelGrid>
+
+                <p:panelGrid id="pgIngresoFechas" columns="2"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
 
@@ -84,7 +94,9 @@
                                  value="#{reporteCajaMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+                <p:panelGrid id="pgIngresoSave" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
                     <p:commandButton value="PDF" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
@@ -98,6 +110,7 @@
                         <p:fileDownload value="#{reporteCompraMB.imprimirExcelCompra()}"/>
                     </p:commandButton>
                 </p:panelGrid>
+
 
                 <p:panelGrid id="pgSalida" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Insumo:"  styleClass="field-label"  />
