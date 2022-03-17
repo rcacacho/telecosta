@@ -33,9 +33,9 @@
 
                     <p:selectOneMenu id="agenciadi" value="#{reporteInventarioMB.idAgencia}" style="width: 250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
-                        <p:ajax event="itemSelect"/>
+                        <p:ajax event="itemSelect" listener="#{reporteInventarioMB.cargarIngreso()}" update="@form"/>
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen}"/>
+                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen.idagencia}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Mes:"  styleClass="field-label"  />
@@ -43,6 +43,7 @@
 
                     <p:selectOneMenu id="mes" value="#{reporteInventarioMB.mes}" style="width:250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect" listener="#{reporteInventarioMB.cargarIngreso()}" update="@form"/>
                         <f:selectItem itemLabel="(selecciona un mes)" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="Enero" itemValue="Enero" />
                         <f:selectItem itemLabel="Febrero" itemValue="Febrero" />
@@ -60,6 +61,7 @@
 
                     <p:selectOneMenu id="anio" value="#{reporteInventarioMB.anio}" style="width:250px;" 
                                      filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect" listener="#{reporteInventarioMB.cargarIngreso()}" update="@form"/>
                         <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="2020" itemValue="2020" />
                         <f:selectItem itemLabel="2021" itemValue="2021" />
@@ -69,31 +71,35 @@
                     </p:selectOneMenu>
                 </p:panelGrid>
 
-                <p:panelGrid id="pgIngreso" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
+                <p:panelGrid id="pgIngreso" columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
                     <p:outputLabel id="labdoc" value="No. documento:"  styleClass="field-label"  />
-                    <p:outputLabel value="Insumo:"  styleClass="field-label"  />
-
                     <p:inputText id="txtdoc" value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
-                        <p:ajax event="blur" process="@this"/>
-                    </p:inputText>
-                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
 
-                <p:panelGrid id="pgIngresoFechas" columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                <p:panelGrid id="pgIngresoFechas" columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngresoFechaInicio}">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
-                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
 
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteCajaMB.fechaInicio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngresoFechaFin}">
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteCajaMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
+
+                <p:panelGrid  columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngresoInsumo}">
+                    <p:outputLabel value="Insumo:"  styleClass="field-label"  />
+                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
                 </p:panelGrid>
 
                 <p:panelGrid id="pgIngresoSave" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
@@ -112,23 +118,37 @@
                 </p:panelGrid>
 
 
-                <p:panelGrid id="pgSalida" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                <p:panelGrid id="pgSalida" columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Insumo:"  styleClass="field-label"  />
+                    <p:inputText  value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                </p:panelGrid>
+
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="No. documento:"  styleClass="field-label"  />
+                    <p:inputText  value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                </p:panelGrid>
 
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
-                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
-
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteCajaMB.fechaInicio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteCajaMB.fechaFin}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:commandButton value="PDF" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 

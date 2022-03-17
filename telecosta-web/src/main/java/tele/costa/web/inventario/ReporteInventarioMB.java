@@ -32,6 +32,9 @@ public class ReporteInventarioMB implements Serializable {
     private Integer idAgencia;
     private Integer anio;
     private Boolean mostrarIngreso;
+    private Boolean mostrarIngresoFechaInicio;
+    private Boolean mostrarIngresoFechaFin;
+    private Boolean mostrarIngresoInsumo;
     private Boolean mostrarSalida;
     private Boolean mostrarTraslado;
     private List<Agencia> listAgencia;
@@ -40,6 +43,9 @@ public class ReporteInventarioMB implements Serializable {
         mostrarIngreso = Boolean.FALSE;
         mostrarSalida = Boolean.FALSE;
         mostrarTraslado = Boolean.FALSE;
+        mostrarIngresoFechaInicio = Boolean.FALSE;
+        mostrarIngresoFechaFin = Boolean.FALSE;
+        mostrarIngresoInsumo = Boolean.FALSE;
     }
 
     @PostConstruct
@@ -49,16 +55,54 @@ public class ReporteInventarioMB implements Serializable {
 
     public void cargarIngreso() {
         if (tipoCarga.equals("Ingreso")) {
+            if (idAgencia != null) {
+                mostrarIngresoFechaInicio = Boolean.TRUE;
+            }
+
+            if (mes != null) {
+                mostrarIngresoFechaFin = Boolean.TRUE;
+            }
+
+            if (anio != null) {
+                mostrarIngresoInsumo = Boolean.TRUE;
+            }
+
             mostrarIngreso = Boolean.TRUE;
-        } else if (tipoCarga.equals("")) {
+        } else {
+            mostrarIngreso = Boolean.FALSE;
+        }
+
+        if (tipoCarga.equals("Salida")) {
             mostrarSalida = Boolean.TRUE;
-        } else if (tipoCarga.equals("")) {
+        } else {
+            mostrarSalida = Boolean.FALSE;
+        }
+
+        if (tipoCarga.equals("Envio")) {
             mostrarTraslado = Boolean.TRUE;
+        } else {
+            mostrarTraslado = Boolean.FALSE;
         }
     }
 
-    public void cargarSalida() {
+    public void cargarAgencia() {
+        if (tipoCarga.equals("Ingreso")) {
+            mostrarIngreso = Boolean.TRUE;
+        } else {
+            mostrarIngreso = Boolean.FALSE;
+        }
 
+        if (tipoCarga.equals("Salida")) {
+            mostrarSalida = Boolean.TRUE;
+        } else {
+            mostrarSalida = Boolean.FALSE;
+        }
+
+        if (tipoCarga.equals("Envio")) {
+            mostrarTraslado = Boolean.TRUE;
+        } else {
+            mostrarTraslado = Boolean.FALSE;
+        }
     }
 
     /*Metodos getters y setters*/
@@ -124,6 +168,30 @@ public class ReporteInventarioMB implements Serializable {
 
     public void setListAgencia(List<Agencia> listAgencia) {
         this.listAgencia = listAgencia;
+    }
+
+    public Boolean getMostrarIngresoFechaInicio() {
+        return mostrarIngresoFechaInicio;
+    }
+
+    public void setMostrarIngresoFechaInicio(Boolean mostrarIngresoFechaInicio) {
+        this.mostrarIngresoFechaInicio = mostrarIngresoFechaInicio;
+    }
+
+    public Boolean getMostrarIngresoFechaFin() {
+        return mostrarIngresoFechaFin;
+    }
+
+    public void setMostrarIngresoFechaFin(Boolean mostrarIngresoFechaFin) {
+        this.mostrarIngresoFechaFin = mostrarIngresoFechaFin;
+    }
+
+    public Boolean getMostrarIngresoInsumo() {
+        return mostrarIngresoInsumo;
+    }
+
+    public void setMostrarIngresoInsumo(Boolean mostrarIngresoInsumo) {
+        this.mostrarIngresoInsumo = mostrarIngresoInsumo;
     }
 
 }

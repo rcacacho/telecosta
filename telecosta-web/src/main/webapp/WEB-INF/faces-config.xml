@@ -8,5 +8,8 @@
         <locale-config>
             <default-locale>es_GT</default-locale>            
         </locale-config>
+        <navigation-handler>
+            org.primefaces.mobile.application.MobileNavigationHandler
+        </navigation-handler>
     </application>
 </faces-config>
