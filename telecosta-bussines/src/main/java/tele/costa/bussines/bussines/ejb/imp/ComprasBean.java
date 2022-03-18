@@ -131,7 +131,7 @@ public class ComprasBean implements ComprasBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaInicio);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.activo = true", Compra.class)
                 .setParameter("fechainicio", fechaInicio)
                 .getResultList();
 
@@ -157,7 +157,7 @@ public class ComprasBean implements ComprasBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaFin);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra <= :fechafin ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra <= :fechafin and pa.activo = true", Compra.class)
                 .setParameter("fechacompra", fechaFin)
                 .getResultList();
 
@@ -191,7 +191,7 @@ public class ComprasBean implements ComprasBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin and pa.activo = true ", Compra.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .getResultList();
@@ -263,7 +263,7 @@ public class ComprasBean implements ComprasBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaInicio);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.idtipocompra.idtipocompra =:idTipoCompra ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true", Compra.class)
                 .setParameter("fechainicio", fechaInicio)
                 .setParameter("idTipoCompra", idTipoCompra)
                 .getResultList();
@@ -290,8 +290,9 @@ public class ComprasBean implements ComprasBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaFin);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra <= :fechafin and pa.idtipocompra.idtipocompra =:idTipoCompra ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra <= :fechafin and pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true", Compra.class)
                 .setParameter("fechacompra", fechaFin)
+                .setParameter("idTipoCompra", idTipoCompra)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -324,7 +325,7 @@ public class ComprasBean implements ComprasBeanLocal {
         sdf.format(fechaInicio);
         sdf.format(fechaFin);
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin and pa.idtipocompra.idtipocompra =:idTipoCompra ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.fechacompra >= :fechainicio and pa.fechacompra <= :fechafin and pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true", Compra.class)
                 .setParameter("fechainicio", fechaInicio)
                 .setParameter("fechafin", fechaFin)
                 .setParameter("idTipoCompra", idTipoCompra)
@@ -342,14 +343,14 @@ public class ComprasBean implements ComprasBeanLocal {
             return null;
         }
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.idtipocompra.idtipocompra =:idTipoCompra ", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true ", Compra.class)
                 .setParameter("idTipoCompra", idTipoCompra)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
             return null;
         }
-        return lst;
+        return lst; 
     }
 
 }
