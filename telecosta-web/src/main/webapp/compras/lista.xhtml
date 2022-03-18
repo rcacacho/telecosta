@@ -31,17 +31,26 @@
                                 value="#{listaCompraMB.fechaFin}" navigator="true">  
                     </p:calendar>
 
-                    <p:outputLabel value=""   />
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                    <p:outputLabel value="Tipo compra:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:selectOneMenu id="tipocompra" value="#{listaCompraMB.idTipoCompra}" style="width: 70%" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un tipo)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaCompraMB.listTipoCompra}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip.idtipocompra}"/>
+                    </p:selectOneMenu>
+
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 10px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{listaCompraMB.buscarCliente()}" 
+                                         action="#{listaCompraMB.buscarCompra()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
                                          id="btn_buscar"  icon="ui-icon-search"
                                          update="frm_content"
                                          onstart="start();" oncomplete="stop();"/>
-                        
+
                         <p:commandButton value="Limpiar" 
                                          action="#{listaCompraMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"

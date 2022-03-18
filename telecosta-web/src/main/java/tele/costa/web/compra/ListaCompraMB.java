@@ -40,6 +40,7 @@ public class ListaCompraMB implements Serializable {
     private List<Proveedor> listProveedor;
     private List<Tipodocumentocompra> listTipoDocumento;
     private List<Formapago> listFormaPago;
+    private Integer idTipoCompra;
 
     @PostConstruct
     void cargarDatos() {
@@ -51,8 +52,32 @@ public class ListaCompraMB implements Serializable {
     }
 
     public void buscarCompra() {
-        if (fechaInicio != null && fechaFin != null) {
+        if (fechaInicio != null && fechaFin != null && idTipoCompra > 0) {
+            List<Compra> response = compraBean.listCompraByFechaInicioFechaFinAndTipoCompra(fechaInicio, fechaFin, idTipoCompra);
+            if (response != null) {
+                listCompra = response;
+            } else {
+                listCompra = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicio != null && fechaFin != null) {
             List<Compra> response = compraBean.listCompraByFechaInicioFechaFin(fechaInicio, fechaFin);
+            if (response != null) {
+                listCompra = response;
+            } else {
+                listCompra = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicio != null && fechaFin == null && idTipoCompra > 0) {
+            List<Compra> response = compraBean.listCompraByFechaInicioAndTipoCompra(fechaInicio, idTipoCompra);
+            if (response != null) {
+                listCompra = response;
+            } else {
+                listCompra = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicio == null && fechaFin != null && idTipoCompra > 0) {
+            List<Compra> response = compraBean.listCompraByFechaFinAndTipoCompra(fechaFin, idTipoCompra);
             if (response != null) {
                 listCompra = response;
             } else {
@@ -75,6 +100,14 @@ public class ListaCompraMB implements Serializable {
                 listCompra = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
+        } else if (idTipoCompra > 0) {
+            List<Compra> response = compraBean.listCompraByidTipoCompra(idTipoCompra);
+            if (response != null) {
+                listCompra = response;
+            } else {
+                listCompra = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
         } else {
             listCompra = new ArrayList<>();
             JsfUtil.addErrorMessage("No se encontraron datos");
@@ -84,6 +117,8 @@ public class ListaCompraMB implements Serializable {
     public void limpiarCampos() {
         fechaInicio = null;
         fechaFin = null;
+        idTipoCompra = null;
+        cargarDatos();
     }
 
     public void detalle(Integer id) {
@@ -178,6 +213,14 @@ public class ListaCompraMB implements Serializable {
 
     public void setListFormaPago(List<Formapago> listFormaPago) {
         this.listFormaPago = listFormaPago;
+    }
+
+    public Integer getIdTipoCompra() {
+        return idTipoCompra;
+    }
+
+    public void setIdTipoCompra(Integer idTipoCompra) {
+        this.idTipoCompra = idTipoCompra;
     }
 
 }
