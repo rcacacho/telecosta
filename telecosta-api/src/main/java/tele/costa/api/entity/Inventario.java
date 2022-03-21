@@ -154,6 +154,10 @@ public class Inventario implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Sectorpago idsectorpago;
 
+    @JoinColumn(name = "idtipocarga", referencedColumnName = "idtipocarga")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tipocarga idtipocarga;
+
     public Inventario() {
     }
 
@@ -362,6 +366,14 @@ public class Inventario implements Serializable {
 
     public void setNodocumentotraslado(String nodocumentotraslado) {
         this.nodocumentotraslado = nodocumentotraslado;
+    }
+
+    public Tipocarga getIdtipocarga() {
+        return idtipocarga;
+    }
+
+    public void setIdtipocarga(Tipocarga idtipocarga) {
+        this.idtipocarga = idtipocarga;
     }
 
     @Override

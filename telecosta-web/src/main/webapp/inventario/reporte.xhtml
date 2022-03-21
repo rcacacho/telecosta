@@ -73,7 +73,7 @@
 
                 <p:panelGrid id="pgIngreso" columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
                     <p:outputLabel id="labdoc" value="No. documento:"  styleClass="field-label"  />
-                    <p:inputText id="txtdoc" value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                    <p:inputText id="txtdoc" value="#{reporteInventarioMB.numeroDocumentoIngreso}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
@@ -82,7 +82,7 @@
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
 
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaInicio}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaInicioIngreso}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
                 </p:panelGrid>
@@ -90,14 +90,14 @@
                 <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngresoFechaFin}">
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaFin}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaFinIngreso}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
                 </p:panelGrid>
 
                 <p:panelGrid  columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngresoInsumo}">
                     <p:outputLabel value="Insumo:"  styleClass="field-label"  />
-                    <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                    <p:inputText value="#{reporteInventarioMB.insumoIngreso}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
@@ -120,14 +120,14 @@
 
                 <p:panelGrid id="pgSalida" columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Insumo:"  styleClass="field-label"  />
-                    <p:inputText  value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                    <p:inputText  value="#{reporteInventarioMB.insumoSalida}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
 
                 <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="No. documento:"  styleClass="field-label"  />
-                    <p:inputText  value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                    <p:inputText  value="#{reporteInventarioMB.numeroDocumentoSalida}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
@@ -135,7 +135,7 @@
                 <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaInicio}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaInicioIngreso}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
                 </p:panelGrid>
@@ -143,7 +143,7 @@
                 <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaFin}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaFinSalida}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
                 </p:panelGrid>
@@ -168,12 +168,12 @@
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
 
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaInicio}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaInicioEnvio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteCajaMB.fechaFin}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaFinEnvio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
 

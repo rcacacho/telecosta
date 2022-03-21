@@ -1,6 +1,7 @@
 package tele.costa.web.inventario;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -38,6 +39,16 @@ public class ReporteInventarioMB implements Serializable {
     private Boolean mostrarSalida;
     private Boolean mostrarTraslado;
     private List<Agencia> listAgencia;
+    private String numeroDocumentoIngreso;
+    private Date fechaInicioIngreso;
+    private Date fechaFinIngreso;
+    private String insumoIngreso;
+    private String insumoSalida;
+    private String numeroDocumentoSalida;
+    private Date fechaInicioSalida;
+    private Date fechaFinSalida;
+    private Date fechaInicioEnvio;
+    private Date fechaFinEnvio;
 
     public ReporteInventarioMB() {
         mostrarIngreso = Boolean.FALSE;
@@ -103,6 +114,30 @@ public class ReporteInventarioMB implements Serializable {
         } else {
             mostrarTraslado = Boolean.FALSE;
         }
+    }
+    
+    public void imprimirReporteIngresoPdf(){
+        
+    }
+    
+    public void imprimirReporteIngresoExcel(){
+        
+    }
+    
+    public void imprimirReporteSalidaPdf(){
+        
+    }
+    
+    public void imprimirReporteSalidaExcel(){
+        
+    }
+    
+    public void imprimirReporteEnvioPdf(){
+        
+    }
+    
+    public void imprimirReporteEnvioExcel(){
+        
     }
 
     /*Metodos getters y setters*/
@@ -192,6 +227,86 @@ public class ReporteInventarioMB implements Serializable {
 
     public void setMostrarIngresoInsumo(Boolean mostrarIngresoInsumo) {
         this.mostrarIngresoInsumo = mostrarIngresoInsumo;
+    }
+
+    public String getNumeroDocumentoIngreso() {
+        return numeroDocumentoIngreso;
+    }
+
+    public void setNumeroDocumentoIngreso(String numeroDocumentoIngreso) {
+        this.numeroDocumentoIngreso = numeroDocumentoIngreso;
+    }
+
+    public Date getFechaInicioIngreso() {
+        return fechaInicioIngreso;
+    }
+
+    public void setFechaInicioIngreso(Date fechaInicioIngreso) {
+        this.fechaInicioIngreso = fechaInicioIngreso;
+    }
+
+    public Date getFechaFinIngreso() {
+        return fechaFinIngreso;
+    }
+
+    public void setFechaFinIngreso(Date fechaFinIngreso) {
+        this.fechaFinIngreso = fechaFinIngreso;
+    }
+
+    public String getInsumoIngreso() {
+        return insumoIngreso;
+    }
+
+    public void setInsumoIngreso(String insumoIngreso) {
+        this.insumoIngreso = insumoIngreso;
+    }
+
+    public String getInsumoSalida() {
+        return insumoSalida;
+    }
+
+    public void setInsumoSalida(String insumoSalida) {
+        this.insumoSalida = insumoSalida;
+    }
+
+    public String getNumeroDocumentoSalida() {
+        return numeroDocumentoSalida;
+    }
+
+    public void setNumeroDocumentoSalida(String numeroDocumentoSalida) {
+        this.numeroDocumentoSalida = numeroDocumentoSalida;
+    }
+
+    public Date getFechaInicioSalida() {
+        return fechaInicioSalida;
+    }
+
+    public void setFechaInicioSalida(Date fechaInicioSalida) {
+        this.fechaInicioSalida = fechaInicioSalida;
+    }
+
+    public Date getFechaFinSalida() {
+        return fechaFinSalida;
+    }
+
+    public void setFechaFinSalida(Date fechaFinSalida) {
+        this.fechaFinSalida = fechaFinSalida;
+    }
+
+    public Date getFechaInicioEnvio() {
+        return fechaInicioEnvio;
+    }
+
+    public void setFechaInicioEnvio(Date fechaInicioEnvio) {
+        this.fechaInicioEnvio = fechaInicioEnvio;
+    }
+
+    public Date getFechaFinEnvio() {
+        return fechaFinEnvio;
+    }
+
+    public void setFechaFinEnvio(Date fechaFinEnvio) {
+        this.fechaFinEnvio = fechaFinEnvio;
     }
 
 }

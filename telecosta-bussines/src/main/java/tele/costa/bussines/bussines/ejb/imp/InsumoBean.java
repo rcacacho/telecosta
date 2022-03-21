@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
 import tele.costa.api.entity.Insumos;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Bitacorainventario;
 import tele.costa.api.entity.Inventario;
 
 /**
@@ -396,6 +397,26 @@ public class InsumoBean implements InsumoBeanLocal {
             return null;
         }
         return lst;
+    }
+
+    @Override
+    public Bitacorainventario saveBitacoraInventario(Bitacorainventario bitacora) {
+         try {
+            bitacora.setActivo(true);
+            bitacora.setFechacreacion(new Date());
+            em.persist(bitacora);
+            em.flush();
+            return (bitacora);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
     }
 
 }

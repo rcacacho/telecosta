@@ -17,7 +17,10 @@ import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Bitacorainventario;
 import tele.costa.api.entity.Inventario;
+import tele.costa.api.entity.Tipocarga;
+import tele.costa.api.enums.TipoCargaEnum;
 
 /**
  *
@@ -168,6 +171,21 @@ public class TrasladoInsumoMB implements Serializable {
             Inventario responseCreate = bodegaBeanLocal.saveInventario(insumo);
         }
         if (response != null) {
+            Tipocarga tipo = catalogoBean.findTipoCarga(TipoCargaEnum.ENVIOS.getId());
+            Bitacorainventario bitacora = new Bitacorainventario();
+            bitacora.setCantidad(saldoTraslado);
+            bitacora.setCodigo(inventarioSelectedTraslado.getIdinsumo().getCodigo());
+            bitacora.setDescripcion(inventarioSelectedTraslado.getIdinsumo().getDescripcion());
+            bitacora.setDocumento(inventarioSelectedTraslado.getNodocumento());
+            bitacora.setFecha(inventarioSelectedTraslado.getFecha());
+            bitacora.setIdagencia(inventarioSelectedTraslado.getIdagencia());
+            bitacora.setIdtipocarga(tipo);
+            bitacora.setPreciounitario(inventarioSelectedTraslado.getPrecio());
+            bitacora.setProveedor(inventarioSelectedTraslado.getProveedor());
+            bitacora.setTotal(inventarioSelectedTraslado.getTotal());
+            bitacora.setDestino(inventarioSelectedTraslado.getIdagenciaenvio().getAgencia());
+            bitacora.setUsuariocreacion(SesionUsuarioMB.getUserName());
+            Bitacorainventario bitacoraSave = bodegaBeanLocal.saveBitacoraInventario(bitacora);
             JsfUtil.addSuccessMessage("Insumo trasladado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");

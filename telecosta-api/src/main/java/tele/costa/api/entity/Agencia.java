@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Agencia.findByActivo", query = "SELECT a FROM Agencia a WHERE a.activo = :activo")})
 public class Agencia implements Serializable {
 
+    @OneToMany(mappedBy = "idagencia", fetch = FetchType.LAZY)
+    private List<Bitacorainventario> bitacorainventarioList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idagencia", fetch = FetchType.LAZY)
     private List<Inventario> inventarioList;
     @OneToMany(mappedBy = "idagenciaenvio", fetch = FetchType.LAZY)
@@ -182,6 +185,15 @@ public class Agencia implements Serializable {
 
     public void setInventarioList1(List<Inventario> inventarioList1) {
         this.inventarioList1 = inventarioList1;
+    }
+
+    @XmlTransient
+    public List<Bitacorainventario> getBitacorainventarioList() {
+        return bitacorainventarioList;
+    }
+
+    public void setBitacorainventarioList(List<Bitacorainventario> bitacorainventarioList) {
+        this.bitacorainventarioList = bitacorainventarioList;
     }
 
 }

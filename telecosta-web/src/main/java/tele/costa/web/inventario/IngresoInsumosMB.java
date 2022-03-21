@@ -16,7 +16,10 @@ import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Bitacorainventario;
 import tele.costa.api.entity.Inventario;
+import tele.costa.api.entity.Tipocarga;
+import tele.costa.api.enums.TipoCargaEnum;
 import telecosta.web.utils.SesionUsuarioMB;
 
 /**
@@ -224,12 +227,27 @@ public class IngresoInsumosMB implements Serializable {
             return;
         }
 
+        Tipocarga tipo = catalogoBean.findTipoCarga(TipoCargaEnum.INGRESO.getId());
+        inventarioSelected.setIdtipocarga(tipo);
         inventarioSelected.setEntradas(saldoIngreso);
         inventarioSelected.setPrecio((precioActualizado + inventarioSelected.getPrecio()) / 2);
         inventarioSelected.setExistencia(inventarioSelected.getEntradas() + inventarioSelected.getExistencia());
         inventarioSelected.setTotal(inventarioSelected.getPrecio() * inventarioSelected.getExistencia());
         Inventario response = bodegaBeanLocal.updateInventario(inventarioSelected);
         if (response != null) {
+            Bitacorainventario bitacora = new Bitacorainventario();
+            bitacora.setCantidad(saldoIngreso);
+            bitacora.setCodigo(inventarioSelected.getIdinsumo().getCodigo());
+            bitacora.setDescripcion(inventarioSelected.getIdinsumo().getDescripcion());
+            bitacora.setDocumento(inventarioSelected.getNodocumento());
+            bitacora.setFecha(inventarioSelected.getFecha());
+            bitacora.setIdagencia(inventarioSelected.getIdagencia());
+            bitacora.setIdtipocarga(tipo);
+            bitacora.setPreciounitario(inventarioSelected.getPrecio());
+            bitacora.setProveedor(inventarioSelected.getProveedor());
+            bitacora.setTotal(inventarioSelected.getTotal());
+            bitacora.setUsuariocreacion(SesionUsuarioMB.getUserName());
+            Bitacorainventario bitacoraSave = bodegaBeanLocal.saveBitacoraInventario(bitacora);
             JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");

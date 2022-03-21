@@ -16,7 +16,11 @@ import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Ruta;
 import telecosta.web.utils.JsfUtil;
 import tele.costa.api.ejb.InsumoBeanLocal;
+import tele.costa.api.entity.Bitacorainventario;
 import tele.costa.api.entity.Inventario;
+import tele.costa.api.entity.Tipocarga;
+import tele.costa.api.enums.TipoCargaEnum;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -90,11 +94,27 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
+        Tipocarga tipo = catalogoBean.findTipoCarga(TipoCargaEnum.SALIDA.getId());
         inventarioSelectedSalida.setSalidas(saldoSalida);
         inventarioSelectedSalida.setExistencia(inventarioSelectedSalida.getExistencia() - inventarioSelectedSalida.getSalidas());
         inventarioSelectedSalida.setTotal(inventarioSelectedSalida.getPrecio() * inventarioSelectedSalida.getExistencia());
         Inventario response = bodegaBeanLocal.updateInventario(inventarioSelectedSalida);
         if (response != null) {
+            Bitacorainventario bitacora = new Bitacorainventario();
+            bitacora.setCantidad(saldoSalida);
+            bitacora.setCodigo(inventarioSelectedSalida.getIdinsumo().getCodigo());
+            bitacora.setDescripcion(inventarioSelectedSalida.getIdinsumo().getDescripcion());
+            bitacora.setDocumento(inventarioSelectedSalida.getNodocumento());
+            bitacora.setFecha(inventarioSelectedSalida.getFecha());
+            bitacora.setIdagencia(inventarioSelectedSalida.getIdagencia());
+            bitacora.setIdtipocarga(tipo);
+            bitacora.setPreciounitario(inventarioSelectedSalida.getPrecio());
+            bitacora.setProveedor(inventarioSelectedSalida.getProveedor());
+            bitacora.setTotal(inventarioSelectedSalida.getTotal());
+            bitacora.setResponsable(inventarioSelectedSalida.getResponsable());
+            bitacora.setSector(inventarioSelectedSalida.getIdruta().getRuta());
+            bitacora.setUsuariocreacion(SesionUsuarioMB.getUserName());
+            Bitacorainventario bitacoraSave = bodegaBeanLocal.saveBitacoraInventario(bitacora);
             JsfUtil.addSuccessMessage("Insumo actualizado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");

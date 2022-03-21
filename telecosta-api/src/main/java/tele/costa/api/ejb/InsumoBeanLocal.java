@@ -3,6 +3,7 @@ package tele.costa.api.ejb;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import tele.costa.api.entity.Bitacorainventario;
 import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Inventario;
 
@@ -46,5 +47,7 @@ public interface InsumoBeanLocal {
     List<Inventario> listInsumoByCodigo(String codigo);
 
     List<Inventario> listInsumoByIdAgenciaAndCodigo(Integer idAgencia, String codigo);
+
+    Bitacorainventario saveBitacoraInventario(Bitacorainventario bitacora);
 
 }
