@@ -658,4 +658,31 @@ public class PagosBean implements PagosBeanLocal {
         }
     }
 
+    @Override
+    public Detallepago eliminarDetallePago(Integer idpago, String usuario) {
+         if (idpago == null) {
+            context.setRollbackOnly();
+            return null;
+        }
+
+        try {
+            Detallepago toUpdate = em.find(Detallepago.class, idpago);
+
+            toUpdate.setActivo(false);
+            toUpdate.setUsuariomodificacion(usuario);
+            toUpdate.setFechamodificacion(new Date());
+            em.merge(toUpdate);
+
+            return toUpdate;
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            return null;
+        }
+    }
+
 }

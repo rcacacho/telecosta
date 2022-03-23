@@ -76,4 +76,6 @@ public interface PagosBeanLocal {
 
     Detallepago updateDetallePago(Detallepago detalle);
 
+    Detallepago eliminarDetallePago(Integer idpago, String usuario);
+
 }

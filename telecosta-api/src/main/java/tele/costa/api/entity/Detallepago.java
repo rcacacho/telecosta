@@ -83,11 +83,20 @@ public class Detallepago implements Serializable {
     private String usuariocreacion;
 
     @Column(name = "fechamodificacion")
-    private Integer fechamodificacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechamodificacion;
 
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
+
+    @Column(name = "fechaeliminacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaeliminacion;
+
+    @Size(max = 50)
+    @Column(name = "usuarioeliminacion")
+    private String usuarioeliminacion;
 
     @Basic(optional = false)
     @NotNull
@@ -189,12 +198,28 @@ public class Detallepago implements Serializable {
         this.usuariocreacion = usuariocreacion;
     }
 
-    public Integer getFechamodificacion() {
+    public Date getFechamodificacion() {
         return fechamodificacion;
     }
 
-    public void setFechamodificacion(Integer fechamodificacion) {
+    public void setFechamodificacion(Date fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
+    }
+
+    public Date getFechaeliminacion() {
+        return fechaeliminacion;
+    }
+
+    public void setFechaeliminacion(Date fechaeliminacion) {
+        this.fechaeliminacion = fechaeliminacion;
+    }
+
+    public String getUsuarioeliminacion() {
+        return usuarioeliminacion;
+    }
+
+    public void setUsuarioeliminacion(String usuarioeliminacion) {
+        this.usuarioeliminacion = usuarioeliminacion;
     }
 
     public String getUsuariomodificacion() {

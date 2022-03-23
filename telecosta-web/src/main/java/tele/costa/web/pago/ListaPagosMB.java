@@ -14,6 +14,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
 import telecosta.web.utils.JsfUtil;
@@ -187,6 +188,7 @@ public class ListaPagosMB implements Serializable {
     public void eliminarPago(Integer id) throws IOException {
         Pago response = pagosBean.eliminarPago(id, SesionUsuarioMB.getUserName());
         if (response != null) {
+            Detallepago responseDetalle = pagosBean.eliminarDetallePago(id, SesionUsuarioMB.getUserName());
             buzon();
             JsfUtil.addSuccessMessage("Se elimino el pago exitosamente");
             return;
