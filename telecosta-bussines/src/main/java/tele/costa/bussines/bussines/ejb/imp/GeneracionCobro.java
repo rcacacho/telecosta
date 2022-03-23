@@ -12,6 +12,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Tipopago;
@@ -33,8 +34,9 @@ public class GeneracionCobro {
     @EJB
     private CatalogoBeanLocal catalogoBean;
 
-    @Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
+    //@Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
     //@Schedule(second = "0", minute = "40", hour = "*", persistent = false)
+    @Schedule(second = "0", minute = "30", hour = "22")
     public void registroCobro() {
         List<Cliente> response = clienteBean.ListClientes();
         if (response.size() > 0) {
@@ -72,20 +74,28 @@ public class GeneracionCobro {
                 }
 
                 Pago responsePago = pagoBean.findPagoByIdClienteAndAnioAndMes(cc.getIdcliente(), an, mes);
-                if (responsePago == null) {
+                Cobro responseVerCobro = pagoBean.findCobroByIdClienteAndAnioAndMes(cc.getIdcliente(), an, mes);
+                if (cc.getIdconfiguracionpago() == null) {
+                    continue;
+                }
+
+                if (responsePago == null && responseVerCobro == null) {
                     Tipopago tipo = catalogoBean.findTipoPago(TipoPagoEnum.COBRO.getId());
 
-                    Pago cobro = new Pago();
+                    Cobro cobro = new Cobro();
                     cobro.setAnio(an);
                     cobro.setMes(mes);
-                    cobro.setTotal(cc.getIdconfiguracionpago().getValor());
-                    cobro.setIdtipopago(tipo);
+                    cobro.setIdconfiguracionpago(cc.getIdconfiguracionpago());
+                    cobro.setCobro(cc.getIdconfiguracionpago().getValor());
+                    cobro.setFechacobro(new Date());
+                    cobro.setIdcliente(cc);
+                    cobro.setObservacion("Cobro automatico");
                     cobro.setUsuariocreacion("Cobro automatico");
                     cobro.setIdcliente(cc);
-                    Pago responseCobro = pagoBean.saveCobro(cobro);
+                    Cobro responseCobro = pagoBean.saveCobro(cobro);
 
                     Detallepago detalle = new Detallepago();
-                    detalle.setIdpago(cobro);
+                    detalle.setIdcobro(cobro);
                     detalle.setMontocobrado(cc.getIdconfiguracionpago().getValor());
                     detalle.setUsuariocreacion("Cobro automatico");
                     detalle.setTotal(cc.getIdconfiguracionpago().getValor());
@@ -94,16 +104,7 @@ public class GeneracionCobro {
                 }
             }
         }
-    }
-
-    public void registroCobroMesAtrasado() {
-        Date fechaActual = new Date();
-        LocalDate localDate = fechaActual.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    
-        List<Pago> listPago = pagoBean.listPagos();
-        if (listPago != null){
-            
-        }
+        System.out.println("Termino proceso");
     }
 
 }

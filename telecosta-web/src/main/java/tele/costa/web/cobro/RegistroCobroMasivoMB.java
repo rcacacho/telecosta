@@ -15,6 +15,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
@@ -39,7 +40,7 @@ public class RegistroCobroMasivoMB implements Serializable {
     @EJB
     private CatalogoBeanLocal catalogoBean;
 
-    private Pago pago;
+    private Cobro cobro;
     private Municipio municipioSelected;
     private List<Municipio> listMunicipios;
     private Cliente cliente;
@@ -48,7 +49,7 @@ public class RegistroCobroMasivoMB implements Serializable {
     private Date fechaFin;
 
     public RegistroCobroMasivoMB() {
-        pago = new Pago();
+        cobro = new Cobro();
     }
 
     @PostConstruct
@@ -70,7 +71,7 @@ public class RegistroCobroMasivoMB implements Serializable {
     }
 
     public void cargarCliente() {
-        pago.setIdcliente(cliente);
+        cobro.setIdcliente(cliente);
     }
 
     public void saveCobro() throws IOException {
@@ -200,7 +201,7 @@ public class RegistroCobroMasivoMB implements Serializable {
             }
         }
 
-        pago = null;
+        cobro = null;
         cliente = null;
     }
 
@@ -210,26 +211,21 @@ public class RegistroCobroMasivoMB implements Serializable {
             return;
         }
 
-        pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
-        pago.setIdcliente(cliente);
-        pago.setIdtipopago(catalogoBean.findTipoPago(TipoPagoEnum.COBRO.getId()));
-        pago.setAnio(anio);
-        pago.setMes(mes);
-        pago.setFechapago(fechaPago);
+        cobro.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        cobro.setIdcliente(cliente);
+        cobro.setIdconfiguracionpago(catalogoBean.findConfiguracionPago(TipoPagoEnum.COBRO.getId()));
+        cobro.setAnio(anio);
+        cobro.setMes(mes);
+        cobro.setFechacobro(fechaPago);
+        cobro.setCobro(cliente.getIdconfiguracionpago().getValor());
 
-        if (pago.getTotal() != null) {
-            pago.setTotal(cliente.getIdconfiguracionpago().getValor() - pago.getTotal());
-        } else {
-            pago.setTotal(cliente.getIdconfiguracionpago().getValor());
-        }
-
-        Pago response = pagosBean.saveCobro(pago);
+        Cobro response = pagosBean.saveCobro(cobro);
         if (response != null) {
             Detallepago detalle = new Detallepago();
-            detalle.setIdpago(pago);
+            detalle.setIdcobro(cobro);
             detalle.setFechapago(fechaPago);
-            if (pago.getTotal() != null) {
-                detalle.setMontocobrado(pago.getTotal());
+            if (cobro.getCobro() != null) {
+                detalle.setMontocobrado(cobro.getCobro());
             } else {
                 detalle.setMontocobrado(cliente.getIdconfiguracionpago().getValor());
             }
@@ -244,7 +240,7 @@ public class RegistroCobroMasivoMB implements Serializable {
             Detallepago responseDetalle = pagosBean.saveDetallepago(detalle);
 
             JsfUtil.addSuccessMessage("El cobro se registro exitosamente");
-            pago = null;
+            cobro = null;
             cliente = null;
             return;
         }
@@ -280,12 +276,12 @@ public class RegistroCobroMasivoMB implements Serializable {
     }
 
     /*Metodos getters y setters*/
-    public Pago getPago() {
-        return pago;
+    public Cobro getCobro() {
+        return cobro;
     }
 
-    public void setPago(Pago pago) {
-        this.pago = pago;
+    public void setCobro(Cobro cobro) {
+        this.cobro = cobro;
     }
 
     public Municipio getMunicipioSelected() {

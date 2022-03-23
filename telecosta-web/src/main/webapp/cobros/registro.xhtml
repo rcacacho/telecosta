@@ -29,7 +29,7 @@
 
                         <p:row>
                             <p:column>
-                                <p:selectOneMenu id="anio" value="#{registroCobroMB.pago.anio}" style="width:250px;" 
+                                <p:selectOneMenu id="anio" value="#{registroCobroMB.cobro.anio}" style="width:250px;" 
                                                  filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes selecciona un año" >
                                     <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
@@ -41,7 +41,7 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="mes" value="#{registroCobroMB.pago.mes}" style="width:250px;" 
+                                <p:selectOneMenu id="mes" value="#{registroCobroMB.cobro.mes}" style="width:250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes selecciona un municipio" >
                                     <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />

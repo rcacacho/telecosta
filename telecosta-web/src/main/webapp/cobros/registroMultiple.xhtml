@@ -82,7 +82,7 @@
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroCobroMasivoMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
+                        <p:commandButton value="Guardar" action="#{registroCobroMasivoMB.saveCobro()}" icon="ui-icon-disk" process="pgPago"  
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
                         <p:commandButton value="Cancelar" process="@this" action="#{registroCobroMasivoMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>

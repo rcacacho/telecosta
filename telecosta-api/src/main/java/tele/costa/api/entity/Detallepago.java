@@ -111,6 +111,10 @@ public class Detallepago implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pago idpago;
 
+    @JoinColumn(name = "idcobro", referencedColumnName = "idcobro")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Cobro idcobro;
+
     public Detallepago() {
     }
 
@@ -252,6 +256,14 @@ public class Detallepago implements Serializable {
 
     public void setIdpago(Pago idpago) {
         this.idpago = idpago;
+    }
+
+    public Cobro getIdcobro() {
+        return idcobro;
+    }
+
+    public void setIdcobro(Cobro idcobro) {
+        this.idcobro = idcobro;
     }
 
     @Override

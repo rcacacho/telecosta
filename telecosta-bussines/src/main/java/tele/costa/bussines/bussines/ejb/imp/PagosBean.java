@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
 import tele.costa.api.dto.ReporteCobrosDto;
 import tele.costa.api.ejb.PagosBeanLocal;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 
@@ -139,13 +140,13 @@ public class PagosBean implements PagosBeanLocal {
     }
 
     @Override
-    public Pago saveCobro(Pago pago) {
+    public Cobro saveCobro(Cobro cobro) {
         try {
-            pago.setActivo(true);
-            pago.setFechacreacion(new Date());
-            em.persist(pago);
+            cobro.setActivo(true);
+            cobro.setFechacreacion(new Date());
+            em.persist(cobro);
             em.flush();
-            return (pago);
+            return (cobro);
         } catch (ConstraintViolationException ex) {
             String validationError = getConstraintViolationExceptionAsString(ex);
             log.error(validationError);
@@ -683,6 +684,24 @@ public class PagosBean implements PagosBeanLocal {
             processException(ex);
             return null;
         }
+    }
+
+    @Override
+    public Cobro findCobroByIdClienteAndAnioAndMes(Integer idcliente, Integer anio, String mes) {
+        if (idcliente == null) {
+            return null;
+        }
+
+        List<Cobro> lst = em.createQuery("SELECT pa FROM Cobro pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.mes like :mes and pa.activo = true", Cobro.class)
+                .setParameter("idcliente", idcliente)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }

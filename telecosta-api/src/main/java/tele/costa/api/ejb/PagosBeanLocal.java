@@ -3,6 +3,7 @@ package tele.costa.api.ejb;
 import java.util.Date;
 import java.util.List;
 import tele.costa.api.dto.ReporteCobrosDto;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
 
@@ -18,7 +19,7 @@ public interface PagosBeanLocal {
 
     Pago savePago(Pago pago);
 
-    Pago saveCobro(Pago pago);
+    Cobro saveCobro(Cobro cobro);
 
     Pago findPagoByIdClienteAndAnioAndMes(Integer idCliente, Integer anio, String mes);
 
@@ -77,5 +78,7 @@ public interface PagosBeanLocal {
     Detallepago updateDetallePago(Detallepago detalle);
 
     Detallepago eliminarDetallePago(Integer idpago, String usuario);
+    
+    Cobro findCobroByIdClienteAndAnioAndMes(Integer idcliente, Integer anio, String mes);
 
 }

@@ -47,60 +47,67 @@ public class Cobro implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcobro")
     private Integer idcobro;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "mes")
     private String mes;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "anio")
     private Integer anio;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacobro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacobro;
-    
+
+    @Column(name = "cobro")
+    private Integer cobro;
+
     @Size(max = 500)
     @Column(name = "observacion")
     private String observacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-    
+
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idcliente;
-    
+
     @JoinColumn(name = "idconfiguracionpago", referencedColumnName = "idconfiguracionpago")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Configuracionpago idconfiguracionpago;
+
+    @JoinColumn(name = "idpago", referencedColumnName = "idpago")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Pago idpago;
 
     public Cobro() {
     }
@@ -133,14 +140,6 @@ public class Cobro implements Serializable {
 
     public void setMes(String mes) {
         this.mes = mes;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
     }
 
     public Date getFechacobro() {
@@ -215,6 +214,30 @@ public class Cobro implements Serializable {
         this.idconfiguracionpago = idconfiguracionpago;
     }
 
+    public Pago getIdpago() {
+        return idpago;
+    }
+
+    public void setIdpago(Pago idpago) {
+        this.idpago = idpago;
+    }
+
+    public Integer getAnio() {
+        return anio;
+    }
+
+    public void setAnio(Integer anio) {
+        this.anio = anio;
+    }
+
+    public Integer getCobro() {
+        return cobro;
+    }
+
+    public void setCobro(Integer cobro) {
+        this.cobro = cobro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -239,5 +262,5 @@ public class Cobro implements Serializable {
     public String toString() {
         return "tele.costa.api.entity.Cobro[ idcobro=" + idcobro + " ]";
     }
-    
+
 }
