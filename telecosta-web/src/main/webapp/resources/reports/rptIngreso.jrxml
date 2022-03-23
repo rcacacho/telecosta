@@ -11,35 +11,54 @@
 	<parameter name="AGENCIA" class="java.lang.String"/>
 	<parameter name="ANIO" class="java.lang.String"/>
 	<parameter name="MES" class="java.lang.String"/>
+	<parameter name="DOCUMENTO" class="java.lang.String"/>
+	<parameter name="FECHA_INICIO" class="java.lang.String"/>
+	<parameter name="FECHA_FIN" class="java.lang.String"/>
+	<parameter name="INSUMO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select codigo, fecha, descripcion, cantidad, preciounitario, proveedor, documento  
+from bitacorainventario r
+WHERE idtipocarga = 1 
+AND ( documento = $P{DOCUMENTO} OR $P{DOCUMENTO} IS NULL )
+AND ( fecha  >= $P{FECHA_INICIO} OR $P{FECHA_INICIO} IS NULL )
+AND ( fecha <= $P{FECHA_FIN} OR $P{FECHA_FIN}  IS NULL )
+AND ( descripcion = $P{INSUMO}   OR $P{INSUMO}  IS NULL )
+]]>
 	</queryString>
-	<field name="fechapago" class="java.lang.String">
-		<fieldDescription><![CDATA[fechapago]]></fieldDescription>
-	</field>
 	<field name="codigo" class="java.lang.String">
-		<fieldDescription><![CDATA[codigo]]></fieldDescription>
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="idpago" class="java.lang.Integer">
-		<fieldDescription><![CDATA[idpago]]></fieldDescription>
+	<field name="fecha" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="direccion" class="java.lang.String">
-		<fieldDescription><![CDATA[direccion]]></fieldDescription>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="valor" class="java.lang.Integer">
-		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="telefono" class="java.lang.String">
-		<fieldDescription><![CDATA[telefono]]></fieldDescription>
+	<field name="preciounitario" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="preciounitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="preciounitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="sector" class="java.lang.String">
-		<fieldDescription><![CDATA[sector]]></fieldDescription>
+	<field name="proveedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="proveedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="proveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
-	<field name="observacion" class="java.lang.String">
-		<fieldDescription><![CDATA[observacion]]></fieldDescription>
-	</field>
-	<field name="nombres" class="java.lang.String">
-		<fieldDescription><![CDATA[nombres]]></fieldDescription>
+	<field name="documento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="documento"/>
+		<property name="com.jaspersoft.studio.field.label" value="documento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bitacorainventario"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -136,7 +155,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DIRECCIÓN]]></text>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="462" y="0" width="121" height="19" forecolor="#FFFFFF" backcolor="#345AC2" uuid="e3aa7f35-bee3-451e-9ba7-36e749fc4cc2">
@@ -266,7 +285,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="462" y="0" width="121" height="19" uuid="e3623405-cb7c-4dd1-be6e-b60280069368">
@@ -277,7 +296,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fechapago}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="664" y="0" width="184" height="19" uuid="9266637f-0dd6-4535-b690-de6720af8e4c">
@@ -288,7 +307,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="90" y="0" width="109" height="19" uuid="7eacd409-5c7b-4604-b25a-17006ed366d7">
@@ -301,7 +320,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="583" y="0" width="81" height="19" uuid="f44decbc-f235-47bf-bd8b-ba5572a68917">
@@ -312,7 +331,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{preciounitario}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement x="848" y="0" width="116" height="19" uuid="6754e446-603b-46a2-bef3-5f898c7c8487">
@@ -323,7 +342,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

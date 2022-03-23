@@ -401,7 +401,7 @@ public class InsumoBean implements InsumoBeanLocal {
 
     @Override
     public Bitacorainventario saveBitacoraInventario(Bitacorainventario bitacora) {
-         try {
+        try {
             bitacora.setActivo(true);
             bitacora.setFechacreacion(new Date());
             em.persist(bitacora);
@@ -417,6 +417,210 @@ public class InsumoBean implements InsumoBeanLocal {
             context.setRollbackOnly();
             return null;
         }
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByDocumento(String documento, Integer idtipocarga) {
+        if (idtipocarga == null) {
+            return null;
+        }
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.documento =:documento and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("documento", documento)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByFechaInicio(Date fechaInicio, Integer idtipocarga) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.fecha >= :fechaInicio and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByFechaFin(Date fechaFin, Integer idtipocarga) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaFin);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaFin = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.fecha <= :fechaFin and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin, Integer idtipocarga) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaFin);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaFin = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaInicio);
+        c1.set(Calendar.HOUR_OF_DAY, 0);
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+        fechaInicio = c1.getTime();
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf2.format(fechaInicio);
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.fecha >= :fechaInicio and  pa.fecha <= :fechaFin and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByInsumo(String insumo, Integer idtipocarga) {
+        if (idtipocarga == null) {
+            return null;
+        }
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.descripcion =:insumo and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("insumo", insumo)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFinAndDocumento(Date fechaInicio, Date fechaFin, String documento, Integer idtipocarga) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaFin);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaFin = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaInicio);
+        c1.set(Calendar.HOUR_OF_DAY, 0);
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+        fechaInicio = c1.getTime();
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf2.format(fechaInicio);
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.fecha >= :fechaInicio and  pa.fecha <= :fechaFin and pa.documento =:documento and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("documento", documento)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFinAndInsumo(Date fechaInicio, Date fechaFin, String insumo, Integer idtipocarga) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaFin);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaFin = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaInicio);
+        c1.set(Calendar.HOUR_OF_DAY, 0);
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+        fechaInicio = c1.getTime();
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf2.format(fechaInicio);
+
+        List<Bitacorainventario> lst = em.createQuery("SELECT pa FROM Bitacorainventario pa WHERE pa.fecha >= :fechaInicio and  pa.fecha <= :fechaFin and pa.descripcion =:insumo and pa.idtipocarga.idtipocarga =:idtipocarga and pa.activo = true ", Bitacorainventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("insumo", insumo)
+                .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

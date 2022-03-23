@@ -35,7 +35,7 @@
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect" listener="#{reporteInventarioMB.cargarIngreso()}" update="@form"/>
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen.idagencia}"/>
+                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Mes:"  styleClass="field-label"  />
@@ -102,19 +102,26 @@
                     </p:inputText>
                 </p:panelGrid>
 
-                <p:panelGrid id="pgIngresoSave" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
+                <p:panelGrid id="pgIngresoSave" columns="3"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarIngreso}">
                     <p:commandButton value="PDF" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteCajaMB.reporteCaja()}"/>
+                        <p:fileDownload value="#{reporteInventarioMB.imprimirReporteIngresoPdf()}"/>
                     </p:commandButton>
                     <p:commandButton value="Excel" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
                                      immediate="true" process="@this" update="@form" ajax="false">
-                        <p:fileDownload value="#{reporteCompraMB.imprimirExcelCompra()}"/>
+                        <p:fileDownload value="#{reporteInventarioMB.imprimirReporteIngresoExcel()}"/>
                     </p:commandButton>
+                    <p:commandButton value="Limpiar" 
+                                     action="#{reporteInventarioMB.limpiarCampos()}"
+                                     class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                     style="background-size: 20px 20px !important; float: right;
+                                     background-position: 4px 1px !important;"
+                                     update="@form"  icon="ui-icon-refresh"
+                                     onstart="start();" oncomplete="stop();"/>
                 </p:panelGrid>
 
 
@@ -125,22 +132,22 @@
                     </p:inputText>
                 </p:panelGrid>
 
-                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalidaDocumento}">
                     <p:outputLabel value="No. documento:"  styleClass="field-label"  />
                     <p:inputText  value="#{reporteInventarioMB.numeroDocumentoSalida}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText>
                 </p:panelGrid>
 
-                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalidaFechaInicio}">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                 value="#{reporteInventarioMB.fechaInicioIngreso}" navigator="true">  
+                                 value="#{reporteInventarioMB.fechaInicioSalida}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
                 </p:panelGrid>
 
-                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalidaFechaFin}">
                     <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteInventarioMB.fechaFinSalida}" navigator="true">  
@@ -148,7 +155,7 @@
                     </p:calendar>
                 </p:panelGrid>
 
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
+                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarSalida}">
                     <p:commandButton value="PDF" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
@@ -161,22 +168,33 @@
                                      immediate="true" process="@this" update="@form" ajax="false">
                         <p:fileDownload value="#{reporteCompraMB.imprimirExcelCompra()}"/>
                     </p:commandButton>
+                    <p:commandButton value="Limpiar" 
+                                     action="#{reporteInventarioMB.limpiarCampos()}"
+                                     class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                     style="background-size: 20px 20px !important; float: right;
+                                     background-position: 4px 1px !important;"
+                                     update="@form"  icon="ui-icon-refresh"
+                                     onstart="start();" oncomplete="stop();"/>
                 </p:panelGrid>
 
-                <p:panelGrid id="pgTraslado" columns="2"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarTraslado}">
+                <p:panelGrid  columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarTrasladoFechaInicio}">
                     <p:outputLabel value="Fecha inicio:"  styleClass="field-label"  />
-                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
-
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteInventarioMB.fechaInicioEnvio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+
+                <p:panelGrid columns="1"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarTrasladoFechaFin}">
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
                     <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                  value="#{reporteInventarioMB.fechaFinEnvio}" navigator="true">  
                         <p:ajax event="dateSelect" process="@this" />
                     </p:calendar>
+                </p:panelGrid>
 
+                <p:panelGrid id="pgTraslado" columns="3"  styleClass="no-border" style="margin-top: 10px;" rendered="#{reporteInventarioMB.mostrarTraslado}">
                     <p:commandButton value="PDF" style="float: left;"
                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                      onclick="PrimeFaces.monitorDownload(start, stop);" 
@@ -189,6 +207,54 @@
                                      immediate="true" process="@this" update="@form" ajax="false">
                         <p:fileDownload value="#{reporteCompraMB.imprimirExcelCompra()}"/>
                     </p:commandButton>
+                    <p:commandButton value="Limpiar" 
+                                     action="#{reporteInventarioMB.limpiarCampos()}"
+                                     class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                     style="background-size: 20px 20px !important; float: right;
+                                     background-position: 4px 1px !important;"
+                                     update="@form"  icon="ui-icon-refresh"
+                                     onstart="start();" oncomplete="stop();"/>
+                </p:panelGrid>
+
+
+                <h4 style="margin-right: 90px; margin-top: 25px;">Reporte General de bodega</h4>
+                <p:panelGrid  columns="2"  styleClass="no-border" style="margin-top: 10px;" >
+                    <p:outputLabel value="Fecha incio:"  styleClass="field-label"  />
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
+
+                    <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                 value="#{reporteInventarioMB.fechaInicioGeneral}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+                    <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                 value="#{reporteInventarioMB.fechaFinGeneral}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel value="Agencia"  styleClass="field-label"  />
+                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                    <p:selectOneMenu  value="#{reporteInventarioMB.idAgenciaGeneral}" style="width: 250px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect" />
+                        <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen.idagencia}"/>
+                    </p:selectOneMenu>
+
+                    <p:panelGrid  columns="2"  styleClass="no-border" >
+                        <p:commandButton value="PDF" style="float: left;"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                         immediate="true" process="@this" update="@form" ajax="false">
+                            <p:fileDownload value="#{reporteClienteMB.generarPdfMunicipioCliente()}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Excel" style="float: left;"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                         immediate="true" process="@this" update="@form" ajax="false">
+                            <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteMuncipio()}"/>
+                        </p:commandButton>
+                    </p:panelGrid>
                 </p:panelGrid>
             </div> 
         </h:form>
