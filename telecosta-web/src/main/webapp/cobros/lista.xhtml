@@ -91,10 +91,10 @@
 
                 <br/>
 
-                <p:dataTable id="dt_pago" var="col" value="#{listaCobrosMB.listPago}"
+                <p:dataTable id="dt_pago" var="col" value="#{listaCobrosMB.listCobro}"
                              emptyMessage="No hay pagos registrados" 
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="10" paginator="#{listaCobrosMB.listPago.size()>5}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{listaCobrosMB.listCobro.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -115,11 +115,11 @@
                     </p:column>
 
                     <p:column headerText="Cantidad" width="20%" >
-                        <p:outputLabel value="#{col.total}"/>
+                        <p:outputLabel value="#{col.cobro}"/>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaCobrosMB.detalle(col.idpago)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaCobrosMB.detalle(col.idcobro)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>

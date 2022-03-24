@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import tele.costa.api.ejb.PagosBeanLocal;
-import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Cobro;
 import tele.costa.web.pago.DetallePagoMB;
 import telecosta.web.utils.JsfUtil;
 
@@ -24,10 +24,10 @@ public class DetalleCobroMB implements Serializable {
     private PagosBeanLocal pagosBean;
 
     private Integer idCobro;
-    private Pago pago;
+    private Cobro cobro;
 
     public void cargarDatos() {
-        pago = pagosBean.findPagoByIdPago(idCobro);
+        cobro = pagosBean.findCobroByIdCobro(idCobro);
     }
 
     public void regresar() {
@@ -35,12 +35,12 @@ public class DetalleCobroMB implements Serializable {
     }
 
     /*Metodos getters y setters*/
-    public Pago getPago() {
-        return pago;
+    public Cobro getCobro() {
+        return cobro;
     }
 
-    public void setPago(Pago pago) {
-        this.pago = pago;
+    public void setCobro(Cobro cobro) {
+        this.cobro = cobro;
     }
 
     public Integer getIdCobro() {

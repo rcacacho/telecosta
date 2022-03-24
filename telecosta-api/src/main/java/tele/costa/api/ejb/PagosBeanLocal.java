@@ -15,7 +15,7 @@ public interface PagosBeanLocal {
 
     List<Pago> listPagosByFechaInicioAndFin(Date fechainicio, Date fechafin);
 
-    List<Pago> listCobros(Date fechainicio, Date fechafin);
+    List<Cobro> listCobros(Date fechainicio, Date fechafin);
 
     Pago savePago(Pago pago);
 
@@ -29,11 +29,11 @@ public interface PagosBeanLocal {
 
     List<Pago> listPagoByMes(String mes);
 
-    List<Pago> listCobroByIdCliente(Integer idcliente);
+    List<Cobro> listCobroByIdCliente(Integer idcliente);
 
-    List<Pago> listCobroByAnio(Integer anio);
+    List<Cobro> listCobroByAnio(Integer anio);
 
-    List<Pago> listCobroByMes(String mes);
+    List<Cobro> listCobroByMes(String mes);
 
     Pago findPagoByIdPago(Integer idPago);
 
@@ -78,9 +78,11 @@ public interface PagosBeanLocal {
     Detallepago updateDetallePago(Detallepago detalle);
 
     Detallepago eliminarDetallePago(Integer idpago, String usuario);
-    
+
     Cobro findCobroByIdClienteAndAnioAndMes(Integer idcliente, Integer anio, String mes);
-    
+
     Cobro updateCobro(Cobro cobro);
+
+    Cobro findCobroByIdCobro(Integer idCobro);
 
 }

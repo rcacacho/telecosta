@@ -12,9 +12,11 @@ import org.apache.log4j.Logger;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Pago;
 import tele.costa.web.pago.ListaPagosMB;
 import telecosta.web.utils.JsfUtil;
+import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
@@ -31,7 +33,7 @@ public class ListaCobrosMB implements Serializable {
     @EJB
     private ClienteBeanLocal clienteBean;
 
-    private List<Pago> listPago;
+    private List<Cobro> listCobro;
     private Integer idcliente;
     private Integer anio;
     private Date fechaInicio;
@@ -46,48 +48,52 @@ public class ListaCobrosMB implements Serializable {
 
     @PostConstruct
     void cargarDatos() {
-        Date fInicio = new Date();
-        Date fFin = new Date();
-
-        listPago = pagosBean.listCobros(fInicio, fFin);
-        listClientes = clienteBean.ListClientes();
+        if (SesionUsuarioMB.getRootUsuario()) {
+            listClientes = clienteBean.ListClientes();
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
+            listClientes = clienteBean.listClientesByInMunucipio();
+        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
+            listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
+        } else {
+            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+        }
     }
 
     public void buscarPago() {
         if (idcliente != 0) {
-            List<Pago> response = pagosBean.listCobroByIdCliente(idcliente);
+            List<Cobro> response = pagosBean.listCobroByIdCliente(idcliente);
             if (response != null) {
-                listPago = response;
+                listCobro = response;
             } else {
-                listPago = new ArrayList<>();
+                listCobro = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null) {
-            List<Pago> response = pagosBean.listCobroByAnio(anio);
+            List<Cobro> response = pagosBean.listCobroByAnio(anio);
             if (response != null) {
-                listPago = response;
+                listCobro = response;
             } else {
-                listPago = new ArrayList<>();
+                listCobro = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (mes != "") {
-            List<Pago> response = pagosBean.listCobroByMes(mes);
+            List<Cobro> response = pagosBean.listCobroByMes(mes);
             if (response != null) {
-                listPago = response;
+                listCobro = response;
             } else {
-                listPago = new ArrayList<>();
+                listCobro = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicioBus != null && fechaFinBus != null) {
-            List<Pago> response = pagosBean.listCobros(fechaInicioBus, fechaFinBus);
+            List<Cobro> response = pagosBean.listCobros(fechaInicioBus, fechaFinBus);
             if (response != null) {
-                listPago = response;
+                listCobro = response;
             } else {
-                listPago = new ArrayList<>();
+                listCobro = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else {
-            listPago = new ArrayList<>();
+            listCobro = new ArrayList<>();
             JsfUtil.addErrorMessage("No se encontraron datos");
         }
     }
@@ -104,14 +110,13 @@ public class ListaCobrosMB implements Serializable {
         JsfUtil.redirectTo("/cobros/detalle.xhtml?idcobro=" + id);
     }
 
-
-    /*Metodos getters y setters*/
-    public List<Pago> getListPago() {
-        return listPago;
+    public List<Cobro> getListCobro() {
+        return listCobro;
     }
 
-    public void setListPago(List<Pago> listPago) {
-        this.listPago = listPago;
+    /*Metodos getters y setters*/
+    public void setListCobro(List<Cobro> listCobro) {
+        this.listCobro = listCobro;
     }
 
     public Integer getAnio() {
