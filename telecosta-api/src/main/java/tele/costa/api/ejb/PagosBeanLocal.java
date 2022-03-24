@@ -80,5 +80,7 @@ public interface PagosBeanLocal {
     Detallepago eliminarDetallePago(Integer idpago, String usuario);
     
     Cobro findCobroByIdClienteAndAnioAndMes(Integer idcliente, Integer anio, String mes);
+    
+    Cobro updateCobro(Cobro cobro);
 
 }

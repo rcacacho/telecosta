@@ -13,6 +13,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
+import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Pago;
@@ -81,6 +82,15 @@ public class RegistroPagoClienteMB implements Serializable {
             detalle.setIdpago(actualizacionPago);
             Detallepago responseDet = pagosBean.saveDetallepago(detalle);
 
+            Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pago.getIdcliente().getIdcliente(), pago.getAnio(), pago.getMes());
+            if (findCobro != null) {
+                findCobro.setIdpago(pago);
+                findCobro.setCobro(0);
+                findCobro.setFechamodificacion(new Date());
+                findCobro.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+                Cobro responseCobro = pagosBean.updateCobro(findCobro);
+            }
+
             JsfUtil.addSuccessMessage("El pago se registro exitosamente");
             pago = null;
             cliente = null;
@@ -99,6 +109,15 @@ public class RegistroPagoClienteMB implements Serializable {
                 detalle.setMontopagado(pago.getTotal());
                 detalle.setIdpago(pago);
                 Detallepago responseDet = pagosBean.saveDetallepago(detalle);
+
+                Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pago.getIdcliente().getIdcliente(), pago.getAnio(), pago.getMes());
+                if (findCobro != null) {
+                    findCobro.setIdpago(pago);
+                    findCobro.setCobro(0);
+                    findCobro.setFechamodificacion(new Date());
+                    findCobro.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+                    Cobro responseCobro = pagosBean.updateCobro(findCobro);
+                }
 
                 JsfUtil.redirectTo("/clientes/lista.xhtml");
                 JsfUtil.addSuccessMessage("El pago se registro exitosamente");

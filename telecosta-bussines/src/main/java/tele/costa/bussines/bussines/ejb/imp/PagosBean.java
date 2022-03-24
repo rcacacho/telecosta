@@ -704,4 +704,22 @@ public class PagosBean implements PagosBeanLocal {
         return lst.get(0);
     }
 
+    @Override
+    public Cobro updateCobro(Cobro cobro) {
+         try {
+            em.merge(cobro);
+            em.flush();
+            return (cobro);
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            context.setRollbackOnly();
+            return null;
+        }
+    }
+
 }
