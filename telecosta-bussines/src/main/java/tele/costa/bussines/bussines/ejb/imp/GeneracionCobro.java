@@ -34,9 +34,9 @@ public class GeneracionCobro {
     @EJB
     private CatalogoBeanLocal catalogoBean;
 
-    //@Schedule(month = "*", dayOfMonth = "1", hour = "1", persistent = false)
+    @Schedule(month = "*", dayOfMonth = "*", hour = "1", persistent = false)
     //@Schedule(second = "0", minute = "40", hour = "*", persistent = false)
-    @Schedule(second = "0", minute = "30", hour = "22")
+    //@Schedule(second = "0", minute = "30", hour = "22")
     public void registroCobro() {
         List<Cliente> response = clienteBean.ListClientes();
         if (response.size() > 0) {
