@@ -39,7 +39,7 @@ public class ListaConfiguracionInsumoMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/configuracion/insumos/detalle.xhtml?idtipocompra=" + id);
+        JsfUtil.redirectTo("/configuracion/insumos/detalle.xhtml?idinsumo=" + id);
     }
 
     public void eliminar(Integer id) throws IOException {

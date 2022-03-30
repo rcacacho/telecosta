@@ -246,7 +246,10 @@ public class ReporteCobroMB {
                     }
 
                     cobroWrapper.setTelefono(cl.getTelefono());
-                    cobroWrapper.setValor(pag.getTotal());
+                    if (cl.getIdconfiguracionpago() != null) {
+                        cobroWrapper.setValor(cl.getIdconfiguracionpago().getValor());
+                    }
+
                     listCobro.add(cobroWrapper);
                 }
             }
@@ -328,6 +331,9 @@ public class ReporteCobroMB {
                 }
 
                 cobroWrapper.setTelefono(cl.getTelefono());
+                if (cl.getIdconfiguracionpago() != null) {
+                    cobroWrapper.setValor(cl.getIdconfiguracionpago().getValor());
+                }
                 cobroWrapper.setValor(pag.getTotal());
                 listCobro.add(cobroWrapper);
             }
@@ -583,7 +589,10 @@ public class ReporteCobroMB {
                 }
 
                 cobroWrapper.setTelefono(cl.getTelefono());
-                cobroWrapper.setValor(pag.getTotal());
+                if (cl.getIdconfiguracionpago() != null) {
+                    cobroWrapper.setValor(cl.getIdconfiguracionpago().getValor());
+                }
+
                 listCobro.add(cobroWrapper);
             }
         }

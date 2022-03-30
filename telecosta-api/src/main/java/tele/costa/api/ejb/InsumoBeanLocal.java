@@ -49,20 +49,21 @@ public interface InsumoBeanLocal {
     List<Inventario> listInsumoByIdAgenciaAndCodigo(Integer idAgencia, String codigo);
 
     Bitacorainventario saveBitacoraInventario(Bitacorainventario bitacora);
-    
+
     List<Bitacorainventario> listBitacoraByDocumento(String documento, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByFechaInicio(Date fechaInicio, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByFechaFin(Date fechaFin, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByInsumo(String insumo, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFinAndDocumento(Date fechaInicio, Date fechaFin, String documento, Integer idtipocarga);
-    
+
     List<Bitacorainventario> listBitacoraByFechaInicioAndFechaFinAndInsumo(Date fechaInicio, Date fechaFin, String insumo, Integer idtipocarga);
-    
+
+    Inventario deleteInventario(Integer idinventario, String usuario);
 
 }

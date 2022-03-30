@@ -280,6 +280,20 @@ public class IngresoInsumosMB implements Serializable {
         }
     }
 
+    public void eliminarBitacoraInsumo(Integer id) throws IOException {
+        String usuario = SesionUsuarioMB.getUserName();
+        Inventario response = bodegaBeanLocal.deleteInventario(id, usuario);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Se elimino exitosamente");
+            cargarDatos();
+            listAgencia = catalogoBean.listAgencias();
+            return;
+        }
+
+        JsfUtil.addErrorMessage("Sucedio un error al elimnar");
+
+    }
+
     /*Metodos getters y setters*/
     public Integer getIdAgencia() {
         return idAgencia;

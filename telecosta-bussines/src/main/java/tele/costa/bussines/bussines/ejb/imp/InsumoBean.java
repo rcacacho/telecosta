@@ -623,4 +623,31 @@ public class InsumoBean implements InsumoBeanLocal {
         return lst;
     }
 
+    @Override
+    public Inventario deleteInventario(Integer idinventario, String usuario) {
+       if (idinventario == null) {
+            context.setRollbackOnly();
+            return null;
+        }
+
+        try {
+            Inventario toUpdate = em.find(Inventario.class, idinventario);
+
+            toUpdate.setUsuariomodificacion(usuario);
+            toUpdate.setFechamodificacion(new Date());
+            toUpdate.setActivo(false);
+            em.merge(toUpdate);
+
+            return toUpdate;
+        } catch (ConstraintViolationException ex) {
+            String validationError = getConstraintViolationExceptionAsString(ex);
+            log.error(validationError);
+            context.setRollbackOnly();
+            return null;
+        } catch (Exception ex) {
+            processException(ex);
+            return null;
+        }
+    }
+
 }

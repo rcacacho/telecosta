@@ -32,6 +32,10 @@ public class DetalleInsumoMB implements Serializable {
     public void regresar() {
         JsfUtil.redirectTo("/bodega/ingreso.xhtml");
     }
+    
+    public void regresarDetalle() {
+        JsfUtil.redirectTo("/insumos/lista.xhtml");
+    }
 
     /*Metodos getters y setters*/
     public Integer getIdinsumo() {

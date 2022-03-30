@@ -9,8 +9,8 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
     
     <f:metadata>
-        <f:viewParam name="idconfiguracionpago" value="#{detalleConfiguracionMB.idconfiguracionpago}"/>
-        <f:event type="preRenderView" listener="#{detalleConfiguracionMB.cargarDatos()}"/>
+        <f:viewParam name="idinsumo" value="#{detalleInsumoMB.idinsumo}"/>
+        <f:event type="preRenderView" listener="#{detalleInsumoMB.cargarDatos()}"/>
     </f:metadata>
 
     <ui:define name="pageTitle">
@@ -27,7 +27,7 @@
                                        style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
                     </td>
                     <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
-                        <h:commandLink action="#{detalleInsumoMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                        <h:commandLink action="#{detalleInsumoMB.regresarDetalle()}" style="text-decoration: none; margin-left: 25px;">
                             <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
                         </h:commandLink>
                     </td>
@@ -39,10 +39,10 @@
             <p:panelGrid  id="pg_info" styleClass="no-border" style="width: 90%; margin-left: 4%;">
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="Descripción:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Código:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="Valor:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Descripción:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column >
                         <p:outputLabel value="Fecha Creación:" styleClass="colorTitulo" />
@@ -51,14 +51,14 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleConfiguracionMB.configuracion.descripcion}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleInsumoMB.insumos.codigo}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleConfiguracionMB.configuracion.valor}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.insumos.descripcion}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleConfiguracionMB.configuracion.fechacreacion}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.insumos.fechacreacion}" style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>

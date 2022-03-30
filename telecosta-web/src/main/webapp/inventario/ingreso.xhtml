@@ -77,9 +77,11 @@
                 <br/>
 
                 <p:dataTable id="dt_insumo" var="ins" value="#{ingresoInsumosMB.listInventario}"
-                             emptyMessage="No hay insumos registrados" 
+                             emptyMessage="No hay insumos registrados" editable="true" 
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="15" paginator="#{ingresoInsumosMB.listInventario.size()>15}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaCompraMB.onRowEdit}" update="dt_queja" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -109,7 +111,16 @@
                         <p:outputLabel value="#{ins.idagencia.agencia}"/>
                     </p:column>
 
-                    <p:column width="20%" exportable="false" >
+                    <p:column headerText="Editar" width="8%">
+                        <p:rowEditor />
+                    </p:column>
+
+                    <p:column width="25%" exportable="false" >
+                        <p:commandButton value="Eliminar" 
+                                         style="float:left!important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
+                                         action="#{ingresoInsumosMB.eliminarBitacoraInsumo(ins.idinventario)}" update="@form"/>
+
                         <p:commandButton value="Ingresar" 
                                          style="float:left!important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-plus"
