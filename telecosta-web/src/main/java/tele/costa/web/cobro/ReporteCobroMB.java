@@ -334,7 +334,7 @@ public class ReporteCobroMB {
                 if (cl.getIdconfiguracionpago() != null) {
                     cobroWrapper.setValor(cl.getIdconfiguracionpago().getValor());
                 }
-                cobroWrapper.setValor(pag.getTotal());
+
                 listCobro.add(cobroWrapper);
             }
         }

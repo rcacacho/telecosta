@@ -81,7 +81,7 @@
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="15" paginator="#{ingresoInsumosMB.listInventario.size()>15}"  paginatorPosition="bottom">
 
-                    <p:ajax event="rowEdit" listener="#{listaCompraMB.onRowEdit}" update="dt_queja" />
+                    <p:ajax event="rowEdit" listener="#{ingresoInsumosMB.onRowEdit}" update="dt_insumo" />
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -96,19 +96,59 @@
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >
-                        <p:outputLabel value="#{ins.existencia}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.existencia}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ins.existencia}" size="10" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Precio unitario" width="15%" >
-                        <p:outputLabel value="#{ins.precio}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.precio}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ins.precio}" size="14" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Total" width="16%" >
-                        <p:outputLabel value="#{ins.total}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.total}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ins.total}" size="10" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Agencia" width="16%" >
-                        <p:outputLabel value="#{ins.idagencia.agencia}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.idagencia.agencia}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="docu" value="#{ins.idagencia}" style="width: 70%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un tipo documento" >
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{ingresoInsumosMB.listAgencia}"  var="tip" itemLabel="#{tip.agencia}" itemValue="#{tip}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Editar" width="8%">
