@@ -2,6 +2,8 @@ package tele.costa.web.cliente;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +50,7 @@ public class ListaClienteMB implements Serializable {
     private String motivoCorte;
     private Cliente clienteSelected;
     private List<Configuracionpago> listConfiguracionPago;
+    private String color;
 
     public ListaClienteMB() {
     }
@@ -152,6 +155,26 @@ public class ListaClienteMB implements Serializable {
     public String obtenerUltimoPago(Integer idcliente) {
         Pago response = pagosBean.findUltimoPago(idcliente);
         if (response != null) {
+
+            if (response.getFechapago() != null) {
+                Date fechaInicio = new Date();
+                LocalDate startDate = response.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                ZoneId defaultZoneId = ZoneId.systemDefault();
+                Integer count = 0;
+                for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                    count++;
+                }
+
+                if (count >= 90) {
+                    color = "background-color:#FFD1D1 !important;";
+                } else if (count >= 60 && count <= 89) {
+                    color = "background-color:#F6F7BB !important;";
+                } else if (count >= 30 && count <= 59) {
+                    color = "background-color:#F7BF8D !important;";
+                }
+            }
+
             String a = new StringBuilder(response.getMes()).append("-").append(response.getAnio().toString()).toString();
             return a;
         } else {
@@ -214,7 +237,7 @@ public class ListaClienteMB implements Serializable {
     public void ticketCliente(Integer id) {
         JsfUtil.redirectTo("/atencion/registroCliente.xhtml?idcliente=" + id);
     }
-    
+
     /*Metodos getters y setters*/
     public List<Cliente> getListCliente() {
         return listCliente;
@@ -278,6 +301,14 @@ public class ListaClienteMB implements Serializable {
 
     public void setListConfiguracionPago(List<Configuracionpago> listConfiguracionPago) {
         this.listConfiguracionPago = listConfiguracionPago;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
 }

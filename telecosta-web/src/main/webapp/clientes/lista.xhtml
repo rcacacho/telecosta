@@ -138,7 +138,7 @@
                     </p:column>
 
                     <p:column headerText="Fecha Ultimo Pago" width="20%" >
-                        <p:outputLabel value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+                        <p:outputLabel style="#{listaClienteMB.color}" value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -173,6 +173,32 @@
                                          action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
+                
+                <div align="center" style="margin-top: 15px;">
+                    <p:panelGrid columns="3" style="text-align: center !important;" styleClass="no-border" >
+
+                        <p:outputPanel style="width: 80px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorAmarillo" style="border: 1px solid black;"/>
+                            </div>
+                            Un mes pendiente 
+                        </p:outputPanel>
+
+                        <p:outputPanel style="width: 80px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorAnaranjado" style="border: 1px solid black;"/>
+                            </div>
+                            Dos mes pendiente 
+                        </p:outputPanel>
+
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
+                            </div>
+                            Tres o mas mes pendientes
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </div>
             </div>
             <p:dialog header="Corte de Servicio" widgetVar="dlgCorte" id="dlgCorte" 
                       onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="550px">
