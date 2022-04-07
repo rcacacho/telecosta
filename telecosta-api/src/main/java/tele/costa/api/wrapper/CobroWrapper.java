@@ -16,8 +16,8 @@ public class CobroWrapper implements Serializable {
     private String sector;
     private String fechapago;
     private Integer valor;
+    private String tiposervicio;
     private String observacion;
-
     public CobroWrapper() {
     }
 
@@ -92,5 +92,15 @@ public class CobroWrapper implements Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
+
+    public String getTiposervicio() {
+        return tiposervicio;
+    }
+
+    public void setTiposervicio(String tiposervicio) {
+        this.tiposervicio = tiposervicio;
+    }
+    
+    
 
 }

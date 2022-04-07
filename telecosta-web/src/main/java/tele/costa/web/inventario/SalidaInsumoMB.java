@@ -17,6 +17,7 @@ import tele.costa.api.entity.Ruta;
 import telecosta.web.utils.JsfUtil;
 import tele.costa.api.ejb.InsumoBeanLocal;
 import tele.costa.api.entity.Bitacorainventario;
+import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Inventario;
 import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.enums.TipoCargaEnum;
@@ -47,6 +48,12 @@ public class SalidaInsumoMB implements Serializable {
     private List<Ruta> listRuta;
     private Integer saldoSalida;
     private String codigoBusqueda;
+    private Insumos insumo;
+
+    public SalidaInsumoMB() {
+        inventarioSelectedSalida = new Inventario();
+        insumo = new Insumos();
+    }
 
     @PostConstruct
     void cargarDatos() {
@@ -74,7 +81,7 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
-        if (inventarioSelectedSalida.getNodocumento() == null) {
+        if (inventarioSelectedSalida.getNodocumentosalida() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
             return;
         }
@@ -89,13 +96,13 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
+        inventarioSelectedSalida.setSalidas(saldoSalida);
         if (inventarioSelectedSalida.getSalidas() > inventarioSelectedSalida.getExistencia()) {
             JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
             return;
         }
 
         Tipocarga tipo = catalogoBean.findTipoCarga(TipoCargaEnum.SALIDA.getId());
-        inventarioSelectedSalida.setSalidas(saldoSalida);
         inventarioSelectedSalida.setExistencia(inventarioSelectedSalida.getExistencia() - inventarioSelectedSalida.getSalidas());
         inventarioSelectedSalida.setTotal(inventarioSelectedSalida.getPrecio() * inventarioSelectedSalida.getExistencia());
         Inventario response = bodegaBeanLocal.updateInventario(inventarioSelectedSalida);
@@ -202,6 +209,37 @@ public class SalidaInsumoMB implements Serializable {
         JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
     }
 
+    public void saveInsumo() throws IOException {
+        if (insumo.getCodigo() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar un código");
+            return;
+        }
+
+        if (insumo.getDescripcion() == null) {
+            JsfUtil.addErrorMessage("Debe de ingresar una descripción");
+            return;
+        }
+
+        insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
+
+        Insumos response = bodegaBeanLocal.saveInsumo(insumo);
+        if (response != null) {
+            JsfUtil.addSuccessMessage("Insumo registrado exitosamente");
+        } else {
+            JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
+        }
+
+        insumo = null;
+    }
+
+    public void cerrarDialogRegistro() {
+        RequestContext.getCurrentInstance().execute("PF('dlgRegistro').hide()");
+    }
+
+    public void dialogRegistro() {
+        RequestContext.getCurrentInstance().execute("PF('dlgRegistro').show()");
+    }
+
     /*Metodos getters y setters*/
     public Integer getIdAgencia() {
         return idAgencia;
@@ -281,6 +319,14 @@ public class SalidaInsumoMB implements Serializable {
 
     public void setCodigoBusqueda(String codigoBusqueda) {
         this.codigoBusqueda = codigoBusqueda;
+    }
+
+    public Insumos getInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(Insumos insumo) {
+        this.insumo = insumo;
     }
 
 }

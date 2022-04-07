@@ -326,6 +326,8 @@ public class ReporteCobroMB {
                 cobroWrapper.setIdpago(pag.getIdpago());
                 cobroWrapper.setNombres(cl.getNombres());
                 cobroWrapper.setObservacion(pag.getObservacion());
+                cobroWrapper.setTiposervicio(cl.getTipocliente());
+
                 if (cl.getIdSector() != null) {
                     cobroWrapper.setSector(cl.getIdSector().getSector());
                 }
@@ -353,7 +355,8 @@ public class ReporteCobroMB {
         sheet.setColumnWidth(5, 5000);
         sheet.setColumnWidth(6, 5000);
         sheet.setColumnWidth(7, 5000);
-        sheet.setColumnWidth(8, 5000);
+        sheet.setColumnWidth(8, 8000);
+        sheet.setColumnWidth(9, 5000);
 
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 250, 250));
@@ -473,8 +476,11 @@ public class ReporteCobroMB {
         celda7.setCellValue("CONFIG PAGO/ CUOTA");
         celda7.setCellStyle(headerStyle);
         Cell celda8 = encabezados.createCell(headerNum++);
-        celda8.setCellValue("OBSERVACIONES");
+        celda8.setCellValue("TIPO DE SERVICIO");
         celda8.setCellStyle(headerStyle);
+        Cell celda9 = encabezados.createCell(headerNum++);
+        celda9.setCellValue("OBSERVACIONES");
+        celda9.setCellStyle(headerStyle);
         int correlativo = 1;
 
         for (CobroWrapper reporte : listCobro) {
@@ -544,14 +550,24 @@ public class ReporteCobroMB {
                     cell7.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getTiposervicio() != null) {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell8.setCellValue(reporte.getObservacion());
+                    cell8.setCellValue(reporte.getTiposervicio());
                     cell8.setCellStyle(cellStyle);
                 } else {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell8.setCellValue("");
                     cell8.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getObservacion() != null) {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue(reporte.getObservacion());
+                    cell9.setCellStyle(cellStyle);
+                } else {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue("");
+                    cell9.setCellStyle(cellStyle);
                 }
             }
         }
@@ -583,6 +599,7 @@ public class ReporteCobroMB {
                 cobroWrapper.setFechapago(pag.getMes() + '-' + pag.getAnio());
                 cobroWrapper.setIdpago(pag.getIdpago());
                 cobroWrapper.setNombres(cl.getNombres());
+                cobroWrapper.setTiposervicio(cl.getTipocliente());
                 cobroWrapper.setObservacion(pag.getObservacion());
                 if (cl.getIdSector() != null) {
                     cobroWrapper.setSector(cl.getIdSector().getSector());
@@ -612,6 +629,7 @@ public class ReporteCobroMB {
         sheet.setColumnWidth(6, 5000);
         sheet.setColumnWidth(7, 5000);
         sheet.setColumnWidth(8, 7000);
+        sheet.setColumnWidth(9, 7000);
 
         CellStyle headerStyle = workbook.createCellStyle();
         XSSFColor color = new XSSFColor(new java.awt.Color(255, 250, 250));
@@ -731,8 +749,11 @@ public class ReporteCobroMB {
         celda7.setCellValue("CONFIG PAGO/ CUOTA");
         celda7.setCellStyle(headerStyle);
         Cell celda8 = encabezados.createCell(headerNum++);
-        celda8.setCellValue("OBSERVACIONES");
+        celda8.setCellValue("TIPO DE SERVICIO");
         celda8.setCellStyle(headerStyle);
+        Cell celda9 = encabezados.createCell(headerNum++);
+        celda9.setCellValue("OBSERVACIONES");
+        celda9.setCellStyle(headerStyle);
         int correlativo = 1;
 
         for (CobroWrapper reporte : listCobro) {
@@ -808,14 +829,24 @@ public class ReporteCobroMB {
                     cell7.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getTiposervicio() != null) {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell8.setCellValue(reporte.getObservacion());
+                    cell8.setCellValue(reporte.getTiposervicio());
                     cell8.setCellStyle(cellStyle);
                 } else {
                     Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell8.setCellValue("");
                     cell8.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getObservacion() != null) {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue(reporte.getObservacion());
+                    cell9.setCellStyle(cellStyle);
+                } else {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue("");
+                    cell9.setCellStyle(cellStyle);
                 }
             }
         }

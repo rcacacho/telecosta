@@ -88,11 +88,29 @@
                     </p:column>
 
                     <p:column headerText="Código" width="10%" >
-                        <p:outputLabel value="#{ins.idinsumo.codigo}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.idinsumo.codigo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ins.idinsumo.codigo}" size="10" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Descripción" width="25%" >
-                        <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{ins.idinsumo.descripcion}" size="10" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Existencia" width="12%" >

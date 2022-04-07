@@ -55,12 +55,12 @@
                                          update="dt_insumo" icon="ui-icon-search"
                                          onstart="start();" oncomplete="stop();"/>
 
-                        <p:commandButton value="Limpiar" 
-                                         action="#{salidaInsumoMB.limpiarCampos()}"
+                        <p:commandButton value="Registro Insumo" 
+                                         action="#{salidaInsumoMB.dialogRegistro()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
-                                         update="@form" icon="ui-icon-refresh" process="@this"
+                                         update="@form" icon="ui-icon-plus" process="@this"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>
@@ -104,7 +104,7 @@
                         <p:commandButton value="Salida" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
-                                         action="#{salidaInsumoMB.dialogSalida(ins)}" update="dlgSalida"/>
+                                         action="#{salidaInsumoMB.dialogSalida(ins)}" update="@form"/>
 
                         <p:commandButton value="Detalle" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
@@ -112,66 +112,88 @@
                                          action="#{salidaInsumoMB.detalle(ins.idinsumo)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
-            </div>            
+            </div>
+
+            <p:dialog header="Salida insumo" widgetVar="dlgSalida" id="dlgSalida" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="700px">
+
+                <p:panelGrid id="pgSalida"  columns="2" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Código:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
+
+                    <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.codigo}" style="font-size: 16px!important;" />
+                    <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.descripcion}" style="font-size: 16px!important;" />
+
+                    <p:outputLabel  value="Cantidad existencia:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
+
+                    <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.existencia}" style="font-size: 16px!important;" />
+                    <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.precio}" style="font-size: 16px!important;" />
+
+                    <p:outputLabel  value="Cantidad a salida:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Ruta:" styleClass="colorTitulo" />
+
+                    <p:inputText value="#{salidaInsumoMB.saldoSalida}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" />
+                    </p:inputText> 
+                    <p:selectOneMenu id="ruta" value="#{salidaInsumoMB.inventarioSelectedSalida.idruta}" style="width: 150px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{salidaInsumoMB.listRuta}"  var="ag" itemLabel="#{ag.ruta}" itemValue="#{ag}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
+                    <p:outputLabel  value="Responsable:" styleClass="colorTitulo" />
+
+                    <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.nodocumentosalida}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                    <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.responsable}" size="25" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+                </p:panelGrid>
+
+                <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
+                    <p:inputTextarea cols="120" value="#{salidaInsumoMB.inventarioSelectedSalida    .observacion}" counter="display2" maxlength="500" 
+                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputTextarea>
+                    <h:outputText id="display2" style="margin-left: 480px;" />
+                </p:panelGrid>
+
+                <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                    <p:commandButton value="Guardar" action="#{salidaInsumoMB.salidaInsumo()}" icon="ui-icon-disk" process="@this"  
+                                     style=" margin-left: 5px; " onstart="return confirm('¿Confirmas la salida de insumos?');" update="pgSalida" />
+                    <p:commandButton value="Cancelar" process="@this" action="#{salidaInsumoMB.cerrarDialogSalida()}" 
+                                     icon="ui-icon-close" style="margin-left: 12px; " update="dlgSalida"/>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:dialog header="Registro insumo" widgetVar="dlgRegistro" id="dlgRegistro" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="470px">
+
+                <p:panelGrid id="pgRegistro" columns="1" styleClass="no-border" style="width: 80%;"  >
+                    <p:panelGrid columns="2" id="pg_denunciante"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                        <p:outputLabel for="pDescrip" value="Código:" />
+                        <p:outputLabel for="pvalor"  value="Descripción:" />
+
+                        <p:inputText id="pDescrip" value="#{salidaInsumoMB.insumo.codigo}" size="25"  placeholder="Ingrese la descripción" >
+                            <p:ajax event="blur" />
+                        </p:inputText>
+                        <p:inputText id="pvalor" value="#{salidaInsumoMB.insumo.descripcion}" size="25"  placeholder="Ingrese el valor" >
+                            <p:ajax event="blur" />
+                        </p:inputText>
+                    </p:panelGrid>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{salidaInsumoMB.saveInsumo()}" icon="ui-icon-disk" process="@this"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el insumo?');" update="@form"/>
+                        <p:commandButton value="Cancelar"  process="@this" action="#{salidaInsumoMB.cerrarDialogRegistro()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
         </h:form>
-
-        <p:dialog header="Salida insumo" widgetVar="dlgSalida" id="dlgSalida" 
-                  onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="700px">
-
-            <p:panelGrid id="pgSalida"  columns="2" styleClass="no-border" style="width: 80%;"  >
-                <p:outputLabel  value="Código:" styleClass="colorTitulo" />
-                <p:outputLabel  value="Descripción:" styleClass="colorTitulo" />
-
-                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.codigo}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.idinsumo.descripcion}" style="font-size: 16px!important;" />
-
-                <p:outputLabel  value="Cantidad existencia:" styleClass="colorTitulo" />
-                <p:outputLabel  value="Precio Unitario:" styleClass="colorTitulo" />
-
-                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.existencia}" style="font-size: 16px!important;" />
-                <p:outputLabel  value="#{salidaInsumoMB.inventarioSelectedSalida.precio}" style="font-size: 16px!important;" />
-
-                <p:outputLabel  value="Cantidad a salida:" styleClass="colorTitulo" />
-                <p:outputLabel  value="Ruta:" styleClass="colorTitulo" />
-
-                <p:inputText value="#{salidaInsumoMB.saldoSalida}" size="25" style="font-size: 16px!important;">
-                    <p:ajax event="blur" process="@this"/>
-                </p:inputText> 
-                <p:selectOneMenu id="ruta" value="#{salidaInsumoMB.inventarioSelectedSalida.idruta}" style="width: 150px;" 
-                                 converter="entityConverter" filter="true" filterMatchMode="contains">
-                    <p:ajax event="itemSelect"/>
-                    <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
-                    <f:selectItems value="#{salidaInsumoMB.listRuta}"  var="ag" itemLabel="#{ag.ruta}" itemValue="#{ag}"/>
-                </p:selectOneMenu>
-
-                <p:outputLabel  value="No. Documento:" styleClass="colorTitulo" />
-                <p:outputLabel  value="Responsable:" styleClass="colorTitulo" />
-
-                <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.nodocumentosalida}" size="25" style="font-size: 16px!important;">
-                    <p:ajax event="blur" process="@this"/>
-                </p:inputText>
-                <p:inputText value="#{salidaInsumoMB.inventarioSelectedSalida.responsable}" size="25" style="font-size: 16px!important;">
-                    <p:ajax event="blur" process="@this"/>
-                </p:inputText>
-            </p:panelGrid>
-
-            <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
-                <p:outputLabel  value="Obsevaciones:" styleClass="colorTitulo" />
-                <p:inputTextarea cols="120" value="#{salidaInsumoMB.inventarioSelectedSalida    .observacion}" counter="display2" maxlength="500" 
-                                 counterTemplate="{0} caracteres pendientes." autoResize="false">
-                    <p:ajax event="blur" process="@this" />
-                </p:inputTextarea>
-                <h:outputText id="display2" style="margin-left: 480px;" />
-            </p:panelGrid>
-
-            <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                <p:commandButton value="Guardar" action="#{salidaInsumoMB.salidaInsumo()}" icon="ui-icon-disk" process="@this"  
-                                 style=" margin-left: 5px; " onstart="return confirm('¿Confirmas la salida de insumos?');" update="pgSalida" />
-                <p:commandButton value="Cancelar" process="@this" action="#{salidaInsumoMB.cerrarDialogSalida()}" 
-                                 icon="ui-icon-close" style="margin-left: 12px; " update="dlgSalida"/>
-            </p:outputPanel>
-        </p:dialog>
-
-
     </ui:define>
 </ui:composition>
