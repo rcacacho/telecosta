@@ -92,7 +92,7 @@ public class SalidaInsumoMB implements Serializable {
             return;
         }
 
-        if (inventarioSelectedSalida.getObservacion() == null) {
+        if (inventarioSelectedSalida.getObservacionsalida() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar una observación");
             return;
         }
