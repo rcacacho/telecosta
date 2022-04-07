@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Ruta;
@@ -238,6 +239,19 @@ public class SalidaInsumoMB implements Serializable {
 
     public void dialogRegistro() {
         RequestContext.getCurrentInstance().execute("PF('dlgRegistro').show()");
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        Object value = event.getObject();
+        Inventario inv = (Inventario) value;
+
+        if (inv != null) {
+            Inventario tt = bodegaBeanLocal.updateInventario(inv);
+            JsfUtil.addSuccessMessage("Se actualizo la compra exitosamente");
+            cargarDatos();
+        } else {
+            JsfUtil.addErrorMessage("Sucedio un error al actualizar el registro");
+        }
     }
 
     /*Metodos getters y setters*/
