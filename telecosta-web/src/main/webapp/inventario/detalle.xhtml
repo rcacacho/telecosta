@@ -9,7 +9,8 @@
                 xmlns:shiro="http://shiro.apache.org/tags">
 
     <f:metadata>
-        <f:viewParam name="idinsumo" value="#{detalleInsumoMB.idinsumo}"/>
+        <f:viewParam name="idinventario" value="#{detalleInsumoMB.idinventario}"/>
+        <f:viewParam name="idregresar" value="#{detalleInsumoMB.idregresar }"/>
         <f:event type="preRenderView" listener="#{detalleInsumoMB.cargarDatos()}"/>
     </f:metadata>
 
@@ -49,10 +50,10 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.codigo}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idinsumo.codigo}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.descripcion}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idinsumo.descripcion}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
@@ -69,12 +70,12 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.nodocumento}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.nodocumento}" style="font-size: 16px!important;" />
                     </p:column>
 
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.proveedor}" style="font-size: 16px!important;" />
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.idagenciaenvio.agencia}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.proveedor}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idagenciaenvio.agencia}" style="font-size: 16px!important;" />
                     </p:column>
                 </p:row>
 
@@ -90,11 +91,11 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.cantidad}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.existencia}" style="font-size: 16px!important;" />
                     </p:column>
 
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.precio}" style="font-size: 16px!important;" >
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.precio}" style="font-size: 16px!important;" >
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
@@ -110,10 +111,10 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.total}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.total}" style="font-size: 16px!important;" />
                     </p:column>
                     <p:column colspan="2">
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.observacion}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.observacion}" style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -123,7 +124,83 @@
             <table style="width: 100%; margin-top: 23px;">
                 <tr>
                     <td style="width: 50%;">
-                        <p:outputLabel value="2. Información de Registro y Actualización" 
+                        <p:outputLabel value="2. Información de las Salidas del insumo" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid styleClass="no-border" style="width: 90%; margin-left: 4%;" >
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Cantidad de salida:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Responsable:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Ruta:" styleClass="colorTitulo"/>
+                    </p:column>    
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.salidas}"  style="font-size: 16px!important;">
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.responsable}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column style="width:40%">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idruta.ruta}" style="font-size: 16px!important;">
+                        </p:outputLabel>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="3. Información del Traslado del insumo" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid styleClass="no-border" style="width: 90%; margin-left: 4%;" >
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Cantidad de salida:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Responsable:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Ruta:" styleClass="colorTitulo"/>
+                    </p:column>    
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.salidas}"  style="font-size: 16px!important;">
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.responsable}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column style="width:40%">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idruta.ruta}" style="font-size: 16px!important;">
+                        </p:outputLabel>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+            
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="4. Información de Registro y Actualización" 
                                        style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
                     </td>
                 </tr>
@@ -144,15 +221,15 @@
                 </p:row>
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.fechacreacion}"  style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.fechacreacion}"  style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.usuariocreacion}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.usuariocreacion}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column style="width:40%">
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.fechamodificacion}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.fechamodificacion}" style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -164,7 +241,7 @@
                 </p:row>
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="#{detalleInsumoMB.insumos.usuariomodificacion}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.usuariomodificacion}" style="font-size: 16px!important;"/>
                     </p:column>
                 </p:row>
             </p:panelGrid>

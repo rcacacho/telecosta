@@ -45,7 +45,7 @@
                     </p:inputText> 
                     <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
 
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 20px;">
+                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
                         <p:commandButton value="Buscar"  
                                          action="#{salidaInsumoMB.buscarInsumo()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
@@ -55,13 +55,22 @@
                                          update="dt_insumo" icon="ui-icon-search"
                                          onstart="start();" oncomplete="stop();"/>
 
+                        <p:commandButton value="Limpiar" 
+                                         action="#{salidaInsumoMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form" icon="ui-icon-refresh" process="@this"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+
+
                         <p:commandButton value="Registro Insumo" 
                                          action="#{salidaInsumoMB.dialogRegistro()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
                                          update="@form" icon="ui-icon-plus" process="@this"
-                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                                         id="btn_registro"  onstart="start();" oncomplete="stop();"/>
                     </p:panelGrid>
                 </p:panelGrid>
 
@@ -104,7 +113,7 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Existencia" width="12%" >
+                    <p:column headerText="Existencia" width="15%" >
                         <p:cellEditor>
                             <f:facet name="output">
                                 <p:outputLabel value="#{ins.existencia}"/>
@@ -115,6 +124,10 @@
                                 </p:inputText> 
                             </f:facet>
                         </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Salidas" width="12%" >
+                        <p:outputLabel value="#{ins.salidas}"/>
                     </p:column>
 
                     <p:column headerText="Precio unitario" width="15%" >
@@ -130,17 +143,13 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Total" width="16%" >
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <p:outputLabel value="#{ins.total}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{ins.total}" size="10" >
-                                    <p:ajax event="blur" process="@this"/>
-                                </p:inputText> 
-                            </f:facet>
-                        </p:cellEditor>
+
+                    <p:column headerText="Responsable" width="18%" >
+                        <p:outputLabel value="#{ins.responsable}"/>
+                    </p:column>
+
+                    <p:column headerText="Ruta" width="12%" >
+                        <p:outputLabel value="#{ins.idruta.ruta}"/>
                     </p:column>
 
                     <p:column headerText="Agencia" width="16%" >
@@ -173,7 +182,7 @@
                         <p:commandButton value="Detalle" 
                                          style="float:left!important; margin-left:7.5% !important;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-search"
-                                         action="#{salidaInsumoMB.detalle(ins.idinsumo)}" update="@form"/>
+                                         action="#{salidaInsumoMB.detalle(ins.idinventario)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
             </div>

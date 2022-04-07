@@ -263,7 +263,7 @@ public class IngresoInsumosMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
+        JsfUtil.redirectTo("/inventario/detalle.xhtml?idinventario=" + id + "&idregresar=1");
     }
 
     public void buscarInsumo() {
@@ -293,7 +293,7 @@ public class IngresoInsumosMB implements Serializable {
 
         JsfUtil.addErrorMessage("Sucedio un error al elimnar");
     }
-    
+
     public void onRowEdit(RowEditEvent event) {
         Object value = event.getObject();
         Inventario inv = (Inventario) value;

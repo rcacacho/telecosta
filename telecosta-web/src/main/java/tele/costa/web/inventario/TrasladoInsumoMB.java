@@ -197,7 +197,7 @@ public class TrasladoInsumoMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
+         JsfUtil.redirectTo("/inventario/detalle.xhtml?idinventario=" + id+"&idregresar=3");
     }
 
     public void limpiarCampos() {

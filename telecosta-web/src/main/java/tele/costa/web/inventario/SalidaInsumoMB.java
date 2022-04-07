@@ -207,7 +207,7 @@ public class SalidaInsumoMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-        JsfUtil.redirectTo("/bodega/detalle.xhtml?idinsumo=" + id);
+        JsfUtil.redirectTo("/inventario/detalle.xhtml?idinventario=" + id+"&idregresar=2");
     }
 
     public void saveInsumo() throws IOException {
