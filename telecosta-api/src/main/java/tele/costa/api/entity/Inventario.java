@@ -66,6 +66,9 @@ public class Inventario implements Serializable {
     @Column(name = "salidas")
     private Integer salidas;
 
+    @Column(name = "traslado")
+    private Integer traslado;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "existencia")
@@ -105,9 +108,21 @@ public class Inventario implements Serializable {
     @Column(name = "responsable")
     private String responsable;
 
+    @Size(max = 250)
+    @Column(name = "responsabletraslado")
+    private String responsabletraslado;
+
     @Size(max = 1000)
     @Column(name = "observacion")
     private String observacion;
+
+    @Size(max = 1000)
+    @Column(name = "observacionsalida")
+    private String observacionsalida;
+
+    @Size(max = 1000)
+    @Column(name = "observaciontraslado")
+    private String observaciontraslado;
 
     @Basic(optional = false)
     @NotNull
@@ -374,6 +389,38 @@ public class Inventario implements Serializable {
 
     public void setIdtipocarga(Tipocarga idtipocarga) {
         this.idtipocarga = idtipocarga;
+    }
+
+    public Integer getTraslado() {
+        return traslado;
+    }
+
+    public void setTraslado(Integer traslado) {
+        this.traslado = traslado;
+    }
+
+    public String getResponsabletraslado() {
+        return responsabletraslado;
+    }
+
+    public void setResponsabletraslado(String responsabletraslado) {
+        this.responsabletraslado = responsabletraslado;
+    }
+
+    public String getObservacionsalida() {
+        return observacionsalida;
+    }
+
+    public void setObservacionsalida(String observacionsalida) {
+        this.observacionsalida = observacionsalida;
+    }
+
+    public String getObservaciontraslado() {
+        return observaciontraslado;
+    }
+
+    public void setObservaciontraslado(String observaciontraslado) {
+        this.observaciontraslado = observaciontraslado;
     }
 
     @Override

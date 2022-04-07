@@ -139,9 +139,6 @@
                     </p:column>
                     <p:column>
                         <p:outputLabel value="Responsable:" styleClass="colorTitulo"/>
-                    </p:column>
-                    <p:column >
-                        <p:outputLabel value="Ruta:" styleClass="colorTitulo"/>
                     </p:column>    
                 </p:row>
                 <p:row>
@@ -151,6 +148,19 @@
                     </p:column>
                     <p:column >
                         <p:outputLabel value="#{detalleInsumoMB.inventario.responsable}" style="font-size: 16px!important;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="No. Documento salida:" styleClass="colorTitulo"/>
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Ruta:" styleClass="colorTitulo"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.nodocumentosalida}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column style="width:40%">
                         <p:outputLabel value="#{detalleInsumoMB.inventario.idruta.ruta}" style="font-size: 16px!important;">
@@ -173,30 +183,41 @@
             <p:panelGrid styleClass="no-border" style="width: 90%; margin-left: 4%;" >
                 <p:row>
                     <p:column >
-                        <p:outputLabel value="Cantidad de salida:" styleClass="colorTitulo" />
+                        <p:outputLabel value="Cantidad de Trasladada:" styleClass="colorTitulo" />
                     </p:column>
                     <p:column>
                         <p:outputLabel value="Responsable:" styleClass="colorTitulo"/>
                     </p:column>
-                    <p:column >
-                        <p:outputLabel value="Ruta:" styleClass="colorTitulo"/>
-                    </p:column>    
+
                 </p:row>
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="#{detalleInsumoMB.inventario.salidas}"  style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.traslado}"  style="font-size: 16px!important;">
                         </p:outputLabel>
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="#{detalleInsumoMB.inventario.responsable}" style="font-size: 16px!important;"/>
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.responsabletraslado}" style="font-size: 16px!important;"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="No. Documento:" styleClass="colorTitulo"/>
+                    </p:column>  
+                    <p:column >
+                        <p:outputLabel value="Agencia:" styleClass="colorTitulo"/>
+                    </p:column>   
+                </p:row>
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.nodocumentotraslado}" style="font-size: 16px!important;"/>
                     </p:column>
                     <p:column style="width:40%">
-                        <p:outputLabel value="#{detalleInsumoMB.inventario.idruta.ruta}" style="font-size: 16px!important;">
+                        <p:outputLabel value="#{detalleInsumoMB.inventario.idagenciaenvio.agencia}" style="font-size: 16px!important;">
                         </p:outputLabel>
                     </p:column>
                 </p:row>
             </p:panelGrid>
-            
+
             <table style="width: 100%; margin-top: 23px;">
                 <tr>
                     <td style="width: 50%;">

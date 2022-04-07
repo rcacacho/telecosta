@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
-import tele.costa.api.entity.Insumos;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 import tele.costa.api.ejb.InsumoBeanLocal;
@@ -43,9 +42,12 @@ public class TrasladoInsumoMB implements Serializable {
     private Date fechaInicio;
     private Date fechaFin;
     private List<Inventario> listInventario;
-    private Integer saldoTraslado;
     private Inventario inventarioSelectedTraslado;
     private String codigoBusqueda;
+
+    public TrasladoInsumoMB() {
+        inventarioSelectedTraslado = new Inventario();
+    }
 
     @PostConstruct
     void cargarDatos() {
@@ -117,7 +119,7 @@ public class TrasladoInsumoMB implements Serializable {
     }
 
     public void trasladoInsumo() throws IOException {
-        if (inventarioSelectedTraslado.getSalidas() == null) {
+        if (inventarioSelectedTraslado.getTraslado() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar una cantidad");
             return;
         }
@@ -127,34 +129,33 @@ public class TrasladoInsumoMB implements Serializable {
             return;
         }
 
-        if (inventarioSelectedTraslado.getNodocumento() == null) {
+        if (inventarioSelectedTraslado.getNodocumentotraslado() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar un número de documento");
             return;
         }
 
-        if (inventarioSelectedTraslado.getResponsable() == null) {
+        if (inventarioSelectedTraslado.getResponsabletraslado() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar un responsable");
             return;
         }
 
-        if (inventarioSelectedTraslado.getObservacion() == null) {
+        if (inventarioSelectedTraslado.getObservaciontraslado() == null) {
             JsfUtil.addErrorMessage("Debe de ingresar una observación");
             return;
         }
 
-        if (inventarioSelectedTraslado.getSalidas() > inventarioSelectedTraslado.getExistencia()) {
+        if (inventarioSelectedTraslado.getTraslado() > inventarioSelectedTraslado.getExistencia()) {
             JsfUtil.addErrorMessage("La cantidad de salida es mayor a la existencia");
             return;
         }
 
-        inventarioSelectedTraslado.setSalidas(saldoTraslado);
-        inventarioSelectedTraslado.setExistencia(inventarioSelectedTraslado.getExistencia() - inventarioSelectedTraslado.getSalidas());
+        inventarioSelectedTraslado.setExistencia(inventarioSelectedTraslado.getExistencia() - inventarioSelectedTraslado.getTraslado());
         inventarioSelectedTraslado.setTotal(inventarioSelectedTraslado.getPrecio() * inventarioSelectedTraslado.getExistencia());
         Inventario response = bodegaBeanLocal.updateInventario(inventarioSelectedTraslado);
 
         Inventario insumoSuma = bodegaBeanLocal.findInsumoByIdAgenciaAndCodigo(inventarioSelectedTraslado.getIdagenciaenvio().getIdagencia(), inventarioSelectedTraslado.getIdinsumo().getCodigo());
         if (insumoSuma != null) {
-            insumoSuma.setEntradas(saldoTraslado);
+            insumoSuma.setEntradas(inventarioSelectedTraslado.getTraslado());
             insumoSuma.setExistencia(insumoSuma.getEntradas() + insumoSuma.getExistencia());
             insumoSuma.setTotal(insumoSuma.getPrecio() * insumoSuma.getExistencia());
             Inventario responseUpdate = bodegaBeanLocal.updateInventario(insumoSuma);
@@ -162,10 +163,10 @@ public class TrasladoInsumoMB implements Serializable {
             Inventario insumo = new Inventario();
             insumo.setIdinsumo(inventarioSelectedTraslado.getIdinsumo());
             insumo.setIdagencia(inventarioSelectedTraslado.getIdagenciaenvio());
-            insumo.setSaldoinicial(saldoTraslado);
-            insumo.setExistencia(saldoTraslado);
+            insumo.setSaldoinicial(inventarioSelectedTraslado.getTraslado());
+            insumo.setExistencia(inventarioSelectedTraslado.getTraslado());
             insumo.setPrecio(inventarioSelectedTraslado.getPrecio());
-            insumo.setTotal(inventarioSelectedTraslado.getPrecio() * saldoTraslado);
+            insumo.setTotal(inventarioSelectedTraslado.getPrecio() * inventarioSelectedTraslado.getTraslado());
             insumo.setUsuariocreacion(SesionUsuarioMB.getUserName());
 
             Inventario responseCreate = bodegaBeanLocal.saveInventario(insumo);
@@ -173,7 +174,7 @@ public class TrasladoInsumoMB implements Serializable {
         if (response != null) {
             Tipocarga tipo = catalogoBean.findTipoCarga(TipoCargaEnum.ENVIOS.getId());
             Bitacorainventario bitacora = new Bitacorainventario();
-            bitacora.setCantidad(saldoTraslado);
+            bitacora.setCantidad(inventarioSelectedTraslado.getTraslado());
             bitacora.setCodigo(inventarioSelectedTraslado.getIdinsumo().getCodigo());
             bitacora.setDescripcion(inventarioSelectedTraslado.getIdinsumo().getDescripcion());
             bitacora.setDocumento(inventarioSelectedTraslado.getNodocumento());
@@ -197,7 +198,7 @@ public class TrasladoInsumoMB implements Serializable {
     }
 
     public void detalle(Integer id) {
-         JsfUtil.redirectTo("/inventario/detalle.xhtml?idinventario=" + id+"&idregresar=3");
+        JsfUtil.redirectTo("/inventario/detalle.xhtml?idinventario=" + id + "&idregresar=3");
     }
 
     public void limpiarCampos() {
@@ -246,14 +247,6 @@ public class TrasladoInsumoMB implements Serializable {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-
-    public Integer getSaldoTraslado() {
-        return saldoTraslado;
-    }
-
-    public void setSaldoTraslado(Integer saldoTraslado) {
-        this.saldoTraslado = saldoTraslado;
     }
 
     public List<Inventario> getListInventario() {
