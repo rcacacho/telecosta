@@ -19,8 +19,10 @@ import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Configuracionpago;
+import tele.costa.api.entity.Estadocliente;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.enums.EstadoClienteEnum;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -58,13 +60,13 @@ public class ListaClienteMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         if (SesionUsuarioMB.getRootUsuario()) {
-            listCliente = clienteBean.ListClientes();
+            listCliente = clienteBean.ListClientesInactivos();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listCliente = clienteBean.listClientesByInMunucipio();
+            listCliente = clienteBean.listClientesByInMunucipioInactivos();
         } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
-            listCliente = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
+            listCliente = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo();
         } else {
-            listCliente = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+            listCliente = clienteBean.ListClientesByIdMunucipioInactivo(SesionUsuarioMB.getIdMunicipio());
         }
 
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
@@ -183,12 +185,13 @@ public class ListaClienteMB implements Serializable {
     }
 
     public void suspenderCliente(Cliente cl) throws IOException {
-        cl.setSuspendido(true);
+        Estadocliente estado = catalogoBean.findEstadoCliente(EstadoClienteEnum.SUSPENDIDO.getId());
+        cl.setIdestadocliente(estado);
         cl.setFechamodificacion(new Date());
         cl.setUsuariomodificacion(SesionUsuarioMB.getUserName());
         Cliente response = clienteBean.updateCliente(cl);
         if (response != null) {
-            JsfUtil.addSuccessMessage("Cliente inactivado exitosamente");
+            JsfUtil.addSuccessMessage("Cliente suspendido exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un al inactivar al cliente");
         }
@@ -205,7 +208,8 @@ public class ListaClienteMB implements Serializable {
     }
 
     public void corteCliente() throws IOException {
-        clienteSelected.setActivo(false);
+        Estadocliente estado = catalogoBean.findEstadoCliente(EstadoClienteEnum.CORTE.getId());
+        clienteSelected.setIdestadocliente(estado);
         clienteSelected.setFechamodificacion(new Date());
         clienteSelected.setUsuariomodificacion(SesionUsuarioMB.getUserName());
         Cliente response = clienteBean.updateCliente(clienteSelected);

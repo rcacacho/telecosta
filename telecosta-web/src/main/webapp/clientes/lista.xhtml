@@ -70,7 +70,7 @@
                 <br/>
 
                 <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMB.listCliente}"
-                             emptyMessage="No hay clientes registrados" editable="true"
+                             emptyMessage="No hay clientes registrados" editable="true" rowStyleClass="#{col.getStyleCliente()}"
                              styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
                              rows="15" paginator="#{listaClienteMB.listCliente.size()>15}"  paginatorPosition="bottom">
 
@@ -142,6 +142,10 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
+                    
+                    <p:column headerText="Estado" width="15%" >
+                        <p:outputLabel value="#{col.idestadocliente.estado}"/>      
+                    </p:column>
 
                     <p:column width="24%" exportable="false" >
                         <p:column headerText="Editar" width="8%">
@@ -181,21 +185,14 @@
                             <div align="center">
                                 <div id="rectangle" class="rowColorAmarillo" style="border: 1px solid black;"/>
                             </div>
-                            Un mes pendiente 
-                        </p:outputPanel>
-
-                        <p:outputPanel style="width: 80px;">
-                            <div align="center">
-                                <div id="rectangle" class="rowColorAnaranjado" style="border: 1px solid black;"/>
-                            </div>
-                            Dos mes pendiente 
+                            Servicio suspendido  
                         </p:outputPanel>
 
                         <p:outputPanel style="width: 75px;">
                             <div align="center">
                                 <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
                             </div>
-                            Tres o mas mes pendientes
+                            Corte de servicio
                         </p:outputPanel>
                     </p:panelGrid>
                 </div>

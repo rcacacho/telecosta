@@ -315,4 +315,53 @@ public class ClienteBean implements ClienteBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Cliente> ListClientesInactivos() {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> listClientesByInMunucipioInactivos() {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio in (1,6,7) ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo() {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where  qj.idmunicipio.idmunicipio in (3,6,7) ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunucipioInactivo(Integer idmunicipio) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }

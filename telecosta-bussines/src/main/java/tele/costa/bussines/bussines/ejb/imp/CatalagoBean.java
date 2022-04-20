@@ -11,6 +11,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.entity.Agencia;
 import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
+import tele.costa.api.entity.Estadocliente;
 import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
@@ -270,8 +271,21 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public Tipocarga findTipoCarga(Integer idtipocarga) {
-      List<Tipocarga> lst = em.createQuery("SELECT dep FROM Tipocarga dep WHERE dep.activo  = true and dep.idtipocarga =:idtipocarga ", Tipocarga.class)
+        List<Tipocarga> lst = em.createQuery("SELECT dep FROM Tipocarga dep WHERE dep.activo  = true and dep.idtipocarga =:idtipocarga ", Tipocarga.class)
                 .setParameter("idtipocarga", idtipocarga)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public Estadocliente findEstadoCliente(Integer idestadocliente) {
+        List<Estadocliente> lst = em.createQuery("SELECT dep FROM Estadocliente dep WHERE dep.activo  = true and dep.idestadocliente =:idestadocliente", Estadocliente.class)
+                .setParameter("idestadocliente", idestadocliente)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

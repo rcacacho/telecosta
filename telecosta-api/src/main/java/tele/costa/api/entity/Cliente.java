@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import tele.costa.api.enums.EstadoClienteEnum;
 
 /**
  *
@@ -149,6 +150,10 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "idsector", referencedColumnName = "idsector")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Sector idSector;
+
+    @JoinColumn(name = "idestadocliente", referencedColumnName = "idestadocliente")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Estadocliente idestadocliente;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
@@ -302,6 +307,14 @@ public class Cliente implements Serializable {
         this.idmunicipio = idmunicipio;
     }
 
+    public Estadocliente getIdestadocliente() {
+        return idestadocliente;
+    }
+
+    public void setIdestadocliente(Estadocliente idestadocliente) {
+        this.idestadocliente = idestadocliente;
+    }
+
     @XmlTransient
     public List<Pago> getPagoList() {
         return pagoList;
@@ -408,6 +421,15 @@ public class Cliente implements Serializable {
 
     public void setIdSector(Sector idSector) {
         this.idSector = idSector;
+    }
+
+    public String getStyleCliente() {
+        if (idestadocliente.getIdestadocliente().equals(EstadoClienteEnum.SUSPENDIDO.getId())) {
+            return "rowColorAmarillo";
+        } else if (idestadocliente.getIdestadocliente().equals(EstadoClienteEnum.CORTE.getId())) {
+            return "rowColorRojo";
+        }
+        return "";
     }
 
 }

@@ -97,6 +97,9 @@
                     <p:column >
                         <p:outputLabel value="Configuración pago:" styleClass="colorTitulo" />
                     </p:column>
+                    <p:column >
+                        <p:outputLabel value="Estado cliente:" styleClass="colorTitulo" />
+                    </p:column>
                 </p:row>
 
                 <p:row>
@@ -104,6 +107,9 @@
                         <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.descripcion}" style="font-size: 16px!important;" />
 
                         <p:outputLabel value="#{detalleClienteMB.cliente.idconfiguracionpago.valor}" style="margin-left:5px; font-size: 16px!important;" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleClienteMB.estado}" style="font-size: 16px!important;" />
                     </p:column>
                 </p:row>
             </p:panelGrid>
@@ -153,7 +159,7 @@
                         <p:outputLabel value="Fecha supresión sistema:" styleClass="colorTitulo"/>
                     </p:column>
                     <p:column >
-                        <p:outputLabel value="Nip supresión sistema:" styleClass="colorTitulo"/>
+                        <p:outputLabel value="Usuario suspendio sistema:" styleClass="colorTitulo"/>
                     </p:column>
                 </p:row>
                 <p:row>

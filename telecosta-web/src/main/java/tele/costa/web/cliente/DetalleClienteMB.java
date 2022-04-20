@@ -24,9 +24,17 @@ public class DetalleClienteMB implements Serializable {
 
     private Integer idcliente;
     private Cliente cliente;
+    private String estado;
 
     public void cargarDatos() {
         cliente = clienteBean.findClienteById(idcliente);
+        if (cliente.getActivo() == false){
+            estado = "Servicio con Corte";
+        }else if (cliente.getSuspendido() == true){
+            estado = "Suspendido";
+        }else{
+            estado = "Activo";
+        }
     }
 
     public void regresar() {
@@ -53,5 +61,15 @@ public class DetalleClienteMB implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    
     
 }

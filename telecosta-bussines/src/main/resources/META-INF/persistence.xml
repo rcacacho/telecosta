@@ -4,6 +4,7 @@
         <jta-data-source>jdbc/telecosta</jta-data-source>
         <class>tele.costa.api.entity.Atencion</class>
         <class>tele.costa.api.entity.Cliente</class>
+        <class>tele.costa.api.entity.Estadocliente</class>
         <class>tele.costa.api.entity.Detalleatencion</class>
         <class>tele.costa.api.entity.Cobro</class>
         <class>tele.costa.api.entity.Configuracionpago</class>
