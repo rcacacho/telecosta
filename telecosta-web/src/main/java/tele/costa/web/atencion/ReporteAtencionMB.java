@@ -442,9 +442,9 @@ public class ReporteAtencionMB implements Serializable {
                     cell8.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservaciones() != null) {
+                if (reporte.getObservacion() != null) {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell9.setCellValue(reporte.getObservaciones());
+                    cell9.setCellValue(reporte.getObservacion());
                     cell9.setCellStyle(cellStyle);
                 } else {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
@@ -728,9 +728,9 @@ public class ReporteAtencionMB implements Serializable {
                     cell8.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservaciones() != null) {
+                if (reporte.getObservacion() != null) {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell9.setCellValue(reporte.getObservaciones());
+                    cell9.setCellValue(reporte.getObservacion());
                     cell9.setCellStyle(cellStyle);
                 } else {
                     Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());

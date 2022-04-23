@@ -29,13 +29,13 @@ import javax.xml.bind.annotation.XmlRootElement;
                         @FieldResult(name = "referencia", column = "referencia"),
                         @FieldResult(name = "materialutilizado", column = "materialutilizado"),
                         @FieldResult(name = "cantidad", column = "cantidad"),
-                        @FieldResult(name = "observaciones", column = "observaciones"),
+                        @FieldResult(name = "observacion", column = "observacion"),
                         @FieldResult(name = "fechacreacion", column = "fechacreacion"),})})
 @NamedNativeQueries({
     @NamedNativeQuery(
             name = "ReporteAtencionDto.atencionesFechas",
             query
-            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
+            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, d.observacion, a.fechacreacion  \n"
             + "from atencion a\n"
             + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
             + "where  a.fechacreacion >= ? \n"
@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedNativeQuery(
             name = "ReporteAtencionDto.atencionesRuta",
             query
-            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, a.observaciones, a.fechacreacion  \n"
+            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, d.observacion, a.fechacreacion  \n"
             + "from atencion a \n"
             + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
             + "join ruta r on a.idruta = r.idruta and r.activo = 1\n"
@@ -64,7 +64,7 @@ public class ReporteAtencionDto implements Serializable {
     private String referencia;
     private String materialutilizado;
     private String cantidad;
-    private String observaciones;
+    private String observacion;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechacreacion;
 
@@ -132,12 +132,12 @@ public class ReporteAtencionDto implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public String getObservaciones() {
-        return observaciones;
+    public String getObservacion() {
+        return observacion;
     }
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     public Date getFechacreacion() {
