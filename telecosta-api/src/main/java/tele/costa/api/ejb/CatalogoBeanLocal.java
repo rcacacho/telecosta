@@ -7,6 +7,7 @@ import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Estadocliente;
 import tele.costa.api.entity.Formapago;
+import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
@@ -65,5 +66,7 @@ public interface CatalogoBeanLocal {
     Tipocarga findTipoCarga(Integer idtipocarga);
 
     Estadocliente findEstadoCliente(Integer idestadocliente);
+    
+     List<Insumos> listInsumos();
 
 }

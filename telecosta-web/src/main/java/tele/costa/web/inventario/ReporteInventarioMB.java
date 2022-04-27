@@ -103,6 +103,9 @@ public class ReporteInventarioMB implements Serializable {
     private Integer idAgenciaGeneral;
     private Date fechaInicioGeneral;
     private Date fechaFinGeneral;
+    private Integer idAgenciaTecnico;
+    private Date fechaInicioTecnico;
+    private Date fechaFinTecnico;
 
     public ReporteInventarioMB() {
         mostrarIngreso = Boolean.FALSE;
@@ -1484,6 +1487,291 @@ public class ReporteInventarioMB implements Serializable {
         return content;
     }
 
+    public StreamedContent imprimirReporteTecnicoPdf() {
+        try {
+            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            String realPath = servletContext.getRealPath("/");
+            String nombreReporte = "rptTecnicoBodega";
+            String nombreArchivo = "tecnico.pdf";
+
+            HashMap parametros = new HashMap();
+            parametros.put("IMAGE", "logo.jpeg");
+            parametros.put("DIRECTORIO", realPath + File.separator + "resources" + File.separator + "images" + File.separator);
+            parametros.put("USUARIO", SesionUsuarioMB.getUserName());
+            parametros.put("ID_AGENCIA", idAgenciaTecnico);
+            parametros.put("FECHA_INICIO", fechaInicioTecnico);
+            parametros.put("FECHA_FIN", fechaFinTecnico);
+
+            ReporteJasper reporteJasper = JasperUtil.jasperReportPDF(nombreReporte, nombreArchivo, parametros, dataSource);
+            StreamedContent streamedContent;
+            FileInputStream stream = new FileInputStream(realPath + "resources/reports/" + reporteJasper.getFileName());
+            streamedContent = new DefaultStreamedContent(stream, "application/pdf", reporteJasper.getFileName());
+            return streamedContent;
+        } catch (Exception ex) {
+            log.error(ex);
+            JsfUtil.addErrorMessage("Ocurrio un error al generar el pdf del reporte");
+        }
+        return null;
+    }
+
+    public StreamedContent imprimirReporteTecnicoExcel() throws IOException {
+        StreamedContent content = null;
+        List<Inventario> listInventario = null;
+
+        if (fechaInicioTecnico != null && fechaFinTecnico != null && idAgenciaTecnico > 0) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoTecnicoByFechaInicioAndFechaFinAndIdAgencia(fechaInicioTecnico, fechaFinTecnico, idAgenciaTecnico);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicioTecnico != null && fechaFinGeneral != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicioAndFechaFin(fechaInicioTecnico, fechaFinTecnico);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaInicioTecnico != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByFechaInicio(fechaInicioTecnico);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (fechaFinTecnico != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoTecnicoByFechaInicio(fechaFinTecnico);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idAgenciaTecnico != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoTecnicoByIdAgencia(idAgenciaTecnico);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else {
+            JsfUtil.addErrorMessage("No se encontraron datos");
+            return null;
+        }
+
+        HashMap<Integer, Fila> mapaFilas = new HashMap<>();
+        Workbook workbook = new SXSSFWorkbook(1000);
+        Sheet sheet = workbook.createSheet("REPORTE_INGRESO_BODEGA");
+
+        int rownum = 0;
+        int headerNum = 0;
+        sheet.setColumnWidth(0, 900);
+        sheet.setColumnWidth(1, 9000);
+        sheet.setColumnWidth(2, 9000);
+        sheet.setColumnWidth(3, 6000);
+        sheet.setColumnWidth(4, 7000);
+        sheet.setColumnWidth(5, 5000);
+        sheet.setColumnWidth(6, 5000);
+        sheet.setColumnWidth(7, 5000);
+        sheet.setColumnWidth(8, 5000);
+        sheet.setColumnWidth(9, 5000);
+        sheet.setColumnWidth(10, 5000);
+        sheet.setColumnWidth(11, 5000);
+        sheet.setColumnWidth(12, 11000);
+        sheet.setColumnWidth(13, 12000);
+        sheet.setColumnWidth(14, 14000);
+        sheet.setColumnWidth(15, 2000);
+        sheet.setColumnWidth(16, 6000);
+        sheet.setColumnWidth(17, 5000);
+        sheet.setColumnWidth(18, 4000);
+        sheet.setColumnWidth(19, 6000);
+        sheet.setColumnWidth(20, 6000);
+        sheet.setColumnWidth(21, 7000);
+        sheet.setColumnWidth(22, 7000);
+        sheet.setColumnWidth(23, 7000);
+        sheet.setColumnWidth(24, 19000);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        XSSFColor color = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) headerStyle).setFillForegroundColor(color);
+        headerStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+
+        CellStyle cellStyle = workbook.createCellStyle();
+        XSSFColor colorBlanco = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) cellStyle).setFillForegroundColor(colorBlanco);
+        Font font = workbook.createFont();//Create font
+        cellStyle.setFont(font);//set it to bold
+
+        CellStyle cellStyleTitulo = workbook.createCellStyle();
+        XSSFColor colorBlancoTitulo = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) cellStyleTitulo).setFillForegroundColor(colorBlancoTitulo);
+        Font fontTitulo = workbook.createFont();//Create font
+        fontTitulo.setBoldweight(Font.BOLDWEIGHT_BOLD);//Make font bold
+        fontTitulo.setFontName(HSSFFont.FONT_ARIAL);
+        fontTitulo.setFontHeightInPoints((short) 16);
+        cellStyleTitulo.setFont(fontTitulo);//set it to bold
+
+        CellStyle cellStyle2 = workbook.createCellStyle();
+        XSSFColor colorBlanco2 = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) cellStyle2).setFillForegroundColor(colorBlanco2);
+
+        CellStyle cellStyleNumero = workbook.createCellStyle();
+        XSSFColor colorBlanco3 = new XSSFColor(new java.awt.Color(255, 250, 250));
+        ((XSSFCellStyle) cellStyleNumero).setFillForegroundColor(colorBlanco3);
+        DataFormat df = workbook.createDataFormat();
+        cellStyleNumero.setDataFormat(df.getFormat("###,###,##0.00"));
+
+        CellStyle cellStyleFecha = workbook.createCellStyle();
+        CreationHelper createHelper = workbook.getCreationHelper();
+        cellStyleFecha.setDataFormat(createHelper.createDataFormat().getFormat("dd/mm/yyyy"));
+
+        for (int i = 1; i < 4; i++) {
+            Fila fila = new Fila(sheet.createRow(rownum++));
+            Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell.setCellValue("");
+            cell.setCellStyle(cellStyle);
+        }
+
+        for (int i = 0; i < 1; i++) {
+            Fila fila = new Fila(sheet.createRow(rownum++));
+            Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell.setCellValue("");
+            cell.setCellStyle(cellStyle);
+
+            Cell cell13 = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell13.setCellValue("");
+            cell13.setCellStyle(cellStyle);
+
+            Cell cell11 = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell11.setCellValue("TELECOSTA");
+            CellUtil.setAlignment(cell11, workbook, CellStyle.ALIGN_LEFT);
+            cell11.setCellStyle(cellStyleTitulo);
+        }
+
+        for (int i = 0; i < 1; i++) {
+            Fila fila = new Fila(sheet.createRow(rownum++));
+            Cell cell12 = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell12.setCellValue("");
+            cell12.setCellStyle(cellStyle);
+
+            Cell cell17 = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell17.setCellValue("");
+            cell17.setCellStyle(cellStyle);
+
+            Cell cell15 = fila.getFila().createCell(fila.nextIndex().shortValue());
+            cell15.setCellValue("BODEGA");
+            cell15.setCellStyle(cellStyleTitulo);
+        }
+
+        Row encabezados = sheet.createRow(rownum++);
+        InputStream inputStream = new FileInputStream(getImagesDir() + LOGO);
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        //Adds a picture to the workbook
+        int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+        //close the input stream
+        inputStream.close();
+        //Returns an object that handles instantiating concrete classes
+        CreationHelper helper = workbook.getCreationHelper();
+        //Creates the top-level drawing patriarch.
+        Drawing drawing = sheet.createDrawingPatriarch();
+        //Create an anchor that is attached to the worksheet
+        ClientAnchor anchor = helper.createClientAnchor();
+        //set top-left corner for the image
+        anchor.setCol1(3);
+        anchor.setRow1(1);
+        //Creates a picture
+        Picture pict = drawing.createPicture(anchor, pictureIdx);
+        //Reset the image to the original size
+        pict.resize(0.6, 4);
+
+        Cell celda0 = encabezados.createCell(headerNum++);
+        celda0.setCellValue("No.");
+        celda0.setCellStyle(headerStyle);
+        Cell celda1 = encabezados.createCell(headerNum++);
+        celda1.setCellValue("CÓDIGO");
+        celda1.setCellStyle(headerStyle);
+        Cell celda2 = encabezados.createCell(headerNum++);
+        celda2.setCellValue("DESCRIPCIÓN");
+        celda2.setCellStyle(headerStyle);
+        Cell celda3 = encabezados.createCell(headerNum++);
+        celda3.setCellValue("CANTIDAD ENTREGADA");
+        celda3.setCellStyle(headerStyle);
+        Cell celda4 = encabezados.createCell(headerNum++);
+        celda4.setCellValue("PRECIO UNITARIO");
+        celda4.setCellStyle(headerStyle);
+        Cell celda5 = encabezados.createCell(headerNum++);
+        celda5.setCellValue("RESPONSABLE");
+        celda5.setCellStyle(headerStyle);
+        Cell celda6 = encabezados.createCell(headerNum++);
+        celda6.setCellValue("RUTA");
+        celda6.setCellStyle(headerStyle);
+        Cell celda7 = encabezados.createCell(headerNum++);
+        celda7.setCellValue("AGENCIA");
+        celda7.setCellStyle(headerStyle);
+        int correlativo = 1;
+
+        for (Inventario reporte : listInventario) {
+            if (!mapaFilas.containsKey(reporte.getIdinventario())) {
+                Fila fila = new Fila(sheet.createRow(rownum++));
+                mapaFilas.put(reporte.getIdinventario(), fila);
+
+                Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell.setCellValue(correlativo++);
+                cell.setCellStyle(cellStyle);
+
+                Cell cell1 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell1.setCellValue(reporte.getIdinsumo().getCodigo());
+                cell1.setCellStyle(cellStyle);
+
+                Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell2.setCellValue(reporte.getIdinsumo().getDescripcion());
+                cell2.setCellStyle(cellStyle);
+
+                Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell3.setCellValue(reporte.getSalidas());
+                cell3.setCellStyle(cellStyle);
+
+                Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell4.setCellValue(reporte.getPrecio());
+                cell4.setCellStyle(cellStyleNumero);
+
+                if (reporte.getResponsable() != null) {
+                    Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell5.setCellValue(reporte.getResponsable());
+                    cell5.setCellStyle(cellStyle);
+                } else {
+                    Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell5.setCellValue("");
+                    cell5.setCellStyle(cellStyle);
+                }
+
+                Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell6.setCellValue(reporte.getIdruta().getRuta());
+                cell6.setCellStyle(cellStyle);
+
+                Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell7.setCellValue(reporte.getIdagencia().getAgencia());
+                cell7.setCellStyle(cellStyle);
+
+            }
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String outputFileName = "Reporte_" + sdf.format(new Date()) + ".xlsx";
+        String outputReportFile = getOutputDir() + outputFileName;
+        FileOutputStream out = new FileOutputStream(outputReportFile);
+        workbook.write(out);
+        out.close();
+        ((SXSSFWorkbook) workbook).dispose();
+        FileInputStream stream = new FileInputStream(outputReportFile);
+        content = new DefaultStreamedContent(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", outputFileName);
+
+        return content;
+    }
+
     public String getOutputDir() {
         return String.format("%sresources%sreports%sgenerated%s", getRealPath(), getDirSeparator(), getDirSeparator(), getDirSeparator());
     }
@@ -1814,6 +2102,30 @@ public class ReporteInventarioMB implements Serializable {
 
     public void setFechaFinGeneral(Date fechaFinGeneral) {
         this.fechaFinGeneral = fechaFinGeneral;
+    }
+
+    public Integer getIdAgenciaTecnico() {
+        return idAgenciaTecnico;
+    }
+
+    public void setIdAgenciaTecnico(Integer idAgenciaTecnico) {
+        this.idAgenciaTecnico = idAgenciaTecnico;
+    }
+
+    public Date getFechaInicioTecnico() {
+        return fechaInicioTecnico;
+    }
+
+    public void setFechaInicioTecnico(Date fechaInicioTecnico) {
+        this.fechaInicioTecnico = fechaInicioTecnico;
+    }
+
+    public Date getFechaFinTecnico() {
+        return fechaFinTecnico;
+    }
+
+    public void setFechaFinTecnico(Date fechaFinTecnico) {
+        this.fechaFinTecnico = fechaFinTecnico;
     }
 
 }

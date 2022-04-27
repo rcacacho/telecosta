@@ -216,7 +216,6 @@
                                      onstart="start();" oncomplete="stop();"/>
                 </p:panelGrid>
 
-
                 <h4 style="margin-right: 90px; margin-top: 25px;">Reporte General de bodega</h4>
                 <p:panelGrid  columns="2"  styleClass="no-border" style="margin-top: 10px;" >
                     <p:outputLabel value="Fecha incio:"  styleClass="field-label"  />
@@ -235,7 +234,7 @@
                     <p:outputLabel value=""  styleClass="field-label"  />
 
                     <p:selectOneMenu  value="#{reporteInventarioMB.idAgenciaGeneral}" style="width: 250px;" 
-                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect" />
                         <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen.idagencia}"/>
@@ -246,13 +245,54 @@
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                          onclick="PrimeFaces.monitorDownload(start, stop);" 
                                          immediate="true" process="@this" update="@form" ajax="false">
-                            <p:fileDownload value="#{reporteClienteMB.generarPdfMunicipioCliente()}"/>
+                            <p:fileDownload value="#{reporteInventarioMB.imprimirReporteGeneralPdf()}"/>
                         </p:commandButton>
                         <p:commandButton value="Excel" style="float: left;"
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-print"
                                          onclick="PrimeFaces.monitorDownload(start, stop);" 
                                          immediate="true" process="@this" update="@form" ajax="false">
-                            <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteMuncipio()}"/>
+                            <p:fileDownload value="#{reporteInventarioMB.imprimirReporteGeneralExcel()}"/>
+                        </p:commandButton>
+                    </p:panelGrid>
+                </p:panelGrid>
+                
+                
+                <h4 style="margin-right: 90px; margin-top: 25px;">Reporte de técnicos</h4>
+                <p:panelGrid  columns="2"  styleClass="no-border" style="margin-top: 10px;" >
+                    <p:outputLabel value="Fecha incio:"  styleClass="field-label"  />
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label"  />
+
+                    <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                 value="#{reporteInventarioMB.fechaInicioTecnico}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+                    <p:calendar  placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                 value="#{reporteInventarioMB.fechaFinTecnico}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel value="Agencia"  styleClass="field-label"  />
+                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                    <p:selectOneMenu  value="#{reporteInventarioMB.idAgenciaTecnico}" style="width: 250px;" 
+                                      converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect" />
+                        <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{reporteInventarioMB.listAgencia}"  var="agen" itemLabel="#{agen.agencia}" itemValue="#{agen.idagencia}"/>
+                    </p:selectOneMenu>
+
+                    <p:panelGrid  columns="2"  styleClass="no-border" >
+                        <p:commandButton value="PDF" style="float: left;"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                         immediate="true" process="@this" update="@form" ajax="false">
+                            <p:fileDownload value="#{reporteInventarioMB.imprimirReporteTecnicoPdf()}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Excel" style="float: left;"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                         immediate="true" process="@this" update="@form" ajax="false">
+                            <p:fileDownload value="#{reporteInventarioMB.imprimirReporteTecnicoExcel()}"/>
                         </p:commandButton>
                     </p:panelGrid>
                 </p:panelGrid>

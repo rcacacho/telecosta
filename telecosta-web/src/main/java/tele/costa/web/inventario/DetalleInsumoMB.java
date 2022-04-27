@@ -37,6 +37,8 @@ public class DetalleInsumoMB implements Serializable {
             JsfUtil.redirectTo("/inventario/salidas.xhtml");
         } else if (idregresar.equals(3)) {
             JsfUtil.redirectTo("/inventario/traslados.xhtml");
+        } else if (idregresar.equals(4)) {
+            JsfUtil.redirectTo("/inventario/tecnicos.xhtml");
         }
 
     }

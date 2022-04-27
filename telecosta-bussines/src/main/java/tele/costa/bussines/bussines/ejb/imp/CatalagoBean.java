@@ -13,6 +13,7 @@ import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Departamento;
 import tele.costa.api.entity.Estadocliente;
 import tele.costa.api.entity.Formapago;
+import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
@@ -293,6 +294,18 @@ public class CatalagoBean implements CatalogoBeanLocal {
         }
 
         return lst.get(0);
+    }
+
+    @Override
+    public List<Insumos> listInsumos() {
+        List<Insumos> lst = em.createQuery("SELECT qj FROM Insumos qj where qj.activo = true", Insumos.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
     }
 
 }

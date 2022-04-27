@@ -66,4 +66,22 @@ public interface InsumoBeanLocal {
 
     Inventario deleteInventario(Integer idinventario, String usuario);
 
+    List<Inventario> listInsumoByIdInsumo(Integer idinsumo);
+
+    List<Inventario> listInsumoTecnicoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia);
+
+    List<Inventario> listInsumoTecnicoByCodigo(String codigo);
+
+    List<Inventario> listInsumoTecnicoByIdAgencia(Integer idAgencia);
+
+    List<Inventario> listInsumoBTecnicoyFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin);
+
+    List<Inventario> listInsumoTecnicoByIdAgenciaAndCodigo(Integer idAgencia, String codigo);
+
+    List<Inventario> listInsumoTecnicoByFechaInicio(Date fechaInicio);
+
+    List<Inventario> listInsumoTecnicoByFechaFin(Date fechaFin);
+
+    List<Inventario> listInsumoTecnicoByIdInsumo(Integer idinsumo);
+
 }

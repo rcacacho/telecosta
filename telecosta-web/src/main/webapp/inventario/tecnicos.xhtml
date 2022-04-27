@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Lista de Insumos
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content" enctype="multipart/form-data"> 
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Lista de Insumos</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha inicio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{tecnicosMB.fechaInicio}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{tecnicosMB.fechaFin}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:selectOneMenu id="agencia" value="#{tecnicosMB.idAgencia}" style="width: 150px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona una agencia)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{tecnicosMB.listAgencia}"  var="ag" itemLabel="#{ag.agencia}" itemValue="#{ag.idagencia}"/>
+                    </p:selectOneMenu>
+                    <p:inputText value="#{tecnicosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="Insumo:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:selectOneMenu id="idInsumo" value="#{tecnicosMB.idinsumo}" style="width: 150px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un insumo)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{tecnicosMB.listInsumos}"  var="ag" itemLabel="#{ag.descripcion}" itemValue="#{ag.idinsumo}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 20px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{tecnicosMB.buscarInsumo()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar" process="@this"  
+                                         update="dt_insumo" icon="ui-icon-search"
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{tecnicosMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form" icon="ui-icon-refresh" process="@this"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_insumo" var="ins" value="#{tecnicosMB.listInventario}"
+                             emptyMessage="No hay insumos registrados"
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                             rows="15" paginator="#{tecnicosMB.listInventario.size()>15}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Código" width="10%" >
+                        <p:outputLabel value="#{ins.idinsumo.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Descripción" width="25%" >
+                        <p:outputLabel value="#{ins.idinsumo.descripcion}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad Entregada" width="12%" >
+                        <p:outputLabel value="#{ins.salidas}"/>
+                    </p:column>
+
+                    <p:column headerText="Precio unitario" width="15%" >
+                        <p:outputLabel value="#{ins.precio}"/>
+                    </p:column>
+
+                    <p:column headerText="Responsable" width="18%" >
+                        <p:outputLabel value="#{ins.responsable}"/>
+                    </p:column>
+
+                    <p:column headerText="Ruta" width="12%" >
+                        <p:outputLabel value="#{ins.idruta.ruta}"/>
+                    </p:column>
+
+                    <p:column headerText="Agencia" width="16%" >
+                        <p:outputLabel value="#{ins.idagencia.agencia}"/>
+                    </p:column>
+
+                    <p:column width="10%" exportable="false" >
+                        <p:commandButton value="Detalle" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{tecnicosMB.detalle(ins.idinventario)}" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

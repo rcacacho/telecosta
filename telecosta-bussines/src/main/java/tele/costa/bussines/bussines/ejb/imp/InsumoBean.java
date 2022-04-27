@@ -625,7 +625,7 @@ public class InsumoBean implements InsumoBeanLocal {
 
     @Override
     public Inventario deleteInventario(Integer idinventario, String usuario) {
-       if (idinventario == null) {
+        if (idinventario == null) {
             context.setRollbackOnly();
             return null;
         }
@@ -648,6 +648,210 @@ public class InsumoBean implements InsumoBeanLocal {
             processException(ex);
             return null;
         }
+    }
+
+    @Override
+    public List<Inventario> listInsumoByIdInsumo(Integer idinsumo) {
+        if (idinsumo == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idinsumo.idinsumo =:idinsumo and pa.activo = true ", Inventario.class)
+                .setParameter("idinsumo", idinsumo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByFechaInicioAndFechaFinAndIdAgencia(Date fechaInicio, Date fechaFin, Integer idAgencia) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+        sdf.format(fechaFin);
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.idagencia.idagencia =:idAgencia and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("idAgencia", idAgencia)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByCodigo(String codigo) {
+        if (codigo == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idinsumo.codigo =:codigo and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByIdAgencia(Integer idAgencia) {
+        if (idAgencia == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idagencia.idagencia =:idAgencia and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("idAgencia", idAgencia)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoBTecnicoyFechaInicioAndFechaFin(Date fechaInicio, Date fechaFin) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+        sdf.format(fechaFin);
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.fecha <= :fechaFin and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .setParameter("fechaFin", fechaFin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByIdAgenciaAndCodigo(Integer idAgencia, String codigo) {
+        if (idAgencia == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idagencia.idagencia =:idAgencia and pa.idinsumo.codigo =:codigo and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("idAgencia", idAgencia)
+                .setParameter("codigo", codigo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByFechaInicio(Date fechaInicio) {
+        if (fechaInicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaInicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaInicio = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaInicio);
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha >= :fechaInicio and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("fechaInicio", fechaInicio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByFechaFin(Date fechaFin) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.fecha <= :fechaFin and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("fechaFin", fechaFin)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Inventario> listInsumoTecnicoByIdInsumo(Integer idinsumo) {
+        if (idinsumo == null) {
+            return null;
+        }
+
+        List<Inventario> lst = em.createQuery("SELECT pa FROM Inventario pa WHERE pa.idinsumo.idinsumo =:idinsumo and pa.activo = true and pa.responsable is not null", Inventario.class)
+                .setParameter("idinsumo", idinsumo)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

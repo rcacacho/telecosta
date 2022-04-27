@@ -33,7 +33,7 @@
                     </p:calendar>
 
                     <p:outputLabel value="Agencia:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Código"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Código:"  styleClass="field-label" style="font-weight: bold;"  />
                     <p:selectOneMenu id="agenciaSelected" value="#{trasladoInsumoMB.idAgencia}" style="width: 150px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax event="itemSelect"/>
@@ -43,6 +43,17 @@
                     <p:inputText value="#{ingresoInsumosMB.codigoBusqueda}" size="19" style="font-size: 16px!important;">
                         <p:ajax event="blur" process="@this"/>
                     </p:inputText> 
+
+                    <p:outputLabel value="Insumo:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
+                    
+                    <p:selectOneMenu id="idInsumo" value="#{trasladoInsumoMB.idinsumo}" style="width: 150px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un insumo)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{trasladoInsumoMB.listInsumos}"  var="ag" itemLabel="#{ag.descripcion}" itemValue="#{ag.idinsumo}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
 
                     <p:outputLabel value=""  styleClass="field-label" style="font-weight: bold;"  />
 
@@ -88,7 +99,7 @@
                     <p:column headerText="Existencia" width="15%" >
                         <p:outputLabel value="#{ins.existencia}"/>
                     </p:column>
-                    
+
                     <p:column headerText="Cantidad de traslado" width="12%" >
                         <p:outputLabel value="#{ins.traslado}"/>
                     </p:column>
@@ -104,9 +115,9 @@
                     <p:column headerText="Agencia envio" width="16%" >
                         <p:outputLabel value="#{ins.idagencia.agencia}"/>
                     </p:column>
-                    
-                     <p:column headerText="Agencia traslado" width="16%" >
-                         <p:outputLabel value="#{ins.idagenciaenvio.agencia}"/>
+
+                    <p:column headerText="Agencia traslado" width="16%" >
+                        <p:outputLabel value="#{ins.idagenciaenvio.agencia}"/>
                     </p:column>
 
                     <p:column width="30%" exportable="false" >

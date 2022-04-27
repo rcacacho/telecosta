@@ -17,6 +17,7 @@ import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 import tele.costa.api.ejb.InsumoBeanLocal;
 import tele.costa.api.entity.Bitacorainventario;
+import tele.costa.api.entity.Insumos;
 import tele.costa.api.entity.Inventario;
 import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.enums.TipoCargaEnum;
@@ -44,6 +45,8 @@ public class TrasladoInsumoMB implements Serializable {
     private List<Inventario> listInventario;
     private Inventario inventarioSelectedTraslado;
     private String codigoBusqueda;
+    private Integer idinsumo;
+    private List<Insumos> listInsumos;
 
     public TrasladoInsumoMB() {
         inventarioSelectedTraslado = new Inventario();
@@ -52,6 +55,7 @@ public class TrasladoInsumoMB implements Serializable {
     @PostConstruct
     void cargarDatos() {
         listAgencia = catalogoBean.listAgencias();
+        listInsumos = catalogoBean.listInsumos();
     }
 
     public void buscarInsumo() {
@@ -97,6 +101,14 @@ public class TrasladoInsumoMB implements Serializable {
             }
         } else if (codigoBusqueda != null) {
             List<Inventario> response = bodegaBeanLocal.listInsumoByCodigo(codigoBusqueda);
+            if (response != null) {
+                listInventario = response;
+            } else {
+                listInventario = new ArrayList<>();
+                JsfUtil.addErrorMessage("No se encontraron datos");
+            }
+        } else if (idinsumo != null) {
+            List<Inventario> response = bodegaBeanLocal.listInsumoByIdInsumo(idinsumo);
             if (response != null) {
                 listInventario = response;
             } else {
@@ -206,6 +218,7 @@ public class TrasladoInsumoMB implements Serializable {
         fechaInicio = null;
         fechaFin = null;
         cargarDatos();
+        idinsumo = null;
     }
 
     /*Metodos getters y setters*/
@@ -271,6 +284,22 @@ public class TrasladoInsumoMB implements Serializable {
 
     public void setCodigoBusqueda(String codigoBusqueda) {
         this.codigoBusqueda = codigoBusqueda;
+    }
+
+    public Integer getIdinsumo() {
+        return idinsumo;
+    }
+
+    public void setIdinsumo(Integer idinsumo) {
+        this.idinsumo = idinsumo;
+    }
+
+    public List<Insumos> getListInsumos() {
+        return listInsumos;
+    }
+
+    public void setListInsumos(List<Insumos> listInsumos) {
+        this.listInsumos = listInsumos;
     }
 
 }
