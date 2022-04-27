@@ -26,7 +26,9 @@ join agencia ag on inv.idagencia = ag.idagencia and ag.activo = 1
 join ruta rt on inv.idruta = rt.idruta and rt.activo = 1
 where inv.activo = 1
 and inv.responsable is not null
-and ( inv.idagencia  = $P{ID_AGENCIA} OR $P{ID_AGENCIA} IS NULL )]]>
+and ( inv.idagencia  = $P{ID_AGENCIA} OR $P{ID_AGENCIA} IS NULL )
+and ( inv.fechacreacion  >= $P{FECHA_INICIO} OR $P{FECHA_INICIO} IS NULL )
+and ( inv.fechacreacion <= $P{FECHA_FIN} OR $P{FECHA_FIN} IS NULL )]]>
 	</queryString>
 	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
