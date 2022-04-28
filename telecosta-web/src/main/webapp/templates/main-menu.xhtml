@@ -57,6 +57,12 @@
                 <p:menuitem value="Técnicos" outcome="/inventario/tecnicos.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Reporte" outcome="/inventario/reporte.xhtml" style="width: 90px;"/>
             </p:submenu>
+            
+            <p:submenu label="Compras Bodega" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('bodega_central') || loginMB.validarRoot()}">  
+                <p:menuitem value="Lista" outcome="/compras-bodega/lista.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Registro" outcome="/compras-bodega/registro.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Reporte" outcome="/compras-bodega/reporte.xhtml" style="width: 90px;"/>
+            </p:submenu>
 
             <p:submenu label="Ticket de trabajo" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('bodega_central')  || loginMB.validarRoot() || loginMB.validarRol().equals('cobros')}">  
                 <p:menuitem value="Lista" outcome="/atencion/lista.xhtml" style="width: 90px;"/>

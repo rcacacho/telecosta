@@ -134,7 +134,7 @@
                     <p:row>
                         <p:column>
                             <p:inputText value="#{registroCompraMB.compra.montocompra}" size="24" style="font-size: 16px!important;"
-                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                         required="true" requiredMessage="Debes ingresar un monto">
                                 <p:ajax event="blur" process="@this"/>
                             </p:inputText> 
                         </p:column>
@@ -172,9 +172,12 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="3">
+                <p:panelGrid id="pg_obs"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:row>
+                        <p:column colspan="3">
                             <p:inputTextarea rows="3" cols="125" value="#{registroCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
                                              counterTemplate="{0} caracteres pendientes." autoResize="false"
-                                             required="true" requiredMessage="Debes ingresar una dirección">
+                                             required="true" requiredMessage="Debes ingresar una descripción">
                                 <p:ajax event="blur" process="@this" />
                             </p:inputTextarea>
                             <h:outputText id="display" style="margin-left: 750px;" /> 

@@ -39,4 +39,12 @@ public interface ComprasBeanLocal {
 
     List<Compra> listCompraByidTipoCompra(Integer idTipoCompra);
 
+    List<Compra> listCompraBodegaByFechaInicioFechaFin(Date fechaInicio, Date fechaFin);
+
+    List<Compra> listCompraBodegaByFechaInicio(Date fechaInicio);
+
+    List<Compra> listCompraBodegaByFechaFin(Date fechaFin);
+
+    List<Compra> listCompraBodega();
+
 }

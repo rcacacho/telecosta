@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="pageTitle">
+        Registro de Compra
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
+            <div align="center">
+                <p:panelGrid id="pgCompra" styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Proveedor:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Fecha compra:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="prov" value="#{registroBodegaCompraMB.compra.idproveedor}" style="width: 50%" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains"
+                                             required="true" requiredMessage="Debes selecciona un proveedor" >
+                                <p:ajax event="itemSelect"/>
+                                <f:selectItem itemLabel="(selecciona un proveedor)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{registroBodegaCompraMB.listProveedor}"  var="prove" itemLabel="#{prove.nombre}" itemValue="#{prove}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Agregar" action="#{registroBodegaCompraMB.cargarDialog()}" icon="ui-icon-plus"
+                                             style=" margin-left: 5px; "  update="dlgProveedor" process="@this"/>
+                        </p:column>
+                        <p:column  >
+                            <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{registroBodegaCompraMB.compra.fechacompra}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
+                        </p:column>    
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="No. Documento:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:inputText value="#{registroBodegaCompraMB.compra.nodocumento}" size="30" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                        <p:column  >
+                            <p:inputText value="#{registroBodegaCompraMB.compra.serie}" size="30" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar una serie">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>   
+                    </p:row>
+
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Cantidad:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Precio unitario:" styleClass="colorTitulo" style="font-weight: bold; " />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:inputText value="#{registroBodegaCompraMB.compra.cantidad}" size="24" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                <p:ajax event="blur" process="@this"/>
+                            </p:inputText> 
+                        </p:column>
+                        <p:column>
+                            <p:inputText value="#{registroBodegaCompraMB.compra.montocompra}" size="24" style="font-size: 16px!important;"
+                                         required="true" requiredMessage="Debes ingresar un numero de documento">
+                                <p:ajax event="blur" update="lblTotal" process="@this" listener="#{registroBodegaCompraMB.cargarTotal()}"/>
+                            </p:inputText> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel value="Total:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column >
+                            <p:outputLabel id="lblTotal" value="#{registroBodegaCompraMB.compra.total}" style="font-size: 16px!important;" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p:panelGrid id="pg_obs"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:outputLabel value="Descripción:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="3" cols="125" value="#{registroBodegaCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
+                                             counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                             required="true" requiredMessage="Debes ingresar una descripción">
+                                <p:ajax event="blur" process="@this" />
+                            </p:inputTextarea>
+                            <h:outputText id="display" style="margin-left: 550px;" /> 
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:outputLabel value="Observación:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:inputTextarea rows="3" cols="125" value="#{registroBodegaCompraMB.compra.observacion}" counter="display2" maxlength="2000" 
+                                             counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                             required="true" requiredMessage="Debes ingresar una Observación">
+                                <p:ajax event="blur" process="@this" />
+                            </p:inputTextarea>
+                            <h:outputText id="display2" style="margin-left: 550px;" /> 
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 14%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroBodegaCompraMB.saveCompra()}" icon="ui-icon-disk" process="@this"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar la compra?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroBodegaCompraMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </div>
+
+            <p:dialog header="Registro Proveedor" widgetVar="dlgProveedor" id="dlgProveedor" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="450px">
+                <p:panelGrid id="pgProve" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Nit:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{registroBodegaCompraMB.proveedor.nit}" size="50" style="font-size: 16px!important;"
+                                 required="true" requiredMessage="Debes ingresar un nit">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Nombre:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{registroBodegaCompraMB.proveedor.nombre}" size="50" style="font-size: 16px!important;"
+                                 required="true" requiredMessage="Debes ingresar un nombre">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroBodegaCompraMB.saveProveedor()}" icon="ui-icon-disk" process="pgProve"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al proveedor?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroBodegaCompraMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

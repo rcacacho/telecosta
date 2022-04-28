@@ -66,7 +66,13 @@ public interface CatalogoBeanLocal {
     Tipocarga findTipoCarga(Integer idtipocarga);
 
     Estadocliente findEstadoCliente(Integer idestadocliente);
-    
-     List<Insumos> listInsumos();
+
+    List<Insumos> listInsumos();
+
+    Tipocompra findTipoCompra(Integer idtipocompra);
+
+    Tipodocumentocompra findTipoDocumentoCompra(Integer idtipodocumentocompra);
+
+    Formapago findFormaPago(Integer idformapago);
 
 }

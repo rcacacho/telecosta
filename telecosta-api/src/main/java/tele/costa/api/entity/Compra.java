@@ -82,6 +82,16 @@ public class Compra implements Serializable {
     @Column(name = "nocheque")
     private String nocheque;
 
+    @Column(name = "cantidad")
+    private Integer cantidad;
+
+    @Column(name = "total")
+    private double total;
+
+    @Size(max = 2000)
+    @Column(name = "observacion")
+    private String observacion;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
@@ -305,6 +315,30 @@ public class Compra implements Serializable {
 
     public void setNocheque(String nocheque) {
         this.nocheque = nocheque;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     @Override

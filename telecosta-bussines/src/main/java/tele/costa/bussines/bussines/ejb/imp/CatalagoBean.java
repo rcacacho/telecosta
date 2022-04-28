@@ -134,7 +134,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Tipocompra> listTipoCompra() {
-        List<Tipocompra> lst = em.createQuery("SELECT qj FROM Tipocompra qj where qj.activo = true ", Tipocompra.class)
+        List<Tipocompra> lst = em.createQuery("SELECT qj FROM Tipocompra qj where qj.activo = true and qj.idtipocompra not in (60)", Tipocompra.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -306,6 +306,45 @@ public class CatalagoBean implements CatalogoBeanLocal {
         }
 
         return lst;
+    }
+
+    @Override
+    public Tipocompra findTipoCompra(Integer idtipocompra) {
+        List<Tipocompra> lst = em.createQuery("SELECT dep FROM Tipocompra dep WHERE dep.activo  = true and dep.idtipocompra =:idtipocompra ", Tipocompra.class)
+                .setParameter("idtipocompra", idtipocompra)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public Tipodocumentocompra findTipoDocumentoCompra(Integer idtipodocumentocompra) {
+        List<Tipodocumentocompra> lst = em.createQuery("SELECT dep FROM Tipodocumentocompra dep WHERE dep.activo  = true and dep.idtipodocumentocompra =:idtipodocumentocompra ", Tipodocumentocompra.class)
+                .setParameter("idtipodocumentocompra", idtipodocumentocompra)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
+    }
+
+    @Override
+    public Formapago findFormaPago(Integer idformapago) {
+                List<Formapago> lst = em.createQuery("SELECT dep FROM Formapago dep WHERE dep.activo  = true and dep.idformapago =:idformapago ", Formapago.class)
+                .setParameter("idformapago", idformapago)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
     }
 
 }
