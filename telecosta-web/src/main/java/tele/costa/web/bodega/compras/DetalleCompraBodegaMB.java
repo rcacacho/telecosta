@@ -1,5 +1,6 @@
 package tele.costa.web.bodega.compras;
 
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -14,7 +15,7 @@ import telecosta.web.utils.JsfUtil;
  */
 @ManagedBean(name = "detalleCompraBodegaMB")
 @ViewScoped
-public class DetalleCompraBodegaMB {
+public class DetalleCompraBodegaMB implements Serializable {
 
     private static final Logger log = Logger.getLogger(DetalleCompraBodegaMB.class);
 

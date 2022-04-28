@@ -163,7 +163,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                
+
                 <p:panelGrid id="pg_obs"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                     <p:row>
                         <p:column colspan="3">
@@ -172,17 +172,14 @@
                     </p:row>
                     <p:row>
                         <p:column colspan="3">
-                <p:panelGrid id="pg_obs"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
-                    <p:row>
-                        <p:column colspan="3">
                             <p:inputTextarea rows="3" cols="125" value="#{registroCompraMB.compra.descripcion}" counter="display" maxlength="2000" 
                                              counterTemplate="{0} caracteres pendientes." autoResize="false"
                                              required="true" requiredMessage="Debes ingresar una descripción">
                                 <p:ajax event="blur" process="@this" />
                             </p:inputTextarea>
-                            <h:outputText id="display" style="margin-left: 750px;" /> 
+                            <h:outputText id="display" style="margin-left: 550px;" /> 
                         </p:column>
-                    </p:row>
+                    </p:row>      
                 </p:panelGrid>
 
                 <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
