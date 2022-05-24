@@ -587,7 +587,7 @@ public class ReporteCobroMB {
 
     public StreamedContent imprimirExcelCobroMunicipio() throws IOException {
         StreamedContent content = null;
-        List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipio(idMunicipio);
+        List<Cliente> listCliente = clienteBean.ListClientesByIdMunucipioCobro(idMunicipio);
         List<CobroWrapper> listCobro = new ArrayList<>();
 
         for (Cliente cl : listCliente) {
