@@ -2,6 +2,7 @@ package tele.costa.api.ejb;
 
 import java.util.List;
 import tele.costa.api.entity.Usuario;
+import tele.costa.api.entity.Usuariomunicipio;
 
 /**
  *
@@ -18,4 +19,13 @@ public interface UsuarioBeanLocal {
     Usuario findUsuario(String usuario);
 
     Usuario reinicioPassword(Usuario usuario);
+
+    Usuario updateUsuario(Usuario usuario);
+
+    List<Usuariomunicipio> listUsuarioMunicipio(Integer idusuario);
+
+    Usuariomunicipio updateUsuarioMunicipio(Usuariomunicipio usuario);
+    
+    Usuariomunicipio saveUsuarioMunicipio(Usuariomunicipio usuarioMunicipio);
+
 }
