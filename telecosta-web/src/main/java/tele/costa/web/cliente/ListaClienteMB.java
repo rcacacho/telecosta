@@ -22,6 +22,7 @@ import tele.costa.api.entity.Configuracionpago;
 import tele.costa.api.entity.Estadocliente;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Usuariomunicipio;
 import tele.costa.api.enums.EstadoClienteEnum;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
@@ -61,12 +62,17 @@ public class ListaClienteMB implements Serializable {
     void cargarDatos() {
         if (SesionUsuarioMB.getRootUsuario()) {
             listCliente = clienteBean.ListClientesInactivos();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listCliente = clienteBean.listClientesByInMunucipioInactivos();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
-            listCliente = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo();
         } else {
-            listCliente = clienteBean.ListClientesByIdMunucipioInactivo(SesionUsuarioMB.getIdMunicipio());
+            List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
+            if (listUsuarioMun != null) {
+                List<Integer> list = new ArrayList<>();
+                for (Usuariomunicipio uu : listUsuarioMun) {
+                    list.add(uu.getIdmunicipio().getIdmunicipio());
+                }
+                listCliente = clienteBean.ListClientesByListMunucipioInactivo(list);
+            } else {
+                listCliente = clienteBean.ListClientesByIdMunucipioInactivo(SesionUsuarioMB.getIdMunicipio());
+            }
         }
 
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
