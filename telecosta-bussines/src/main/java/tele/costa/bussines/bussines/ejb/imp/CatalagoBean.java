@@ -25,6 +25,7 @@ import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
 import tele.costa.api.entity.Usuario;
+import tele.costa.api.entity.Usuariomunicipio;
 
 /**
  *
@@ -336,7 +337,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public Formapago findFormaPago(Integer idformapago) {
-                List<Formapago> lst = em.createQuery("SELECT dep FROM Formapago dep WHERE dep.activo  = true and dep.idformapago =:idformapago ", Formapago.class)
+        List<Formapago> lst = em.createQuery("SELECT dep FROM Formapago dep WHERE dep.activo  = true and dep.idformapago =:idformapago ", Formapago.class)
                 .setParameter("idformapago", idformapago)
                 .getResultList();
 
@@ -345,6 +346,19 @@ public class CatalagoBean implements CatalogoBeanLocal {
         }
 
         return lst.get(0);
+    }
+
+    @Override
+    public List<Usuariomunicipio> listUsuarioMunicipio(Integer idusuario) {
+        List<Usuariomunicipio> lst = em.createQuery("SELECT qj FROM Usuariomunicipio qj where qj.activo = true and qj.idusuario.idusuario =:idusuario", Usuariomunicipio.class)
+                .setParameter("idusuario", idusuario)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
     }
 
 }

@@ -364,4 +364,17 @@ public class ClienteBean implements ClienteBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Cliente> ListClientesByListMunucipioInactivo(List<Integer> listIdmunicipio) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio in :listIdmunicipio ", Cliente.class)
+                .setParameter("listIdmunicipio", listIdmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }
