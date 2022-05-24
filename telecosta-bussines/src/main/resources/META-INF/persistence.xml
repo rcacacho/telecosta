@@ -32,6 +32,7 @@
         <class>tele.costa.api.entity.Tipocarga</class>
         <class>tele.costa.api.entity.Bitacorainventario</class>
         <class>tele.costa.api.entity.Tipocarga</class>
+        <class>tele.costa.api.entity.Usuariomunicipio</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
