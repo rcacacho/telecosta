@@ -19,6 +19,7 @@ import tele.costa.api.entity.Tipocompra;
 import tele.costa.api.entity.Tipodocumentocompra;
 import tele.costa.api.entity.Tipopago;
 import tele.costa.api.entity.Usuario;
+import tele.costa.api.entity.Usuariomunicipio;
 
 /**
  *
@@ -74,5 +75,7 @@ public interface CatalogoBeanLocal {
     Tipodocumentocompra findTipoDocumentoCompra(Integer idtipodocumentocompra);
 
     Formapago findFormaPago(Integer idformapago);
+
+    List<Usuariomunicipio> listUsuarioMunicipio(Integer idusuario);
 
 }

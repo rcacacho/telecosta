@@ -52,5 +52,7 @@ public interface ClienteBeanLocal {
     List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo();
     
     List<Cliente> ListClientesByIdMunucipioInactivo(Integer idmunicipio);
+    
+    List<Cliente> ListClientesByListMunucipioInactivo(List<Integer> listIdmunicipio);
 
 }
