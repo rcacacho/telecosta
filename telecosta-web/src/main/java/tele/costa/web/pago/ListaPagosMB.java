@@ -17,6 +17,7 @@ import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Municipio;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Usuariomunicipio;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -59,20 +60,22 @@ public class ListaPagosMB implements Serializable {
 
         if (SesionUsuarioMB.getRootUsuario()) {
             listClientes = clienteBean.ListClientes();
-            //listPago = pagosBean.listPagos();
             listMunicipio = catalogoBean.listMunicipioByIdDepartamento(1);
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
-            listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
-            listPago = pagosBean.listPagosByInIdMunicipiosSanRafaelSanPabloRodeo();
-            listMunicipio = catalogoBean.listMunicipioBySanRafaelSanPableRodeo();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listClientes = clienteBean.listClientesByInMunucipio();
-            listPago = pagosBean.listPagosByInIdMunicipios();
-            listMunicipio = catalogoBean.listMunicipioBySanpabloAndSanRafael();
         } else {
-            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
-            listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
-            listMunicipio = catalogoBean.listMunicipioByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+            List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
+            if (listUsuarioMun != null) {
+                List<Integer> list = new ArrayList<>();
+                for (Usuariomunicipio uu : listUsuarioMun) {
+                    list.add(uu.getIdmunicipio().getIdmunicipio());
+                }
+                listClientes = clienteBean.ListClientesByListMunucipioInactivo(list);
+                listPago = pagosBean.listPagosByIdMunicipioByList(list);
+                listMunicipio = catalogoBean.listMunicipioByIdMunicipioByList(list);
+            } else {
+                listClientes = clienteBean.ListClientesByIdMunicipioInactivo(SesionUsuarioMB.getIdMunicipio());
+                listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+                listMunicipio = catalogoBean.listMunicipioByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
+            }
         }
     }
 

@@ -361,4 +361,21 @@ public class CatalagoBean implements CatalogoBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Municipio> listMunicipioByIdMunicipioByList(List<Integer> listIdmunicipio) {
+       if (listIdmunicipio == null) {
+            return null;
+        }
+
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in :idMunicipio", Municipio.class)
+                .setParameter("listIdmunicipio", listIdmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }

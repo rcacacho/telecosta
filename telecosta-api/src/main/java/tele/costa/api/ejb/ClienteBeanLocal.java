@@ -51,10 +51,16 @@ public interface ClienteBeanLocal {
     
     List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo();
     
-    List<Cliente> ListClientesByIdMunucipioInactivo(Integer idmunicipio);
+    List<Cliente> ListClientesByIdMunicipioInactivo(Integer idmunicipio);
     
     List<Cliente> ListClientesByListMunucipioInactivo(List<Integer> listIdmunicipio);
     
     List<Cliente> ListClientesByIdMunucipioCobro(Integer idmunicipio);
+    
+    List<Cliente> ListClientesEstadoActivo();
+    
+    List<Cliente> ListClientesByListMunucipioEstadoActivo(List<Integer> listIdmunicipio);
+    
+    List<Cliente> ListClientesByIdMunicipioEstadoActivo(Integer idmunicipio);
 
 }

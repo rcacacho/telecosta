@@ -14,6 +14,10 @@
     <ui:define name="content">
 
         <h:form id="frm_content" enctype="multipart/form-data"> 
+            <ui:include src="/clientes/tab-menu.xhtml">
+                <ui:param name="activeIndex" value="0"/>
+            </ui:include>
+
             <div align="center">
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
@@ -137,12 +141,12 @@
                         </p:outputLabel>
                     </p:column>
 
-                    <p:column headerText="Fecha Ultimo Pago" width="20%" >
+                    <p:column headerText="Fecha Ultimo Pago" width="24%" >
                         <p:outputLabel style="#{listaClienteMB.color}" value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
-                    
+
                     <p:column headerText="Estado" width="15%" >
                         <p:outputLabel value="#{col.idestadocliente.estado}"/>      
                     </p:column>
@@ -177,7 +181,7 @@
                                          action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
                     </p:column>
                 </p:dataTable>
-                
+
                 <div align="center" style="margin-top: 15px;">
                     <p:panelGrid columns="3" style="text-align: center !important;" styleClass="no-border" >
 

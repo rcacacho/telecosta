@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Clientes
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content" enctype="multipart/form-data"> 
+            <ui:include src="/clientes/tab-menu.xhtml">
+                <ui:param name="activeIndex" value="1"/>
+            </ui:include>
+
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Codigo:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:inputText id="txtNombre" value="#{listaClienteMorosoMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
+                                 requiredMessage="(nombre)" size="30" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:inputText id="txtCui" value="#{listaClienteMorosoMB.codigo}" style="width: 95%;"  placeholder="(codigo)"
+                                 requiredMessage="(codigo)" size="40" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:outputLabel value="Sector:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Municipio"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:inputText id="txtsector" value="#{listaClienteMorosoMB.sector}" style="width: 100%;"  placeholder="(nombre)"
+                                 requiredMessage="(sector)" size="30" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+                    <p:selectOneMenu id="mun" value="#{listaClienteMorosoMB.idMunicipio}" style="width: 280px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaClienteMorosoMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaClienteMorosoMB.buscarCliente()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  icon="ui-icon-search"
+                                         update="frm_content" 
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaClienteMorosoMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form"  icon="ui-icon-refresh"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMorosoMB.listClientePago}"
+                             emptyMessage="No hay clientes registrados" editable="true" rowStyleClass="#{col.getStyleCliente()}"
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                             rows="15" paginator="#{listaClienteMorosoMB.listClientePago.size()>15}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaClienteMorosoMB.onRowEdit}" update="dt_cliente" />
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Codigo" width="15%" >
+                        <p:outputLabel value="#{col.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre" width="20%" >
+                        <p:outputLabel value="#{col.nombres}"/>
+                    </p:column>
+
+                    <p:column headerText="Dirección" width="25%" >
+                        <p:outputLabel value="#{col.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="Sector" width="20%" >
+                        <p:outputLabel value="#{col.sector}"/>
+                    </p:column>
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Tipo Cliente" width="20%" >
+                        <p:outputLabel value="#{col.tipocliente}"/>
+                    </p:column>
+
+                    <p:column headerText="Configuración pago" width="20%" >
+                        <p:outputLabel value="#{col.idconfiguracionpago.descripcion}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
+                        <p:outputLabel value="#{col.fechainicioservicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Fecha Ultimo Pago" width="24%" >
+                        <p:outputLabel style="#{listaClienteMorosoMB.color}" value="#{listaClienteMorosoMB.obtenerUltimoPago(col.idcliente)}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Estado" width="15%" >
+                        <p:outputLabel value="#{col.idestadocliente.estado}"/>      
+                    </p:column>
+
+                    <p:column width="24%" exportable="false" >
+                        <p:commandButton value="Pago" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
+                                         action="#{listaClienteMorosoMB.pagoCliente(col.idcliente)}" update="@form"/>
+
+                        <p:commandButton value="Detalle" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaClienteMorosoMB.detalleCliente(col.idcliente)}" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

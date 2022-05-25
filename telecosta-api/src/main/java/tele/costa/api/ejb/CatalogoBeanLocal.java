@@ -77,5 +77,7 @@ public interface CatalogoBeanLocal {
     Formapago findFormaPago(Integer idformapago);
 
     List<Usuariomunicipio> listUsuarioMunicipio(Integer idusuario);
+    
+    List<Municipio> listMunicipioByIdMunicipioByList(List<Integer> listIdmunicipio);
 
 }

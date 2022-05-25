@@ -352,7 +352,7 @@ public class ClienteBean implements ClienteBeanLocal {
     }
 
     @Override
-    public List<Cliente> ListClientesByIdMunucipioInactivo(Integer idmunicipio) {
+    public List<Cliente> ListClientesByIdMunicipioInactivo(Integer idmunicipio) {
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
                 .getResultList();
@@ -380,6 +380,44 @@ public class ClienteBean implements ClienteBeanLocal {
     @Override
     public List<Cliente> ListClientesByIdMunucipioCobro(Integer idmunicipio) {
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente = 1 ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesEstadoActivo() {
+             List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByListMunucipioEstadoActivo(List<Integer> listIdmunicipio) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio in :listIdmunicipio and qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
+                .setParameter("listIdmunicipio", listIdmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunicipioEstadoActivo(Integer idmunicipio) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
                 .getResultList();
 

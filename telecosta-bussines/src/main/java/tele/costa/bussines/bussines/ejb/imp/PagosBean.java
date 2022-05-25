@@ -661,7 +661,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public Detallepago eliminarDetallePago(Integer idpago, String usuario) {
-         if (idpago == null) {
+        if (idpago == null) {
             context.setRollbackOnly();
             return null;
         }
@@ -706,7 +706,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public Cobro updateCobro(Cobro cobro) {
-         try {
+        try {
             em.merge(cobro);
             em.flush();
             return (cobro);
@@ -736,6 +736,22 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst.get(0);
+    }
+
+    @Override
+    public List<Pago> listPagosByIdMunicipioByList(List<Integer> listIdmunicipio) {
+        if (listIdmunicipio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in :listIdmunicipio and pa.activo = true order by pa.fechapago desc", Pago.class)
+                .setParameter("listIdmunicipio", listIdmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

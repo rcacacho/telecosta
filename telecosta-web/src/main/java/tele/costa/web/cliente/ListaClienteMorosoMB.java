@@ -1,7 +1,6 @@
 package tele.costa.web.cliente;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -29,13 +28,13 @@ import telecosta.web.utils.SesionUsuarioMB;
 
 /**
  *
- * @author elfo_
+ * @author rcacacho
  */
-@ManagedBean(name = "listaClienteMB")
+@ManagedBean(name = "listaClienteMorosoMB")
 @ViewScoped
-public class ListaClienteMB implements Serializable {
+public class ListaClienteMorosoMB {
 
-    private static final Logger log = Logger.getLogger(ListaClienteMB.class);
+    private static final Logger log = Logger.getLogger(ListaClienteMorosoMB.class);
 
     @EJB
     private ClienteBeanLocal clienteBean;
@@ -45,6 +44,7 @@ public class ListaClienteMB implements Serializable {
     private PagosBeanLocal pagosBean;
 
     private List<Cliente> listCliente;
+    private List<Cliente> listClientePago;
     private String nombre;
     private String codigo;
     private Integer idMunicipio;
@@ -55,13 +55,37 @@ public class ListaClienteMB implements Serializable {
     private List<Configuracionpago> listConfiguracionPago;
     private String color;
 
-    public ListaClienteMB() {
+    public ListaClienteMorosoMB() {
+        listClientePago = new ArrayList<>();
     }
 
     @PostConstruct
     void cargarDatos() {
         if (SesionUsuarioMB.getRootUsuario()) {
-            listCliente = clienteBean.ListClientesInactivos();
+            listCliente = clienteBean.ListClientesEstadoActivo();
+
+            for (Cliente cc : listCliente) {
+                Pago pp = new Pago();
+                pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                if (pp.getFechapago() != null) {
+                    Date fechaInicio = new Date();
+                    LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    ZoneId defaultZoneId = ZoneId.systemDefault();
+                    Integer count = 0;
+                    for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                        count++;
+                    }
+
+                    if (count >= 90) {
+                        listClientePago.add(pp.getIdcliente());
+                    } else if (count >= 60 && count <= 89) {
+                        listClientePago.add(pp.getIdcliente());
+                    } else if (count >= 30 && count <= 59) {
+                        listClientePago.add(pp.getIdcliente());
+                    }
+                }
+            }
         } else {
             List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
             if (listUsuarioMun != null) {
@@ -69,9 +93,58 @@ public class ListaClienteMB implements Serializable {
                 for (Usuariomunicipio uu : listUsuarioMun) {
                     list.add(uu.getIdmunicipio().getIdmunicipio());
                 }
-                listCliente = clienteBean.ListClientesByListMunucipioInactivo(list);
+                listCliente = clienteBean.ListClientesByListMunucipioEstadoActivo(list);
+
+                for (Cliente cc : listCliente) {
+                    Pago pp = new Pago();
+                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                    if (pp != null) {
+                        if (pp.getFechapago() != null) {
+                            Date fechaInicio = new Date();
+                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            ZoneId defaultZoneId = ZoneId.systemDefault();
+                            Integer count = 0;
+                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                                count++;
+                            }
+
+                            if (count >= 90) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 60 && count <= 89) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 30 && count <= 59) {
+                                listClientePago.add(pp.getIdcliente());
+                            }
+                        }
+                    }
+                }
+
             } else {
-                listCliente = clienteBean.ListClientesByIdMunicipioInactivo(SesionUsuarioMB.getIdMunicipio());
+                listCliente = clienteBean.ListClientesByIdMunicipioEstadoActivo(SesionUsuarioMB.getIdMunicipio());
+
+                for (Cliente cc : listCliente) {
+                    Pago pp = new Pago();
+                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                    if (pp.getFechapago() != null) {
+                        Date fechaInicio = new Date();
+                        LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        ZoneId defaultZoneId = ZoneId.systemDefault();
+                        Integer count = 0;
+                        for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                            count++;
+                        }
+
+                        if (count >= 90) {
+                            listClientePago.add(pp.getIdcliente());
+                        } else if (count >= 60 && count <= 89) {
+                            listClientePago.add(pp.getIdcliente());
+                        } else if (count >= 30 && count <= 59) {
+                            listClientePago.add(pp.getIdcliente());
+                        }
+                    }
+                }
             }
         }
 
@@ -84,6 +157,31 @@ public class ListaClienteMB implements Serializable {
             List<Cliente> response = clienteBean.ListClientesByNombreAndSectorAndMunicipio(nombre, sector, idMunicipio);
             if (response != null) {
                 listCliente = response;
+
+                for (Cliente cc : listCliente) {
+                    Pago pp = new Pago();
+                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                    if (pp != null) {
+                        if (pp.getFechapago() != null) {
+                            Date fechaInicio = new Date();
+                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            ZoneId defaultZoneId = ZoneId.systemDefault();
+                            Integer count = 0;
+                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                                count++;
+                            }
+
+                            if (count >= 90) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 60 && count <= 89) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 30 && count <= 59) {
+                                listClientePago.add(pp.getIdcliente());
+                            }
+                        }
+                    }
+                }
             } else {
                 listCliente = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
@@ -132,6 +230,31 @@ public class ListaClienteMB implements Serializable {
             List<Cliente> response = clienteBean.ListClientesByNombre(nombre);
             if (response != null) {
                 listCliente = response;
+
+                for (Cliente cc : listCliente) {
+                    Pago pp = new Pago();
+                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                    if (pp != null) {
+                        if (pp.getFechapago() != null) {
+                            Date fechaInicio = new Date();
+                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            ZoneId defaultZoneId = ZoneId.systemDefault();
+                            Integer count = 0;
+                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                                count++;
+                            }
+
+                            if (count >= 90) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 60 && count <= 89) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 30 && count <= 59) {
+                                listClientePago.add(pp.getIdcliente());
+                            }
+                        }
+                    }
+                }
             } else {
                 listCliente = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
@@ -140,6 +263,31 @@ public class ListaClienteMB implements Serializable {
             List<Cliente> response = clienteBean.ListClientesByCodigo(codigo);
             if (response.size() > 0) {
                 listCliente = response;
+
+                for (Cliente cc : listCliente) {
+                    Pago pp = new Pago();
+                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
+                    if (pp != null) {
+                        if (pp.getFechapago() != null) {
+                            Date fechaInicio = new Date();
+                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            ZoneId defaultZoneId = ZoneId.systemDefault();
+                            Integer count = 0;
+                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+                                count++;
+                            }
+
+                            if (count >= 90) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 60 && count <= 89) {
+                                listClientePago.add(pp.getIdcliente());
+                            } else if (count >= 30 && count <= 59) {
+                                listClientePago.add(pp.getIdcliente());
+                            }
+                        }
+                    }
+                }
             } else {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
@@ -319,6 +467,14 @@ public class ListaClienteMB implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public List<Cliente> getListClientePago() {
+        return listClientePago;
+    }
+
+    public void setListClientePago(List<Cliente> listClientePago) {
+        this.listClientePago = listClientePago;
     }
 
 }
