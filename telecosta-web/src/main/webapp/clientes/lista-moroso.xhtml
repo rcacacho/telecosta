@@ -8,7 +8,7 @@
                 template="/templates/template.xhtml">
 
     <ui:define name="pageTitle">
-        Consulta de Clientes
+        Consulta de Clientes Morosos
     </ui:define>
 
     <ui:define name="content">
@@ -51,7 +51,7 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value=""   />
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                    <p:panelGrid columns="3" styleClass="no-border" style="margin-left: 160px;">
                         <p:commandButton value="Buscar"  
                                          action="#{listaClienteMorosoMB.buscarCliente()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
@@ -68,6 +68,13 @@
                                          background-position: 4px 1px !important;"
                                          update="@form"  icon="ui-icon-refresh"
                                          id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Excel" style="float: left;"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                         immediate="true" process="@this" update="@form" ajax="false">
+                            <p:fileDownload value="#{listaClienteMorosoMB.imprimirExcelCobro()}"/>
+                        </p:commandButton>
                     </p:panelGrid>
                 </p:panelGrid>
 

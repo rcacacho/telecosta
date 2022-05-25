@@ -65,6 +65,9 @@ public class Pago implements Serializable {
     @Column(name = "mes")
     private String mes;
 
+    @Column(name = "nomes")
+    private Integer nomes;
+
     @Column(name = "total")
     private Integer total;
 
@@ -265,6 +268,14 @@ public class Pago implements Serializable {
         this.observacion = observacion;
     }
 
+    public Integer getNomes() {
+        return nomes;
+    }
+
+    public void setNomes(Integer nomes) {
+        this.nomes = nomes;
+    }
+
     public String getStylePago() {
         if (fechapago != null) {
             Date fechaInicio = new Date();
@@ -275,7 +286,7 @@ public class Pago implements Serializable {
             for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
                 count++;
             }
-            
+
             if (count >= 90) {
                 return "rowColorRojo";
             } else if (count >= 60 && count <= 89) {
