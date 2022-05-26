@@ -14,11 +14,12 @@
     <ui:define name="content">
 
         <h:form id="frm_content" enctype="multipart/form-data"> 
-            <ui:include src="/clientes/tab-menu.xhtml">
-                <ui:param name="activeIndex" value="0"/>
-            </ui:include>
 
             <div align="center">
+                <ui:include src="/clientes/tab-menu.xhtml">
+                    <ui:param name="activeIndex" value="0"/>
+                </ui:include>
+
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
                 </ui:define>
