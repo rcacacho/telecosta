@@ -12,13 +12,12 @@
     </ui:define>
 
     <ui:define name="content">
-
         <h:form id="frm_content" enctype="multipart/form-data"> 
-            <ui:include src="/clientes/tab-menu.xhtml">
-                <ui:param name="activeIndex" value="1"/>
-            </ui:include>
 
             <div align="center">
+                <ui:include src="/clientes/tab-menu.xhtml">
+                    <ui:param name="activeIndex" value="1"/>
+                </ui:include>
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
                 </ui:define>
@@ -58,7 +57,7 @@
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
                                          id="btn_buscar"  icon="ui-icon-search"
-                                         update="frm_content" 
+                                         update="dt_cliente" 
                                          onstart="start();" oncomplete="stop();"/>
 
                         <p:commandButton value="Limpiar" 
