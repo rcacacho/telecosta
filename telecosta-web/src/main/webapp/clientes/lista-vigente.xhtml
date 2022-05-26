@@ -22,55 +22,7 @@
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
                 </ui:define>
-
-                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
-                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Codigo:"  styleClass="field-label" style="font-weight: bold;"  />
-
-                    <p:inputText id="txtNombre" value="#{listaClienteVigenteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
-                                 requiredMessage="(nombre)" size="30" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-
-                    <p:inputText id="txtCui" value="#{listaClienteVigenteMB.codigo}" style="width: 95%;"  placeholder="(codigo)"
-                                 requiredMessage="(codigo)" size="40" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-
-                    <p:outputLabel value="Sector:"  styleClass="field-label" style="font-weight: bold;"  />
-                    <p:outputLabel value="Municipio"  styleClass="field-label" style="font-weight: bold;"  />
-
-                    <p:inputText id="txtsector" value="#{listaClienteVigenteMB.sector}" style="width: 100%;"  placeholder="(nombre)"
-                                 requiredMessage="(sector)" size="30" >
-                        <p:ajax event="blur" process="@this"  />
-                    </p:inputText>
-                    <p:selectOneMenu id="mun" value="#{listaClienteVigenteMB.idMunicipio}" style="width: 280px;" 
-                                     converter="entityConverter" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaClienteVigenteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value=""   />
-                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
-                        <p:commandButton value="Buscar"  
-                                         action="#{listaClienteVigenteMB.buscarCliente()}" 
-                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
-                                         style="background-size: 20px 20px !important; float: right;
-                                         background-position: 4px 1px !important;"   
-                                         id="btn_buscar"  icon="ui-icon-search"
-                                         update="frm_content" 
-                                         onstart="start();" oncomplete="stop();"/>
-
-                        <p:commandButton value="Limpiar" 
-                                         action="#{listaClienteVigenteMB.limpiarCampos()}"
-                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
-                                         style="background-size: 20px 20px !important; float: right;
-                                         background-position: 4px 1px !important;"
-                                         update="@form"  icon="ui-icon-refresh"
-                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
-                    </p:panelGrid>
-                </p:panelGrid>
-
+   
                 <br/>
 
                 <p:dataTable id="dt_cliente" var="col" value="#{listaClienteVigenteMB.listClientePago}"
@@ -84,11 +36,13 @@
                         #{rowId+1}
                     </p:column>
 
-                    <p:column headerText="Codigo" width="15%" >
+                    <p:column headerText="Codigo" width="15%" filterMatchMode="contains" 
+                              filterBy="#{col.codigo}" filterStyle="width: 100%;">
                         <p:outputLabel value="#{col.codigo}"/>
                     </p:column>
 
-                    <p:column headerText="Nombre" width="20%" >
+                    <p:column headerText="Nombre" width="20%" filterMatchMode="contains" 
+                              filterBy="#{col.nombres}" filterStyle="width: 100%;">
                         <p:outputLabel value="#{col.nombres}"/>
                     </p:column>
 
