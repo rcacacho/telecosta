@@ -178,15 +178,92 @@ public class ListaClienteVigenteMB implements Serializable {
                     if (pp != null) {
                         if (pp.getFechapago() != null) {
                             Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
+                            LocalDate fecha = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                            Integer anio = fecha.getYear();
+                            Integer mes = fecha.getMonthValue();
+                            String mesLetra = "";
+                            String mesLetraMa = "";
+
+                            switch (mes) {
+                                case 1:
+                                    mesLetra = "enero";
+                                    break;
+                                case 2:
+                                    mesLetra = "febrero";
+                                    break;
+                                case 3:
+                                    mesLetra = "marzo";
+                                    break;
+                                case 4:
+                                    mesLetra = "abril";
+                                    break;
+                                case 5:
+                                    mesLetra = "mayo";
+                                    break;
+                                case 6:
+                                    mesLetra = "junio";
+                                    break;
+                                case 7:
+                                    mesLetra = "julio";
+                                    break;
+                                case 8:
+                                    mesLetra = "agosto";
+                                    break;
+                                case 9:
+                                    mesLetra = "septiembre";
+                                    break;
+                                case 10:
+                                    mesLetra = "octubre";
+                                    break;
+                                case 11:
+                                    mesLetra = "noviembre";
+                                    break;
+                                case 12:
+                                    mesLetra = "diciembre";
+                                    break;
                             }
 
-                            if (count < 30) {
+                            switch (mes) {
+                                case 1:
+                                    mesLetraMa = "Enero";
+                                    break;
+                                case 2:
+                                    mesLetraMa = "Febrero";
+                                    break;
+                                case 3:
+                                    mesLetraMa = "Marzo";
+                                    break;
+                                case 4:
+                                    mesLetraMa = "Abril";
+                                    break;
+                                case 5:
+                                    mesLetraMa = "Mayo";
+                                    break;
+                                case 6:
+                                    mesLetraMa = "Junio";
+                                    break;
+                                case 7:
+                                    mesLetraMa = "Julio";
+                                    break;
+                                case 8:
+                                    mesLetraMa = "Agosto";
+                                    break;
+                                case 9:
+                                    mesLetraMa = "Septiembre";
+                                    break;
+                                case 10:
+                                    mesLetraMa = "Octubre";
+                                    break;
+                                case 11:
+                                    mesLetraMa = "Noviembre";
+                                    break;
+                                case 12:
+                                    mesLetraMa = "Diciembre";
+                                    break;
+                            }
+
+                            if ((mesLetra.equals(pp.getMes()) || mesLetraMa.equals(pp.getMes())) && anio.equals(pp.getAnio())) {
                                 listClientePago.add(pp.getIdcliente());
                             }
                         }
@@ -202,15 +279,92 @@ public class ListaClienteVigenteMB implements Serializable {
                     if (pp != null) {
                         if (pp.getFechapago() != null) {
                             Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
+                            LocalDate fecha = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            
+                            Integer anio = fecha.getYear();
+                            Integer mes = fecha.getMonthValue();
+                            String mesLetra = "";
+                            String mesLetraMa = "";
+
+                            switch (mes) {
+                                case 1:
+                                    mesLetra = "enero";
+                                    break;
+                                case 2:
+                                    mesLetra = "febrero";
+                                    break;
+                                case 3:
+                                    mesLetra = "marzo";
+                                    break;
+                                case 4:
+                                    mesLetra = "abril";
+                                    break;
+                                case 5:
+                                    mesLetra = "mayo";
+                                    break;
+                                case 6:
+                                    mesLetra = "junio";
+                                    break;
+                                case 7:
+                                    mesLetra = "julio";
+                                    break;
+                                case 8:
+                                    mesLetra = "agosto";
+                                    break;
+                                case 9:
+                                    mesLetra = "septiembre";
+                                    break;
+                                case 10:
+                                    mesLetra = "octubre";
+                                    break;
+                                case 11:
+                                    mesLetra = "noviembre";
+                                    break;
+                                case 12:
+                                    mesLetra = "diciembre";
+                                    break;
                             }
 
-                            if (count < 30) {
+                            switch (mes) {
+                                case 1:
+                                    mesLetraMa = "Enero";
+                                    break;
+                                case 2:
+                                    mesLetraMa = "Febrero";
+                                    break;
+                                case 3:
+                                    mesLetraMa = "Marzo";
+                                    break;
+                                case 4:
+                                    mesLetraMa = "Abril";
+                                    break;
+                                case 5:
+                                    mesLetraMa = "Mayo";
+                                    break;
+                                case 6:
+                                    mesLetraMa = "Junio";
+                                    break;
+                                case 7:
+                                    mesLetraMa = "Julio";
+                                    break;
+                                case 8:
+                                    mesLetraMa = "Agosto";
+                                    break;
+                                case 9:
+                                    mesLetraMa = "Septiembre";
+                                    break;
+                                case 10:
+                                    mesLetraMa = "Octubre";
+                                    break;
+                                case 11:
+                                    mesLetraMa = "Noviembre";
+                                    break;
+                                case 12:
+                                    mesLetraMa = "Diciembre";
+                                    break;
+                            }
+
+                            if ((mesLetra.equals(pp.getMes()) || mesLetraMa.equals(pp.getMes())) && anio.equals(pp.getAnio())) {
                                 listClientePago.add(pp.getIdcliente());
                             }
                         }
@@ -221,242 +375,6 @@ public class ListaClienteVigenteMB implements Serializable {
 
         listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
         listConfiguracionPago = catalogoBean.ListConfiguracionPago();
-    }
-
-    public void buscarCliente() {
-        if (nombre != null && idMunicipio != null && sector != null) {
-            List<Cliente> response = clienteBean.ListClientesByNombreAndSectorAndMunicipio(nombre, sector, idMunicipio);
-            if (response != null) {
-                listCliente = response;
-
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (nombre != null && sector != null) {
-            List<Cliente> response = clienteBean.ListClientesByNombreAndSector(nombre, sector);
-            if (response != null) {
-                listCliente = response;
-
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (nombre != null && idMunicipio != 0) {
-            List<Cliente> response = clienteBean.ListClientesByNombreAndMunicipio(nombre, idMunicipio);
-            if (response != null) {
-                listCliente = response;
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (idMunicipio != 0 && sector != null) {
-            List<Cliente> response = clienteBean.ListClientesBySectorAndMunicipio(sector, idMunicipio);
-            if (response != null) {
-                listCliente = response;
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (idMunicipio != 0) {
-            List<Cliente> response = clienteBean.ListClientesByIdMunucipio(idMunicipio);
-            if (response != null) {
-                listCliente = response;
-
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(fechaInicio);
-
-                            Integer anio = calendar.get(Calendar.YEAR);
-                            Integer mes = calendar.get(Calendar.MONTH);
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (sector != null) {
-            List<Cliente> response = clienteBean.ListClientesBySector(sector);
-            if (response != null) {
-                listCliente = response;
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (nombre != null) {
-            List<Cliente> response = clienteBean.ListClientesByNombre(nombre);
-            if (response != null) {
-                listCliente = response;
-
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                listCliente = new ArrayList<>();
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else if (codigo != null) {
-            List<Cliente> response = clienteBean.ListClientesByCodigo(codigo);
-            if (response.size() > 0) {
-                listCliente = response;
-
-                for (Cliente cc : listCliente) {
-                    Pago pp = new Pago();
-                    pp = pagosBean.findUltimoPago(cc.getIdcliente());
-                    if (pp != null) {
-                        if (pp.getFechapago() != null) {
-                            Date fechaInicio = new Date();
-                            LocalDate startDate = pp.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            ZoneId defaultZoneId = ZoneId.systemDefault();
-                            Integer count = 0;
-                            for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-                                count++;
-                            }
-
-                            if (count < 30) {
-                                listClientePago.add(pp.getIdcliente());
-                            }
-                        }
-                    }
-                }
-            } else {
-                JsfUtil.addErrorMessage("No se encontraron datos");
-            }
-        } else {
-            JsfUtil.addErrorMessage("No se encontraron datos");
-        }
-    }
-
-    public void limpiarCampos() {
-        nombre = null;
-        codigo = null;
-        sector = null;
-        idMunicipio = null;
-        cargarDatos();
     }
 
     public void detalleCliente(Integer id) {
