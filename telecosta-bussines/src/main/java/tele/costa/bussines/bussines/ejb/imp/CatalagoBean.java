@@ -367,7 +367,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
             return null;
         }
 
-        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in :idMunicipio", Municipio.class)
+        List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in :listIdmunicipio", Municipio.class)
                 .setParameter("listIdmunicipio", listIdmunicipio)
                 .getResultList();
 
