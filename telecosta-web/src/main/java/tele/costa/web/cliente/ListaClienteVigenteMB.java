@@ -78,6 +78,7 @@ public class ListaClienteVigenteMB implements Serializable {
                         Integer mes = fecha.getMonthValue();
                         String mesLetra = "";
                         String mesLetraMa = "";
+                        Integer mesNumero = 0;
 
                         switch (mes) {
                             case 1:
@@ -157,7 +158,48 @@ public class ListaClienteVigenteMB implements Serializable {
                                 break;
                         }
 
+                        switch (pp.getMes()) {
+                            case "Enero":
+                                mesNumero = 1;
+                                break;
+                            case "Febrero":
+                                mesNumero = 2;
+                                break;
+                            case "Marzo":
+                                mesNumero = 3;
+                                break;
+                            case "Abril":
+                                mesNumero = 4;
+                                break;
+                            case "Mayo":
+                                mesNumero = 5;
+                                break;
+                            case "Junio":
+                                mesNumero = 6;
+                                break;
+                            case "Julio":
+                                mesNumero = 7;
+                                break;
+                            case "Agosto":
+                                mesNumero = 8;
+                                break;
+                            case "Septiembre":
+                                mesNumero = 9;
+                                break;
+                            case "Octubre":
+                                mesNumero = 10;
+                                break;
+                            case "Noviembre":
+                                mesNumero = 11;
+                                break;
+                            case "Diciembre":
+                                mesNumero = 12;
+                                break;
+                        }
+
                         if ((mesLetra.equals(pp.getMes()) || mesLetraMa.equals(pp.getMes())) && anio.equals(pp.getAnio())) {
+                            listClientePago.add(pp.getIdcliente());
+                        } else if (mesNumero > mes && anio.equals(pp.getAnio())) {
                             listClientePago.add(pp.getIdcliente());
                         }
                     }
@@ -280,7 +322,7 @@ public class ListaClienteVigenteMB implements Serializable {
                         if (pp.getFechapago() != null) {
                             Date fechaInicio = new Date();
                             LocalDate fecha = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            
+
                             Integer anio = fecha.getYear();
                             Integer mes = fecha.getMonthValue();
                             String mesLetra = "";
