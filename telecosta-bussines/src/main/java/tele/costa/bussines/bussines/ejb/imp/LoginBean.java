@@ -27,7 +27,7 @@ public class LoginBean implements LoginBeanLocal {
 
     @Override
     public Usuario verificarUsuario(String usuario, String password) {
-        List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.usuario =:usuario and usuario.password =:password ", Usuario.class)
+        List<Usuario> lst = em.createQuery("SELECT us FROM Usuario us WHERE us.usuario =:usuario and us.password =:password and us.activo = true ", Usuario.class)
                 .setParameter("usuario", usuario)
                 .setParameter("password", password)
                 .getResultList();
@@ -41,7 +41,7 @@ public class LoginBean implements LoginBeanLocal {
 
     @Override
     public String findUsuario(String usuario) {
-       List<Usuario> lst = em.createQuery("SELECT usuario FROM Usuario usuario WHERE usuario.usuario =:usuario ", Usuario.class)
+       List<Usuario> lst = em.createQuery("SELECT us FROM Usuario us WHERE us.usuario =:usuario ", Usuario.class)
                 .setParameter("usuario", usuario)
                 .getResultList();
 

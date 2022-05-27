@@ -9,11 +9,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Cobro;
-import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Usuariomunicipio;
 import tele.costa.web.pago.ListaPagosMB;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
@@ -32,6 +33,8 @@ public class ListaCobrosMB implements Serializable {
     private PagosBeanLocal pagosBean;
     @EJB
     private ClienteBeanLocal clienteBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private List<Cobro> listCobro;
     private Integer idcliente;
@@ -50,12 +53,17 @@ public class ListaCobrosMB implements Serializable {
     void cargarDatos() {
         if (SesionUsuarioMB.getRootUsuario()) {
             listClientes = clienteBean.ListClientes();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listClientes = clienteBean.listClientesByInMunucipio();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
-            listClientes = clienteBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
         } else {
-            listClientes = clienteBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+            List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
+            if (listUsuarioMun != null) {
+                List<Integer> list = new ArrayList<>();
+                for (Usuariomunicipio uu : listUsuarioMun) {
+                    list.add(uu.getIdmunicipio().getIdmunicipio());
+                }
+                listClientes = clienteBean.ListClientesByListMunucipioInactivo(list);
+            } else {
+                listClientes = clienteBean.ListClientesByIdMunicipioInactivo(SesionUsuarioMB.getIdMunicipio());
+            }
         }
     }
 
