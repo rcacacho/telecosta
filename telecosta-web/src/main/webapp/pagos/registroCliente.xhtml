@@ -60,7 +60,6 @@
                                             timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
                                             value="#{registroPagoClienteMB.detalle.fechapago}" navigator="true"
                                             required="true" requiredMessage="Debes seleccionar un fecha" >  
-                                    <p:ajax event="dateSelect" process="@this" />
                                 </p:calendar> 
                             </p:column>
 
@@ -158,7 +157,7 @@
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 42%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroPagoClienteMB.savePago()}" icon="ui-icon-disk" process="pgPago"  
+                        <p:commandButton value="Guardar" action="#{registroPagoClienteMB.savePago()}" icon="ui-icon-disk"
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
                         <p:commandButton value="Cancelar" process="@this" action="#{registroPagoClienteMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>

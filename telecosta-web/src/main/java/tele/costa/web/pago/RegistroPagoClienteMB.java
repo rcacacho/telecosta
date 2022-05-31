@@ -52,8 +52,10 @@ public class RegistroPagoClienteMB implements Serializable {
     }
 
     public void cargarDatos() {
-        listFormaPago = catalogoBean.listFormaPago();
-        cliente = clienteBean.findClienteById(idcliente);
+        if (cliente == null) {
+            listFormaPago = catalogoBean.listFormaPago();
+            cliente = clienteBean.findClienteById(idcliente);
+        }
     }
 
     public void savePago() throws IOException {
