@@ -73,7 +73,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .getResultList();
@@ -183,7 +183,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -199,7 +199,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.activo = true ", Pago.class)
                 .setParameter("anio", anio)
                 .getResultList();
 
@@ -215,7 +215,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.mes like :mes and pa.activo = true ", Pago.class)
                 .setParameter("mes", '%' + mes + '%')
                 .getResultList();
 
@@ -430,7 +430,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.anio =:anio and pa.activo = true ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .setParameter("anio", anio)
                 .getResultList();
@@ -526,7 +526,7 @@ public class PagosBean implements PagosBeanLocal {
         sdf.format(fechainicio);
         sdf.format(fechafin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.activo = true ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .setParameter("fechafin", fechafin)
                 .setParameter("idMunicipio", idMunicipio)
@@ -560,7 +560,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio order by pa.fechapago descmole", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes and pa.idcliente.idmunicipio.idmunicipio =:idMunicipio", Pago.class)
                 .setParameter("anio", anio)
                 .setParameter("mes", mes)
                 .setParameter("idMunicipio", idMunicipio)
@@ -578,7 +578,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.anio =:anio and pa.mes like :mes ", Pago.class)
                 .setParameter("anio", anio)
                 .setParameter("mes", mes)
                 .getResultList();
@@ -605,7 +605,7 @@ public class PagosBean implements PagosBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechainicio);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio  and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago >= :fechainicio  and pa.activo = true ", Pago.class)
                 .setParameter("fechainicio", fechainicio)
                 .getResultList();
 
@@ -631,7 +631,7 @@ public class PagosBean implements PagosBeanLocal {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.format(fechaFin);
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago <= :fechaFin and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.fechapago <= :fechaFin and pa.activo = true", Pago.class)
                 .setParameter("fechaFin", fechaFin)
                 .getResultList();
 
