@@ -39,14 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Agencia.findByActivo", query = "SELECT a FROM Agencia a WHERE a.activo = :activo")})
 public class Agencia implements Serializable {
 
-    @OneToMany(mappedBy = "idagencia", fetch = FetchType.LAZY)
-    private List<Bitacorainventario> bitacorainventarioList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idagencia", fetch = FetchType.LAZY)
-    private List<Inventario> inventarioList;
-    @OneToMany(mappedBy = "idagenciaenvio", fetch = FetchType.LAZY)
-    private List<Inventario> inventarioList1;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +72,15 @@ public class Agencia implements Serializable {
     @NotNull
     @Column(name = "activo")
     private boolean activo;
+
+    @OneToMany(mappedBy = "idagencia", fetch = FetchType.LAZY)
+    private List<Bitacorainventario> bitacorainventarioList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idagencia", fetch = FetchType.LAZY)
+    private List<Inventario> inventarioList;
+    
+    @OneToMany(mappedBy = "idagenciaenvio", fetch = FetchType.LAZY)
+    private List<Inventario> inventarioList1;
 
     public Agencia() {
     }
