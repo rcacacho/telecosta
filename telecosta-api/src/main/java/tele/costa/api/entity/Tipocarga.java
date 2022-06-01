@@ -40,50 +40,50 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tipocarga.findByActivo", query = "SELECT t FROM Tipocarga t WHERE t.activo = :activo")})
 public class Tipocarga implements Serializable {
 
-    @OneToMany(mappedBy = "idtipocarga", fetch = FetchType.LAZY)
-    private List<Bitacorainventario> bitacorainventarioList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idtipocarga")
     private Integer idtipocarga;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
     @Column(name = "nombre")
     private String nombre;
-    
+
     @Size(max = 250)
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "usuariocreacion")
     private String usuariocreacion;
-    
+
     @Column(name = "fechamodificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    
+
     @Size(max = 50)
     @Column(name = "usuariomodificacion")
     private String usuariomodificacion;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
     private boolean activo;
+
+    @OneToMany(mappedBy = "idtipocarga", fetch = FetchType.LAZY)
+    private List<Bitacorainventario> bitacorainventarioList;
 
     public Tipocarga() {
     }
@@ -197,5 +197,5 @@ public class Tipocarga implements Serializable {
     public void setBitacorainventarioList(List<Bitacorainventario> bitacorainventarioList) {
         this.bitacorainventarioList = bitacorainventarioList;
     }
-    
+
 }
