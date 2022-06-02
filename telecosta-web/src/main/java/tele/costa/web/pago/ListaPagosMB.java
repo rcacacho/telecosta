@@ -220,6 +220,18 @@ public class ListaPagosMB implements Serializable {
         }
     }
 
+    public Date obtenerFechPago(Integer idpago) {
+        Detallepago response = pagosBean.findDetallePago(idpago);
+        if (response != null) {
+            if (response.getFechapago() != null) {
+                return response.getFechapago();
+            }
+        } else {
+            return null;
+        }
+        return null;
+    }
+
     /*Metodos getters y setters*/
     public List<Pago> getListPago() {
         return listPago;

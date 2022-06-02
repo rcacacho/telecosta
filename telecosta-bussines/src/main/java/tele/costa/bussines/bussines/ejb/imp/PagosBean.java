@@ -183,7 +183,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idcliente.idcliente =:idcliente and pa.activo = true order by pa.fechapago desc ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
@@ -360,7 +360,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio =:idmunicicpio and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idcliente.idmunicipio.idmunicipio =:idmunicicpio and pa.activo = true order by pa.fechapago desc", Pago.class)
                 .setParameter("idmunicicpio", idmunicicpio)
                 .getResultList();
 
@@ -744,7 +744,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idmunicipio.idmunicipio in :listIdmunicipio and pa.activo = true order by pa.fechapago desc", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idcliente.idmunicipio.idmunicipio in :listIdmunicipio and pa.activo = true order by pa.fechapago desc", Pago.class)
                 .setParameter("listIdmunicipio", listIdmunicipio)
                 .getResultList();
 
@@ -752,6 +752,22 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst;
+    }
+
+    @Override
+    public Detallepago findDetallePago(Integer idpago) {
+          if (idpago == null) {
+            return null;
+        }
+
+        List<Detallepago> lst = em.createQuery("SELECT pa FROM Detallepago pa WHERE pa.idpago.idpago =:idpago and pa.activo = true order by pa.fechacreacion desc ", Detallepago.class)
+                .setParameter("idpago", idpago)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst.get(0);
     }
 
 }

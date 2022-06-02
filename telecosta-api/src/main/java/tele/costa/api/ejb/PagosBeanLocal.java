@@ -86,5 +86,7 @@ public interface PagosBeanLocal {
     Cobro findCobroByIdCobro(Integer idCobro);
 
     List<Pago> listPagosByIdMunicipioByList(List<Integer> listIdmunicipio);
+    
+    Detallepago findDetallePago(Integer idpago);
 
 }

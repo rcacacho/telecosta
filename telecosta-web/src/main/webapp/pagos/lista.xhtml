@@ -77,7 +77,7 @@
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{listaPagosMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
                     </p:selectOneMenu>
-                    
+
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 100px;">
                         <p:commandButton value="Buscar"  
                                          action="#{listaPagosMB.buscarPago()}" 
@@ -113,7 +113,7 @@
                     </p:column>
 
                     <p:column headerText="Fecha pago" width="25%" >
-                        <p:outputLabel value="#{col.fechapago}">
+                        <p:outputLabel  value="#{listaPagosMB.obtenerFechPago(col.idpago)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
