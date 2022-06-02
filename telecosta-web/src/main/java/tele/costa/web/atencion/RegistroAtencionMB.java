@@ -2,6 +2,7 @@ package tele.costa.web.atencion;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import tele.costa.api.entity.Atencion;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Tipoatencion;
+import tele.costa.api.entity.Usuariomunicipio;
 import tele.costa.api.enums.TipoAtencion;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
@@ -52,14 +54,20 @@ public class RegistroAtencionMB implements Serializable {
     void cargarDatos() {
         listRuta = catalogoBean.listRuta();
         listTipoAtencion = catalogoBean.listTipoAtencion();
+        
         if (SesionUsuarioMB.getRootUsuario()) {
-            listCliente = clientesBean.ListClientes();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(6)) {
-            listCliente = clientesBean.listClientesByInMunucipio();
-        } else if (SesionUsuarioMB.getIdMunicipio().equals(3)) {
-            listCliente = clientesBean.listClientesByInMunucipioSanPabloRodeoSanRafael();
+            listCliente = clientesBean.ListClientesInactivos();
         } else {
-            listCliente = clientesBean.ListClientesByIdMunucipio(SesionUsuarioMB.getIdMunicipio());
+            List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
+            if (listUsuarioMun != null) {
+                List<Integer> list = new ArrayList<>();
+                for (Usuariomunicipio uu : listUsuarioMun) {
+                    list.add(uu.getIdmunicipio().getIdmunicipio());
+                }
+                listCliente = clientesBean.ListClientesByListMunucipioInactivo(list);
+            } else {
+                listCliente = clientesBean.ListClientesByIdMunicipioInactivo(SesionUsuarioMB.getIdMunicipio());
+            }
         }
     }
 
