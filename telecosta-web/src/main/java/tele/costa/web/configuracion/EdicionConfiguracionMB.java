@@ -26,13 +26,16 @@ public class EdicionConfiguracionMB implements Serializable {
     private Configuracionpago configuracion;
 
     public void cargarDatos() {
-        configuracion = configuracionBen.findConfiguracionPago(idconfiguracionpago);
+        if (configuracion == null) {
+            configuracion = configuracionBen.findConfiguracionPago(idconfiguracionpago);
+        }
     }
 
     public void actualizarConfiguracion() {
         Configuracionpago responseVerificacion = configuracionBen.actualizarConfiguracion(configuracion);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Configuración actualizada exitosamente");
+            JsfUtil.redirectTo("/configuracion/detalle.xhtml?idconfiguracionpago=" + idconfiguracionpago);
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }

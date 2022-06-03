@@ -80,7 +80,7 @@ public class ListaPagosMB implements Serializable {
     }
 
     public void buscarPago() {
-        if (fechaInicioBus != null && fechaFinBus != null && idMunicipio != null) {
+        if (fechaInicioBus != null && fechaFinBus != null && idMunicipio > 0) {
             List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipio(fechaInicioBus, fechaFinBus, idMunicipio);
             if (response != null) {
                 listPago = response;

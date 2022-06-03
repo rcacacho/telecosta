@@ -36,6 +36,7 @@
 
             <p:submenu label="Reportes" icon="ui-icon-document">  
                 <p:menuitem value="Reporte" outcome="/reportes/reporte.xhtml" style="width: 90px;"/>
+                <p:menuitem value="Cobros" outcome="/reportes/cobros.xhtml" style="width: 90px;"/>
             </p:submenu>
 
             <p:submenu label="Configuración" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('contabilidad') || loginMB.validarRol().equals('bodega_central') || loginMB.validarRoot()}" >  
