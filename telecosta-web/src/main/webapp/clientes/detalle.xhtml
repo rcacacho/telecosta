@@ -114,6 +114,25 @@
                 </p:row>
             </p:panelGrid>
 
+            <p:panelGrid styleClass="no-border" style="width: 90%; margin-left: 4%;" rendered="#{detalleClienteMB.cliente.idestadocliente.idestadocliente eq 3}" >
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Motivo corte:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Fecha corte:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleClienteMB.cliente.motivoeliminacion}" style="font-size: 16px!important;" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleClienteMB.cliente.fechaeliminacion}" style="font-size: 16px!important;" />
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
             <table style="width: 100%; margin-top: 23px;">
                 <tr>
                     <td style="width: 50%;">

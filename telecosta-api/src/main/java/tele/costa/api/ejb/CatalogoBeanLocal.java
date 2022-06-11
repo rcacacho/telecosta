@@ -13,6 +13,7 @@ import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.entity.Sectorpago;
+import tele.costa.api.entity.Seriefactura;
 import tele.costa.api.entity.Tipoatencion;
 import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.entity.Tipocompra;
@@ -77,7 +78,9 @@ public interface CatalogoBeanLocal {
     Formapago findFormaPago(Integer idformapago);
 
     List<Usuariomunicipio> listUsuarioMunicipio(Integer idusuario);
-    
+
     List<Municipio> listMunicipioByIdMunicipioByList(List<Integer> listIdmunicipio);
+
+    List<Seriefactura> listSerieFactura();
 
 }

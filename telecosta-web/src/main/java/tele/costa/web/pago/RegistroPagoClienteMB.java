@@ -18,6 +18,7 @@ import tele.costa.api.entity.Cobro;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Formapago;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Seriefactura;
 import tele.costa.api.entity.Tipopago;
 import tele.costa.api.enums.TipoPagoEnum;
 import telecosta.web.utils.JsfUtil;
@@ -47,6 +48,8 @@ public class RegistroPagoClienteMB implements Serializable {
     private List<Formapago> listFormaPago;
     private Integer idcliente;
     private Pago pagoVerificacion;
+    private List<Seriefactura> listSerieFactura;
+    private Seriefactura serieFactura;
 
     public RegistroPagoClienteMB() {
         pago = new Pago();
@@ -58,6 +61,7 @@ public class RegistroPagoClienteMB implements Serializable {
             listFormaPago = catalogoBean.listFormaPago();
             cliente = clienteBean.findClienteById(idcliente);
         }
+        listSerieFactura = catalogoBean.listSerieFactura();
     }
 
     public void savePago() throws IOException {
@@ -76,6 +80,8 @@ public class RegistroPagoClienteMB implements Serializable {
                 detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
                 detalle.setMontopagado(pago.getTotal());
                 detalle.setIdpago(pago);
+                detalle.setIdseriefactura(serieFactura);
+                detalle.setSerie(serieFactura.getSerie());
                 Detallepago responseDet = pagosBean.saveDetallepago(detalle);
 
                 Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pago.getIdcliente().getIdcliente(), pago.getAnio(), pago.getMes());
@@ -142,6 +148,8 @@ public class RegistroPagoClienteMB implements Serializable {
         detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
         detalle.setMontopagado(pago.getTotal());
         detalle.setIdpago(pagoVerificacion);
+        detalle.setIdseriefactura(serieFactura);
+        detalle.setSerie(serieFactura.getSerie());
         Detallepago responseDet = pagosBean.saveDetallepago(detalle);
 
         Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pagoVerificacion.getIdcliente().getIdcliente(), pagoVerificacion.getAnio(), pagoVerificacion.getMes());
@@ -220,6 +228,22 @@ public class RegistroPagoClienteMB implements Serializable {
 
     public void setPagoVerificacion(Pago pagoVerificacion) {
         this.pagoVerificacion = pagoVerificacion;
+    }
+
+    public List<Seriefactura> getListSerieFactura() {
+        return listSerieFactura;
+    }
+
+    public void setListSerieFactura(List<Seriefactura> listSerieFactura) {
+        this.listSerieFactura = listSerieFactura;
+    }
+
+    public Seriefactura getSerieFactura() {
+        return serieFactura;
+    }
+
+    public void setSerieFactura(Seriefactura serieFactura) {
+        this.serieFactura = serieFactura;
     }
 
 }

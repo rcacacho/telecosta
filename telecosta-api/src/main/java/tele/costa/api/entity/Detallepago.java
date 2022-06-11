@@ -115,6 +115,10 @@ public class Detallepago implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cobro idcobro;
 
+    @JoinColumn(name = "idseriefactura", referencedColumnName = "idseriefactura")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Seriefactura idseriefactura;
+
     public Detallepago() {
     }
 
@@ -264,6 +268,14 @@ public class Detallepago implements Serializable {
 
     public void setIdcobro(Cobro idcobro) {
         this.idcobro = idcobro;
+    }
+
+    public Seriefactura getIdseriefactura() {
+        return idseriefactura;
+    }
+
+    public void setIdseriefactura(Seriefactura idseriefactura) {
+        this.idseriefactura = idseriefactura;
     }
 
     @Override

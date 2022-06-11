@@ -115,8 +115,12 @@
 
                             </p:column>
                             <p:column>
-                                <p:inputText value="#{registroPagoClienteMB.detalle.serie}" size="35" style="font-size: 16px!important;"
-                                             required="true" requiredMessage="Debes ingresar una serie"/>
+                                <p:selectOneMenu id="serie" value="#{registroPagoClienteMB.serieFactura}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar una serie" >
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroPagoClienteMB.listSerieFactura}"  var="serie" itemLabel="#{serie.serie}" itemValue="#{serie}"/>
+                                </p:selectOneMenu>
                             </p:column>
                             <p:column>
                                 <p:selectOneMenu id="tipo" value="#{registroPagoClienteMB.detalle.idformapago}" style="width: 220px;" 

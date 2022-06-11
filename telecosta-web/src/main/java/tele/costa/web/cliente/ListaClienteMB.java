@@ -216,8 +216,9 @@ public class ListaClienteMB implements Serializable {
     public void corteCliente() throws IOException {
         Estadocliente estado = catalogoBean.findEstadoCliente(EstadoClienteEnum.CORTE.getId());
         clienteSelected.setIdestadocliente(estado);
-        clienteSelected.setFechamodificacion(new Date());
-        clienteSelected.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+        clienteSelected.setFechaeliminacion(new Date());
+        clienteSelected.setUsuarioeliminacion(SesionUsuarioMB.getUserName());
+        clienteSelected.setMotivoeliminacion(motivoCorte);
         Cliente response = clienteBean.updateCliente(clienteSelected);
         if (response != null) {
             JsfUtil.addSuccessMessage("Cliente inactivado exitosamente");

@@ -19,6 +19,7 @@ import tele.costa.api.entity.Proveedor;
 import tele.costa.api.entity.Ruta;
 import tele.costa.api.entity.Sector;
 import tele.costa.api.entity.Sectorpago;
+import tele.costa.api.entity.Seriefactura;
 import tele.costa.api.entity.Tipoatencion;
 import tele.costa.api.entity.Tipocarga;
 import tele.costa.api.entity.Tipocompra;
@@ -369,6 +370,18 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
         List<Municipio> lst = em.createQuery("SELECT muni FROM Municipio muni WHERE muni.idmunicipio in :listIdmunicipio", Municipio.class)
                 .setParameter("listIdmunicipio", listIdmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Seriefactura> listSerieFactura() {
+          List<Seriefactura> lst = em.createQuery("SELECT qj FROM Seriefactura qj where qj.activo = true", Seriefactura.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
