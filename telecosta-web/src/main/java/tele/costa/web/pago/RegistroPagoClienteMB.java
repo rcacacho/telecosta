@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
@@ -45,6 +46,7 @@ public class RegistroPagoClienteMB implements Serializable {
     private Tipopago tipoPago;
     private List<Formapago> listFormaPago;
     private Integer idcliente;
+    private Pago pagoVerificacion;
 
     public RegistroPagoClienteMB() {
         pago = new Pago();
@@ -61,44 +63,8 @@ public class RegistroPagoClienteMB implements Serializable {
     public void savePago() throws IOException {
         Pago responseVerificacion = pagosBean.findPagoByIdClienteAndAnioAndMes(cliente.getIdcliente(), pago.getAnio(), pago.getMes());
         if (responseVerificacion != null) {
-            Pago actualizacionPago = new Pago();
-            actualizacionPago = responseVerificacion;
-            actualizacionPago.setAnio(pago.getAnio());
-            actualizacionPago.setMes(pago.getMes());
-            actualizacionPago.setIdcliente(cliente);
-            actualizacionPago.setFechapago(new Date());
-
-            Integer total = 0;
-            if (cliente.getIdconfiguracionpago() != null) {
-                total = cliente.getIdconfiguracionpago().getValor();
-            }
-
-            if (pago.getTotal() != null) {
-                pago.setTotal(total - pago.getTotal());
-            }
-
-            Pago updatePago = pagosBean.updatePago(actualizacionPago);
-
-            detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
-            detalle.setMontopagado(pago.getTotal());
-            detalle.setIdpago(actualizacionPago);
-            Detallepago responseDet = pagosBean.saveDetallepago(detalle);
-
-            Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pago.getIdcliente().getIdcliente(), pago.getAnio(), pago.getMes());
-            if (findCobro != null) {
-                findCobro.setIdpago(pago);
-                findCobro.setCobro(0);
-                findCobro.setFechamodificacion(new Date());
-                findCobro.setUsuariomodificacion(SesionUsuarioMB.getUserName());
-                Cobro responseCobro = pagosBean.updateCobro(findCobro);
-            }
-
-            JsfUtil.addSuccessMessage("El pago se registro exitosamente");
-            pago = null;
-            cliente = null;
-            detalle = null;
-            JsfUtil.redirectTo("/pagos/lista.xhtml");
-            return;
+            pagoVerificacion = responseVerificacion;
+            RequestContext.getCurrentInstance().execute("PF('dlgConfirmacion').show()");
         } else {
             pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
             tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.PAGO.getId());
@@ -156,6 +122,49 @@ public class RegistroPagoClienteMB implements Serializable {
         pago.setIdcliente(cliente);
     }
 
+    public void actualizarPago() throws IOException {
+        pagoVerificacion.setAnio(pago.getAnio());
+        pagoVerificacion.setMes(pago.getMes());
+        pagoVerificacion.setIdcliente(cliente);
+        pagoVerificacion.setFechapago(new Date());
+
+        Integer total = 0;
+        if (cliente.getIdconfiguracionpago() != null) {
+            total = cliente.getIdconfiguracionpago().getValor();
+        }
+
+        if (pago.getTotal() != null) {
+            pago.setTotal(total - pago.getTotal());
+        }
+
+        Pago updatePago = pagosBean.updatePago(pagoVerificacion);
+
+        detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());
+        detalle.setMontopagado(pago.getTotal());
+        detalle.setIdpago(pagoVerificacion);
+        Detallepago responseDet = pagosBean.saveDetallepago(detalle);
+
+        Cobro findCobro = pagosBean.findCobroByIdClienteAndAnioAndMes(pagoVerificacion.getIdcliente().getIdcliente(), pagoVerificacion.getAnio(), pagoVerificacion.getMes());
+        if (findCobro != null) {
+            findCobro.setIdpago(pagoVerificacion);
+            findCobro.setCobro(0);
+            findCobro.setFechamodificacion(new Date());
+            findCobro.setUsuariomodificacion(SesionUsuarioMB.getUserName());
+            Cobro responseCobro = pagosBean.updateCobro(findCobro);
+        }
+
+        JsfUtil.addSuccessMessage("El pago se registro exitosamente");
+        pago = null;
+        cliente = null;
+        detalle = null;
+        JsfUtil.redirectTo("/clientes/lista.xhtml");
+        return;
+    }
+
+    public void cerrarDialog() {
+        RequestContext.getCurrentInstance().execute("PF('dlgConfirmacion').hide()");
+    }
+
     /*Metodos getters y setters*/
     public Pago getPago() {
         return pago;
@@ -203,6 +212,14 @@ public class RegistroPagoClienteMB implements Serializable {
 
     public void setIdcliente(Integer idcliente) {
         this.idcliente = idcliente;
+    }
+
+    public Pago getPagoVerificacion() {
+        return pagoVerificacion;
+    }
+
+    public void setPagoVerificacion(Pago pagoVerificacion) {
+        this.pagoVerificacion = pagoVerificacion;
     }
 
 }

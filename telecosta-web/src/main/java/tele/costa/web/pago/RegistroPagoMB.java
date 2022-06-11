@@ -175,7 +175,7 @@ public class RegistroPagoMB implements Serializable {
             Cobro responseCobro = pagosBean.updateCobro(findCobro);
         }
 
-        JsfUtil.addSuccessMessage("El pago se registro exitosamente");
+        JsfUtil.addSuccessMessage("El pago se actualizado exitosamente");
         pago = null;
         cliente = null;
         detalle = null;

@@ -111,12 +111,12 @@
                         <p:row>
                             <p:column>
                                 <p:inputText value="#{registroPagoClienteMB.detalle.nofactura}" size="35" style="font-size: 16px!important;"
-                                              required="true" requiredMessage="Debes ingresar un nuevo de factura"/>
+                                             required="true" requiredMessage="Debes ingresar un nuevo de factura"/>
 
                             </p:column>
                             <p:column>
                                 <p:inputText value="#{registroPagoClienteMB.detalle.serie}" size="35" style="font-size: 16px!important;"
-                                              required="true" requiredMessage="Debes ingresar una serie"/>
+                                             required="true" requiredMessage="Debes ingresar una serie"/>
                             </p:column>
                             <p:column>
                                 <p:selectOneMenu id="tipo" value="#{registroPagoClienteMB.detalle.idformapago}" style="width: 220px;" 
@@ -163,6 +163,18 @@
                     </p:outputPanel>
                 </p:panelGrid>
             </div>
+
+            <p:dialog header="Confirmación pago" widgetVar="dlgConfirmacion" id="dlgConfirmacion" 
+                      onShow="stop();"  onHide="stop();" 
+                      modal="true" position="top" resizable="false" width="300px">
+                <p:panelGrid  columns="2" styleClass="no-border" style="width: 80%;"  >
+                    <p:outputLabel  value="Este cliente ya cuenta con un pago en este mes y año de valor: #{registroPagoClienteMB.pagoVerificacion.total} ¿Esta seguro de actualizarlo?" style="color: red;" />
+                </p:panelGrid>
+                <p:panelGrid  columns="2" styleClass="no-border" style="width: 50%;"  >
+                    <p:commandButton value="Si" action="#{registroPagoClienteMB.actualizarPago()}" icon="ui-icon-disk" process="@this"  style=" margin-left: 5px; "  update="@form"/>
+                    <p:commandButton value="No"  process="@this" action="#{registroPagoClienteMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                </p:panelGrid>    
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

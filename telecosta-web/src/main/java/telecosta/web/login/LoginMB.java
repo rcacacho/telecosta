@@ -93,7 +93,10 @@ public class LoginMB implements Serializable {
     }
 
     public boolean validarRoot() {
-        return root = SesionUsuarioMB.getRootUsuario();
+        if (SesionUsuarioMB.getRootUsuario()) {
+            return root = SesionUsuarioMB.getRootUsuario();
+        }
+        return false;
     }
 
     public String validarRol() throws IOException {

@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="frm_menu" >
-        <p:menubar style="border: 1px solid #ccc; font-size: small; height: 60px; width: 1000px;"  autoDisplay="false" >
+        <p:menubar style="border: 0px solid #ccc; font-size: small; height: 60px; width: 1000px;"  autoDisplay="false" >
             <p:submenu label="Clientes" icon="ui-icon-document" rendered="#{loginMB.validarRol().equals('cobros') || loginMB.validarRoot()}">  
                 <p:menuitem value="Lista" outcome="/clientes/lista.xhtml" style="width: 90px;"/>
                 <p:menuitem value="Registro" outcome="/clientes/registro.xhtml" style="width: 90px;"/>

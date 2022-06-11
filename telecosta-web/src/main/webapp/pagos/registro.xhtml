@@ -166,13 +166,13 @@
 
             <p:dialog header="Confirmación pago" widgetVar="dlgConfirmacion" id="dlgConfirmacion" 
                       onShow="stop();"  onHide="stop();" 
-                      modal="true" position="top" resizable="false" width="500px">
+                      modal="true" position="top" resizable="false" width="300px">
                 <p:panelGrid  columns="2" styleClass="no-border" style="width: 80%;"  >
                     <p:outputLabel  value="Este cliente ya cuenta con un pago en este mes y año de valor: #{registroPagoMB.pagoVerificacion.total} ¿Esta seguro de actualizarlo?" style="color: red;" />
                 </p:panelGrid>
-                <p:panelGrid  columns="1" styleClass="no-border" style="width: 80%;"  >
-                    <p:commandButton value="Actualizar" action="#{registroPagoMB.actualizarPago()}" icon="ui-icon-disk" process="@this"  style=" margin-left: 5px; " onstart="return confirm('¿Confirmas reiniciar la contraseña?');" update="@form"/>
-                    <p:commandButton value="Cancelar"  process="@this" action="#{registroPagoMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                <p:panelGrid  columns="2" styleClass="no-border" style="width: 50%;"  >
+                    <p:commandButton value="Si" action="#{registroPagoMB.actualizarPago()}" icon="ui-icon-disk" process="@this"  style=" margin-left: 5px; "  update="@form"/>
+                    <p:commandButton value="No"  process="@this" action="#{registroPagoMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                 </p:panelGrid>    
             </p:dialog>
 
