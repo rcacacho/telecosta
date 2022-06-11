@@ -152,21 +152,26 @@
                         <p:outputLabel value="#{col.idestadocliente.estado}"/>      
                     </p:column>
 
-                    <p:column width="24%" exportable="false" >
+                    <p:column width="29%" exportable="false" >
                         <p:column headerText="Editar" width="8%">
                             <p:rowEditor />
                         </p:column>
 
                         <p:commandButton value="Ticket" 
-                                         style="" process="@this" styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
+                                         style="" process="@this" styleClass="button-16 b-greylight-16" icon="ui-icon-comment"
                                          action="#{listaClienteMB.ticketCliente(col.idcliente)}" update="@form"/>
 
-                        <p:commandButton value="Suspender" 
+                        <p:commandButton value="Suspender" rendered="#{col.idestadocliente.idestadocliente != 3 }" 
                                          style="" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
                                          action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
+                        
+                          <p:commandButton value="Activar" rendered="#{col.idestadocliente.idestadocliente eq 3 }" 
+                                         style="" process="@this" onstart="return confirm('¿Confirmas activar el servicio?');"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-n"
+                                         action="#{listaClienteMB.activarCliente(col)}" update="@form"/>
 
-                        <p:commandButton value="Corte" 
+                        <p:commandButton value="Corte" rendered="#{col.idestadocliente.idestadocliente != 3 }" 
                                          style="margin-top: 3px;" process="@this" 
                                          styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
                                          action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
