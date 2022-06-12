@@ -6,7 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"    
                 xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="idcliente" value="#{registroAtencionClienteMB.idcliente}"/>
         <f:event type="preRenderView" listener="#{registroAtencionClienteMB.cargarDatos()}"/>
@@ -57,6 +57,7 @@
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccion una ruta" >
                                     <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
+                                    <p:ajax event="itemSelect"/>
                                     <f:selectItems value="#{registroAtencionClienteMB.listRuta}"  var="rut" itemLabel="#{rut.ruta}" itemValue="#{rut}"/>
                                 </p:selectOneMenu>
                             </p:column>
@@ -65,6 +66,7 @@
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccion una tipo de atención" >
                                     <f:selectItem itemLabel="(selecciona una tipo)" itemValue="" noSelectionOption="true" />
+                                    <p:ajax event="itemSelect"/>
                                     <f:selectItems value="#{registroAtencionClienteMB.listTipoAtencion}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip}"/>
                                 </p:selectOneMenu>
                             </p:column>   
@@ -119,12 +121,11 @@
                     </p:panelGrid>
 
                     <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
-                        <p:commandButton value="Guardar" action="#{registroAtencionClienteMB.saveAtencion()}" icon="ui-icon-disk" process="pg_ticket"  
+                        <p:commandButton value="Guardar" action="#{registroAtencionClienteMB.saveAtencion()}" icon="ui-icon-disk" process="@this"  
                                          style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el ticket?');" update="@form"/>
                         <p:commandButton value="Cancelar" process="@this" action="#{registroAtencionClienteMB.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
                     </p:outputPanel>
                 </p:panelGrid>
-
             </div>
         </h:form>
     </ui:define>

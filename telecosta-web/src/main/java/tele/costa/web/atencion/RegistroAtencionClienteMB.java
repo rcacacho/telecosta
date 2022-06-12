@@ -43,11 +43,12 @@ public class RegistroAtencionClienteMB implements Serializable {
         atencion = new Atencion();
     }
 
-
     public void cargarDatos() {
-        listRuta = catalogoBean.listRuta();
-        listTipoAtencion = catalogoBean.listTipoAtencion();
-        clienteSelected = clientesBean.findClienteById(idcliente);
+        if (clienteSelected == null) {
+            listRuta = catalogoBean.listRuta();
+            listTipoAtencion = catalogoBean.listTipoAtencion();
+            clienteSelected = clientesBean.findClienteById(idcliente);
+        }
     }
 
     public void cargarCliente() {
@@ -59,6 +60,36 @@ public class RegistroAtencionClienteMB implements Serializable {
     }
 
     public void saveAtencion() throws IOException {
+        if (clienteSelected.getTelefono() == null) {
+            JsfUtil.addErrorMessage("Debe registrar un telefono");
+            return;
+        }
+
+        if (clienteSelected.getDireccion() == null) {
+            JsfUtil.addErrorMessage("Debe registrar una dirección");
+            return;
+        }
+
+        if (atencion.getIdruta() == null) {
+            JsfUtil.addErrorMessage("Debe registrar una ruta");
+            return;
+        }
+
+        if (atencion.getIdtipoatencion() == null) {
+            JsfUtil.addErrorMessage("Debe registrar una atención");
+            return;
+        }
+
+        if (atencion.getMotivo() == null) {
+            JsfUtil.addErrorMessage("Debe registrar un motivo");
+            return;
+        }
+
+        if (atencion.getReferencia() == null) {
+            JsfUtil.addErrorMessage("Debe registrar una referencia");
+            return;
+        }
+
         atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
         atencion.setEstado(true);
         atencion.setNombre(clienteSelected.getNombres());
@@ -77,7 +108,7 @@ public class RegistroAtencionClienteMB implements Serializable {
                 clienteSelected.setActivo(false);
             }
             Cliente responseUpdate = clientesBean.updateCliente(clienteSelected);
-
+             JsfUtil.redirectTo("/clientes/lista.xhtml");
             JsfUtil.addSuccessMessage("Ticket de atención creado exitosamente");
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
