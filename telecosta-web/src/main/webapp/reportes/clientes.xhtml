@@ -32,7 +32,8 @@
                         </td>
                         <td style="vertical-align: top; margin-left: 20px;">
                             <div>
-                                <h4 style="margin-right: 190px;">Reporte de Clientes</h4>
+                                <h4 style="margin-right: 190px;">1. Reporte de Clientes</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
                                 <p:panelGrid columns="2" styleClass="no-border">
                                     <p:commandButton value="PDF" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"
@@ -48,7 +49,8 @@
                                     </p:commandButton> 
                                 </p:panelGrid>
 
-                                <h4 style="margin-right: 190px;">Reporte de tipo de cliente</h4>
+                                <h4 style="margin-right: 190px;">2. Reporte de tipo de cliente</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
                                 <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
                                     <p:outputLabel value=""  styleClass="field-label"  />
@@ -76,7 +78,8 @@
                                     </p:commandButton>
                                 </p:panelGrid>
 
-                                <h4 style="margin-right: 190px;">Reporte de Clientes por municipio</h4>
+                                <h4 style="margin-right: 190px;">3. Reporte de Clientes por municipio</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
                                 <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Municipio:"  styleClass="field-label"  />
                                     <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
@@ -97,6 +100,47 @@
                                         <f:selectItem itemLabel="Cable" itemValue="Cable" />
                                         <f:selectItem itemLabel="Internet" itemValue="Internet" />
                                     </p:selectOneMenu>
+
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfMunicipioCliente()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteMuncipio()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">4. Reporte de Clientes con corte</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Fechas:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun2" value="#{reporteClienteMB.idmunicipio}" style="width: 250px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:panelGrid columns="2"  styleClass="no-border" >
+                                        <p:calendar id="cal_fechaInicio" placeholder="(fecha inicio)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                    value="#{reportePagoMB.fechaIncio}" navigator="true">  
+                                            <p:ajax event="dateSelect" process="@this" />
+                                        </p:calendar>
+
+                                        <p:calendar id="cal_fechaFin" placeholder="(fecha fin)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                    value="#{reportePagoMB.fechaFin}" navigator="true">  
+                                            <p:ajax event="dateSelect" process="@this" />
+                                        </p:calendar>
+                                    </p:panelGrid>
 
                                     <p:commandButton value="PDF" style="float: left;"
                                                      styleClass="button-16 b-greylight-16" icon="ui-icon-print"

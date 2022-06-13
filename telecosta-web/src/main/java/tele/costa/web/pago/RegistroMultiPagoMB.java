@@ -75,6 +75,45 @@ public class RegistroMultiPagoMB implements Serializable {
         LocalDate endDate = fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
+        switch (pago.getMes()) {
+            case "enero":
+                pago.setNomes(1);
+                break;
+            case "febrero":
+                pago.setNomes(2);
+                break;
+            case "marzo":
+                pago.setNomes(3);
+                break;
+            case "abril":
+                pago.setNomes(4);
+                break;
+            case "mayo":
+                pago.setNomes(5);
+                break;
+            case "junio":
+                pago.setNomes(6);
+                break;
+            case "julio":
+                pago.setNomes(7);
+                break;
+            case "agosto":
+                pago.setNomes(8);
+                break;
+            case "septiembre":
+                pago.setNomes(9);
+                break;
+            case "octubre":
+                pago.setNomes(10);
+                break;
+            case "noviembre":
+                pago.setNomes(11);
+                break;
+            case "diciembre":
+                pago.setNomes(12);
+                break;
+        }
+
         Integer count = 0;
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
             count++;
