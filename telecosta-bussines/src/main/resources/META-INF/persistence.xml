@@ -37,8 +37,8 @@
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
-            <property name="eclipselink.logging.level.sql" value="FINE"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.level.sql" value="OFF"/>
+            <property name="eclipselink.logging.parameters" value="false"/>
             <property name="eclipselink.jdbc.sequence-connection-pool" value="true"/>
             <property name="eclipselink.target-database" value="MySQL"/>
         </properties>
