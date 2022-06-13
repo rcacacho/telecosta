@@ -66,7 +66,6 @@ public class CajaBean implements CajaBeanLocal {
             caja.setActivo(true);
             caja.setFechacreacion(new Date());
             em.persist(caja);
-            em.flush();
             return (caja);
         } catch (ConstraintViolationException ex) {
             String validationError = getConstraintViolationExceptionAsString(ex);

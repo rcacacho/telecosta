@@ -467,6 +467,8 @@ public class ClienteBean implements ClienteBeanLocal {
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true and qj.fechacreacion >=:fechainicio and qj.fechacreacion <=:fechafin ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
                 .setParameter("idestadocliente", idestadocliente)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -498,6 +500,8 @@ public class ClienteBean implements ClienteBeanLocal {
 
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true and qj.fechacreacion >=:fechainicio and qj.fechacreacion <=:fechafin ", Cliente.class)
                 .setParameter("idestadocliente", idestadocliente)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
