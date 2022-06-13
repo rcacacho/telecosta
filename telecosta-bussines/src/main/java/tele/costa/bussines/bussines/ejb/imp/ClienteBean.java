@@ -1,5 +1,7 @@
 package tele.costa.bussines.bussines.ejb.imp;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -444,8 +446,25 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientesByIdMunicipioByIdEstadoAndFechas(Integer idmunicipio, Integer idestadocliente, Date fechainicio, Date fechafin) {
-          List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente "
-                  + "and qj.activo = true and qj.fechacreacion >=  ", Cliente.class)
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true and qj.fechacreacion >=:fechainicio and qj.fechacreacion <=:fechafin ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
                 .setParameter("idestadocliente", idestadocliente)
                 .getResultList();
@@ -459,7 +478,25 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientesByIdEstadoAndFechas(Integer idestadocliente, Date fechainicio, Date fechafin) {
-          List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true ", Cliente.class)
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true and qj.fechacreacion >=:fechainicio and qj.fechacreacion <=:fechafin ", Cliente.class)
                 .setParameter("idestadocliente", idestadocliente)
                 .getResultList();
 

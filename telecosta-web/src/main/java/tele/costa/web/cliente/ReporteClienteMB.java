@@ -892,14 +892,27 @@ public class ReporteClienteMB implements Serializable {
         StreamedContent content = null;
         List<Cliente> listaCliente = null;
 
-        if (idmunicipio != null && fechaIncio != null && fechaFin != null) {
-
+        if (idmunicipioCorte != null && fechaIncio != null && fechaFin != null) {
+            listaCliente = clienteBean.ListClientesByIdMunicipioByIdEstadoAndFechas(idmunicipioCorte, EstadoClienteEnum.CORTE.getId(), fechaIncio, fechaFin);
+            if (listaCliente == null) {
+                JsfUtil.addErrorMessage("No se encontraron datos");
+                return null;
+            }
         } else if (idmunicipioCorte != null) {
-            listaCliente = clienteBean.ListClientesByIdMunicipioByIdEstado(idmunicipio, EstadoClienteEnum.CORTE.getId());
+            listaCliente = clienteBean.ListClientesByIdMunicipioByIdEstado(idmunicipioCorte, EstadoClienteEnum.CORTE.getId());
+            if (listaCliente == null) {
+                JsfUtil.addErrorMessage("No se encontraron datos");
+                return null;
+            }
         } else if (fechaIncio != null && fechaFin != null) {
-
+            listaCliente = clienteBean.ListClientesByIdEstadoAndFechas(EstadoClienteEnum.CORTE.getId(), fechaIncio, fechaFin);
+            if (listaCliente == null) {
+                JsfUtil.addErrorMessage("No se encontraron datos");
+                return null;
+            }
         } else {
-
+            JsfUtil.addErrorMessage("Debe seleccionar el municipio las fechas");
+            return null;
         }
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
@@ -1002,7 +1015,7 @@ public class ReporteClienteMB implements Serializable {
             cell17.setCellStyle(cellStyle);
 
             Cell cell15 = fila.getFila().createCell(fila.nextIndex().shortValue());
-            cell15.setCellValue("CLIENTES");
+            cell15.setCellValue("CLIENTES CON CORTE");
             cell15.setCellStyle(cellStyleTitulo);
         }
 
@@ -1043,10 +1056,10 @@ public class ReporteClienteMB implements Serializable {
         celda4.setCellValue("MUNICIPIO");
         celda4.setCellStyle(headerStyle);
         Cell celda5 = encabezados.createCell(headerNum++);
-        celda5.setCellValue("TELEFONO");
+        celda5.setCellValue("FECHA CORTE");
         celda5.setCellStyle(headerStyle);
         Cell celda6 = encabezados.createCell(headerNum++);
-        celda6.setCellValue("OBSERVACIÓN");
+        celda6.setCellValue("OBSERVACIÓN CORTE");
         celda6.setCellStyle(headerStyle);
         int correlativo = 1;
 
@@ -1081,17 +1094,17 @@ public class ReporteClienteMB implements Serializable {
                     cell4.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getTelefono() != null) {
+                if (reporte.getFechaeliminacion() != null) {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell5.setCellValue(reporte.getTelefono());
-                    cell5.setCellStyle(cellStyle);
+                    cell5.setCellValue(reporte.getFechaeliminacion());
+                    cell5.setCellStyle(cellStyleFecha);
                 } else {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell5.setCellValue("");
                     cell5.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getMotivoeliminacion() != null) {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell6.setCellValue(reporte.getObservacion());
                     cell6.setCellStyle(cellStyle);

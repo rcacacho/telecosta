@@ -39,6 +39,11 @@
     </welcome-file-list>
     
     <error-page>
-        <location>/templates/error.xhtml</location>
+        <location>/WEB-INF/templates/error.xhtml</location>
     </error-page>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/WEB-INF/templates/error.xhtml</location>
+    </error-page>
+
 </web-app>
