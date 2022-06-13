@@ -392,7 +392,7 @@ public class ClienteBean implements ClienteBeanLocal {
 
     @Override
     public List<Cliente> ListClientesEstadoActivo() {
-             List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -419,6 +419,48 @@ public class ClienteBean implements ClienteBeanLocal {
     public List<Cliente> ListClientesByIdMunicipioEstadoActivo(Integer idmunicipio) {
         List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente = 1 and qj.activo = true ", Cliente.class)
                 .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunicipioByIdEstado(Integer idmunicipio, Integer idestadocliente) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunicipioByIdEstadoAndFechas(Integer idmunicipio, Integer idestadocliente, Date fechainicio, Date fechafin) {
+          List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente "
+                  + "and qj.activo = true and qj.fechacreacion >=  ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdEstadoAndFechas(Integer idestadocliente, Date fechainicio, Date fechafin) {
+          List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente and qj.activo = true ", Cliente.class)
+                .setParameter("idestadocliente", idestadocliente)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

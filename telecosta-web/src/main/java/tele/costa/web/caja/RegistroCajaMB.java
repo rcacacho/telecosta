@@ -93,6 +93,11 @@ public class RegistroCajaMB implements Serializable {
             return;
         }
 
+        if (caja.getIdsectorpago() == null) {
+            JsfUtil.addErrorMessage("Debe seleccionar un sector");
+            return;
+        }
+
         caja.setUsuariocreacion(SesionUsuarioMB.getUserName());
         Cajaagencia responseVerificacion = cajaBean.saveCaja(caja);
         if (responseVerificacion != null) {

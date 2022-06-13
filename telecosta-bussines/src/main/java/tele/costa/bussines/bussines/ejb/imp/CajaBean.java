@@ -142,6 +142,24 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechas(Date fechaIncio, Date fechaFin) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechaIncio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaIncio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaIncio);
+        sdf.format(fechaFin);
+
         List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.fechacreacion <= :fechaFin ", Cajaagencia.class)
                 .setParameter("fechaIncio", fechaIncio)
                 .setParameter("fechaFin", fechaFin)
@@ -156,6 +174,16 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechaInicioAndSector(Date fechaIncio, Integer idSector) {
+          Calendar c = Calendar.getInstance();
+        c.setTime(fechaIncio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaIncio = c.getTime();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaIncio);
+        
         List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.idsectorpago.idsectorpago =:idSector ", Cajaagencia.class)
                 .setParameter("fechaIncio", fechaIncio)
                 .setParameter("idSector", idSector)
@@ -170,6 +198,16 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechaFinAndSector(Date fechaFin, Integer idSector) {
+         Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+        
         List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion <= :fechaFin and qj.idsectorpago.idsectorpago =:idSector ", Cajaagencia.class)
                 .setParameter("fechaFin", fechaFin)
                 .setParameter("idSector", idSector)
@@ -184,6 +222,24 @@ public class CajaBean implements CajaBeanLocal {
 
     @Override
     public List<Cajaagencia> listCajaByFechasAndSector(Date fechaIncio, Date fechaFin, Integer idSector) {
+         Calendar c = Calendar.getInstance();
+        c.setTime(fechaIncio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechaIncio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaIncio);
+        sdf.format(fechaFin);
+        
         List<Cajaagencia> lst = em.createQuery("SELECT qj FROM Cajaagencia qj where qj.activo = true and qj.fechacreacion >= :fechaIncio and qj.fechacreacion <= :fechaFin and qj.idsectorpago.idsectorpago =:idSector", Cajaagencia.class)
                 .setParameter("fechaIncio", fechaIncio)
                 .setParameter("fechaFin", fechaFin)

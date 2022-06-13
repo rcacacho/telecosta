@@ -52,6 +52,7 @@ public class ListaCajaMB implements Serializable {
         fechaInicio = null;
         fechaFin = null;
         municipioSelected = null;
+        idSectorPago = null;
         listCaja = new ArrayList<>();
 
         cargarDatos();

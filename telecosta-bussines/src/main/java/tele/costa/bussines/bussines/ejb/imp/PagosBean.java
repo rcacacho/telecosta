@@ -25,7 +25,7 @@ import tele.costa.api.entity.Pago;
 @Singleton
 public class PagosBean implements PagosBeanLocal {
 
-    private static final Logger log = Logger.getLogger(ClienteBean.class);
+    private static final Logger log = Logger.getLogger(PagosBean.class);
 
     @PersistenceContext(unitName = "TeleCostaPU")
     EntityManager em;
@@ -387,7 +387,7 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
 
-        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true order by pa.fechapago desc ", Pago.class)
+        List<Pago> lst = em.createQuery("SELECT pa FROM Pago pa WHERE pa.idcliente.idcliente =:idcliente and pa.activo = true order by pa.fechacreacion desc ", Pago.class)
                 .setParameter("idcliente", idcliente)
                 .getResultList();
 
