@@ -8,7 +8,7 @@
                 template="/templates/template.xhtml">
 
     <ui:define name="pageTitle">
-        Consulta de pagos
+        Consulta de pagos cliente con corte
     </ui:define>
 
     <ui:define name="content">
@@ -16,7 +16,7 @@
         <h:form id="frm_content">
             <div align="center">
                 <ui:include src="/pagos/tab-menu.xhtml">
-                    <ui:param name="activeIndex" value="0"/>
+                    <ui:param name="activeIndex" value="1"/>
                 </ui:include>
 
                 <ui:define name="pageTitle">
@@ -132,14 +132,6 @@
 
                     <p:column headerText="Usuario registro" width="15%" >
                         <p:outputLabel value="#{col.usuariocreacion}"/>
-                    </p:column>
-
-                    <p:column width="17%" exportable="false" >
-                        <p:commandButton value="Eliminar" 
-                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
-                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
-                                         onstart="return confirm('¿Confirmas eliminar el pago?');" rendered="#{listaPagosMB.obtenerRoot()}"
-                                         action="#{listaPagosMB.eliminarPago(col.idpago)}" update="@form"/>
                     </p:column>
 
                     <p:column width="15%" exportable="false" >

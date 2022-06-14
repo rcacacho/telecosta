@@ -578,4 +578,45 @@ public class ClienteBean implements ClienteBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Cliente> ListClientesByIdEstaado(Integer idestadocliente) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true  and qj.idestadocliente.idestadocliente =:idestadocliente", Cliente.class)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByListMunucipioInactivoAndIdEstado(List<Integer> listIdmunicipio, Integer idestadocliente) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio in :listIdmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente ", Cliente.class)
+                .setParameter("listIdmunicipio", listIdmunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunicipioInactivoNoCorteAndIdEstado(Integer idmunicipio, Integer idestadocliente) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente =:idestadocliente  ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }

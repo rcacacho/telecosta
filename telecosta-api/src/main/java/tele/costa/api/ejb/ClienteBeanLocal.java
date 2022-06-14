@@ -79,5 +79,11 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesByNombreNoCorte(String nombre);
     
     List<Cliente> ListClientesByIdMunucipioNoCorte(Integer idmunicipio);
+    
+    List<Cliente> ListClientesByIdEstaado(Integer idestadocliente);
+    
+    List<Cliente> ListClientesByListMunucipioInactivoAndIdEstado(List<Integer> listIdmunicipio, Integer idestadocliente);
+    
+    List<Cliente> ListClientesByIdMunicipioInactivoNoCorteAndIdEstado(Integer idmunicipio, Integer idestadocliente);
 
 }
