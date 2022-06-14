@@ -27,7 +27,7 @@
                     <p:outputLabel value="Año:"  styleClass="field-label"  />
                     <p:outputLabel value="Mes:"  styleClass="field-label"  />
 
-                    <p:selectOneMenu id="anio" value="#{listaPagosMB.anio}" style="width:250px;" 
+                    <p:selectOneMenu id="anio" value="#{listaPagosCorteMB.anio}" style="width:250px;" 
                                      filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="2020" itemValue="2020" />
@@ -37,7 +37,7 @@
                         <f:selectItem itemLabel="2024" itemValue="2024" />
                     </p:selectOneMenu>
 
-                    <p:selectOneMenu id="mes" value="#{listaPagosMB.mes}" style="width:250px;" 
+                    <p:selectOneMenu id="mes" value="#{listaPagosCorteMB.mes}" style="width:250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="(selecciona un mes)" itemValue="" noSelectionOption="true" />
                         <f:selectItem itemLabel="Enero" itemValue="Enero" />
@@ -57,34 +57,34 @@
                     <p:outputLabel value="Nombre:"  styleClass="field-label"  />
                     <p:outputLabel value="Fechas:"  styleClass="field-label"  />
 
-                    <p:selectOneMenu id="cl" value="#{listaPagosMB.idcliente}" style="width: 250px;" 
+                    <p:selectOneMenu id="cl" value="#{listaPagosCorteMB.idcliente}" style="width: 250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaPagosMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun.idcliente}"/>
+                        <f:selectItems value="#{listaPagosCorteMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun.idcliente}"/>
                     </p:selectOneMenu>
 
                     <p:panelGrid columns="2"  styleClass="no-border">
                         <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                    value="#{listaPagosMB.fechaInicioBus}" navigator="true">  
+                                    value="#{listaPagosCorteMB.fechaInicioBus}" navigator="true">  
                         </p:calendar>
                         <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
-                                    value="#{listaPagosMB.fechaFinBus}" navigator="true">  
+                                    value="#{listaPagosCorteMB.fechaFinBus}" navigator="true">  
                         </p:calendar>
                     </p:panelGrid>
 
                     <p:outputLabel value="Municipio:"  styleClass="field-label"  />
                     <p:outputLabel value=""   />
 
-                    <p:selectOneMenu id="mun" value="#{listaPagosMB.idMunicipio}" style="width: 250px;" 
+                    <p:selectOneMenu id="mun" value="#{listaPagosCorteMB.idMunicipio}" style="width: 250px;" 
                                      converter="entityConverter" filter="true" filterMatchMode="contains">
                         <p:ajax  event="itemSelect"/>
                         <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{listaPagosMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                        <f:selectItems value="#{listaPagosCorteMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
                     </p:selectOneMenu>
 
                     <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 100px;">
                         <p:commandButton value="Buscar"  
-                                         action="#{listaPagosMB.buscarPago()}" 
+                                         action="#{listaPagosCorteMB.buscarPago()}" 
                                          class="boton boton-imgtxt-16 b-gris4 icon-buscar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"   
@@ -93,7 +93,7 @@
                                          onstart="start();" oncomplete="stop();"/>
 
                         <p:commandButton value="Limpiar" 
-                                         action="#{listaPagosMB.limpiarCampos()}"
+                                         action="#{listaPagosCorteMB.limpiarCampos()}"
                                          class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
                                          style="background-size: 20px 20px !important; float: right;
                                          background-position: 4px 1px !important;"
@@ -103,10 +103,10 @@
                 </p:panelGrid>
 
                 <br/>
-                <p:dataTable id="dt_pago" var="col" value="#{listaPagosMB.listPago}"
+                <p:dataTable id="dt_pago" var="col" value="#{listaPagosCorteMB.listPago}"
                              emptyMessage="No hay pagos registrados" rowStyleClass="#{col.getStylePago()}"
                              styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
-                             rows="15" paginator="#{listaPagosMB.listPago.size()>15}"  paginatorPosition="bottom">
+                             rows="15" paginator="#{listaPagosCorteMB.listPago.size()>15}"  paginatorPosition="bottom">
 
                     <p:column headerText="No." style="width: 5%;">
                         #{rowId+1}
@@ -117,7 +117,7 @@
                     </p:column>
 
                     <p:column headerText="Fecha pago" width="25%" >
-                        <p:outputLabel  value="#{listaPagosMB.obtenerFechPago(col.idpago)}">
+                        <p:outputLabel  value="#{listaPagosCorteMB.obtenerFechPago(col.idpago)}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -135,7 +135,7 @@
                     </p:column>
 
                     <p:column width="15%" exportable="false" >
-                        <h:commandLink action="#{listaPagosMB.detalle(col.idpago)}" style="text-decoration: none;">
+                        <h:commandLink action="#{listaPagosCorteMB.detalle(col.idpago)}" style="text-decoration: none;">
                             <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
                         </h:commandLink>
                     </p:column>

@@ -126,7 +126,7 @@
                                 <p:selectOneMenu id="serie" value="#{registroPagoMB.serieFactura}" style="width: 250px;" 
                                                  converter="entityConverter" filter="true" filterMatchMode="contains"
                                                  required="true" requiredMessage="Debes seleccionar una serie" >
-                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="(selecciona una serie)" itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{registroPagoMB.listSerieFactura}"  var="serie" itemLabel="#{serie.serie}" itemValue="#{serie}"/>
                                 </p:selectOneMenu>
                             </p:column>

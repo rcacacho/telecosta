@@ -111,7 +111,7 @@
                         <p:outputLabel value="Observaciones:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
-                     <p:row>
+                <p:row>
                     <p:column>
                         <p:outputLabel value="#{detallePagoMB.pago.observacion}" style="font-size: 16px!important;"/>
                     </p:column>
@@ -134,7 +134,7 @@
                          styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
                          rows="10" paginator="#{detallePagoMB.listDetalle.size()>5}"  paginatorPosition="bottom">
 
-                <p:ajax event="rowEdit" listener="#{detallePagoMB.onRowEdit}" update="dt_pago" />
+                <p:ajax event="rowEdit" listener="#{detallePagoMB.onRowEdit}" update="dt_pago"/>
 
                 <p:column headerText="No." style="width: 5%;">
                     #{rowId+1}
@@ -163,9 +163,12 @@
                             <p:outputLabel value="#{col.serie}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{col.serie}" size="15" >
-                                <p:ajax event="blur" process="@this"/>
-                            </p:inputText> 
+                            <p:selectOneMenu id="serie" value="#{col.idseriefactura}" style="width: 70px;" 
+                                             converter="entityConverter" filter="true" filterMatchMode="contains">
+                                <p:ajax  listener="#{detallePagoMB.cargarSerie(col.idseriefactura)}" />
+                                <f:selectItem itemLabel="(selecciona una serie)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{detallePagoMB.listSerieFactura}"  var="serie" itemLabel="#{serie.serie}" itemValue="#{serie}"/>
+                            </p:selectOneMenu>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>

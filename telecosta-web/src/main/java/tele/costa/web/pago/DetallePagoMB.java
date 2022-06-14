@@ -7,9 +7,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
+import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Detallepago;
 import tele.costa.api.entity.Pago;
+import tele.costa.api.entity.Seriefactura;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.SesionUsuarioMB;
 
@@ -25,14 +27,21 @@ public class DetallePagoMB implements Serializable {
 
     @EJB
     private PagosBeanLocal pagosBean;
+    @EJB
+    private CatalogoBeanLocal catalogoBean;
 
     private Integer idPago;
     private Pago pago;
     private List<Detallepago> listDetalle;
+    private List<Seriefactura> listSerieFactura;
+    private Seriefactura serieFactura;
 
     public void cargarDatos() {
-        pago = pagosBean.findPagoByIdPago(idPago);
-        listDetalle = pagosBean.listDetallePago(idPago);
+        if (listDetalle == null) {
+            pago = pagosBean.findPagoByIdPago(idPago);
+            listDetalle = pagosBean.listDetallePago(idPago);
+            listSerieFactura = catalogoBean.listSerieFactura();
+        }
     }
 
     public void regresar() {
@@ -56,12 +65,21 @@ public class DetallePagoMB implements Serializable {
         Detallepago tipo = (Detallepago) value;
 
         if (tipo != null) {
+            if (serieFactura != null) {
+                tipo.setIdseriefactura(serieFactura);
+                tipo.setSerie(serieFactura.getSerie());
+            }
+
             Detallepago tt = pagosBean.updateDetallePago(tipo);
             JsfUtil.addSuccessMessage("Se actualizo el pago exitosamente");
         } else {
             JsfUtil.addErrorMessage("Sucedio un error al actualizar el registro");
         }
-        listDetalle = pagosBean.listDetallePago(idPago);
+        listDetalle = pagosBean.listDetallePago(tipo.getIdpago().getIdpago());
+    }
+
+    public void cargarSerie(Seriefactura s) {
+        serieFactura = s;
     }
 
     /*Metodos getters y setters*/
@@ -87,6 +105,22 @@ public class DetallePagoMB implements Serializable {
 
     public void setListDetalle(List<Detallepago> listDetalle) {
         this.listDetalle = listDetalle;
+    }
+
+    public List<Seriefactura> getListSerieFactura() {
+        return listSerieFactura;
+    }
+
+    public void setListSerieFactura(List<Seriefactura> listSerieFactura) {
+        this.listSerieFactura = listSerieFactura;
+    }
+
+    public Seriefactura getSerieFactura() {
+        return serieFactura;
+    }
+
+    public void setSerieFactura(Seriefactura serieFactura) {
+        this.serieFactura = serieFactura;
     }
 
 }
