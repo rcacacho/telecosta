@@ -39,20 +39,18 @@ public class SesionUsuarioMB {
 
     public static Integer getUserId() {
         HttpSession session = getSession();
-        if (session != null) {
+        if (session.getAttribute("idusuario") != null) {
             return (Integer) session.getAttribute("idusuario");
-        } else {
-            return null;
         }
+        return null;
     }
 
     public static boolean getRootUsuario() {
         HttpSession session = getSession();
-        if (session != null) {
+        if (session.getAttribute("root") != null) {
             return (boolean) session.getAttribute("root");
-        } else {
-            return false;
         }
+        return false;
     }
 
     public static String getRolUsuario() throws IOException {

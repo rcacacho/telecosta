@@ -128,7 +128,10 @@
                         <p:outputLabel value="#{detalleClienteMB.cliente.motivoeliminacion}" style="font-size: 16px!important;" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="#{detalleClienteMB.cliente.fechaeliminacion}" style="font-size: 16px!important;" />
+                        <p:outputLabel value="#{detalleClienteMB.cliente.fechaeliminacion}" style="font-size: 16px!important;" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
                     </p:column>
                 </p:row>
             </p:panelGrid>

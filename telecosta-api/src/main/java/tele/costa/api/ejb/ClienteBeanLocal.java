@@ -1,5 +1,6 @@
 package tele.costa.api.ejb;
 
+import java.util.Date;
 import java.util.List;
 import tele.costa.api.entity.Cliente;
 
@@ -46,21 +47,21 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesByIdMunucipioAndTipo(Integer idmunicipio, String tipocliente);
 
     List<Cliente> ListClientesInactivos();
-    
+
     List<Cliente> listClientesByInMunucipioInactivos();
-    
+
     List<Cliente> listClientesByInMunucipioSanPabloRodeoSanRafaelInactivo();
-    
+
     List<Cliente> ListClientesByIdMunicipioInactivo(Integer idmunicipio);
-    
+
     List<Cliente> ListClientesByListMunucipioInactivo(List<Integer> listIdmunicipio);
-    
+
     List<Cliente> ListClientesByIdMunucipioCobro(Integer idmunicipio);
-    
+
     List<Cliente> ListClientesEstadoActivo();
-    
+
     List<Cliente> ListClientesByListMunucipioEstadoActivo(List<Integer> listIdmunicipio);
-    
+
     List<Cliente> ListClientesByIdMunicipioEstadoActivo(Integer idmunicipio);
     
     List<Cliente> ListClientesNoCorte();
@@ -68,5 +69,11 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesByListMunucipioInactivoNoCorte(List<Integer> listIdmunicipio);
     
     List<Cliente> ListClientesByIdMunicipioInactivoNoCorte(Integer idmunicipio);
+
+    List<Cliente> ListClientesByIdMunicipioByIdEstado(Integer idmunicipio, Integer idestadocliente);
+
+    List<Cliente> ListClientesByIdMunicipioByIdEstadoAndFechas(Integer idmunicipio, Integer idestadocliente, Date fechainicio, Date fechafin);
+
+    List<Cliente> ListClientesByIdEstadoAndFechas(Integer idestadocliente, Date fechainicio, Date fechafin);
 
 }
