@@ -82,7 +82,7 @@ public class ListaPagosCorteMB implements Serializable {
 
     public void buscarPago() {
         if (fechaInicioBus != null && fechaFinBus != null && idMunicipio > 0) {
-            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipio(fechaInicioBus, fechaFinBus, idMunicipio);
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinAndIdMunicipioAndIdEstadoCliente(fechaInicioBus, fechaFinBus, idMunicipio, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -90,7 +90,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null && mes != "" && idMunicipio > 0) {
-            List<Pago> response = pagosBean.listPagosByAnioAndMesAndMunicipio(anio, mes, idMunicipio);
+            List<Pago> response = pagosBean.listPagosByAnioAndMesAndMunicipioByIdEstadoCliente(anio, mes, idMunicipio, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -98,7 +98,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicioBus != null && fechaFinBus != null) {
-            List<Pago> response = pagosBean.listPagosByFechaInicioAndFin(fechaInicioBus, fechaFinBus);
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndFinByIdEstadoCliente(fechaInicioBus, fechaFinBus, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -106,7 +106,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null && mes != "") {
-            List<Pago> response = pagosBean.listPagoByAnioAndMes(anio, mes);
+            List<Pago> response = pagosBean.listPagoByAnioAndMesAndIdEstadoCliente(anio, mes, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -114,7 +114,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idcliente != 0 && anio != null) {
-            List<Pago> response = pagosBean.listPagoByIdClienteAndAnio(idcliente, anio);
+            List<Pago> response = pagosBean.listPagoByIdClienteAndAnioAndIdEstadoCliente(idcliente, anio, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -122,7 +122,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idcliente != 0) {
-            List<Pago> response = pagosBean.listPagoByIdCliente(idcliente);
+            List<Pago> response = pagosBean.listPagoByIdClienteByIdEstadoCliente(idcliente, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -130,7 +130,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (anio != null) {
-            List<Pago> response = pagosBean.listPagoByAnio(anio);
+            List<Pago> response = pagosBean.listPagoByAnioAndIdEstadoCliente(anio, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -138,7 +138,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (mes != "") {
-            List<Pago> response = pagosBean.listPagoByMes(mes);
+            List<Pago> response = pagosBean.listPagoByMesAndIdEstadoCliente(mes, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -146,7 +146,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (idMunicipio > 0) {
-            List<Pago> response = pagosBean.listPagosByMunicipio(idMunicipio);
+            List<Pago> response = pagosBean.listPagosByMunicipioAndEstadoCliente(idMunicipio, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {
@@ -154,7 +154,7 @@ public class ListaPagosCorteMB implements Serializable {
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
         } else if (fechaInicioBus != null) {
-            List<Pago> response = pagosBean.listPagosByFechaInicio(fechaInicioBus);
+            List<Pago> response = pagosBean.listPagosByFechaInicioAndEstadoCliente(fechaInicioBus, EstadoClienteEnum.CORTE.getId());
             if (response != null) {
                 listPago = response;
             } else {

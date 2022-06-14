@@ -144,7 +144,7 @@
                     <p:outputLabel value="#{col.idformapago.forma}"/>
                 </p:column>
 
-                <p:column id="no" headerText="No. Factura" width="20%" >
+                <p:column id="no" headerText="No. Factura" width="8%" >
                     <p:cellEditor>
                         <f:facet name="output">
                             <p:outputLabel value="#{col.nofactura}"/>
@@ -173,7 +173,7 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Monto Pagado" width="20%" >
+                <p:column headerText="Monto Pagado" width="7%" >
                     <p:cellEditor>
                         <f:facet name="output">
                             <p:outputLabel value="#{col.montopagado}"/>
@@ -182,6 +182,24 @@
                             <p:inputText value="#{col.montopagado}" size="15" >
                                 <p:ajax event="blur" process="@this"/>
                             </p:inputText> 
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Fecha Pago" width="10%" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <p:outputLabel value="#{col.fechapago}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar id="cal_fechaPago" placeholder="(elige una fecha)" locale="es" 
+                                        timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{col.fechapago}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar> 
                         </f:facet>
                     </p:cellEditor>
                 </p:column>

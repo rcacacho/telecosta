@@ -756,7 +756,7 @@ public class PagosBean implements PagosBeanLocal {
 
     @Override
     public Detallepago findDetallePago(Integer idpago) {
-          if (idpago == null) {
+        if (idpago == null) {
             return null;
         }
 
@@ -768,6 +768,256 @@ public class PagosBean implements PagosBeanLocal {
             return null;
         }
         return lst.get(0);
+    }
+
+    @Override
+    public List<Pago> listPagoByIdClienteByIdEstadoCliente(Integer idcliente, Integer idestadocliente) {
+        if (idcliente == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.idcliente.idcliente =:idcliente and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente and pa.activo = true order by pa.fechapago desc ", Pago.class)
+                .setParameter("idcliente", idcliente)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaInicioAndFinAndIdMunicipioAndIdEstadoCliente(Date fechainicio, Date fechafin, Integer idMunicipio, Integer idestadocliente) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idpago.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc", Pago.class)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
+                .setParameter("idMunicipio", idMunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByAnioAndMesAndMunicipioByIdEstadoCliente(Integer anio, String mes, Integer idMunicipio, Integer idestadocliente) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.anio =:anio and pa.idpago.mes like :mes and pa.idpago.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc", Pago.class)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
+                .setParameter("idMunicipio", idMunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaInicioAndFinByIdEstadoCliente(Date fechainicio, Date fechafin, Integer idestadocliente) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.fechapago >= :fechainicio and pa.fechapago <= :fechafin and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente and pa.activo = true order by pa.fechapago desc ", Pago.class)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("fechafin", fechafin)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagoByAnioAndMesAndIdEstadoCliente(Integer anio, String mes, Integer idestadocliente) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.anio =:anio and pa.idpago.mes like :mes and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("anio", anio)
+                .setParameter("mes", mes)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagoByIdClienteAndAnioAndIdEstadoCliente(Integer idcliente, Integer anio, Integer idestadocliente) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.idcliente.idcliente =:idcliente and pa.idpago.anio =:anio and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("idcliente", idcliente)
+                .setParameter("anio", anio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagoByAnioAndIdEstadoCliente(Integer anio, Integer idestadocliente) {
+        if (anio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.anio =:anio and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("anio", anio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagoByMesAndIdEstadoCliente(String mes, Integer idestadocliente) {
+        if (mes == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.mes like :mes and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("mes", '%' + mes + '%')
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByMunicipioAndEstadoCliente(Integer idMunicipio, Integer idestadocliente) {
+        if (idMunicipio == null) {
+            return null;
+        }
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.idpago.idcliente.idmunicipio.idmunicipio =:idMunicipio and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("idMunicipio", idMunicipio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaInicioAndEstadoCliente(Date fechainicio, Integer idestadocliente) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.fechapago >= :fechainicio  and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc ", Pago.class)
+                .setParameter("fechainicio", fechainicio)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Pago> listPagosByFechaFinAdnEstadoCliente(Date fechaFin, Integer idestadocliente) {
+        if (fechaFin == null) {
+            return null;
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechaFin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechaFin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechaFin);
+
+        List<Pago> lst = em.createQuery("SELECT Distinct pa.idpago FROM Detallepago pa WHERE pa.fechapago <= :fechaFin and pa.activo = true and pa.idpago.idcliente.idestadocliente.idestadocliente =:idestadocliente order by pa.fechapago desc", Pago.class)
+                .setParameter("fechaFin", fechaFin)
+                .setParameter("idestadocliente", idestadocliente)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
     }
 
 }

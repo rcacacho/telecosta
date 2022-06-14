@@ -86,7 +86,29 @@ public interface PagosBeanLocal {
     Cobro findCobroByIdCobro(Integer idCobro);
 
     List<Pago> listPagosByIdMunicipioByList(List<Integer> listIdmunicipio);
-    
+
     Detallepago findDetallePago(Integer idpago);
+
+    List<Pago> listPagoByIdClienteByIdEstadoCliente(Integer idcliente, Integer idestadocliente);
+    
+    List<Pago> listPagosByFechaInicioAndFinAndIdMunicipioAndIdEstadoCliente(Date fechainicio, Date fechafin, Integer idMunicipio, Integer idestadocliente);
+    
+    List<Pago> listPagosByAnioAndMesAndMunicipioByIdEstadoCliente(Integer anio, String mes, Integer idMunicipio, Integer idestadocliente);
+    
+    List<Pago> listPagosByFechaInicioAndFinByIdEstadoCliente(Date fechainicio, Date fechafin, Integer idestadocliente);
+    
+    List<Pago> listPagoByAnioAndMesAndIdEstadoCliente(Integer anio, String mes, Integer idestadocliente);
+    
+    List<Pago> listPagoByIdClienteAndAnioAndIdEstadoCliente(Integer idcliente, Integer anio, Integer idestadocliente);
+    
+    List<Pago> listPagoByAnioAndIdEstadoCliente(Integer anio, Integer idestadocliente);
+    
+    List<Pago> listPagoByMesAndIdEstadoCliente(String mes, Integer idestadocliente);
+    
+    List<Pago> listPagosByMunicipioAndEstadoCliente(Integer idMunicipio, Integer idestadocliente);
+    
+    List<Pago> listPagosByFechaInicioAndEstadoCliente(Date fechainicio, Integer idestadocliente);
+    
+    List<Pago> listPagosByFechaFinAdnEstadoCliente(Date fechaFin, Integer idestadocliente);
 
 }
