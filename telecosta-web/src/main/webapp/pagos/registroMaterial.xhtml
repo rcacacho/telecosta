@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="idCliente" value="#{registroPagoMaterial.idcliente}"/>
+        <f:event type="preRenderView" listener="#{registroPagoMaterial.cargarDatos()}"/>
+    </f:metadata>
+
+    <ui:define name="pageTitle">
+        Registro de Pago Tv adiciona o Material
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <p:growl autoUpdate="true" showDetail="false" showSummary="true"/>
+            <div align="center">
+
+                <p:panelGrid  id="pgPago" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:panelGrid id="pg_cliente"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Municipio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Cliente:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="#{registroPagoMaterial.cliente.idmunicipio.municipio}"  style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="#{registroPagoMaterial.cliente.codigo} - #{registroPagoMaterial.cliente.nombres}" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+
+                            <p:column >
+                                <p:outputLabel value="Año:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Mes:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" 
+                                            timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                            value="#{registroPagoMaterial.detalle.fechapago}" navigator="true"
+                                            required="true" requiredMessage="Debes seleccionar un fecha" >  
+                                </p:calendar> 
+                            </p:column>
+
+                            <p:column>
+                                <p:selectOneMenu id="anio" value="#{registroPagoMaterial.pago.anio}" style="width:250px;" 
+                                                 filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un año" >
+                                    <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="2020" itemValue="2020" />
+                                    <f:selectItem itemLabel="2021" itemValue="2021" />
+                                    <f:selectItem itemLabel="2022" itemValue="2022" />
+                                    <f:selectItem itemLabel="2023" itemValue="2023" />
+                                    <f:selectItem itemLabel="2024" itemValue="2024" />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="mes" value="#{registroPagoMaterial.pago.mes}" style="width:220px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un municipio" >
+                                    <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Enero" itemValue="enero" />
+                                    <f:selectItem itemLabel="Febrero" itemValue="febrero" />
+                                    <f:selectItem itemLabel="Marzo" itemValue="marzo" />
+                                    <f:selectItem itemLabel="Abril" itemValue="abril" />
+                                    <f:selectItem itemLabel="Mayo" itemValue="mayo" />
+                                    <f:selectItem itemLabel="Junio" itemValue="junio" />
+                                    <f:selectItem itemLabel="Julio" itemValue="julio" />
+                                    <f:selectItem itemLabel="Agosto" itemValue="agosto" />
+                                    <f:selectItem itemLabel="Septiembre" itemValue="septiembre" />
+                                    <f:selectItem itemLabel="Octubre" itemValue="octubre" />
+                                    <f:selectItem itemLabel="Noviembre" itemValue="noviembre" />
+                                    <f:selectItem itemLabel="Diciembre" itemValue="diciembre" />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="No. Factura:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Serie:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="Forma pago:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroPagoMaterial.detalle.nofactura}" size="35" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar un nuevo de factura"/>
+
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="serie" value="#{registroPagoMaterial.serieFactura}" style="width: 250px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes seleccionar una serie" >
+                                    <f:selectItem itemLabel="(selecciona un serie)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroPagoMaterial.listSerieFactura}"  var="serie" itemLabel="#{serie.serie}" itemValue="#{serie}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="tipo" value="#{registroPagoMaterial.detalle.idformapago}" style="width: 220px;" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona una forma de pago" >
+                                    <f:selectItem itemLabel="(selecciona una tipo de pago)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{registroPagoMaterial.listFormaPago}"  var="mun" itemLabel="#{mun.forma}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column >
+                                <p:outputLabel value="Cantidad a pagar:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:inputText value="#{registroPagoMaterial.pago.total}" size="35" style="font-size: 16px!important;"
+                                             required="true" requiredMessage="Debes ingresar una cantidad"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:outputLabel value="Observación:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:inputTextarea rows="3" cols="170" value="#{registroPagoMaterial.pago.observacion}" counter="display" maxlength="2000" 
+                                                 counterTemplate="{0} caracteres pendientes." autoResize="false"
+                                                 required="true" requiredMessage="Debes ingresar una dirección">
+                                    <p:ajax event="blur" process="@this" />
+                                </p:inputTextarea>
+                                <h:outputText id="display" style="margin-left: 700px;" /> 
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 42%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{registroPagoMaterial.savePago()}" icon="ui-icon-disk"
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar al pago?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{registroPagoMaterial.regresar()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -78,7 +78,12 @@ public class RegistroCajaMB implements Serializable {
 
         Long det = 0L;
         det = cajaBean.findMontoFacturaSerie(caja.getCorrelativodel(), caja.getCorrelativoal(), caja.getIdsectorpago().getIdsectorpago(), fechaInicio, fechaFin);
-        if (det > 0) {
+        if (det == null) {
+            JsfUtil.addErrorMessage("No se encotraron datos con los correlativos");
+            return;
+        }
+
+        if (det != null || det > 0) {
             caja.setIngreso(det.intValue());
         }
     }

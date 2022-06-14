@@ -248,7 +248,7 @@ public class ListaClienteMB implements Serializable {
     public void ticketCliente(Integer id) {
         JsfUtil.redirectTo("/atencion/registroCliente.xhtml?idcliente=" + id);
     }
-    
+
     public void activarCliente(Cliente cl) throws IOException {
         Estadocliente estado = catalogoBean.findEstadoCliente(EstadoClienteEnum.ACTIVO.getId());
         cl.setIdestadocliente(estado);
@@ -260,6 +260,10 @@ public class ListaClienteMB implements Serializable {
         } else {
             JsfUtil.addErrorMessage("Ocurrio un al activar al cliente");
         }
+    }
+
+    public void pagoMaterialCliente(Integer id) {
+        JsfUtil.redirectTo("/pagos/registroMaterial.xhtml?idCliente=" + id);
     }
 
     /*Metodos getters y setters*/
