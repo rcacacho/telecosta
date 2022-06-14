@@ -59,7 +59,7 @@ public class ListaPagosMB implements Serializable {
         Date fFin = new Date();
 
         if (SesionUsuarioMB.getRootUsuario()) {
-            listClientes = clienteBean.ListClientes();
+            listClientes = clienteBean.ListClientesNoCorte();
             listMunicipio = catalogoBean.listMunicipioByIdDepartamento(1);
         } else {
             List<Usuariomunicipio> listUsuarioMun = catalogoBean.listUsuarioMunicipio(SesionUsuarioMB.getUserId());
@@ -68,11 +68,11 @@ public class ListaPagosMB implements Serializable {
                 for (Usuariomunicipio uu : listUsuarioMun) {
                     list.add(uu.getIdmunicipio().getIdmunicipio());
                 }
-                listClientes = clienteBean.ListClientesByListMunucipioInactivo(list);
+                listClientes = clienteBean.ListClientesByListMunucipioInactivoNoCorte(list);
                 listPago = pagosBean.listPagosByIdMunicipioByList(list);
                 listMunicipio = catalogoBean.listMunicipioByIdMunicipioByList(list);
             } else {
-                listClientes = clienteBean.ListClientesByIdMunicipioInactivo(SesionUsuarioMB.getIdMunicipio());
+                listClientes = clienteBean.ListClientesByIdMunicipioInactivoNoCorte(SesionUsuarioMB.getIdMunicipio());
                 listPago = pagosBean.listPagosByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
                 listMunicipio = catalogoBean.listMunicipioByIdMunicipio(SesionUsuarioMB.getIdMunicipio());
             }

@@ -62,5 +62,11 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesByListMunucipioEstadoActivo(List<Integer> listIdmunicipio);
     
     List<Cliente> ListClientesByIdMunicipioEstadoActivo(Integer idmunicipio);
+    
+    List<Cliente> ListClientesNoCorte();
+    
+    List<Cliente> ListClientesByListMunucipioInactivoNoCorte(List<Integer> listIdmunicipio);
+    
+    List<Cliente> ListClientesByIdMunicipioInactivoNoCorte(Integer idmunicipio);
 
 }
