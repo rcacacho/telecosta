@@ -68,7 +68,7 @@ public class RegistroPagoMB implements Serializable {
     }
 
     public List<Cliente> completeCliente(String query) {
-        List<Cliente> clientes = clienteBean.ListClientesByNombre(query);
+        List<Cliente> clientes = clienteBean.ListClientesByNombreNoCorte(query);
         return clientes;
     }
 
@@ -179,7 +179,7 @@ public class RegistroPagoMB implements Serializable {
 
     public void cargarClientesMunicipios() {
         if (municipioSelected != null) {
-            listClientes = clienteBean.ListClientesByIdMunucipio(municipioSelected.getIdmunicipio());
+            listClientes = clienteBean.ListClientesByIdMunucipioNoCorte(municipioSelected.getIdmunicipio());
         } else {
             listClientes = null;
             cliente = null;

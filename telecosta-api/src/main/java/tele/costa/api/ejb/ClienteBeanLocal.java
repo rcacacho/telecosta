@@ -75,5 +75,9 @@ public interface ClienteBeanLocal {
     List<Cliente> ListClientesByIdMunicipioByIdEstadoAndFechas(Integer idmunicipio, Integer idestadocliente, Date fechainicio, Date fechafin);
 
     List<Cliente> ListClientesByIdEstadoAndFechas(Integer idestadocliente, Date fechainicio, Date fechafin);
+    
+    List<Cliente> ListClientesByNombreNoCorte(String nombre);
+    
+    List<Cliente> ListClientesByIdMunucipioNoCorte(Integer idmunicipio);
 
 }

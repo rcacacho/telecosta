@@ -549,4 +549,33 @@ public class ClienteBean implements ClienteBeanLocal {
         return lst;
     }
 
+    @Override
+    public List<Cliente> ListClientesByNombreNoCorte(String nombre) {
+        if (nombre == null) {
+            return null;
+        }
+
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.nombres like :nombre and col.idestadocliente.idestadocliente in (1,2) ", Cliente.class)
+                .setParameter("nombre", '%' + nombre + '%')
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+        return lst;
+    }
+
+    @Override
+    public List<Cliente> ListClientesByIdMunucipioNoCorte(Integer idmunicipio) {
+        List<Cliente> lst = em.createQuery("SELECT qj FROM Cliente qj where qj.activo = true and qj.idmunicipio.idmunicipio =:idmunicipio and qj.idestadocliente.idestadocliente in (1,2) ", Cliente.class)
+                .setParameter("idmunicipio", idmunicipio)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst;
+    }
+
 }
