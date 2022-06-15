@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +42,12 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
+import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Cliente;
 import tele.costa.api.entity.Municipio;
+import tele.costa.api.entity.Pago;
 import tele.costa.api.enums.EstadoClienteEnum;
+import tele.costa.api.wrapper.CobroWrapper;
 import telecosta.web.utils.JasperUtil;
 import telecosta.web.utils.JsfUtil;
 import telecosta.web.utils.ReporteJasper;
@@ -66,6 +70,8 @@ public class ReporteClienteMB implements Serializable {
     private ClienteBeanLocal clienteBean;
     @EJB
     private CatalogoBeanLocal catalogoBean;
+    @EJB
+    private PagosBeanLocal pagosBean;
 
     private final String LOGO = "logo.jpeg";
     private String realPath;
@@ -131,6 +137,32 @@ public class ReporteClienteMB implements Serializable {
     public StreamedContent imprimirExcelCliente() throws IOException {
         StreamedContent content = null;
         List<Cliente> listaCliente = clienteBean.ListClientes();
+        List<CobroWrapper> listCobro = new ArrayList<>();
+
+        for (Cliente cl : listaCliente) {
+            Pago pag = pagosBean.findUltimoPago(cl.getIdcliente());
+            if (pag != null) {
+                CobroWrapper cobroWrapper = new CobroWrapper();
+                cobroWrapper.setCodigo(cl.getCodigo());
+                cobroWrapper.setDireccion(cl.getDireccion());
+                cobroWrapper.setFechapago(pag.getMes() + '-' + pag.getAnio());
+                cobroWrapper.setIdpago(pag.getIdpago());
+                cobroWrapper.setNombres(cl.getNombres());
+                cobroWrapper.setObservacion(pag.getObservacion());
+                cobroWrapper.setTiposervicio(cl.getTipocliente());
+
+                if (cl.getIdSector() != null) {
+                    cobroWrapper.setSector(cl.getIdSector().getSector());
+                }
+
+                cobroWrapper.setTelefono(cl.getTelefono());
+                if (cl.getIdconfiguracionpago() != null) {
+                    cobroWrapper.setValor(cl.getIdconfiguracionpago().getValor());
+                }
+
+                listCobro.add(cobroWrapper);
+            }
+        }
 
         HashMap<Integer, Fila> mapaFilas = new HashMap<>();
         Workbook workbook = new SXSSFWorkbook(1000);
@@ -139,15 +171,15 @@ public class ReporteClienteMB implements Serializable {
         int rownum = 0;
         int headerNum = 0;
         sheet.setColumnWidth(0, 900);
-        sheet.setColumnWidth(1, 9000);
+        sheet.setColumnWidth(1, 6000);
         sheet.setColumnWidth(2, 9000);
         sheet.setColumnWidth(3, 6000);
-        sheet.setColumnWidth(4, 7000);
+        sheet.setColumnWidth(4, 11000);
         sheet.setColumnWidth(5, 5000);
         sheet.setColumnWidth(6, 5000);
-        sheet.setColumnWidth(7, 5000);
-        sheet.setColumnWidth(8, 5000);
-        sheet.setColumnWidth(9, 5000);
+        sheet.setColumnWidth(7, 3000);
+        sheet.setColumnWidth(8, 4000);
+        sheet.setColumnWidth(9, 11000);
         sheet.setColumnWidth(10, 5000);
         sheet.setColumnWidth(11, 5000);
         sheet.setColumnWidth(12, 11000);
@@ -261,74 +293,119 @@ public class ReporteClienteMB implements Serializable {
         celda0.setCellValue("No.");
         celda0.setCellStyle(headerStyle);
         Cell celda1 = encabezados.createCell(headerNum++);
-        celda1.setCellValue("NOMBRES");
+        celda1.setCellValue("CÓDIGO");
         celda1.setCellStyle(headerStyle);
         Cell celda2 = encabezados.createCell(headerNum++);
-        celda2.setCellValue("DIRECCION");
+        celda2.setCellValue("NOMBRES");
         celda2.setCellStyle(headerStyle);
         Cell celda3 = encabezados.createCell(headerNum++);
-        celda3.setCellValue("SECTOR");
+        celda3.setCellValue("TELÉFONO");
         celda3.setCellStyle(headerStyle);
         Cell celda4 = encabezados.createCell(headerNum++);
-        celda4.setCellValue("MUNICIPIO");
+        celda4.setCellValue("DIRECCIÓN");
         celda4.setCellStyle(headerStyle);
         Cell celda5 = encabezados.createCell(headerNum++);
-        celda5.setCellValue("TELEFONO");
+        celda5.setCellValue("SECTOR");
         celda5.setCellStyle(headerStyle);
         Cell celda6 = encabezados.createCell(headerNum++);
-        celda6.setCellValue("OBSERVACIÓN");
+        celda6.setCellValue("ÚLTIMO PAGO");
         celda6.setCellStyle(headerStyle);
+        Cell celda7 = encabezados.createCell(headerNum++);
+        celda7.setCellValue("CONFIG PAGO/ CUOTA");
+        celda7.setCellStyle(headerStyle);
+        Cell celda8 = encabezados.createCell(headerNum++);
+        celda8.setCellValue("TIPO DE SERVICIO");
+        celda8.setCellStyle(headerStyle);
+        Cell celda9 = encabezados.createCell(headerNum++);
+        celda9.setCellValue("OBSERVACIONES");
+        celda9.setCellStyle(headerStyle);
         int correlativo = 1;
 
-        for (Cliente reporte : listaCliente) {
-            if (!mapaFilas.containsKey(reporte.getIdcliente())) {
+        for (CobroWrapper reporte : listCobro) {
+            if (!mapaFilas.containsKey(reporte.getIdpago())) {
                 Fila fila = new Fila(sheet.createRow(rownum++));
-                mapaFilas.put(reporte.getIdcliente(), fila);
+                mapaFilas.put(reporte.getIdpago(), fila);
 
                 Cell cell = fila.getFila().createCell(fila.nextIndex().shortValue());
                 cell.setCellValue(correlativo++);
                 cell.setCellStyle(cellStyle);
 
                 Cell cell1 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell1.setCellValue(reporte.getNombres());
+                cell1.setCellValue(reporte.getCodigo());
                 cell1.setCellStyle(cellStyle);
 
-                Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell2.setCellValue(reporte.getDireccion());
-                cell2.setCellStyle(cellStyle);
-
-                Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                cell3.setCellValue(reporte.getSector());
-                cell3.setCellStyle(cellStyle);
-
-                if (reporte.getIdmunicipio() != null) {
-                    Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue(reporte.getIdmunicipio().getMunicipio());
-                    cell4.setCellStyle(cellStyleNumero);
+                if (reporte.getNombres() != null) {
+                    Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell2.setCellValue(reporte.getNombres());
+                    cell2.setCellStyle(cellStyle);
                 } else {
-                    Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell4.setCellValue("");
-                    cell4.setCellStyle(cellStyle);
+                    Cell cell2 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell2.setCellValue("");
+                    cell2.setCellStyle(cellStyle);
                 }
 
                 if (reporte.getTelefono() != null) {
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue(reporte.getTelefono());
+                    cell3.setCellStyle(cellStyle);
+                } else {
+                    Cell cell3 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell3.setCellValue("");
+                    cell3.setCellStyle(cellStyle);
+                }
+
+                Cell cell4 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                cell4.setCellValue(reporte.getDireccion());
+                cell4.setCellStyle(cellStyle);
+
+                if (reporte.getSector() != null) {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell5.setCellValue(reporte.getTelefono());
-                    cell5.setCellStyle(cellStyle);
+                    cell5.setCellValue(reporte.getSector());
+                    cell5.setCellStyle(cellStyleNumero);
                 } else {
                     Cell cell5 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell5.setCellValue("");
                     cell5.setCellStyle(cellStyle);
                 }
 
-                if (reporte.getObservacion() != null) {
+                if (reporte.getFechapago() != null) {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
-                    cell6.setCellValue(reporte.getObservacion());
+                    cell6.setCellValue(reporte.getFechapago());
                     cell6.setCellStyle(cellStyle);
                 } else {
                     Cell cell6 = fila.getFila().createCell(fila.nextIndex().shortValue());
                     cell6.setCellValue("");
                     cell6.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getValor() != null) {
+                    Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell7.setCellValue(reporte.getValor());
+                    cell7.setCellStyle(cellStyle);
+                } else {
+                    Cell cell7 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell7.setCellValue("");
+                    cell7.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getTiposervicio() != null) {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue(reporte.getTiposervicio());
+                    cell8.setCellStyle(cellStyle);
+                } else {
+                    Cell cell8 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell8.setCellValue("");
+                    cell8.setCellStyle(cellStyle);
+                }
+
+                if (reporte.getObservacion() != null) {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue(reporte.getObservacion());
+                    cell9.setCellStyle(cellStyle);
+                } else {
+                    Cell cell9 = fila.getFila().createCell(fila.nextIndex().shortValue());
+                    cell9.setCellValue("");
+                    cell9.setCellStyle(cellStyle);
                 }
             }
         }

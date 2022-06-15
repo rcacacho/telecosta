@@ -118,6 +118,14 @@ public class RegistroCajaMB implements Serializable {
         fechaInicio = null;
     }
 
+    public void limpiarCampos() {
+        fechaInicio = null;
+        fechaFin = null;
+        municipioSelected = null;
+        caja.setIdsectorpago(null);
+        listDetalle = null;
+    }
+
     /*Metodos getters y setters*/
     public Cajaagencia getCaja() {
         return caja;

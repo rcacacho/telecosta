@@ -23,7 +23,16 @@
                 <ui:define name="pageTitle">
                     <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
                 </ui:define>
-   
+
+                <p:panelGrid columns="1" styleClass="no-border" style="margin-left: 160px;">
+                    <p:commandButton value="Excel" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{listaClienteVigenteMB.imprimirExcelCliente()}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+
                 <br/>
 
                 <p:dataTable id="dt_cliente" var="col" value="#{listaClienteVigenteMB.listClientePago}"

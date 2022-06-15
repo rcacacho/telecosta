@@ -70,9 +70,15 @@
 
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%;  font-size: 14px;"  >
                     <p:commandButton value="Buscar" action="#{registroCajaMB.cargarFacturas()}" icon="ui-icon-search" process="@this"  
-                                     style=" margin-left: 5px;"  update="dt_factura"/>
-                </p:outputPanel>
+                                     style="margin-left: 5px;"  update="dt_factura"/>
 
+                    <p:commandButton value="Limpiar" 
+                                     action="#{registroCajaMB.limpiarCampos()}"
+                                     class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                     style="margin-left: 5px;"
+                                     update="@form" icon="ui-icon-refresh" process="@this"
+                                     id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                </p:outputPanel>
 
                 <p:dataTable id="dt_factura" var="fac" value="#{registroCajaMB.listDetalle}"
                              emptyMessage="No hay facturas consultadas" 
