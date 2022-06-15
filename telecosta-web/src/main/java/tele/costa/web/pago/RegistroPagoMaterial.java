@@ -9,7 +9,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.ClienteBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
@@ -66,7 +65,7 @@ public class RegistroPagoMaterial implements Serializable {
 
     public void savePago() throws IOException {
         pago.setUsuariocreacion(SesionUsuarioMB.getUserName());
-        tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.PAGO.getId());
+        tipoPago = catalogoBean.findTipoPago(TipoPagoEnum.MATERIALTVADICIONAL.getId());
         pago.setIdcliente(cliente);
         pago.setIdtipopago(tipoPago);
         pago.setFechapago(new Date());

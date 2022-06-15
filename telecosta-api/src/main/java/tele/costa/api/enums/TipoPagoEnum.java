@@ -6,7 +6,8 @@ package tele.costa.api.enums;
  */
 public enum TipoPagoEnum {
     COBRO(1),
-    PAGO(2);
+    PAGO(2),
+    MATERIALTVADICIONAL(3);
 
     private final Integer id;
 

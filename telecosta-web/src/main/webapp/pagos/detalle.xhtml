@@ -50,6 +50,9 @@
                     <p:column >
                         <p:outputLabel value="Municipio:" styleClass="colorTitulo" />
                     </p:column>
+                    <p:column >
+                        <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" />
+                    </p:column>
                 </p:row>
 
                 <p:row>
@@ -60,32 +63,18 @@
                         <p:outputLabel value="#{detallePagoMB.pago.idcliente.idmunicipio.municipio}" style="font-size: 16px!important;">
                         </p:outputLabel> 
                     </p:column>
-                </p:row>
-
-                <p:row>
-                    <p:column >
-                        <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" />
-                    </p:column>
-
-                    <p:column >
-                        <p:outputLabel value="Cantidad:" styleClass="colorTitulo" />
-                    </p:column>
-                </p:row>
-
-                <p:row>
                     <p:column>
                         <p:outputLabel value="#{detallePagoMB.pago.fechapago}" style="font-size: 16px!important;">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
-
-                    <p:column>
-                        <p:outputLabel value="#{detallePagoMB.pago.total}" style="font-size: 16px!important;" >
-                        </p:outputLabel> 
-                    </p:column>
                 </p:row>
 
                 <p:row>
+                    <p:column >
+                        <p:outputLabel value="Cantidad:" styleClass="colorTitulo" />
+                    </p:column>
+
                     <p:column >
                         <p:outputLabel value="Mes:" styleClass="colorTitulo" />
                     </p:column>
@@ -97,6 +86,10 @@
 
                 <p:row>
                     <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.total}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                    <p:column>
                         <p:outputLabel value="#{detallePagoMB.pago.mes}" style="font-size: 16px!important;">
                         </p:outputLabel>
                     </p:column>
@@ -106,12 +99,20 @@
                         </p:outputLabel> 
                     </p:column>
                 </p:row>
+
                 <p:row>
+                    <p:column >
+                        <p:outputLabel value="Tipo:" styleClass="colorTitulo" />
+                    </p:column> 
                     <p:column >
                         <p:outputLabel value="Observaciones:" styleClass="colorTitulo" />
                     </p:column>
                 </p:row>
+
                 <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.idtipopago.pago}" style="font-size: 16px!important;"/>
+                    </p:column>
                     <p:column>
                         <p:outputLabel value="#{detallePagoMB.pago.observacion}" style="font-size: 16px!important;"/>
                     </p:column>

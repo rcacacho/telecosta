@@ -39,6 +39,7 @@ public class LoginMB implements Serializable {
 
     public LoginMB() {
         usu = new Usuario();
+        usuario = "";
     }
 
     public String loginProject() {
