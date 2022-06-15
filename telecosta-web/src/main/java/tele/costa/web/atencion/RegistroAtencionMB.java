@@ -54,7 +54,7 @@ public class RegistroAtencionMB implements Serializable {
     void cargarDatos() {
         listRuta = catalogoBean.listRuta();
         listTipoAtencion = catalogoBean.listTipoAtencion();
-        
+
         if (SesionUsuarioMB.getRootUsuario()) {
             listCliente = clientesBean.ListClientesInactivos();
         } else {
@@ -110,6 +110,11 @@ public class RegistroAtencionMB implements Serializable {
     }
 
     public void saveAtencionSinCliente() throws IOException {
+        if (atencion.getIdtipoatencion() == null) {
+            JsfUtil.addErrorMessage("Debe registrar una atención");
+            return;
+        }
+
         atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
         atencion.setEstado(true);
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);

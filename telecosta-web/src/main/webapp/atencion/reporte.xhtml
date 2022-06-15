@@ -18,7 +18,8 @@
                     <h1 style="margin: 0 0 0 0;">Reporte Atención Ticket</h1>            
                 </ui:define>
 
-                <h4 style="margin-right: 190px;">Reporte por fechas</h4>
+                <h4 style="margin-right: 400px;">1. Reporte por fechas</h4>
+                <hr class="hr-mp" style="margin-bottom: 5px!important; width: 55%;"/>
                 <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
                     <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
                     <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
@@ -49,8 +50,9 @@
                     </p:commandButton>
                 </p:panelGrid>
 
-                <h4 style="margin-right: 190px;">Reporte de Ruta</h4>
-                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                <h4 style="margin-right: 400px;">2. Reporte de Ruta</h4>
+                <hr class="hr-mp" style="margin-bottom: 5px!important; width: 55%;"/>
+                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px; margin-right: 55px;">
                     <p:outputLabel value="Ruta:"  styleClass="field-label"  />
                     <p:outputLabel value=""  styleClass="field-label"  />
                     <p:outputLabel value=""  styleClass="field-label"  />
@@ -60,6 +62,33 @@
                         <p:ajax  update="cl" />
                         <f:selectItem itemLabel="(selecciona una ruta)" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{reporteAtencionMB.listRuta}"  var="mun" itemLabel="#{mun.ruta}" itemValue="#{mun.idruta}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="PDF" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{reporteAtencionMB.generarPdfRuta()}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Excel" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{reporteAtencionMB.imprimirExcelAtencionRuta()}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+
+                <h4 style="margin-right: 390px;">3. Reporte Tipo de Atención</h4>
+                <hr class="hr-mp" style="margin-bottom: 5px!important; width: 55%;"/>
+                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px; margin-right: 55px;">
+                    <p:outputLabel value="Tipo atención:"  styleClass="field-label"  />
+                    <p:outputLabel value=""  styleClass="field-label"  />
+                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                    <p:selectOneMenu id="tipo" value="#{reporteAtencionMB.atencion.idtipoatencion}" style="width: 250px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona una tipo)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{reporteAtencionMB.listTipoAtencion}"  var="tip" itemLabel="#{tip.tipo}" itemValue="#{tip}"/>
                     </p:selectOneMenu>
 
                     <p:commandButton value="PDF" style="float: left;"

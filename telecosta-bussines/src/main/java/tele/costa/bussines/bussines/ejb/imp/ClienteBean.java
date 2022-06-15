@@ -118,8 +118,8 @@ public class ClienteBean implements ClienteBeanLocal {
             return null;
         }
 
-        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.codigo =:codigo ", Cliente.class)
-                .setParameter("codigo", codigo)
+        List<Cliente> lst = em.createQuery("SELECT col FROM Cliente col WHERE col.codigo like :codigo ", Cliente.class)
+                .setParameter("codigo", '%' + codigo + '%')
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {

@@ -45,5 +45,7 @@ public interface AtencionClienteLocal {
     List<ReporteAtencionDto> listAtencionByIdRuta(Integer idRuta);
 
     List<Atencion> listAtencionByMunicipioByInMunucipioSanPabloRodeoSanRafael();
+    
+    List<ReporteAtencionDto> listAtencionByIdAtencion(Integer idatencion);
 
 }

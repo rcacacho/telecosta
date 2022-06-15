@@ -342,7 +342,7 @@ public class AtencionBean implements AtencionClienteLocal {
 
     @Override
     public List<ReporteAtencionDto> listAtencionByIdRuta(Integer idRuta) {
-          return em.createNamedQuery("ReporteAtencionDto.atencionesRuta")
+        return em.createNamedQuery("ReporteAtencionDto.atencionesRuta")
                 .setParameter(1, idRuta)
                 .getResultList();
     }
@@ -357,6 +357,13 @@ public class AtencionBean implements AtencionClienteLocal {
         }
 
         return lst;
+    }
+
+    @Override
+    public List<ReporteAtencionDto> listAtencionByIdAtencion(Integer idatencion) {
+        return em.createNamedQuery("ReporteAtencionDto.atencionesRuta")
+                .setParameter(1, idatencion)
+                .getResultList();
     }
 
 }

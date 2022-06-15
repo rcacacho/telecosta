@@ -50,8 +50,16 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
             + "join ruta r on a.idruta = r.idruta and r.activo = 1\n"
             + "where r.idruta = ? ",
-            resultSetMapping = "ReporteAtencionDtoMapping")
-})
+            resultSetMapping = "ReporteAtencionDtoMapping"),
+
+    @NamedNativeQuery(
+            name = "ReporteAtencionDto.atencionesById",
+            query
+            = "select a.idatencion, a.nombre, a.direccion, a.telefono, a.motivo, a.referencia, d.materialutilizado, a.cantidad, d.observacion, a.fechacreacion  \n"
+            + "from atencion a\n"
+            + "left join detalleatencion d on a.idatencion = d.idatencion and d.activo = 1\n"
+            + "where  a.id = ? ",
+            resultSetMapping = "ReporteAtencionDtoMapping"),})
 @XmlRootElement
 public class ReporteAtencionDto implements Serializable {
 
