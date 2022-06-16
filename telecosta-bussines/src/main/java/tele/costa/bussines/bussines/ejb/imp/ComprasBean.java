@@ -343,7 +343,7 @@ public class ComprasBean implements ComprasBeanLocal {
             return null;
         }
 
-        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true and qj.idtipocompra.idtipocompra not in (60)", Compra.class)
+        List<Compra> lst = em.createQuery("SELECT pa FROM Compra pa WHERE pa.idtipocompra.idtipocompra =:idTipoCompra and pa.activo = true and pa.idtipocompra.idtipocompra not in (60)", Compra.class)
                 .setParameter("idTipoCompra", idTipoCompra)
                 .getResultList();
 
