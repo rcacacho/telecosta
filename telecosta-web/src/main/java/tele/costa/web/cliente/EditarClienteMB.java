@@ -38,9 +38,11 @@ public class EditarClienteMB implements Serializable {
     private List<Configuracionpago> listConfiguracionPago;
 
     public void cargarDatos() {
-        cliente = clienteBean.findClienteById(idcliente);
-        listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
-        listConfiguracionPago = catalogoBean.ListConfiguracionPago();
+        if (cliente == null) {
+            cliente = clienteBean.findClienteById(idcliente);
+            listMunicipios = catalogoBean.listMunicipioByIdDepartamento(1);
+            listConfiguracionPago = catalogoBean.ListConfiguracionPago();
+        }
     }
 
     public void actualizarCliente() throws IOException {
@@ -49,7 +51,7 @@ public class EditarClienteMB implements Serializable {
         Cliente responseVerificacion = clienteBean.updateCliente(cliente);
         if (responseVerificacion != null) {
             JsfUtil.addSuccessMessage("Cliente actualizado exitosamente");
-            JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + idcliente);
+            JsfUtil.redirectTo("/clientes/detalle.xhtml?idCliente=" + cliente.getIdcliente());
         } else {
             JsfUtil.addErrorMessage("Ocurrio un error verificar datos");
         }
