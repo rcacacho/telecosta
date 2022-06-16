@@ -138,7 +138,7 @@ public class ListaClienteMB implements Serializable {
             }
         } else if (codigo != null) {
             List<Cliente> response = clienteBean.ListClientesByCodigo(codigo);
-            if (response.size() > 0) {
+            if (response != null) {
                 listCliente = response;
             } else {
                 JsfUtil.addErrorMessage("No se encontraron datos");

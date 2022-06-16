@@ -112,7 +112,7 @@ public class ListaPagosMB implements Serializable {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (idcliente != 0 && anio != null) {
+        } else if (idcliente > 0 && anio != null) {
             List<Pago> response = pagosBean.listPagoByIdClienteAndAnio(idcliente, anio);
             if (response != null) {
                 listPago = response;
@@ -120,7 +120,7 @@ public class ListaPagosMB implements Serializable {
                 listPago = new ArrayList<>();
                 JsfUtil.addErrorMessage("No se encontraron datos");
             }
-        } else if (idcliente != 0) {
+        } else if (idcliente > 0) {
             List<Pago> response = pagosBean.listPagoByIdCliente(idcliente);
             if (response != null) {
                 listPago = response;
