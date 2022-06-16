@@ -83,4 +83,6 @@ public interface CatalogoBeanLocal {
 
     List<Seriefactura> listSerieFactura();
 
+    Tipoatencion findTipoAtencion(Integer idtipoatencion);
+
 }

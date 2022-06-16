@@ -110,11 +110,9 @@ public class RegistroAtencionMB implements Serializable {
     }
 
     public void saveAtencionSinCliente() throws IOException {
-        if (atencion.getIdtipoatencion() == null) {
-            JsfUtil.addErrorMessage("Debe registrar una atención");
-            return;
-        }
-
+        Tipoatencion tipo = catalogoBean.findTipoAtencion(TipoAtencion.NUEVO_SERVICIO.getId());
+        
+        atencion.setIdtipoatencion(tipo);
         atencion.setUsuariocreacion(SesionUsuarioMB.getUserName());
         atencion.setEstado(true);
         Atencion responseVerificacion = atencionBean.saveAtencion(atencion);

@@ -196,7 +196,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Tipoatencion> listTipoAtencion() {
-        List<Tipoatencion> lst = em.createQuery("SELECT qj FROM Tipoatencion qj where qj.activo = true", Tipoatencion.class)
+        List<Tipoatencion> lst = em.createQuery("SELECT qj FROM Tipoatencion qj where qj.activo = true and qj.idtipoatencion in (1,2,3)", Tipoatencion.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -364,7 +364,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Municipio> listMunicipioByIdMunicipioByList(List<Integer> listIdmunicipio) {
-       if (listIdmunicipio == null) {
+        if (listIdmunicipio == null) {
             return null;
         }
 
@@ -381,7 +381,7 @@ public class CatalagoBean implements CatalogoBeanLocal {
 
     @Override
     public List<Seriefactura> listSerieFactura() {
-          List<Seriefactura> lst = em.createQuery("SELECT qj FROM Seriefactura qj where qj.activo = true", Seriefactura.class)
+        List<Seriefactura> lst = em.createQuery("SELECT se FROM Seriefactura se where se.activo = true", Seriefactura.class)
                 .getResultList();
 
         if (lst == null || lst.isEmpty()) {
@@ -389,6 +389,19 @@ public class CatalagoBean implements CatalogoBeanLocal {
         }
 
         return lst;
+    }
+
+    @Override
+    public Tipoatencion findTipoAtencion(Integer idtipoatencion) {
+        List<Tipoatencion> lst = em.createQuery("SELECT dep FROM Tipoatencion dep WHERE dep.activo  = true and dep.idtipoatencion =:idtipoatencion ", Tipoatencion.class)
+                .setParameter("idtipoatencion", idtipoatencion)
+                .getResultList();
+
+        if (lst == null || lst.isEmpty()) {
+            return null;
+        }
+
+        return lst.get(0);
     }
 
 }

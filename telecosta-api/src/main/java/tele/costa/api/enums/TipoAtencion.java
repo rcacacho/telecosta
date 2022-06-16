@@ -7,7 +7,8 @@ package tele.costa.api.enums;
 public enum TipoAtencion {
     TRABAJO(1),
     SUSPENSION(2),
-    CORTE(3);
+    CORTE(3),
+    NUEVO_SERVICIO(4);
 
     private final Integer id;
 
