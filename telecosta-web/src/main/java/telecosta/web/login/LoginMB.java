@@ -104,8 +104,15 @@ public class LoginMB implements Serializable {
         return rol = SesionUsuarioMB.getRolUsuario();
     }
 
-    public void renewSesionTimeOut(String pageTo) {
-        JsfUtil.redirectTo(pageTo);
+    public void renewSesionTimeOut(String pageTo) throws IOException {
+        HttpSession session = SesionUsuarioMB.getSession();
+        if (session == null) {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.invalidateSession();
+            ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+        } else {
+            JsfUtil.redirectTo(pageTo);
+        }
     }
 
     /*Metodos Getters y setters*/
