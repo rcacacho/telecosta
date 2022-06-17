@@ -35,13 +35,7 @@ public class AuthorizationFilter implements Filter {
             HttpServletRequest reqt = (HttpServletRequest) request;
             HttpServletResponse resp = (HttpServletResponse) response;
             HttpSession ses = reqt.getSession(false);
-
-            if (!reqt.getRequestURI().startsWith(reqt.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
-                resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-                resp.setDateHeader("Expires", 0); // Proxies.
-            }
-
+            
             String reqURI = reqt.getRequestURI();
             if (reqURI.indexOf("/login.xhtml") >= 0
                     || (ses != null && ses.getAttribute("usuario") != null)

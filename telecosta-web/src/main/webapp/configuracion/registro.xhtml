@@ -17,14 +17,16 @@
             <div align="center">
 
                 <p:panelGrid  columns="1" styleClass="no-border" style="width: 100%;"  >
-                    <p:panelGrid columns="2" id="pg_denunciante"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
+                    <p:panelGrid columns="2" id="pg_configuracion"  styleClass="no-border" style="width: 100%; margin-top: 1%; margin-left: 25px;"  >
                         <p:outputLabel for="pDescrip" value="Descripción:" />
                         <p:outputLabel for="pvalor"  value="Valor:" />
 
-                        <p:inputText id="pDescrip" value="#{registroConfiguracionMB.configuracion.descripcion}" style="width: 350px;"  placeholder="Ingrese la descripción" >
+                        <p:inputText id="pDescrip" value="#{registroConfiguracionMB.configuracion.descripcion}" style="width: 350px;"  
+                                     placeholder="Ingrese la descripción" required="true" requiredMessage="Debes ingresar una descripción" >
                             <p:ajax event="blur" process="@this"/>
                         </p:inputText>
-                        <p:inputText id="pvalor" value="#{registroConfiguracionMB.configuracion.valor}" style="width: 350px;"  placeholder="Ingrese el valor" >
+                        <p:inputText id="pvalor" value="#{registroConfiguracionMB.configuracion.valor}" style="width: 350px;"  
+                                     placeholder="Ingrese el valor"  required="true" requiredMessage="Debes ingresar un valor" >
                             <p:ajax event="blur" process="@this"/>
                         </p:inputText>
                     </p:panelGrid>
