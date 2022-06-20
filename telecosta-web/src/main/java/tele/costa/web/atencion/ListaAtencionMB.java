@@ -135,6 +135,16 @@ public class ListaAtencionMB implements Serializable {
     }
 
     public void cargarDetalle() {
+        if (detalle.getMaterialutilizado() == null || detalle.getMaterialutilizado().isEmpty()){
+            JsfUtil.addErrorMessage("Debe seleccionar un material");
+            return;
+        }
+        
+         if (detalle.getCantidad() == null){
+            JsfUtil.addErrorMessage("Debe ingresar una cantidad");
+            return;
+        }
+        
         listDetalle.add(detalle);
         detalle = null;
         detalle = new Detalleatencion();
@@ -149,6 +159,11 @@ public class ListaAtencionMB implements Serializable {
     }
 
     public void GuardarDetalleAtencion() throws IOException {
+        if (listDetalle.isEmpty()){
+             JsfUtil.addErrorMessage("Debe ingresar al menos un material");
+            return;   
+        }
+        
         for (Detalleatencion det : listDetalle) {
             det.setIdatencion(selectedAtencion);
             det.setUsuariocreacion(SesionUsuarioMB.getUserName());

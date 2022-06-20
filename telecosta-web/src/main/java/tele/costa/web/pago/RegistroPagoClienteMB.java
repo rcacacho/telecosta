@@ -65,6 +65,10 @@ public class RegistroPagoClienteMB implements Serializable {
     }
 
     public void savePago() throws IOException {
+        if (SesionUsuarioMB.getUserName() == null) {
+            JsfUtil.redirectTo("/login.xhtml");
+        }
+
         Pago responseVerificacion = pagosBean.findPagoByIdClienteAndAnioAndMes(cliente.getIdcliente(), pago.getAnio(), pago.getMes());
         if (responseVerificacion != null) {
             pagoVerificacion = responseVerificacion;
@@ -75,7 +79,7 @@ public class RegistroPagoClienteMB implements Serializable {
             pago.setIdcliente(cliente);
             pago.setIdtipopago(tipoPago);
             pago.setFechapago(new Date());
-            
+
             switch (pago.getMes()) {
                 case "enero":
                     pago.setNomes(1);
@@ -114,7 +118,7 @@ public class RegistroPagoClienteMB implements Serializable {
                     pago.setNomes(12);
                     break;
             }
-                  
+
             Pago responsePago = pagosBean.savePago(pago);
             if (responsePago != null) {
                 detalle.setUsuariocreacion(SesionUsuarioMB.getUserName());

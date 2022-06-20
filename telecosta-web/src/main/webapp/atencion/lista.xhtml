@@ -97,8 +97,14 @@
                         <p:outputLabel value="#{listaAtencionMB.estadoAtencion(col.estado)}"/>
                     </p:column>
 
-                    <p:column headerText="Fecha registro" width="20%" >
+                    <p:column headerText="Inicio" width="20%" >
                         <p:outputLabel value="#{col.fechacreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    
+                     <p:column headerText="Finalización" width="22%" >
+                         <p:outputLabel value="#{col.fechamodificacion}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </p:column>
@@ -168,7 +174,7 @@
                         <p:outputLabel value="#{dd.materialutilizado}"/>
                     </p:column>
 
-                    <p:column headerText="Material utilizado" width="20%" >
+                    <p:column headerText="Cantidad" width="20%" >
                         <p:outputLabel value="#{dd.cantidad}"/>
                     </p:column>
 

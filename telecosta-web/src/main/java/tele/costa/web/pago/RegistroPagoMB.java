@@ -73,6 +73,10 @@ public class RegistroPagoMB implements Serializable {
     }
 
     public void savePago() throws IOException {
+        if (SesionUsuarioMB.getUserName() == null) {
+            JsfUtil.redirectTo("/login.xhtml");
+        }
+
         Pago responseVerificacion = pagosBean.findPagoByIdClienteAndAnioAndMes(cliente.getIdcliente(), pago.getAnio(), pago.getMes());
 
         if (responseVerificacion != null) {
