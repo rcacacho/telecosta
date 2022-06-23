@@ -108,6 +108,8 @@ public class CobradorCajaMB implements Serializable {
 
                 if (response.getMes().equals("Tv adicional/Material")) {
                     montoOtros = montoOtros + cc.getMontopagado();
+                } else if (response.getMes().equals("otro")) {
+                    montoOtros = montoOtros + cc.getMontopagado();
                 } else if (response.getIdtipopago().getIdtipopago().equals(3)) {
                     montoOtros = montoOtros + cc.getMontopagado();
                 }
