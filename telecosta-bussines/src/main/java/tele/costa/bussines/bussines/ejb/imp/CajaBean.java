@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
+import tele.costa.api.dto.CobradorDto;
 import tele.costa.api.ejb.CajaBeanLocal;
 import tele.costa.api.entity.Cajaagencia;
 import tele.costa.api.entity.Detallepago;
@@ -475,6 +476,15 @@ public class CajaBean implements CajaBeanLocal {
         }
 
         return lst.get(0);
+    }
+
+    @Override
+    public List<CobradorDto> listClientesByIdSectorFactura(Integer idsectorfactura, String mes, Integer anio) {
+        return em.createNamedQuery("CobradorDto.actual")
+                .setParameter(1, idsectorfactura)
+                .setParameter(2, mes)
+                .setParameter(3, anio)
+                .getResultList();
     }
 
 }

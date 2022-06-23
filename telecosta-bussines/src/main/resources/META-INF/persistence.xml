@@ -34,6 +34,7 @@
         <class>tele.costa.api.entity.Tipocarga</class>
         <class>tele.costa.api.entity.Usuariomunicipio</class>
         <class>tele.costa.api.entity.Seriefactura</class>
+         <class>tele.costa.api.dto.CobradorDto</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
