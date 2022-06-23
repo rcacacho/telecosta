@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "join pago p on d.idpago = p.idpago\n"
             + "join cliente c on p.idcliente = c.idcliente\n"
             + "where d.idseriefactura = ? "
-            + "and c.idestadocliente = 1 "
             + "and d.activo = 1 "
             + "and d.fechapago >= ? \n"
-            + "and d.fechapago <= ? \n",
+            + "and d.fechapago <= ? "
+            + "order by d.nofactura, d.fechacreacion asc \n",
             resultSetMapping = "CobradorDtoMapping"),})
 @XmlRootElement
 public class CobradorDto implements Serializable {

@@ -90,6 +90,10 @@ public class CobradorCajaMB implements Serializable {
         for (CobradorDto cc : listClientes) {
             Pago response = pagosBean.findUltimoPago(cc.getIdcliente());
 
+             if (cc.getMontopagado() == null) {
+                 continue;
+             }
+            
             if (response.getFechapago() != null) {
                 LocalDate startDate = response.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 ZoneId defaultZoneId = ZoneId.systemDefault();
