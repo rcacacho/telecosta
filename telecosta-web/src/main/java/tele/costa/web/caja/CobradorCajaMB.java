@@ -16,6 +16,7 @@ import tele.costa.api.ejb.CatalogoBeanLocal;
 import tele.costa.api.ejb.PagosBeanLocal;
 import tele.costa.api.entity.Pago;
 import tele.costa.api.entity.Seriefactura;
+import telecosta.web.utils.JsfUtil;
 
 /**
  *
@@ -45,8 +46,8 @@ public class CobradorCajaMB implements Serializable {
     private Integer montoAdelantadoInternet;
     private Integer montoTotal;
     private Integer montoOtros;
-    private String mes;
-    private Integer anio;
+    private Date fechaInicio;
+    private Date fechaFin;
 
     public CobradorCajaMB() {
         montoActual = 0;
@@ -72,17 +73,24 @@ public class CobradorCajaMB implements Serializable {
         montoInternet = 0;
         montoMorosoInternet = 0;
         montoOtros = 0;
+        fechaFin = null;
+        fechaInicio = null;
     }
 
-    public void buscarCliente() {
-        Date fechaInicio = new Date();
-        LocalDate endDate = fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        anio = endDate.getYear();
-        listClientes = cajaBean.listClientesByIdSectorFactura(idSerieFactura, mes, anio);
+    public void buscarFacturas() {
+        Date fInicio = new Date();
+        LocalDate endDate = fInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        listClientes = cajaBean.listClientesByIdSectorFactura(idSerieFactura, fechaInicio, fechaFin);
+
+        if (listClientes == null || listClientes.isEmpty()) {
+            JsfUtil.addErrorMessage("No se encontraron registros con esas fechas");
+            return;
+        }
+
         for (CobradorDto cc : listClientes) {
             Pago response = pagosBean.findUltimoPago(cc.getIdcliente());
-            if (response.getFechapago() != null) {
 
+            if (response.getFechapago() != null) {
                 LocalDate startDate = response.getFechapago().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 ZoneId defaultZoneId = ZoneId.systemDefault();
                 Integer count = 0;
@@ -370,12 +378,20 @@ public class CobradorCajaMB implements Serializable {
         this.montoOtros = montoOtros;
     }
 
-    public String getMes() {
-        return mes;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setMes(String mes) {
-        this.mes = mes;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
 }

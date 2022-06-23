@@ -40,5 +40,5 @@ public interface CajaBeanLocal {
 
     Long findMontoFacturaSerie(Integer inicio, Integer fin, Integer idsectorpago, Date fechaInicio, Date fechaFin);
 
-    List<CobradorDto> listClientesByIdSectorFactura(Integer idsectorfactura, String mes, Integer anio);
+    List<CobradorDto> listClientesByIdSectorFactura(Integer idsectorfactura, Date fechainicio, Date fechafin);
 }

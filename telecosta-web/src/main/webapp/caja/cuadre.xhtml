@@ -19,31 +19,27 @@
                 <p:panelGrid id="pg_cobrador"  styleClass="no-border" style="width: 10%; margin-top: 1%; margin-left: 25px;"  >
                     <p:row>
                         <p:column >
-                            <p:outputLabel value="Mes:" styleClass="colorTitulo" style="font-weight: bold;" />
+                            <p:outputLabel value="Fecha inicio:" styleClass="colorTitulo" style="font-weight: bold;" />
+                        </p:column>
+                        <p:column >
+                            <p:outputLabel value="Fecha fin:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                         <p:column >
                             <p:outputLabel value="Serie factura:" styleClass="colorTitulo" style="font-weight: bold;" />
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column >
-                            <p:selectOneMenu id="mes" value="#{cobradorCajaMB.mes}" style="width:220px;" 
-                                             converter="entityConverter" filter="true" filterMatchMode="contains" >
-                                <p:ajax event="itemSelect"/>
-                                <f:selectItem itemLabel="(selecciona un mes)" itemValue="" noSelectionOption="true" />
-                                <f:selectItem itemLabel="Enero" itemValue="enero" />
-                                <f:selectItem itemLabel="Febrero" itemValue="febrero" />
-                                <f:selectItem itemLabel="Marzo" itemValue="marzo" />
-                                <f:selectItem itemLabel="Abril" itemValue="abril" />
-                                <f:selectItem itemLabel="Mayo" itemValue="mayo" />
-                                <f:selectItem itemLabel="Junio" itemValue="junio" />
-                                <f:selectItem itemLabel="Julio" itemValue="julio" />
-                                <f:selectItem itemLabel="Agosto" itemValue="agosto" />
-                                <f:selectItem itemLabel="Septiembre" itemValue="septiembre" />
-                                <f:selectItem itemLabel="Octubre" itemValue="octubre" />
-                                <f:selectItem itemLabel="Noviembre" itemValue="noviembre" />
-                                <f:selectItem itemLabel="Diciembre" itemValue="diciembre" />
-                            </p:selectOneMenu>
+                        <p:column>
+                            <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{cobradorCajaMB.fechaInicio}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
+                        </p:column>
+                        <p:column>
+                            <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                        value="#{cobradorCajaMB.fechaFin}" navigator="true">  
+                                <p:ajax event="dateSelect" process="@this" />
+                            </p:calendar>
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="mun" value="#{cobradorCajaMB.idSerieFactura}" style="width: 150px;" 
@@ -57,8 +53,8 @@
                 </p:panelGrid>
 
                 <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%;  font-size: 14px;"  >
-                    <p:commandButton value="Buscar" action="#{cobradorCajaMB.buscarCliente()}" icon="ui-icon-search" process="@this"  
-                                     style="margin-left: 5px;"  update="pg_calculo"
+                    <p:commandButton value="Buscar" action="#{cobradorCajaMB.buscarFacturas()}" icon="ui-icon-search" process="@this"  
+                                     style="margin-left: 5px;"  update="@form"
                                      onstart="start();" oncomplete="stop();"/>
 
                     <p:commandButton value="Limpiar" 
@@ -68,6 +64,20 @@
                                      update="@form" icon="ui-icon-refresh" process="@this"
                                      id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
                 </p:outputPanel>
+
+                <p:dataTable id="dt_factura" var="fac" value="#{cobradorCajaMB.listClientes}"
+                             emptyMessage="No hay facturas consultadas" 
+                             styleClass="tabla-mp" style="width: 45%" rowIndexVar="rowId"
+                             rows="25" paginator="#{cobradorCajaMB.listClientes.size()>25}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="No. de Factura" width="20%" >
+                        <p:outputLabel value="#{fac.nofactura}"/>
+                    </p:column>
+                </p:dataTable>
 
 
                 <p:panelGrid id="pg_calculo"  styleClass="no-border" style="width: 50%; margin-top: 1%; margin-left: 25px;"  >

@@ -479,11 +479,33 @@ public class CajaBean implements CajaBeanLocal {
     }
 
     @Override
-    public List<CobradorDto> listClientesByIdSectorFactura(Integer idsectorfactura, String mes, Integer anio) {
+    public List<CobradorDto> listClientesByIdSectorFactura(Integer idsectorfactura, Date fechainicio, Date fechafin) {
+        if (fechainicio == null) {
+            return null;
+        }
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(fechainicio);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        fechainicio = c.getTime();
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(fechafin);
+        c1.set(Calendar.HOUR_OF_DAY, 23);
+        c1.set(Calendar.MINUTE, 59);
+        c1.set(Calendar.SECOND, 59);
+        fechafin = c1.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.format(fechainicio);
+        sdf.format(fechafin);
+
         return em.createNamedQuery("CobradorDto.actual")
                 .setParameter(1, idsectorfactura)
-                .setParameter(2, mes)
-                .setParameter(3, anio)
+                .setParameter(2, fechainicio)
+                .setParameter(3, fechafin)
                 .getResultList();
     }
 

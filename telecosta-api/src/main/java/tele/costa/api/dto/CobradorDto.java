@@ -21,20 +21,22 @@ import javax.xml.bind.annotation.XmlRootElement;
                     fields = {
                         @FieldResult(name = "idcliente", column = "idcliente"),
                         @FieldResult(name = "idconfiguracionpago", column = "idconfiguracionpago"),
+                        @FieldResult(name = "nofactura", column = "nofactura"),
+                        @FieldResult(name = "nombres", column = "nombres"),
                         @FieldResult(name = "montopagado", column = "montopagado"),})})
 @NamedNativeQueries({
     @NamedNativeQuery(
             name = "CobradorDto.actual",
             query
-            = "select c.idcliente, d.montopagado, c.idconfiguracionpago "
+            = "select c.idcliente, d.montopagado, c.idconfiguracionpago, d.nofactura, c.nombres "
             + "from detallepago d\n"
             + "join pago p on d.idpago = p.idpago\n"
             + "join cliente c on p.idcliente = c.idcliente\n"
             + "where d.idseriefactura = ? "
             + "and c.idestadocliente = 1 "
             + "and d.activo = 1 "
-            + "and p.mes like ? \n"
-            + "and p.anio = ? \n",
+            + "and d.fechapago >= ? \n"
+            + "and d.fechapago <= ? \n",
             resultSetMapping = "CobradorDtoMapping"),})
 @XmlRootElement
 public class CobradorDto implements Serializable {
@@ -43,6 +45,8 @@ public class CobradorDto implements Serializable {
     private Integer idcliente;
     private Integer idconfiguracionpago;
     private Integer montopagado;
+    private Integer nofactura;
+    private String nombres;
 
     /*Metodos getters y setters*/
     public Integer getIdcliente() {
@@ -67,6 +71,22 @@ public class CobradorDto implements Serializable {
 
     public void setIdconfiguracionpago(Integer idconfiguracionpago) {
         this.idconfiguracionpago = idconfiguracionpago;
+    }
+
+    public Integer getNofactura() {
+        return nofactura;
+    }
+
+    public void setNofactura(Integer nofactura) {
+        this.nofactura = nofactura;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
 }
