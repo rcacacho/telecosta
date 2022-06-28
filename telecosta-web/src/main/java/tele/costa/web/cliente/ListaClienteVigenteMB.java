@@ -602,7 +602,7 @@ public class ListaClienteVigenteMB implements Serializable {
                 cobroWrapper.setTiposervicio(cl.getTipocliente());
 
                 if (cl.getIdSector() != null) {
-                    cobroWrapper.setSector(cl.getIdSector().getSector());
+                    cobroWrapper.setSector(cl.getSector());
                 }
 
                 cobroWrapper.setTelefono(cl.getTelefono());
