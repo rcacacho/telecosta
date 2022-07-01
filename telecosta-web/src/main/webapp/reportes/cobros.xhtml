@@ -82,7 +82,7 @@
                                     </p:panelGrid>
                                 </p:panelGrid>
 
-                                <h4 style="margin-right: 190px;">3. Reporte de cobros por sector</h4>
+                                <h4 style="margin-right: 190px;">3. Reporte de cobros por sector ruta</h4>
                                 <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
                                 <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
                                     <p:outputLabel value="Sector:"  styleClass="field-label"  />
@@ -102,6 +102,33 @@
                                                          onclick="PrimeFaces.monitorDownload(start, stop);" 
                                                          immediate="true" process="@this" update="@form" ajax="false">
                                             <p:fileDownload value="#{reporteCobroMB.imprimirExcelCobroSector()}"/>
+                                        </p:commandButton> 
+                                    </p:panelGrid>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">4. Reporte de cobros por sector</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Sector:"  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun2" value="#{reporteCobroMB.idMunicipio2}" style="width: 200px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteCobroMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                        <p:ajax event="itemSelect" update=""/>
+                                    </p:selectOneMenu>
+
+                                    <p:inputText id="tel" value="#{reporteCobroMB.sector}" size="30" style="font-size: 16px!important;">
+                                        <p:ajax event="blur" process="@this"/>
+                                    </p:inputText> 
+
+                                    <p:panelGrid columns="1"  styleClass="no-border" style="">
+                                        <p:commandButton value="Excel" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteCobroMB.imprimirExcelCobroSectorMunicipio()}"/>
                                         </p:commandButton> 
                                     </p:panelGrid>
                                 </p:panelGrid>
