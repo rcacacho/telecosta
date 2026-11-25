@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"                
+    template="main-template.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">
+        <title>TELECOSTA</title>        
+    </ui:define>
+
+    <ui:define name="main-menu">
+        <ui:include src="/templates/main-menu.xhtml" />
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:insert name="subContent">[CONTENIDO AQUI]</ui:insert>
+    </ui:define>
+
+    <ui:define name="contentBottom">
+        <span style="font-size: 15px; color: #fbf7f7 !important;">
+            Sistema Informatico de TeleCosta
+        </span>
+
+        <h:graphicImage library="images" name="logo.jpeg"  onclick="PF('dlg_acerca_de').show();"  style="float: right; margin-right: 20px;  " width="60px;" title="#{msg.acercaDe}"/>
+        <p:hotkey bind="esc" handler="PF('dlg_acerca_de').hide()" />
+        <h:outputScript library="js"  name="calendarLabels_es_GT.js" /> 
+        <h:outputStylesheet library="css" name="telecosta.css" />
+    </ui:define>
+</ui:composition>

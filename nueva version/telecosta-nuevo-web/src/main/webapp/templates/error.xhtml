@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Error en la aplicación</title>
+        <meta charset="UTF-8" />
+    </h:head>
+    <h:body>
+        <f:view transient="true">
+            <div style="max-width: 500px; margin: 80px auto; text-align: center; font-family: sans-serif;">
+                <h2>Ha ocurrido un problema</h2>
+                <p>Tu sesión ha expirado o se produjo un error inesperado al procesar la solicitud.</p>
+
+                <!-- Opcional: detalles técnicos básicos -->
+                <p style="color: #666; font-size: 0.9em;">
+                    Código: #{requestScope['jakarta.servlet.error.status_code']}
+                </p>
+
+                <h:form>
+                    <p:button value="Volver al inicio" outcome="/login.xhtml" icon="pi pi-home" />
+                </h:form>
+            </div>
+        </f:view>
+    </h:body>
+</html>

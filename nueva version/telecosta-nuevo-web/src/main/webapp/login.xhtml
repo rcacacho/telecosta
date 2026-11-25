@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Ingreso al sistema</title>
+        <style>
+            html, body { height: 100%; margin: 0; }
+            body {
+                background-color: #1281b6;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            }
+            .login-logo { width: 250px; max-width: 40vw; }
+            .login-panel { width: 600px; max-width: 92vw; }
+            .login-grid { width: 100%; }
+            .login-grid td:first-child { width: 30%; text-align: left; }
+            .login-field { width: 100%; box-sizing: border-box; }
+            .login-footer { display: flex; justify-content: center; margin-top: 0.5rem; }
+        </style>
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" showDetail="false" showSummary="true" />
+        <h:form id="form" style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
+            <h:graphicImage library="images" name="logo_redondo.png" styleClass="login-logo"/>
+
+            <p:panel header="Ingreso al sistema" styleClass="login-panel">
+                <h:panelGrid columns="2" cellpadding="5" styleClass="login-grid">
+                    <h:outputLabel for="username" value="Usuario:"/>
+                    <p:inputText id="username" value="#{loginMB.usuario}" styleClass="login-field"
+                                 required="true" requiredMessage="Debe de ingresar un usuario" label="username"/>
+
+                    <h:outputLabel for="password" value="Contraseña:"/>
+                    <p:password id="password" value="#{loginMB.password}" styleClass="login-field"
+                                style="width:100%;"
+                                required="true" requiredMessage="Debes de ingresar una contraseña" label="password"/>
+                </h:panelGrid>
+
+                <div class="login-footer">
+                    <p:commandButton id="loginButton" value="Acceder" icon="pi pi-sign-in"
+                                     action="#{loginMB.loginProject()}"
+                                     onstart="start();" oncomplete="stop();"/>
+                </div>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

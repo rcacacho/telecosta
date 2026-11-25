@@ -1,0 +1,147 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package tele.costa.nuevo.api.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ *
+ * @author rcacacho
+ */
+@Entity
+@Table(name = "tipopago", catalog = "telecosta", schema = "")
+@NamedQueries({
+    @NamedQuery(name = "Tipopago.findAll", query = "SELECT t FROM Tipopago t"),
+    @NamedQuery(name = "Tipopago.findByIdtipopago", query = "SELECT t FROM Tipopago t WHERE t.idtipopago = :idtipopago"),
+    @NamedQuery(name = "Tipopago.findByPago", query = "SELECT t FROM Tipopago t WHERE t.pago = :pago"),
+    @NamedQuery(name = "Tipopago.findByFechacreacion", query = "SELECT t FROM Tipopago t WHERE t.fechacreacion = :fechacreacion"),
+    @NamedQuery(name = "Tipopago.findByUsuariocreacion", query = "SELECT t FROM Tipopago t WHERE t.usuariocreacion = :usuariocreacion"),
+    @NamedQuery(name = "Tipopago.findByActivo", query = "SELECT t FROM Tipopago t WHERE t.activo = :activo")})
+public class Tipopago implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "idtipopago", nullable = false)
+    private Integer idtipopago;
+    @Basic(optional = false)
+    @Column(name = "pago", nullable = false, length = 50)
+    private String pago;
+    @Basic(optional = false)
+    @Column(name = "fechacreacion", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechacreacion;
+    @Basic(optional = false)
+    @Column(name = "usuariocreacion", nullable = false, length = 50)
+    private String usuariocreacion;
+    @Basic(optional = false)
+    @Column(name = "activo", nullable = false)
+    private int activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipopago", fetch = FetchType.LAZY)
+    private List<Pago> pagoList;
+
+    public Tipopago() {
+    }
+
+    public Tipopago(Integer idtipopago) {
+        this.idtipopago = idtipopago;
+    }
+
+    public Tipopago(Integer idtipopago, String pago, Date fechacreacion, String usuariocreacion, int activo) {
+        this.idtipopago = idtipopago;
+        this.pago = pago;
+        this.fechacreacion = fechacreacion;
+        this.usuariocreacion = usuariocreacion;
+        this.activo = activo;
+    }
+
+    public Integer getIdtipopago() {
+        return idtipopago;
+    }
+
+    public void setIdtipopago(Integer idtipopago) {
+        this.idtipopago = idtipopago;
+    }
+
+    public String getPago() {
+        return pago;
+    }
+
+    public void setPago(String pago) {
+        this.pago = pago;
+    }
+
+    public Date getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
+    }
+
+    public String getUsuariocreacion() {
+        return usuariocreacion;
+    }
+
+    public void setUsuariocreacion(String usuariocreacion) {
+        this.usuariocreacion = usuariocreacion;
+    }
+
+    public int getActivo() {
+        return activo;
+    }
+
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
+
+    public List<Pago> getPagoList() {
+        return pagoList;
+    }
+
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idtipopago != null ? idtipopago.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Tipopago)) {
+            return false;
+        }
+        Tipopago other = (Tipopago) object;
+        if ((this.idtipopago == null && other.idtipopago != null) || (this.idtipopago != null && !this.idtipopago.equals(other.idtipopago))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "tele.costa.nuevo.api.entity.Tipopago[ idtipopago=" + idtipopago + " ]";
+    }
+    
+}

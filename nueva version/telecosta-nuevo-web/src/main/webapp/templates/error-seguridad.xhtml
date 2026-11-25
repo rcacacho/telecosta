@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="pageTitle">
+        
+        <p:outputLabel value="¡ADVERTENCIA SEGURIDAD!" style="font-size: 45px!important;color: red;"/>
+        <br />
+    </ui:define>
+    <ui:define name="content">
+        <div align="center" style=" margin-top: 50px;">
+
+            <div style="margin-top: 50px;">
+                <span style="font-size: 30px!important;">
+                    SE HA DETECTADO UN INTENTO DE VIOLACIÓN A LA SEGURIDAD DEL SISTEMA.
+                    <br /><br />
+                    SE HA CREADO UN REGISTRO CON SUS DATOS DE USUARIO EN LA BITÁCORA DEL SISTEMA 
+                    Y SE HA GENERADO UNA ALERTA AUTOMÁTICA A LOS ADMINISTRADORES DEL SISTEMA.
+                </span>
+            </div>
+            <div style="margin-top: 50px;">
+                <span style="font-size: 25px!important; margin-top: 50px;">
+                    si considera que es un error, comuníquese con el Administrador del Sistema
+                </span>
+            </div>
+
+
+
+        </div>
+
+    </ui:define>
+
+
+</ui:composition>
