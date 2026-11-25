@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Clientes
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content" enctype="multipart/form-data"> 
+
+            <div align="center">
+                <ui:include src="/clientes/tab-menu.xhtml">
+                    <ui:param name="activeIndex" value="0"/>
+                </ui:include>
+
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Clientes</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Nombre:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Codigo:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:inputText id="txtNombre" value="#{listaClienteMB.nombre}" style="width: 100%;"  placeholder="(nombre)"
+                                 requiredMessage="(nombre)" size="30" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:inputText id="txtCui" value="#{listaClienteMB.codigo}" style="width: 95%;"  placeholder="(codigo)"
+                                 requiredMessage="(codigo)" size="40" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+
+                    <p:outputLabel value="Sector:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Municipio"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:inputText id="txtsector" value="#{listaClienteMB.sector}" style="width: 100%;"  placeholder="(nombre)"
+                                 requiredMessage="(sector)" size="30" >
+                        <p:ajax event="blur" process="@this"  />
+                    </p:inputText>
+                    <p:selectOneMenu id="mun" value="#{listaClienteMB.idMunicipio}" style="width: 280px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaClienteMB.buscarCliente()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  icon="ui-icon-search"
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaClienteMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form"  icon="ui-icon-refresh"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_cliente" var="col" value="#{listaClienteMB.listCliente}"
+                             emptyMessage="No hay clientes registrados" editable="true" rowStyleClass="#{col.getStyleCliente()}"
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                             rows="15" paginator="#{listaClienteMB.listCliente.size()>15}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaClienteMB.onRowEdit}" update="dt_cliente" />
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Codigo" width="25%" >
+                        <p:outputLabel value="#{col.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre" width="20%" >
+                        <p:outputLabel value="#{col.nombres}"/>
+                    </p:column>
+
+                    <p:column headerText="Dirección" width="25%" >
+                        <p:outputLabel value="#{col.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="Sector" width="20%" >
+                        <p:outputLabel value="#{col.sector}"/>
+                    </p:column>
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{col.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Tipo Cliente" width="20%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.tipocliente}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="tipoCl" value="#{col.tipocliente}" style="width:50px;" 
+                                                 filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                    <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Configuración pago" width="20%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idconfiguracionpago.descripcion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="conf" value="#{col.idconfiguracionpago}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="(selecciona una configuración)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaClienteMB.listConfiguracionPago}"  var="mun" itemLabel="#{mun.descripcion} - #{mun.valor}" itemValue="#{mun}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Fecha Inicio Servicio" width="22%" >
+                        <p:outputLabel value="#{col.fechainicioservicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Fecha Ultimo Pago" width="24%" >
+                        <p:outputLabel style="#{listaClienteMB.color}" value="#{listaClienteMB.obtenerUltimoPago(col.idcliente)}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Estado" width="15%" >
+                        <p:outputLabel value="#{col.idestadocliente.estado}"/>      
+                    </p:column>
+
+                    <p:column width="29%" exportable="false" >
+                        <p:column headerText="Editar" width="8%">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:commandButton value="Ticket" 
+                                         style="" process="@this" styleClass="button-16 b-greylight-16" icon="ui-icon-comment"
+                                         action="#{listaClienteMB.ticketCliente(col.idcliente)}" update="@form"/>
+
+                        <p:commandButton value="Suspender" rendered="#{col.idestadocliente.idestadocliente != 3 }" 
+                                         style="margin-top: 3px;" process="@this" onstart="return confirm('¿Confirmas suspender el servicio?');"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-s"
+                                         action="#{listaClienteMB.suspenderCliente(col)}" update="@form"/>
+                        
+                          <p:commandButton value="Activar" rendered="#{col.idestadocliente.idestadocliente eq 3 or col.idestadocliente.idestadocliente eq 2 }" 
+                                         style="margin-top: 3px;" process="@this" onstart="return confirm('¿Confirmas activar el servicio?');"
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-arrowthick-1-n"
+                                         action="#{listaClienteMB.activarCliente(col)}" update="@form"/>
+
+                        <p:commandButton value="Corte" rendered="#{col.idestadocliente.idestadocliente != 3 }" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-trash"
+                                         action="#{listaClienteMB.dialogCorte(col)}" update="@form"/>
+
+                        <p:commandButton value="Pago" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-bullet"
+                                         action="#{listaClienteMB.pagoCliente(col.idcliente)}" update="@form"/>
+                        
+                         <p:commandButton value="Tv adcional" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-star"
+                                         action="#{listaClienteMB.pagoMaterialCliente(col.idcliente)}" update="@form"/>
+
+                        <p:commandButton value="Detalle" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaClienteMB.detalleCliente(col.idcliente)}" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+
+                <div align="center" style="margin-top: 15px;">
+                    <p:panelGrid columns="3" style="text-align: center !important;" styleClass="no-border" >
+
+                        <p:outputPanel style="width: 80px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorAmarillo" style="border: 1px solid black;"/>
+                            </div>
+                            Servicio suspendido  
+                        </p:outputPanel>
+
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
+                            </div>
+                            Corte de servicio
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </div>
+            </div>
+            <p:dialog header="Corte de Servicio" widgetVar="dlgCorte" id="dlgCorte" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="550px">
+                <p:panelGrid id="pgCorte" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Motivo corte:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputTextarea rows="2" cols="90" value="#{listaClienteMB.motivoCorte}" counter="display" maxlength="1500" 
+                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputTextarea>
+                    <h:outputText id="display" style="margin-left: 330px;" /> 
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{listaClienteMB.corteCliente()}" icon="ui-icon-disk" process="pgCorte"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas dar corte al servicio?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{listaClienteMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px; " update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

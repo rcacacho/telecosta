@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Reportes
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Reportes</h1>            
+                </ui:define>
+                <table>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <div class="menu-perfil" style="display: inline-block; width: 250px; height: auto; margin-right: 20px;">
+                                <h:form>
+                                    <ui:insert name="menu-perfil">
+                                        <ui:include src="/templates/menu-reportes.xhtml" >
+                                            <ui:param name="formulario" value="2" />
+                                        </ui:include>
+                                    </ui:insert>
+                                </h:form>
+                            </div>     
+                        </td>
+                        <td style="vertical-align: top; margin-left: 20px;">
+                            <div>
+                                <h4 style="margin-right: 190px;">1. Reporte de Clientes</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="2" styleClass="no-border">
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfClientes()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelCliente()}"/>
+                                    </p:commandButton> 
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">2. Reporte de tipo de cliente</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="tip" value="#{reporteClienteMB.tipocliente}" style="width:250px;" 
+                                                     filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
+                                        <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                        <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfTipoCliente()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelTipoCliente()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">3. Reporte de Clientes por municipio</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Tipo Cliente:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun" value="#{reporteClienteMB.idmunicipio}" style="width: 250px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu id="tipoCl" value="#{reporteClienteMB.tipoclienteMun}" style="width:250px;" 
+                                                     filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
+                                        <f:selectItem itemLabel="(selecciona un tipo de cliente)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Cable" itemValue="Cable" />
+                                        <f:selectItem itemLabel="Internet" itemValue="Internet" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="PDF" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.generarPdfMunicipioCliente()}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteMuncipio()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">4. Reporte de Clientes con corte</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="4"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Fechas:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun2" value="#{reporteClienteMB.idmunicipioCorte}" style="width: 250px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <p:ajax event="itemSelect"/>
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteClienteMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:panelGrid columns="2"  styleClass="no-border" >
+                                        <p:calendar id="cal_fechaInicio" placeholder="(fecha inicio)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                    value="#{reporteClienteMB.fechaIncio}" navigator="true">  
+                                            <p:ajax event="dateSelect" process="@this" />
+                                        </p:calendar>
+
+                                        <p:calendar id="cal_fechaFin" placeholder="(fecha fin)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                    value="#{reporteClienteMB.fechaFin}" navigator="true">  
+                                            <p:ajax event="dateSelect" process="@this" />
+                                        </p:calendar>
+                                    </p:panelGrid>
+
+                                    <p:commandButton value="Excel" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteClienteMB.imprimirExcelClienteCorte()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div> 
+        </h:form>
+    </ui:define>
+</ui:composition>

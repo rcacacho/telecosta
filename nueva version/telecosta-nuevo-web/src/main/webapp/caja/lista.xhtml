@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta Caja Agencia
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content" enctype="multipart/form-data"> 
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta Caja Agencia</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha inicio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha fin:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaCajaMB.fechaInicio}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaCajaMB.fechaFin}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:outputLabel value="Municipio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Sector:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:selectOneMenu id="mun" value="#{listaCajaMB.municipioSelected}" style="width: 260px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax  listener="#{listaCajaMB.cargarSector()}" update="sec" />
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaCajaMB.listMunicipios}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun}"/>
+                    </p:selectOneMenu>
+                    <p:selectOneMenu id="sec" value="#{listaCajaMB.idSectorPago}" style="width: 260px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaCajaMB.listSectorPago}"  var="s" itemLabel="#{s.nombre}" itemValue="#{s.idsectorpago}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value=""   />
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 160px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaCajaMB.buscarCaja()}" process="@this"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar" icon="ui-icon-search"
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaCajaMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form" icon="ui-icon-refresh" process="@this"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_cajas" var="caj" value="#{listaCajaMB.listCaja}"
+                             emptyMessage="No hay cajas de agencias registradas" 
+                             styleClass="tabla-mp" style="width: 100%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaCajaMB.listCaja.size()>10}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Fecha" width="12%" >
+                        <p:outputLabel value="#{caj.fechacreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+
+                    <p:column headerText="Municipio" width="20%" >
+                        <p:outputLabel value="#{caj.idsectorpago.idmunicipio.municipio}"/>
+                    </p:column>
+
+                    <p:column headerText="Sector" width="15%" >
+                        <p:outputLabel value="#{caj.idsectorpago.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Del" width="12%" >
+                        <p:outputLabel value="#{caj.correlativodel}"/>
+                    </p:column>
+
+                    <p:column headerText="Al" width="12%" >
+                        <p:outputLabel value="#{caj.correlativoal}"/>
+                    </p:column>
+
+                    <p:column headerText="Ingreso" width="12%" >
+                        <p:outputLabel value="#{caj.ingreso}"/>
+                    </p:column>
+
+                    <p:column headerText="Egreso" width="10%" >
+                        <p:outputLabel value="#{caj.egreso}"/>
+                    </p:column>
+
+                    <p:column headerText="Saldo" width="8%" >
+                        <p:outputLabel value="#{caj.saldo}"/>
+                    </p:column>
+
+                    <p:column headerText="Forma" width="15%" >
+                        <p:outputLabel value="#{caj.forma}"/>
+                    </p:column>
+
+                    <p:column headerText="No. Documento" width="18%" >
+                        <p:outputLabel value="#{caj.nodocumento}"/>
+                    </p:column>
+
+                    <p:column headerText="observaciones" width="25%" >
+                        <p:outputLabel value="#{caj.observaciones}"/>
+                    </p:column>
+
+                    <p:column width="16%" exportable="false" >
+                        <p:commandButton value="Egreso" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-calculator"
+                                         action="#{listaCajaMB.dialogEgreso(caj)}" update="@form"/>
+
+                        <p:commandButton value="Detalle" 
+                                         style="margin-top: 3px;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-search"
+                                         action="#{listaCajaMB.detalleCaja(caj.idcajaagencia)}" update="@form"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <p:dialog header="Registro egreso" widgetVar="dlgEgreso" id="dlgEgreso" 
+                      onShow="stop();"  onHide="stop();" modal="true" position="top" resizable="false" width="550px">
+                <p:panelGrid id="pgEgreso" columns="1" styleClass="no-border" style="width: 100%;"  >
+                    <p:outputLabel value="Total de egreso:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.egreso}" size="10" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="Forma:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.forma}" size="20" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="No. Documento:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputText value="#{listaCajaMB.selectedCajaAgencia.nodocumento}" size="20" style="font-size: 16px!important;">
+                        <p:ajax event="blur" process="@this"/>
+                    </p:inputText> 
+
+                    <p:outputLabel value="Observaciones:" styleClass="colorTitulo" style="font-weight: bold;" />
+                    <p:inputTextarea rows="2" cols="90" value="#{listaCajaMB.selectedCajaAgencia.observaciones}" counter="display" maxlength="1500" 
+                                     counterTemplate="{0} caracteres pendientes." autoResize="false">
+                        <p:ajax event="blur" process="@this" />
+                    </p:inputTextarea>
+                    <h:outputText id="display" style="margin-left: 330px;" /> 
+
+                    <p:outputPanel  style="margin-top: 4%; margin-bottom: 20px; margin-right: 6%; margin-left: 34%;  font-size: 14px;"  >
+                        <p:commandButton value="Guardar" action="#{listaCajaMB.egresoCaja()}" icon="ui-icon-disk" process="pgEgreso"  
+                                         style=" margin-left: 5px; " onstart="return confirm('¿Confirmas guardar el egreso?');" update="@form"/>
+                        <p:commandButton value="Cancelar" process="@this" action="#{listaCajaMB.cerrarDialog()}" icon="ui-icon-close" style="margin-left: 12px;" 
+                                         update="@form"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

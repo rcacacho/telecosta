@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"     
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:shiro="http://shiro.apache.org/tags">
+
+    <f:metadata>
+        <f:viewParam name="idusuario" value="#{detalleUsuarioMB.idusuario}"/>
+        <f:event type="preRenderView" listener="#{detalleUsuarioMB.cargarDatos()}"/>
+    </f:metadata>
+
+    <ui:define name="pageTitle">
+        Detalle del colaborador
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="1. Información del colaborador" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
+                        <h:commandLink action="#{detalleUsuarioMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                            <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
+                        </h:commandLink>
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid  id="pg_info" styleClass="no-border" style="width: 90%; margin-left: 4%;">
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Nombres:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Apellidos:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleUsuarioMB.usuario.nombres}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleUsuarioMB.usuario.apellidos}" style="font-size: 16px!important;">
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Usuario:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Fecha creación" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleUsuarioMB.usuario.usuario}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleUsuarioMB.usuario.fechacreacion}" style="font-size: 16px!important;" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

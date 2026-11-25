@@ -2,11 +2,13 @@ package telecosta.nuevo.web.login;
 
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import tele.costa.nuevo.api.ejb.LoginBeanLocal;
 import tele.costa.nuevo.api.entity.Usuario;
+import telecosta.nuevo.web.utils.JsfUtil;
 import telecosta.nuevo.web.utils.SesionUsuarioMB;
 
 /**
@@ -34,7 +37,6 @@ public class LoginMB implements Serializable {
 
     private String usuario;
     private String password;
-    private Usuario usu;
     private boolean root;
     private String rol;
 
@@ -67,7 +69,7 @@ public class LoginMB implements Serializable {
 
             if (guardado.startsWith("$argon2")) {
                 // Hash nuevo
-                ok = EncoderHolder.INSTANCE.matches(password, guardado);               
+                ok = EncoderHolder.INSTANCE.matches(password, guardado);
             } else {
                 // Hash MD5 antiguo: valida y lo convierte al hash nuevo
                 String md5Ingresado = md5Hex(password);
@@ -75,7 +77,7 @@ public class LoginMB implements Serializable {
                         guardado.toLowerCase().getBytes(StandardCharsets.UTF_8),
                         md5Ingresado.getBytes(StandardCharsets.UTF_8));
                 if (ok) {
-                     loginBeanLocal.actualizarPassword(usu.getIdusuario(), EncoderHolder.INSTANCE.encode(password));
+                    loginBeanLocal.actualizarPassword(usu.getIdusuario(), EncoderHolder.INSTANCE.encode(password));
                 }
             }
         }
@@ -103,6 +105,42 @@ public class LoginMB implements Serializable {
         }
         usuario = "";
         return "/menu/menu.xhtml";
+    }
+
+    public void regresarMenu() {
+        JsfUtil.redirectTo("/menu/menu.xhtml");
+    }
+
+    public boolean validarRoot() {
+        Object r = SesionUsuarioMB.getSession().getAttribute("root");
+        if (r instanceof Boolean) {
+            return (Boolean) r;
+        }
+        if (r instanceof Number) {
+            return ((Number) r).intValue() != 0;
+        }
+        return r != null && ("true".equalsIgnoreCase(r.toString()) || "1".equals(r.toString()));
+    }
+
+    public String validarRol() {
+        Object r = SesionUsuarioMB.getSession().getAttribute("rol");
+        return r == null ? "" : r.toString();
+    }
+
+    public void renewSesionTimeOut(String pageTo) throws IOException {
+        HttpSession session = SesionUsuarioMB.getSession();
+        if (session == null) {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.invalidateSession();
+            ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+        } else {
+            JsfUtil.redirectTo(pageTo);
+        }
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login.xhtml?faces-redirect=true";
     }
 
     /*Metodos Getters y setters*/

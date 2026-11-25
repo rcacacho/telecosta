@@ -1,14 +1,166 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
 
-    <ui:define name="pageTitle">
-        Sistema Informático de TeleCosta
+    <ui:define name="pageTitle">       
     </ui:define>
 
     <ui:define name="subContent">
-        Selecciona una opción del menú superior
+        <style>
+            .home-wrap { max-width: 1150px; margin: 0 auto; padding: 1rem; }
+            .home-welcome { margin-bottom: 1.5rem; }
+            .home-welcome h2 { margin: 0 0 .25rem 0; }
+            .home-welcome p { margin: 0; color: #6b7280; }
+            .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+            .home-card { padding: 1.1rem 1.25rem; border: 1px solid #e5e7eb; border-radius: 12px; background: #ffffff;
+                         transition: box-shadow .15s ease, border-color .15s ease; }
+            .home-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.10); border-color: #1281b6; }
+            .home-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .75rem; }
+            .home-head .pi { font-size: 1.5rem; color: #1281b6; }
+            .home-head h3 { margin: 0; font-size: 1.05rem; }
+            .home-links { display: flex; flex-wrap: wrap; gap: .4rem; }
+            .home-links a { padding: .25rem .7rem; border-radius: 999px; background: #eef6fb; color: #0b6a95;
+                            text-decoration: none; font-size: .85rem; }
+            .home-links a:hover { background: #1281b6; color: #ffffff; }
+        </style>
+
+        <div class="home-wrap">
+            <div class="home-welcome">
+                <h2>Bienvenido, #{sessionScope['usuario']}</h2>
+                <p>Selecciona una opción del menú superior o entra directo a un módulo.</p>
+            </div>
+
+            <div class="home-grid">
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'cobros' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-users"></i><h3>Clientes</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/clientes/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/clientes/registro.xhtml">Registro</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'cobros' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-wallet"></i><h3>Pagos</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/pagos/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/pagos/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/pagos/registroMultiple.xhtml">Registro Múltiple</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'cobros' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-dollar"></i><h3>Cobros</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/cobros/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/cobros/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/cobros/registroMultiple.xhtml">Registro Múltiple</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'cobros' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-inbox"></i><h3>Caja Agencias</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/caja/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/caja/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/caja/cuadre.xhtml">Cuadre</a>
+                            <a href="#{request.contextPath}/caja/reporte.xhtml">Reporte</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-user"></i><h3>Usuarios Sistema</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/usuario/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/usuario/registro.xhtml">Registro</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <div class="home-card">
+                    <div class="home-head"><i class="pi pi-chart-bar"></i><h3>Reportes</h3></div>
+                    <div class="home-links">
+                        <a href="#{request.contextPath}/reportes/reporte.xhtml">Reporte</a>
+                        <a href="#{request.contextPath}/reportes/cobros.xhtml">Cobros</a>
+                    </div>
+                </div>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'contabilidad' or loginMB.validarRol() eq 'bodega_central' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-cog"></i><h3>Configuración</h3></div>
+                        <div class="home-links">
+                            <ui:fragment rendered="#{loginMB.validarRol() eq 'contabilidad' or loginMB.validarRoot()}">
+                                <a href="#{request.contextPath}/configuracion/lista.xhtml">Configuración pago</a>
+                                <a href="#{request.contextPath}/configuracion/compra/lista.xhtml">Configuración compra</a>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{loginMB.validarRol() eq 'bodega_central' or loginMB.validarRoot()}">
+                                <a href="#{request.contextPath}/configuracion/insumos/lista.xhtml">Insumos</a>
+                            </ui:fragment>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'contabilidad' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-shopping-cart"></i><h3>Compras</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/compras/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/compras/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/compras/reporte.xhtml">Reporte</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'bodega_central' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-box"></i><h3>Bodega</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/inventario/ingreso.xhtml">Ingresos</a>
+                            <a href="#{request.contextPath}/inventario/salidas.xhtml">Salidas</a>
+                            <a href="#{request.contextPath}/inventario/traslados.xhtml">Traslados</a>
+                            <a href="#{request.contextPath}/inventario/tecnicos.xhtml">Técnicos</a>
+                            <a href="#{request.contextPath}/inventario/reporte.xhtml">Reporte</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'bodega_central' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-shopping-bag"></i><h3>Compras Bodega</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/compras-bodega/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/compras-bodega/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/compras-bodega/reporte.xhtml">Reporte</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{loginMB.validarRol() eq 'bodega_central' or loginMB.validarRol() eq 'cobros' or loginMB.validarRoot()}">
+                    <div class="home-card">
+                        <div class="home-head"><i class="pi pi-ticket"></i><h3>Ticket de trabajo</h3></div>
+                        <div class="home-links">
+                            <a href="#{request.contextPath}/atencion/lista.xhtml">Lista</a>
+                            <a href="#{request.contextPath}/atencion/registro.xhtml">Registro</a>
+                            <a href="#{request.contextPath}/atencion/reporte.xhtml">Reporte</a>
+                        </div>
+                    </div>
+                </ui:fragment>
+
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

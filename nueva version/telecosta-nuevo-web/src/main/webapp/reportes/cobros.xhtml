@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Reportes
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Reporte</h1>            
+                </ui:define>
+
+                <table>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <div class="menu-perfil" style="display: inline-block; width: 250px; height: auto; margin-right: 20px;">
+                                <h:form>
+                                    <ui:insert name="menu-perfil">
+                                        <ui:include src="/templates/menu-reportes.xhtml" >
+                                            <ui:param name="formulario" value="3" />
+                                        </ui:include>
+                                    </ui:insert>
+                                </h:form>
+                            </div>     
+                        </td>
+                        <td style="vertical-align: top; margin-left: 20px;">
+                            <div>
+                                <h4 style="margin-right: 190px;">1. Reporte de cobros por fecha</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="3"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:calendar id="cal_fechaInicioCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteCobroMB.fechaIncioCobro}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
+
+                                    <p:calendar id="cal_fechaFinCo" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                                value="#{reporteCobroMB.fechaFinCobro}" navigator="true">  
+                                        <p:ajax event="dateSelect" process="@this" />
+                                    </p:calendar>
+
+                                    <p:commandButton value="Imprimir" style="float: left;"
+                                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                     immediate="true" process="@this" update="@form" ajax="false">
+                                        <p:fileDownload value="#{reporteCobroMB.generarPdfCobro()}"/>
+                                    </p:commandButton>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">2. Reporte de cobros por Municipio</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun" value="#{reporteCobroMB.idMunicipio}" style="width: 200px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                     required="true" requiredMessage="Debes selecciona un municipio" >
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteCobroMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                        <p:ajax event="itemSelect" update=""/>
+                                    </p:selectOneMenu>
+
+                                    <p:panelGrid columns="1" styleClass="no-border" style="">
+                                        <p:commandButton value="Excel" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteCobroMB.imprimirExcelCobroMunicipio()}"/>
+                                        </p:commandButton> 
+                                    </p:panelGrid>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">3. Reporte de cobros por sector ruta</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Sector:"  styleClass="field-label"  />
+                                    <p:outputLabel value=""  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="sec" value="#{reporteCobroMB.idSector}" style="width: 200px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                     required="true" requiredMessage="Debes selecciona un sector" >
+                                        <f:selectItem itemLabel="(selecciona un sector)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteCobroMB.listSector}"  var="mun" itemLabel="#{mun.sector}" itemValue="#{mun.idsector}"/>
+                                        <p:ajax event="itemSelect" update=""/>
+                                    </p:selectOneMenu>
+
+                                    <p:panelGrid columns="1"  styleClass="no-border" style="">
+                                        <p:commandButton value="Excel" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteCobroMB.imprimirExcelCobroSector()}"/>
+                                        </p:commandButton> 
+                                    </p:panelGrid>
+                                </p:panelGrid>
+
+                                <h4 style="margin-right: 190px;">4. Reporte de cobros por sector</h4>
+                                <hr class="hr-mp" style="margin-bottom: 5px!important;"/>
+                                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                                    <p:outputLabel value="Sector:"  styleClass="field-label"  />
+
+                                    <p:selectOneMenu id="mun2" value="#{reporteCobroMB.idMunicipio2}" style="width: 200px;" 
+                                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{reporteCobroMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                                        <p:ajax event="itemSelect" update=""/>
+                                    </p:selectOneMenu>
+
+                                    <p:inputText id="tel" value="#{reporteCobroMB.sector}" size="30" style="font-size: 16px!important;">
+                                        <p:ajax event="blur" process="@this"/>
+                                    </p:inputText> 
+
+                                    <p:panelGrid columns="1"  styleClass="no-border" style="">
+                                        <p:commandButton value="Excel" style="float: left;"
+                                                         styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                                         onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                         immediate="true" process="@this" update="@form" ajax="false">
+                                            <p:fileDownload value="#{reporteCobroMB.imprimirExcelCobroSectorMunicipio()}"/>
+                                        </p:commandButton> 
+                                    </p:panelGrid>
+                                </p:panelGrid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div> 
+        </h:form>
+    </ui:define>
+</ui:composition>

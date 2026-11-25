@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"     
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:shiro="http://shiro.apache.org/tags">
+
+    <f:metadata>
+        <f:viewParam name="idatencion" value="#{detalleAtencionMB.idAtencion}"/>
+        <f:event type="preRenderView" listener="#{detalleAtencionMB.cargarDatos()}"/>
+    </f:metadata>
+
+    <ui:define name="pageTitle">
+        Detalle Ticket de Trabajo
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="1. Información del Ticket" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
+                        <h:commandLink action="#{detalleAtencionMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                            <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
+                        </h:commandLink>
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid  id="pg_info" styleClass="no-border" style="width: 90%; margin-left: 4%;">
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Nombres:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Dirección:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Teléfono:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.nombres}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.direccion}" style="font-size: 16px!important;">
+                        </p:outputLabel> 
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.idcliente.telefono}" style="font-size: 16px!important;"/>
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Motivo del reporte:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Referencia:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.motivo}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detalleAtencionMB.atencion.referencia}" style="font-size: 16px!important;"/>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="2. Información del Material" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                </tr>
+            </table>
+
+            <p:dataTable id="dt_detalleatencion" var="dd" value="#{detalleAtencionMB.listDetalle}"
+                         emptyMessage="No hay detalles de tickets registrados" 
+                         styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                         rows="10" paginator="#{detalleAtencionMB.listDetalle.size()>4}"  paginatorPosition="bottom">
+
+                <p:column headerText="No." style="width: 5%;">
+                    #{rowId+1}
+                </p:column>
+
+                <p:column headerText="Material utilizado" width="20%" >
+                    <p:outputLabel value="#{dd.materialutilizado}"/>
+                </p:column>
+
+                <p:column headerText="Material utilizado" width="20%" >
+                    <p:outputLabel value="#{dd.cantidad}"/>
+                </p:column>
+
+                <p:column headerText="observación" width="25%" >
+                    <p:outputLabel value="#{dd.observacion}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

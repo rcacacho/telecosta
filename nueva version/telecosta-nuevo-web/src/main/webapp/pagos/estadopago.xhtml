@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"     
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml"
+                xmlns:shiro="http://shiro.apache.org/tags">
+
+    <f:metadata>
+        <f:viewParam name="idpago" value="#{detallePagoMB.idPago}"/>
+        <f:event type="preRenderView" listener="#{detallePagoMB.cargarDatos()}"/>
+    </f:metadata>
+
+    <ui:define name="pageTitle">
+        Detalle del pago
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+
+            <table style="width: 100%; margin-top: 23px;">
+                <tr>
+                    <td style="width: 50%;">
+                        <p:outputLabel value="1. Información del pago" 
+                                       style="font-size: 16px !important; display: block; width: 100%; text-align: left;" />
+                    </td>
+                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
+                        <h:commandLink action="#{detallePagoMB.editar()}" style="text-decoration: none; ">
+                            <h:graphicImage library="images" name="editar.png"   style="float: right !important;" width="20px;" title="Editar"/>
+                        </h:commandLink>
+                    </td>
+
+                    <td style="width: 50%;vertical-align: bottom;text-align: right!important;font-size: 13px;">
+                        <h:commandLink action="#{detallePagoMB.regresar()}" style="text-decoration: none; margin-left: 25px;">
+                            <h:graphicImage library="images" name="regreso.png"   style="float: right !important;" width="20px;" title="Regresar"/>
+                        </h:commandLink>
+                    </td>
+                </tr>
+            </table>
+
+            <hr class="hr-mp" style="margin-bottom: 10px!important;"/>
+
+            <p:panelGrid  id="pg_info" styleClass="no-border" style="width: 90%; margin-left: 4%;">
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Nombres:" styleClass="colorTitulo" />
+                    </p:column>
+                    <p:column >
+                        <p:outputLabel value="Municipio:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.idcliente.nombres}" style="font-size: 16px!important;"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.idcliente.idmunicipio.municipio}" style="font-size: 16px!important;">
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Fecha Pago:" styleClass="colorTitulo" />
+                    </p:column>
+
+                    <p:column >
+                        <p:outputLabel value="Cantidad:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.fechapago}" style="font-size: 16px!important;">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.cantidad}" style="font-size: 16px!important;" >
+                        </p:outputLabel> 
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column >
+                        <p:outputLabel value="Tipo de Pago:" styleClass="colorTitulo" />
+                    </p:column>
+                </p:row>
+
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="#{detallePagoMB.pago.idformapago.forma}" style="font-size: 16px!important;"/>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

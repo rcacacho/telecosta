@@ -1,18 +1,52 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"                
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
       xmlns:p="http://primefaces.org/ui">
     <f:view locale="es_GT">
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-            <ui:insert name="titulo">
-                <ui:insert name="titulo">[TITULO AQUI]</ui:insert>
-            </ui:insert>
+            <ui:insert name="titulo">[TITULO AQUI]</ui:insert>
             <h:outputStylesheet library="css" name="/resources/css/telecosta.css" />
+
+            <style>
+                #app-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: .75rem;
+                    padding: .75rem 1.5rem;
+                    background: linear-gradient(135deg, #0e6a96 0%, #1281b6 55%, #2aa3d6 100%);
+                    color: #ffffff;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+                }
+                .app-header-left { display: flex; align-items: center; gap: .85rem; }
+                .app-header-logo { height: 52px; width: auto; border-radius: 50%; background: #ffffff; padding: 2px; }
+                .app-header-title { display: flex; flex-direction: column; line-height: 1.15; }
+                .app-name { font-size: 1.5rem; font-weight: 700; letter-spacing: .5px; }
+                .app-sub { font-size: .85rem; opacity: .85; }
+                .app-header-right { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+                .app-user {
+                    display: inline-flex; align-items: center; gap: .4rem;
+                    padding: .35rem .8rem; border-radius: 999px;
+                    background: rgba(255, 255, 255, .15); font-size: .9rem;
+                }
+                .app-header .ui-button.header-btn,
+                #app-header .ui-button.header-btn {
+                    background: rgba(255, 255, 255, .15) !important;
+                    border: 1px solid rgba(255, 255, 255, .4) !important;
+                    color: #ffffff !important;
+                }
+                #app-header .ui-button.header-btn:hover {
+                    background: rgba(255, 255, 255, .3) !important;
+                }
+                #app-header .ui-button.header-btn .ui-icon,
+                #app-header .ui-button.header-btn .ui-button-text { color: #ffffff !important; }
+            </style>
         </h:head>
 
         <h:body id="allThePage">
@@ -21,46 +55,38 @@
             <div id="container">
                 <p:growl id="messages"/>
 
-                <div id="top">
-                    <h:graphicImage library="images" name="header.jpg"  style="width: 100%; left: 0px; top: 0px; position: relative;"  height="120px"/>
-                    <div style="float: right; margin-right: 25px;">
-
-                        <h:form>
-                            <center>
-                                <table style="width: 100%; margin-top: 5px;">
-                                    <td style="width: 50%">
-
-
-                                        <h:commandLink action="#{loginMB.loginProject()}" style="text-decoration: none;">
-                                            <h:graphicImage library="images" name="Inicio32.png"   style="float: right !important; margin-right: 10px; margin-top: 50px;" width="30px;" title="Inicio"/>
-                                        </h:commandLink>
-                                    </td>
-                                    <td style="width: 50%">
-                                        <h:commandLink action="#{loginMB.logout()}" style="text-decoration: none;" >
-                                            <h:graphicImage library="images" name="logout.png" style="float: right !important; margin-right: 10px; margin-top: 50px;" 
-                                                            width="30px;" title="Cerrar Sesión" /> 
-                                        </h:commandLink>
-                                    </td>
-                                </table>
-                            </center>
-                        </h:form>
+                <div id="app-header">
+                    <div class="app-header-left">
+                        <h:graphicImage library="images" name="logo_redondo.png" styleClass="app-header-logo"/>
+                        <div class="app-header-title">
+                            <span class="app-name">TeleCosta</span>
+                            <span class="app-sub">Sistema Informático</span>
+                        </div>
                     </div>
+
+                    <h:form id="frm_header" styleClass="app-header-right">
+                        <span class="app-user">
+                            <i class="pi pi-user"></i>
+                            #{sessionScope['usuario']}
+                        </span>
+                        <p:button outcome="/menu/menu.xhtml" icon="pi pi-home" value="Inicio" styleClass="header-btn"/>
+                        <p:commandButton action="#{loginMB.logout()}" icon="pi pi-sign-out" value="Cerrar sesión"
+                                         ajax="false" immediate="true" styleClass="header-btn"/>
+                    </h:form>
                 </div>
 
                 <div id="main-menu">
-                    <ui:insert name="main-menu">
-                        <ui:insert name="main-menu">[MENU AQUI]</ui:insert>
-                    </ui:insert>
+                    <ui:insert name="main-menu">[MENU AQUI]</ui:insert>
                 </div>
 
                 <h:form>
                     <div id="pageTitle">
-                        <center>
-                            <div style="display:inline-block" align="center">
+                        <div style="text-align: center;">
+                            <div style="display: inline-block;">
                                 <ui:insert name="pageTitle">[NOMBRE DE LA PAGINA AQUI]</ui:insert>
-                            </div>   
-                        </center>
-                    </div> 
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="help">
                         <p:outputPanel id="panel_ayuda">
@@ -68,10 +94,10 @@
                         </p:outputPanel>
                     </div>
                 </h:form>
-                <div id="content" >
+                <div id="content">
                     <ui:include src="./confirmation-dialog.xhtml" />
                     <h:outputScript library="js" name="utils.js" />
-                    <h:outputScript library="js"  name="calendarLabels_es_GT.js" /> 
+                    <h:outputScript library="js" name="calendarLabels_es_GT.js" />
                     <ui:insert name="content">[CONTENIDO AQUI]</ui:insert>
                 </div>
 

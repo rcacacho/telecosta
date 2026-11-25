@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de Compras
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de Compras</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label" style="font-weight: bold;"  />
+                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label" style="font-weight: bold;"  />
+
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaBodegaCompraMB.fechaInicio}" navigator="true">  
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{listaBodegaCompraMB.fechaFin}" navigator="true">  
+                    </p:calendar>
+
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 10px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaBodegaCompraMB.buscarCompra()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  icon="ui-icon-search"
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaBodegaCompraMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form" icon="ui-icon-refresh"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+
+                <p:dataTable id="dt_queja" var="col" value="#{listaBodegaCompraMB.listCompra}"
+                             emptyMessage="No hay compras registradas" editable="true"
+                             styleClass="tabla-mp" style="width: 95%" rowIndexVar="rowId"
+                             rows="10" paginator="#{listaBodegaCompraMB.listCompra.size()>5}"  paginatorPosition="bottom">
+
+                    <p:ajax event="rowEdit" listener="#{listaBodegaCompraMB.onRowEdit}" update="dt_queja" />
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Tipo Documento" width="25%" >
+                        <p:outputLabel value="#{col.idtipodocumentocompra.documento}"/>
+                    </p:column>
+
+                    <p:column headerText="Proveedor" width="25%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.idproveedor.nombre}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="prov" value="#{col.idproveedor}" style="width: 50%" 
+                                                 converter="entityConverter" filter="true" filterMatchMode="contains"
+                                                 required="true" requiredMessage="Debes selecciona un proveedor" >
+                                    <p:ajax event="itemSelect"/>
+                                    <f:selectItem itemLabel="(selecciona un proveedor)" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{listaBodegaCompraMB.listProveedor}"  var="prove" itemLabel="#{prove.nombre}" itemValue="#{prove}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Descripción" width="23%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.descripcion}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{col.descripcion}" size="22" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="No Documento" width="24%" >
+                        <p:outputLabel value="#{col.nodocumento}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha compra" width="22%" >
+                        <p:outputLabel value="#{col.fechacompra}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Monto compra" width="15%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.montocompra}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{col.montocompra}" size="14" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Cantidad" width="18%" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputLabel value="#{col.cantidad}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{col.cantidad}" size="14" >
+                                    <p:ajax event="blur" process="@this"/>
+                                </p:inputText> 
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Total" width="21%" >
+                        <p:outputLabel value="#{col.total}"/>
+                    </p:column>
+
+                    <p:column width="20%" exportable="false" >
+                        <p:commandButton value="Eliminar" 
+                                         style="float:left!important; margin-left:7.5% !important;" process="@this" 
+                                         styleClass="button-16 b-greylight-16" icon="ui-icon-closethick"
+                                         onstart="return confirm('¿Confirmas eliminar la compra?');" rendered="#{listaBodegaCompraMB.obtenerRoot()}"
+                                         action="#{listaBodegaCompraMB.eliminarCompra(col.idcompra)}" update="@form"/>
+                    </p:column>
+
+                    <p:column headerText="Editar" width="10%">
+                        <p:rowEditor />
+                    </p:column>
+
+                    <p:column width="15%" exportable="false" >
+                        <h:commandLink action="#{listaBodegaCompraMB.detalle(col.idcompra)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

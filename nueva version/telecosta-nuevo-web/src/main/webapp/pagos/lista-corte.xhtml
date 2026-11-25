@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Consulta de pagos cliente con corte
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:include src="/pagos/tab-menu.xhtml">
+                    <ui:param name="activeIndex" value="1"/>
+                </ui:include>
+
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Consulta de pagos</h1>            
+                </ui:define>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Año:"  styleClass="field-label"  />
+                    <p:outputLabel value="Mes:"  styleClass="field-label"  />
+
+                    <p:selectOneMenu id="anio" value="#{listaPagosCorteMB.anio}" style="width:250px;" 
+                                     filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un año)" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="2020" itemValue="2020" />
+                        <f:selectItem itemLabel="2021" itemValue="2021" />
+                        <f:selectItem itemLabel="2022" itemValue="2022" />
+                        <f:selectItem itemLabel="2023" itemValue="2023" />
+                        <f:selectItem itemLabel="2024" itemValue="2024" />
+                    </p:selectOneMenu>
+
+                    <p:selectOneMenu id="mes" value="#{listaPagosCorteMB.mes}" style="width:250px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un mes)" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Enero" itemValue="Enero" />
+                        <f:selectItem itemLabel="Febrero" itemValue="Febrero" />
+                        <f:selectItem itemLabel="Marzo" itemValue="Marzo" />
+                        <f:selectItem itemLabel="Abril" itemValue="Abril" />
+                        <f:selectItem itemLabel="Mayo" itemValue="Mayo" />
+                        <f:selectItem itemLabel="Junio" itemValue="Junio" />
+                        <f:selectItem itemLabel="Julio" itemValue="Julio" />
+                        <f:selectItem itemLabel="Agosto" itemValue="Agosto" />
+                        <f:selectItem itemLabel="Septiembre" itemValue="Septiembre" />
+                        <f:selectItem itemLabel="Octubre" itemValue="Octubre" />
+                        <f:selectItem itemLabel="Noviembre" itemValue="Noviembre" />
+                        <f:selectItem itemLabel="Diciembre" itemValue="Diciembre" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Nombre:"  styleClass="field-label"  />
+                    <p:outputLabel value="Fechas:"  styleClass="field-label"  />
+
+                    <p:selectOneMenu id="cl" value="#{listaPagosCorteMB.idcliente}" style="width: 250px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="(selecciona un cliente)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaPagosCorteMB.listClientes}"  var="mun" itemLabel="#{mun.codigo} - #{mun.nombres}" itemValue="#{mun.idcliente}"/>
+                    </p:selectOneMenu>
+
+                    <p:panelGrid columns="2"  styleClass="no-border">
+                        <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                    value="#{listaPagosCorteMB.fechaInicioBus}" navigator="true">  
+                        </p:calendar>
+                        <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                    value="#{listaPagosCorteMB.fechaFinBus}" navigator="true">  
+                        </p:calendar>
+                    </p:panelGrid>
+
+                    <p:outputLabel value="Municipio:"  styleClass="field-label"  />
+                    <p:outputLabel value=""   />
+
+                    <p:selectOneMenu id="mun" value="#{listaPagosCorteMB.idMunicipio}" style="width: 250px;" 
+                                     converter="entityConverter" filter="true" filterMatchMode="contains">
+                        <p:ajax  event="itemSelect"/>
+                        <f:selectItem itemLabel="(selecciona un municipio)" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{listaPagosCorteMB.listMunicipio}"  var="mun" itemLabel="#{mun.municipio}" itemValue="#{mun.idmunicipio}"/>
+                    </p:selectOneMenu>
+
+                    <p:panelGrid columns="2" styleClass="no-border" style="margin-left: 100px;">
+                        <p:commandButton value="Buscar"  
+                                         action="#{listaPagosCorteMB.buscarPago()}" 
+                                         class="boton boton-imgtxt-16 b-gris4 icon-buscar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"   
+                                         id="btn_buscar"  icon="ui-icon-search" 
+                                         update="frm_content"
+                                         onstart="start();" oncomplete="stop();"/>
+
+                        <p:commandButton value="Limpiar" 
+                                         action="#{listaPagosCorteMB.limpiarCampos()}"
+                                         class="boton boton-imgtxt-16 b-gris4 icon-limpiar"
+                                         style="background-size: 20px 20px !important; float: right;
+                                         background-position: 4px 1px !important;"
+                                         update="@form" icon="ui-icon-refresh"
+                                         id="btn_limpiar"  onstart="start();" oncomplete="stop();"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+                <br/>
+                <p:dataTable id="dt_pago" var="col" value="#{listaPagosCorteMB.listPago}"
+                             emptyMessage="No hay pagos registrados" rowStyleClass="#{col.getStylePago()}"
+                             styleClass="tabla-mp" style="width: 85%" rowIndexVar="rowId"
+                             rows="15" paginator="#{listaPagosCorteMB.listPago.size()>15}"  paginatorPosition="bottom">
+
+                    <p:column headerText="No." style="width: 5%;">
+                        #{rowId+1}
+                    </p:column>
+
+                    <p:column headerText="Nombre" width="25%" >
+                        <p:outputLabel value="#{col.idcliente.nombres}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha pago" width="25%" >
+                        <p:outputLabel  value="#{listaPagosCorteMB.obtenerFechPago(col.idpago)}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Ultimo pago" width="25%" >
+                        <p:outputLabel value="#{col.mes} - #{col.anio}"/>
+                    </p:column>
+
+                    <p:column headerText="Total adeudado" width="20%" >
+                        <p:outputLabel value="#{col.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Usuario registro" width="15%" >
+                        <p:outputLabel value="#{col.usuariocreacion}"/>
+                    </p:column>
+
+                    <p:column width="15%" exportable="false" >
+                        <h:commandLink action="#{listaPagosCorteMB.detalle(col.idpago)}" style="text-decoration: none;">
+                            <h:graphicImage library="images" name="consulta.png"   style="float: right !important;" width="20px;" title="Detalle"/>
+                        </h:commandLink>
+                    </p:column>
+                </p:dataTable>
+
+                <div align="center" style="margin-top: 15px;">
+                    <p:panelGrid columns="3" style="text-align: center !important;" styleClass="no-border" >
+
+                        <p:outputPanel style="width: 80px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorAmarillo" style="border: 1px solid black;"/>
+                            </div>
+                            Un mes pendiente 
+                        </p:outputPanel>
+
+                        <p:outputPanel style="width: 80px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorAnaranjado" style="border: 1px solid black;"/>
+                            </div>
+                            Dos mes pendiente 
+                        </p:outputPanel>
+
+                        <p:outputPanel style="width: 75px;">
+                            <div align="center">
+                                <div id="rectangle" class="rowColorRojo" style="border: 1px solid black;"/>
+                            </div>
+                            Tres o mas mes pendientes
+                        </p:outputPanel>
+                    </p:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

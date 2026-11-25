@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"    
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+
+    <ui:define name="pageTitle">
+        Reportes
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frm_content">
+            <div align="center">
+                <ui:define name="pageTitle">
+                    <h1 style="margin: 0 0 0 0;">Reportes</h1>            
+                </ui:define>
+
+                <h3 style="margin-right: 190px;">Reporte de Compras</h3>
+
+                <p:panelGrid columns="2"  styleClass="no-border" style="margin-top: 10px;">
+                    <p:outputLabel value="Fecha Inicio:"  styleClass="field-label"  />
+                    <p:outputLabel value="Fecha Fin:"  styleClass="field-label"  />
+
+                    <p:calendar id="cal_fechaInicio" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteCompraMB.fechaIncio}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                    <p:calendar id="cal_fechaFin" placeholder="(elige una fecha)" locale="es" timeZone="America/Guatemala" pattern="dd/MM/yyyy" mask ="true"                          
+                                value="#{reporteCompraMB.fechaFin}" navigator="true">  
+                        <p:ajax event="dateSelect" process="@this" />
+                    </p:calendar>
+
+                </p:panelGrid>
+
+                <p:panelGrid columns="1" styleClass="no-border">
+                    <p:commandButton value="Imprimir" style="float: left;"
+                                     styleClass="button-16 b-greylight-16" icon="ui-icon-print"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                     immediate="true" process="@this" update="@form" ajax="false">
+                        <p:fileDownload value="#{reporteCompraMB.imprimirExcelCompra()}"/>
+                    </p:commandButton>
+                </p:panelGrid>
+            </div> 
+        </h:form>
+    </ui:define>
+</ui:composition>
